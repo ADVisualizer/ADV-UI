@@ -1,8 +1,6 @@
 # Generated folders
 log/
 build/*
-*.gvs
-
 
 # Eclipse properties
 .classpath
@@ -43,5 +41,3 @@ gradle-app.setting
 .gradletasknamecache
 
 # Project specific files
-GVSComm.xml
-input.xml
