@@ -1,0 +1,55 @@
+/****************************************
+ * instructions for all projects
+ ****************************************/
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    group = 'ch.hsr.adv'
+    version = '1.0'
+
+    sourceCompatibility = 1.9
+    targetCompatibility = 1.9
+}
+
+/****************************************
+ * instructions for each sub project
+ ****************************************/
+subprojects {
+
+    // common dependencies
+    dependencies {
+        compile "org.slf4j:slf4j-api:1+"
+        compile "ch.qos.logback:logback-core:1+"
+        compile "ch.qos.logback:logback-classic:1+"
+
+        testCompile "junit:junit:4+"
+    }
+}
+
+/****************************************
+ * Single library jar containing all sub projects and 3rd party dependencies
+ ****************************************/
+configurations {
+    childJars
+}
+
+dependencies {
+    subprojects.each {
+        childJars project(it.path)
+    }
+}
+
+jar {
+    dependsOn configurations.childJars
+    from { configurations.childJars.collect { zipTree(it) } }
+}
+
+
+
+
+
