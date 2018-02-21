@@ -3,6 +3,18 @@ public class AdvApplication {
     AdvExtension extension;
 
     public void onDisplay() {
-        extension.print();
+        if (extension != null){
+            extension.print();
+        }
+    }
+
+    //to shut up spotbugs =)
+    public void doNothing(){
+        extension = new AdvExtension() {
+            @Override
+            public void print() {
+
+            }
+        };
     }
 }

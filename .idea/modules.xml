@@ -3,16 +3,28 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adv-root.iml" filepath="$PROJECT_DIR$/.idea/modules/adv-root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adv-root.iml" filepath="$PROJECT_DIR$/.idea/modules/adv-root.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adv-root_main.iml" filepath="$PROJECT_DIR$/.idea/modules/adv-root_main.iml" group="adv-root" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adv-root_main.iml" filepath="$PROJECT_DIR$/.idea/modules/adv-root_main.iml" group="adv-root" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/adv-root_test.iml" filepath="$PROJECT_DIR$/.idea/modules/adv-root_test.iml" group="adv-root" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adv-root_test.iml" filepath="$PROJECT_DIR$/.idea/modules/adv-root_test.iml" group="adv-root" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_main.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_main.iml" group="core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_test.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/core_test.iml" group="core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" group="module-array" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" group="module-array" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" group="module-array" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" group="module-array" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" group="module-sort" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" group="module-sort" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" group="module-sort" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" group="module-sort" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" group="module-sort" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" group="module-sort" />
     </modules>
   </component>

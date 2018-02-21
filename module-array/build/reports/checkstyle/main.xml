@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="6.19">
+<file name="/Users/muriele/GoogleDrive/HSR/Module/6FS18/BA/ADV/ADVisualizer/module-array/src/main/java/ArrayExtension.java">
+<error line="1" severity="warning" message="Missing a Javadoc comment." source="com.puppycrawl.tools.checkstyle.checks.javadoc.JavadocTypeCheck"/>
+</file>
+</checkstyle>
