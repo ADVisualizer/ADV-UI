@@ -8,20 +8,24 @@ allprojects {
     apply plugin: 'idea'
     apply plugin: 'java'
     apply plugin: 'maven'
-    apply plugin: 'checkstyle'
-    apply plugin: 'com.github.spotbugs'
+
+    group = 'ch.hsr.adv'
+    version = '1.0'
 
     repositories {
         mavenCentral()
     }
 
-    group = 'ch.hsr.adv'
-    version = '1.0'
-
     sourceCompatibility = 1.9
     targetCompatibility = 1.9
+}
 
-
+/****************************************
+ * instructions for each sub project
+ ****************************************/
+subprojects {
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.spotbugs'
 
     checkstyle {
         ignoreFailures = false
@@ -36,12 +40,6 @@ allprojects {
             html.enabled = true
         }
     }
-}
-
-/****************************************
- * instructions for each sub project
- ****************************************/
-subprojects {
 
     // common dependencies
     dependencies {
