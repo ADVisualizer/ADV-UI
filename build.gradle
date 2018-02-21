@@ -1,6 +1,8 @@
 plugins {
     id 'com.github.spotbugs' version '1.6.0'
+    id 'net.saliman.cobertura' version '2.5.4'
 }
+
 /****************************************
  * instructions for all projects
  ****************************************/
@@ -48,6 +50,7 @@ subprojects {
         compile "ch.qos.logback:logback-classic:1+"
 
         testCompile "junit:junit:4+"
+        testCompile 'org.jukito:jukito:1+'
     }
 }
 
