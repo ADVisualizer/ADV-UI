@@ -35,6 +35,10 @@ subprojects {
         configFile = file("${project.rootDir}/checkstyle.xml")
     }
 
+    cobertura {
+        coverageFormats = ['xml']
+    }
+
     // To generate an HTML report instead of XML
     tasks.withType(com.github.spotbugs.SpotBugsTask) {
         reports {
