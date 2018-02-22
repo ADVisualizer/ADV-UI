@@ -1,6 +1,6 @@
 # Generated folders
 log/
-build/*
+build/
 
 # Eclipse
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -83,7 +83,6 @@ fabric.properties
 # Gradle
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 .gradle
-/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting

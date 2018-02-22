@@ -1,3 +1,5 @@
+package ch.hsr.adv;
+
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;

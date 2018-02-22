@@ -1,3 +1,5 @@
+package ch.hsr.adv;
+
 public class AdvApplication {
 
     AdvExtension extension;
