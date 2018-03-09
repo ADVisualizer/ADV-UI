@@ -14,22 +14,6 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 
-# Upload test coverage to Code Climate
-env:
-  global:
-    - CC_TEST_REPORTER_ID=27a480bde8b3b5d221680476d0e47a37ff0b61856fc7b888bc4c7208e9b7e0e6
-
-before_script:
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-script:
-  - gradle cobertura
-
-after_script:
-  - ./cc-test-reporter format-coverage -t cobertura build/reports/cobertura/coverage.xml
-  - ./cc-test-reporter upload-coverage
-
 # Automatic Github deploy of the gvs-ui jar for tagged commits
 deploy:
   provider: releases
