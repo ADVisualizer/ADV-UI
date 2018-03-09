@@ -1,8 +1,14 @@
 dist: trusty
 language: java
+dist: trusty
 jdk:
   - oraclejdk8
   - oraclejdk9
+  - oraclejdk8
+addons:
+  apt:
+    packages:
+      - oracle-java9-installer
 
 # Cache gradle
 before_cache:
