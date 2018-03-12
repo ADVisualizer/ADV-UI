@@ -1,6 +1,6 @@
 package ch.adv.ui;
 
-public interface AdvExtension {
+public interface ADVModule {
 
     public void print();
 

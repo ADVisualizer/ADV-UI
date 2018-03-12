@@ -7,9 +7,9 @@ import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AdvApplication extends Application {
+public class ADVApplication extends Application {
 
-    private AdvExtension extension;
+    private ADVModule extension;
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
@@ -29,7 +29,7 @@ public class AdvApplication extends Application {
         launch(args);
     }
 
-    public void setExtension(AdvExtension extension) {
+    public void setExtension(ADVModule extension) {
         this.extension = extension;
     }
 }
