@@ -1,4 +1,4 @@
-package ch.hsr.adv;
+package ch.adv.ui;
 
 public interface AdvExtension {
 

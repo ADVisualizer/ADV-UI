@@ -1,4 +1,6 @@
-import ch.hsr.adv.AdvExtension;
+package ch.adv.ui.sort;
+
+import ch.adv.ui.AdvExtension;
 
 public class SortExtension implements AdvExtension {
 

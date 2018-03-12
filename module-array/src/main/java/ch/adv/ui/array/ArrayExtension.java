@@ -1,4 +1,6 @@
-import ch.hsr.adv.AdvExtension;
+package ch.adv.ui.array;
+
+import ch.adv.ui.AdvExtension;
 
 public class ArrayExtension implements AdvExtension {
 

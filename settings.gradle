@@ -2,10 +2,10 @@
  * The settings file is used to specify 
  * which projects to include in your build.
  ****************************************/
-rootProject.name = 'adv-root'
+rootProject.name = 'adv-ui'
 
 // submodules
-include ":core"
+include ":ui-core"
 
 include ":module-sort"
 include ":module-array"
