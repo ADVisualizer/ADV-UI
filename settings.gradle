@@ -7,5 +7,4 @@ rootProject.name = 'adv-ui'
 // submodules
 include ":ui-core"
 
-include ":module-sort"
 include ":module-array"

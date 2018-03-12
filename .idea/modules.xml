@@ -18,10 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" group="module-sort" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort.iml" group="module-sort" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" group="module-sort" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_main.iml" group="module-sort" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" group="module-sort" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-sort/module-sort_test.iml" group="module-sort" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core.iml" group="ui-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core_main.iml" group="ui-core" />
