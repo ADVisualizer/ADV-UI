@@ -49,9 +49,9 @@ subprojects {
 
     // common dependencies
     dependencies {
+        //slf4j implementation only needed in lib
         compile "org.slf4j:slf4j-api:1+"
-        compile "ch.qos.logback:logback-core:1+"
-        compile "ch.qos.logback:logback-classic:1+"
+
 
         testCompile "junit:junit:4+"
         testCompile 'org.jukito:jukito:1+'
