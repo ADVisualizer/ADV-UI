@@ -17,6 +17,7 @@ import java.net.Socket;
  */
 public class SocketServer extends Thread {
     private static ServerSocket javaSocket;
+    private static int portNr;
 
     private static final String THREAD_NAME = "SocketServer Thread";
     private static final int DEFAULT_PORT = 8765;
@@ -33,7 +34,13 @@ public class SocketServer extends Thread {
     @Override
     public void run() {
         try {
-            javaSocket = new ServerSocket(DEFAULT_PORT);
+            if (portNr >= 1024 && portNr <= 65535) {
+                logger.info("Configured and acceptable port number found: {}", portNr);
+            } else {
+                portNr = DEFAULT_PORT;
+                logger.info("Listening on default port: {}", portNr);
+            }
+            javaSocket = new ServerSocket(portNr);
         } catch (IOException e) {
             logger.error("Could not initialize java.net.ServerSocket", e);
         }
@@ -58,4 +65,12 @@ public class SocketServer extends Thread {
         }
     }
 
+    /**
+     * Set alternative port on which SocketServer should listen.
+     *
+     * @param port the port number to listen on
+     */
+    public void setPort(int port) {
+        portNr = port;
+    }
 }
