@@ -1,6 +1,7 @@
 package ch.adv.ui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -12,15 +13,26 @@ import java.util.Scanner;
 public class ADVApplication extends Application {
 
     private ADVModule extension;
+    private SocketServer socketServer = new SocketServer();
+    private Stage primaryStage;
 
     private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("ADV Application started");
-        //TODO: remove, just to shut up spotbugs
-        System.out.println(extension);
+        this.primaryStage = primaryStage;
+        logger.info("Starting SocketServer...");
+        socketServer.start();
 
+        logger.info("Starting ADV UI...");
+        setUpFrame();
+    }
+
+    private void setUpFrame() {
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
         StackPane root = new StackPane();
         Scene scene = new Scene(root, 400, 300);
 
