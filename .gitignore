@@ -1,7 +1,8 @@
 # Generated folders
 log/
 build/
-.idea/*
+**/.idea/workspace.xml
+**/.idea/tasks.xml
 
 # Eclipse
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
