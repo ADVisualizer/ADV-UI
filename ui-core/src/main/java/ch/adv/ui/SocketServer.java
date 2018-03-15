@@ -3,18 +3,18 @@ package ch.adv.ui;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import javax.inject.Singleton;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Listens for incoming snapshot transmissions and routes it to the correct module parser.
  *
  * @author mtrentini
  */
+@Singleton
 public class SocketServer extends Thread {
 
     private ServerSocket javaSocket;
@@ -27,15 +27,7 @@ public class SocketServer extends Thread {
 
     public SocketServer() {
         super(THREAD_NAME);
-        initializeServer();
-    }
-
-    public void initializeServer() {
-        try {
-            javaSocket = new ServerSocket(portNr);
-        } catch (IOException e) {
-            logger.error("Could not initialize java.net.ServerSocket", e);
-        }
+        portNr = DEFAULT_PORT;
     }
 
     /**
@@ -44,11 +36,14 @@ public class SocketServer extends Thread {
      */
     @Override
     public void run() {
+        initializeServer();
+
         while (true) {
             try {
                 Socket socket = javaSocket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+                PrintWriter writer = new PrintWriter(new OutputStreamWriter(
+                        socket.getOutputStream(), StandardCharsets.UTF_8), true);
                 String snapshot;
                 while ((snapshot = reader.readLine()) != null) {
                     if (snapshot.equals("END")) {
@@ -62,6 +57,15 @@ public class SocketServer extends Thread {
             } catch (IOException e) {
                 logger.error("Unable to read incoming transmissions", e);
             }
+        }
+    }
+
+    public void initializeServer() {
+        try {
+            javaSocket = new ServerSocket(portNr);
+            logger.info("Server socket created on port {}", portNr);
+        } catch (IOException e) {
+            logger.error("Could not initialize java.net.ServerSocket", e);
         }
     }
 

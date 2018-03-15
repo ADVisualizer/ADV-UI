@@ -1,13 +1,18 @@
 package ch.adv.ui;
 
+import com.gluonhq.ignite.guice.GuiceContext;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -18,21 +23,23 @@ import java.util.Map;
  *
  * @author mwieland
  */
+@Singleton
 public class ADVApplication extends Application {
 
-    private ADVModule extension;
-    //TODO: to be injected
+    @Inject
     private SocketServer socketServer;
+
+    private ADVModule extension;
     private Stage primaryStage;
+
+    private final GuiceContext context = new GuiceContext(this, () -> Arrays.asList(new GuiceBaseModule()));
 
     private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
 
-    public ADVApplication() {
-        this.socketServer = new SocketServer();
-    }
-
     @Override
     public void start(Stage primaryStage) {
+        context.init();
+
         this.primaryStage = primaryStage;
         // use command line arguments before socketServer is started
         retrieveCLIParams();
@@ -42,6 +49,8 @@ public class ADVApplication extends Application {
 
         logger.info("Starting ADV UI...");
         setUpFrame();
+
+        logger.info("ADV UI ready");
     }
 
     /**
