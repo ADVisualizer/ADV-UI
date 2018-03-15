@@ -16,15 +16,26 @@ import java.net.Socket;
  * @author mtrentini
  */
 public class SocketServer extends Thread {
-    private static ServerSocket javaSocket;
-    private static int portNr;
+
+    private ServerSocket javaSocket;
+
+    private int portNr;
+    private static final int DEFAULT_PORT = 8765;
 
     private static final String THREAD_NAME = "SocketServer Thread";
-    private static final int DEFAULT_PORT = 8765;
     private static final Logger logger = LoggerFactory.getLogger(SocketServer.class);
 
     public SocketServer() {
         super(THREAD_NAME);
+        initializeServer();
+    }
+
+    public void initializeServer() {
+        try {
+            javaSocket = new ServerSocket(portNr);
+        } catch (IOException e) {
+            logger.error("Could not initialize java.net.ServerSocket", e);
+        }
     }
 
     /**
@@ -33,17 +44,6 @@ public class SocketServer extends Thread {
      */
     @Override
     public void run() {
-        try {
-            if (portNr >= 1024 && portNr <= 65535) {
-                logger.info("Configured and acceptable port number found: {}", portNr);
-            } else {
-                portNr = DEFAULT_PORT;
-                logger.info("Listening on default port: {}", portNr);
-            }
-            javaSocket = new ServerSocket(portNr);
-        } catch (IOException e) {
-            logger.error("Could not initialize java.net.ServerSocket", e);
-        }
         while (true) {
             try {
                 Socket socket = javaSocket.accept();
@@ -71,6 +71,10 @@ public class SocketServer extends Thread {
      * @param port the port number to listen on
      */
     public void setPort(int port) {
-        portNr = port;
+        if (portNr >= 1024 && portNr <= 65535) {
+            portNr = port;
+        } else {
+            portNr = DEFAULT_PORT;
+        }
     }
 }

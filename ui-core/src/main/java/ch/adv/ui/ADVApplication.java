@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.Scanner;
 
 /**
  * Main class of ADV UI.
@@ -23,16 +22,20 @@ public class ADVApplication extends Application {
 
     private ADVModule extension;
     //TODO: to be injected
-    private SocketServer socketServer = new SocketServer();
+    private SocketServer socketServer;
     private Stage primaryStage;
 
     private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
+
+    public ADVApplication() {
+        this.socketServer = new SocketServer();
+    }
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         // use command line arguments before socketServer is started
-        checkParams();
+        retrieveCLIParams();
 
         logger.info("Starting SocketServer...");
         socketServer.start();
@@ -44,9 +47,9 @@ public class ADVApplication extends Application {
     /**
      * Checks command line arguments for configurable port number
      */
-    private void checkParams() {
+    private void retrieveCLIParams() {
         Map<String, String> params = getParameters().getNamed();
-        params.forEach((k, v) -> logger.debug("Found params: {} -> {}", k, v));
+        params.forEach((k, v) -> logger.debug("Found param: {} -> {}", k, v));
         String port = params.get("port");
         if (port != null) {
             socketServer.setPort(Integer.parseInt(port));
