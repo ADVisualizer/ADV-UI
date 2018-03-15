@@ -51,7 +51,7 @@ subprojects {
     dependencies {
         //only use slf4j implementation (e.g. logback) in core
         compile "org.slf4j:slf4j-api:1+"
-        compile "com.gluonhq:ignite-guice:1.0.0"
+        compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
 
         testCompile "junit:junit:4+"
         testCompile 'org.jukito:jukito:1+'

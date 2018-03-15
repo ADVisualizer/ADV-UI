@@ -1,18 +1,17 @@
 package ch.adv.ui;
 
-import com.gluonhq.ignite.guice.GuiceContext;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -29,16 +28,18 @@ public class ADVApplication extends Application {
     @Inject
     private SocketServer socketServer;
 
+    @Inject
+    ResourceLocator resourceLocator;
+
     private ADVModule extension;
     private Stage primaryStage;
-
-    private final GuiceContext context = new GuiceContext(this, () -> Arrays.asList(new GuiceBaseModule()));
 
     private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
 
     @Override
     public void start(Stage primaryStage) {
-        context.init();
+        Injector injector = Guice.createInjector(new GuiceBaseModule());
+        injector.injectMembers(this);
 
         this.primaryStage = primaryStage;
         // use command line arguments before socketServer is started
@@ -70,8 +71,11 @@ public class ADVApplication extends Application {
             Platform.exit();
             System.exit(0);
         });
-        StackPane root = new StackPane();
-        Scene scene = new Scene(root, 400, 300);
+
+
+        AnchorPane rootLayout = (AnchorPane) resourceLocator.load(ResourceLocator.Resource.ROOTLAYOUT_FXML);
+
+        Scene scene = new Scene(rootLayout, 400, 300);
 
         primaryStage.setTitle("ADV UI");
         primaryStage.setScene(scene);
