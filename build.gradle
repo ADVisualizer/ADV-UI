@@ -49,7 +49,7 @@ subprojects {
 
     // common dependencies
     dependencies {
-        //slf4j implementation only needed in lib
+        //only use slf4j implementation (e.g. logback) in core
         compile "org.slf4j:slf4j-api:1+"
 
 
