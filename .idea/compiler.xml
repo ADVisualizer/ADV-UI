@@ -10,6 +10,10 @@
       <module name="adv-ui_test" target="1.9" />
       <module name="adv_main" target="1.9" />
       <module name="adv_test" target="1.9" />
+      <module name="bootstraper_main" target="1.9" />
+      <module name="bootstraper_test" target="1.9" />
+      <module name="bootstrapper_main" target="1.9" />
+      <module name="bootstrapper_test" target="1.9" />
       <module name="common_main" target="1.9" />
       <module name="common_test" target="1.9" />
       <module name="core_main" target="1.9" />

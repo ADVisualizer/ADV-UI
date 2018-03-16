@@ -16,11 +16,11 @@ public class ResourceLocator {
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceLocator.class);
 
-    public static URL getResourcePath(Resource res) {
+    private URL getResourcePath(Resource res) {
         return ResourceLocator.class.getClassLoader().getResource(res.getRelativePath());
     }
 
-    public static Object load(Resource resource) {
+    public Object load(Resource resource) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getResourcePath(resource));
         try {

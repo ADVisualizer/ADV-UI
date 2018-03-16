@@ -29,12 +29,18 @@ public class ADVApplication extends Application {
     private SocketServer socketServer;
 
     @Inject
-    ResourceLocator resourceLocator;
+    private ResourceLocator resourceLocator;
 
-    private ADVModule extension;
     private Stage primaryStage;
 
+    private Map<String, ADVModule> modules;
+
     private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
+
+    public void launchADV(String[] args, Map<String, ADVModule> modules){
+        this.modules = modules;
+        ADVApplication.launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -80,13 +86,5 @@ public class ADVApplication extends Application {
         primaryStage.setTitle("ADV UI");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    public void setExtension(ADVModule extension) {
-        this.extension = extension;
     }
 }
