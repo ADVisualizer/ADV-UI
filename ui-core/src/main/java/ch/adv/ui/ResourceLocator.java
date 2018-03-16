@@ -25,8 +25,7 @@ public class ResourceLocator {
         loader.setLocation(getResourcePath(resource));
         try {
             return loader.load();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             logger.debug("Cannot load resource {}", resource, e);
         }
         return null;
@@ -40,6 +39,7 @@ public class ResourceLocator {
         private String relativePath = "./";
 
         Resource(String relativePath) {
+
             this.setRelativePath(relativePath);
         }
 
@@ -48,7 +48,9 @@ public class ResourceLocator {
         }
 
         public void setRelativePath(String relativePath) {
-            this.relativePath = relativePath;
+            if (relativePath != null){
+                this.relativePath = relativePath;
+            }
         }
 
     }
