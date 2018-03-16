@@ -2,6 +2,7 @@ package ch.adv.ui;
 
 public interface ADVModule {
 
-    public void print();
+    Layouter getLayouter();
+    Parser getParser();
 
 }
