@@ -82,10 +82,6 @@ public class ADVApplication extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     public void setExtension(ADVModule extension) {
         this.extension = extension;
     }

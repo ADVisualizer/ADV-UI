@@ -75,7 +75,7 @@ jar {
     dependsOn configurations.childJars
     from { configurations.childJars.collect { zipTree(it) } }
     manifest {
-        attributes 'Main-Class': 'ch.adv.ui.ADVApplication'
+        attributes 'Main-Class': 'ch.adv.ui.Bootstrapper'
     }
 }
 
