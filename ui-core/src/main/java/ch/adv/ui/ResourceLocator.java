@@ -1,9 +1,12 @@
 package ch.adv.ui;
 
+import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
 import java.net.URL;
@@ -14,15 +17,20 @@ import java.net.URL;
 @Singleton
 public class ResourceLocator {
 
+    @Inject
+    Injector injector;
+
     private static final Logger logger = LoggerFactory.getLogger(ResourceLocator.class);
 
     private URL getResourcePath(Resource res) {
         return ResourceLocator.class.getClassLoader().getResource(res.getRelativePath());
     }
 
-    public Object load(Resource resource) {
+    public Parent load(Resource resource) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getResourcePath(resource));
+        loader.setControllerFactory(instantiatedClass -> injector.getInstance(instantiatedClass));
+
         try {
             return loader.load();
         } catch (IOException e) {
@@ -34,7 +42,8 @@ public class ResourceLocator {
 
     public enum Resource {
 
-        ROOTLAYOUT_FXML("fxml/root-layout.fxml");
+        ROOT_LAYOUT_FXML("fxml/root-layout.fxml"),
+        SESSION_VIEW_FXML("fxml/session-view.fxml");
 
         private String relativePath = "./";
 

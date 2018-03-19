@@ -4,8 +4,8 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,8 +56,6 @@ public class ADVApplication extends Application {
 
         logger.info("Starting ADV UI...");
         setUpFrame();
-
-        logger.info("ADV UI ready");
     }
 
     /**
@@ -70,6 +68,7 @@ public class ADVApplication extends Application {
         if (port != null) {
             socketServer.setPort(Integer.parseInt(port));
         }
+
     }
 
     private void setUpFrame() {
@@ -78,13 +77,13 @@ public class ADVApplication extends Application {
             System.exit(0);
         });
 
-
-        AnchorPane rootLayout = (AnchorPane) resourceLocator.load(ResourceLocator.Resource.ROOTLAYOUT_FXML);
-
-        Scene scene = new Scene(rootLayout, 400, 300);
+        Parent rootLayout = resourceLocator.load(ResourceLocator.Resource.ROOT_LAYOUT_FXML);
+        Scene scene = new Scene(rootLayout);
 
         primaryStage.setTitle("ADV UI");
         primaryStage.setScene(scene);
+
+        logger.info("ADV UI ready");
         primaryStage.show();
     }
 }
