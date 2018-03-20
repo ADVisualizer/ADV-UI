@@ -31,12 +31,10 @@ public class ResourceLocator {
         return ResourceLocator.class.getClassLoader().getResourceAsStream(res.getRelativePath());
     }
 
-
     public Parent load(Resource resource) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getResourcePath(resource));
         loader.setControllerFactory(instantiatedClass -> injector.getInstance(instantiatedClass));
-
         try {
             return loader.load();
         } catch (IOException e) {
@@ -44,7 +42,6 @@ public class ResourceLocator {
         }
         return null;
     }
-
 
     public enum Resource {
 

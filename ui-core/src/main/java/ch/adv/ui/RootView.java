@@ -1,11 +1,13 @@
 package ch.adv.ui;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.Priority;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,35 +34,25 @@ public class RootView {
     @Inject
     private ResourceLocator resourceLocator;
 
-
-    private ObservableList<String> sessions;
+    private final RootViewModel rootViewModel;
 
     private static final Logger logger = LoggerFactory.getLogger(RootView.class);
 
-    public RootView() {
-        this.sessions = FXCollections.observableArrayList();
+    @Inject
+    public RootView(RootViewModel viewModel) {
+        this.rootViewModel = viewModel;
     }
-
 
     @FXML
     public void initialize() {
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         menuItemLoadSession.setOnAction(e -> handleLoadSessionMenuItemClicked());
         menuItemStoreSession.setOnAction(e -> handleStoreSessionMenuItemClicked());
+        sessionListView.setItems(rootViewModel.getAvailableSessions());
 
-        loadSessionView();
         openNewTab();
     }
 
-
-    private void loadSessionView() {
-        //TODO Fill with socket Data
-        sessions.add("Array 1");
-        sessions.add("Graph 1");
-        sessions.add("Array 2");
-
-        sessionListView.setItems(sessions);
-    }
 
     private void openNewTab() {
         sessionListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
