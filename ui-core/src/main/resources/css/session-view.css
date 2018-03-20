@@ -1,0 +1,7 @@
+.contentPane {
+    -fx-background-image: url("../images/adv-logo.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-size: 300px;
+    -fx-opacity: 0.2;
+}
