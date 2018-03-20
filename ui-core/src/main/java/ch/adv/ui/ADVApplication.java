@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,8 +33,8 @@ public class ADVApplication extends Application {
     private ResourceLocator resourceLocator;
 
     private Stage primaryStage;
-
     private Map<String, ADVModule> modules;
+    private Image advIconImage;
 
     private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
 
@@ -47,6 +48,7 @@ public class ADVApplication extends Application {
         Injector injector = Guice.createInjector(new GuiceBaseModule());
         injector.injectMembers(this);
 
+        this.advIconImage = new Image(resourceLocator.getResourceAsStream(ResourceLocator.Resource.ICON_IMAGE));
         this.primaryStage = primaryStage;
         // use command line arguments before socketServer is started
         retrieveCLIParams();
@@ -82,6 +84,7 @@ public class ADVApplication extends Application {
 
         primaryStage.setTitle("ADV UI");
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(advIconImage);
 
         logger.info("ADV UI ready");
         primaryStage.show();

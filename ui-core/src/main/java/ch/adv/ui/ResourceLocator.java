@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -22,9 +23,14 @@ public class ResourceLocator {
 
     private static final Logger logger = LoggerFactory.getLogger(ResourceLocator.class);
 
-    private URL getResourcePath(Resource res) {
+    public URL getResourcePath(Resource res) {
         return ResourceLocator.class.getClassLoader().getResource(res.getRelativePath());
     }
+
+    public InputStream getResourceAsStream(Resource res) {
+        return ResourceLocator.class.getClassLoader().getResourceAsStream(res.getRelativePath());
+    }
+
 
     public Parent load(Resource resource) {
         FXMLLoader loader = new FXMLLoader();
@@ -43,7 +49,11 @@ public class ResourceLocator {
     public enum Resource {
 
         ROOT_LAYOUT_FXML("fxml/root-layout.fxml"),
-        SESSION_VIEW_FXML("fxml/session-view.fxml");
+        SESSION_VIEW_FXML("fxml/session-view.fxml"),
+
+        ICON_IMAGE("images/adv-icon.png"),
+        LOGO_IMAGE("images/adv-logo.png");
+
 
         private String relativePath = "./";
 
