@@ -1,9 +1,7 @@
 package ch.adv.ui;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Session {
 
@@ -31,5 +29,17 @@ public class Session {
 
     public List<Snapshot> getSnapshots() {
         return snapshots;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
+    }
+
+    public void setSessionId(Long sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public void setSessionName(String sessionName) {
+        this.sessionName = sessionName;
     }
 }

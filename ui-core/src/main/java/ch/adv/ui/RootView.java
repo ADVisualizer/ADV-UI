@@ -55,19 +55,21 @@ public class RootView {
 
 
     private void openNewTab() {
-        sessionListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            Node sessionView = resourceLocator.load(ResourceLocator.Resource.SESSION_VIEW_FXML);
+        sessionListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, sessionName) -> {
 
-            //TODO show time in tab name
-            Optional<Tab> existingTab = sessionTabPane.getTabs().stream().filter(t -> t.getText().equals(newValue)).findFirst();
-            Tab newTab = existingTab.orElse(new Tab(newValue, sessionView));
+            if (sessionName != null) {
+                Node sessionView = resourceLocator.load(ResourceLocator.Resource.SESSION_VIEW_FXML);
 
-            if (!existingTab.isPresent()) {
-                sessionTabPane.getTabs().add(newTab);
+                Optional<Tab> existingTab = sessionTabPane.getTabs().stream().filter(t -> t.getText().equals(sessionName)).findFirst();
+                Tab newTab = existingTab.orElse(new Tab(sessionName, sessionView));
+
+                if (!existingTab.isPresent()) {
+                    sessionTabPane.getTabs().add(newTab);
+                }
+
+                SingleSelectionModel<Tab> selectionModel = sessionTabPane.getSelectionModel();
+                selectionModel.select(newTab);
             }
-
-            SingleSelectionModel<Tab> selectionModel = sessionTabPane.getSelectionModel();
-            selectionModel.select(newTab);
         });
     }
 
