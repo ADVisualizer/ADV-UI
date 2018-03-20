@@ -12,16 +12,16 @@ public class ArrayModule implements ADVModule {
 
     @Override
     public Layouter getLayouter() {
-        return null;
+        return new ArrayLayouter();
     }
 
     @Override
     public Stringifyer getStringifyer() {
-        return null;
+        return new ArrayStringifyer();
     }
 
     @Override
     public Parser getParser() {
-        return null;
+        return new ArrayParser();
     }
 }

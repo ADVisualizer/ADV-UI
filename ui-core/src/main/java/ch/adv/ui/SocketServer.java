@@ -48,15 +48,18 @@ public class SocketServer extends Thread {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
                 PrintWriter writer = new PrintWriter(new OutputStreamWriter(
                         socket.getOutputStream(), StandardCharsets.UTF_8), true);
-                String snapshot;
-                while ((snapshot = reader.readLine()) != null) {
-                    if (snapshot.equals("END")) {
+
+                String sessionJSON;
+                while ((sessionJSON = reader.readLine()) != null) {
+                    if (sessionJSON.equals("END")) {
                         logger.info("End of session transmission");
-                        return;
+                        break;
                     }
-                    logger.debug("Snapshot received: " + snapshot);
-                    //TODO: route snapshot data to right module
+                    logger.debug("Snapshot received: " + sessionJSON);
+
                     writer.println("OK");
+
+                    flowControl.process(sessionJSON);
                 }
             } catch (IOException e) {
                 logger.error("Unable to read incoming transmissions", e);
