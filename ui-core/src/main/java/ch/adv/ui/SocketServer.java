@@ -3,6 +3,7 @@ package ch.adv.ui;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.*;
 import java.net.ServerSocket;
@@ -17,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 @Singleton
 public class SocketServer extends Thread {
 
+    private ADVFlowControl flowControl;
     private ServerSocket javaSocket;
 
     private int portNr;
@@ -25,9 +27,11 @@ public class SocketServer extends Thread {
     private static final String THREAD_NAME = "SocketServer Thread";
     private static final Logger logger = LoggerFactory.getLogger(SocketServer.class);
 
-    public SocketServer() {
+    @Inject
+    public SocketServer(ADVFlowControl flowControl) {
         super(THREAD_NAME);
         portNr = DEFAULT_PORT;
+        this.flowControl = flowControl;
     }
 
     /**

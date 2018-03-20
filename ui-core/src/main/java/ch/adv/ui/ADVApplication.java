@@ -33,15 +33,9 @@ public class ADVApplication extends Application {
     private ResourceLocator resourceLocator;
 
     private Stage primaryStage;
-    private Map<String, ADVModule> modules;
     private Image advIconImage;
 
     private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
-
-    public void launchADV(String[] args, Map<String, ADVModule> modules){
-        this.modules = modules;
-        ADVApplication.launch(args);
-    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -57,7 +51,7 @@ public class ADVApplication extends Application {
         socketServer.start();
 
         logger.info("Starting ADV UI...");
-        setUpFrame();
+        setupStage();
     }
 
     /**
@@ -73,18 +67,18 @@ public class ADVApplication extends Application {
 
     }
 
-    private void setUpFrame() {
-        primaryStage.setOnCloseRequest(e -> {
-            Platform.exit();
-            System.exit(0);
-        });
-
+    private void setupStage() {
         Parent rootLayout = resourceLocator.load(ResourceLocator.Resource.ROOT_LAYOUT_FXML);
         Scene scene = new Scene(rootLayout);
 
         primaryStage.setTitle("ADV UI");
         primaryStage.setScene(scene);
         primaryStage.getIcons().add(advIconImage);
+
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
 
         logger.info("ADV UI ready");
         primaryStage.show();
