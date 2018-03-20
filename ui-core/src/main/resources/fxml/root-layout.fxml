@@ -11,25 +11,25 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/root-layout.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.adv.ui.RootViewModel">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" stylesheets="@../css/root-layout.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.adv.ui.RootView">
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
    <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
      <menus>
        <Menu mnemonicParsing="false" text="ADV">
          <items>
-           <MenuItem mnemonicParsing="false" text="Close" />
+           <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" />
          </items>
        </Menu>
        <Menu mnemonicParsing="false" text="Session">
          <items>
-           <MenuItem mnemonicParsing="false" text="Load" />
-               <MenuItem mnemonicParsing="false" text="Store" />
+           <MenuItem fx:id="menuItemLoadSession" mnemonicParsing="false" text="Load" />
+           <MenuItem fx:id="menuItemStoreSession" mnemonicParsing="false" text="Store" />
          </items>
        </Menu>
      </menus>
    </MenuBar>
-   <SplitPane dividerPositions="0.20044543429844097" layoutX="14.0" layoutY="27.0" prefHeight="573.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+   <SplitPane dividerPositions="0.2" layoutX="14.0" layoutY="27.0" prefHeight="573.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
      <items>
        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="184.0">
             <children>

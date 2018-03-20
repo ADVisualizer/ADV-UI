@@ -15,6 +15,7 @@ allprojects {
     version = '0.1'
 
     repositories {
+        jcenter()
         mavenCentral()
     }
 
@@ -52,7 +53,6 @@ subprojects {
         //only use slf4j implementation (e.g. logback) in core
         compile "org.slf4j:slf4j-api:1+"
         compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
-        compile 'de.jensd:fontawesomefx-commons:9.1.2'
 
         testCompile "junit:junit:4+"
         testCompile 'org.jukito:jukito:1+'

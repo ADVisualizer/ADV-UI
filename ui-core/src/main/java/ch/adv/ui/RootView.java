@@ -1,25 +1,27 @@
 package ch.adv.ui;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
-public class RootViewModel {
+public class RootView {
 
+    @FXML
+    public MenuItem menuItemClose;
 
-    @Inject
-    private ResourceLocator resourceLocator;
+    @FXML
+    public MenuItem menuItemLoadSession;
+
+    @FXML
+    public MenuItem menuItemStoreSession;
 
     @FXML
     private ListView<String> sessionListView;
@@ -27,26 +29,36 @@ public class RootViewModel {
     @FXML
     private TabPane sessionTabPane;
 
+    @Inject
+    private ResourceLocator resourceLocator;
+
+
     private ObservableList<String> sessions;
 
-    private static final Logger logger = LoggerFactory.getLogger(RootViewModel.class);
+    private static final Logger logger = LoggerFactory.getLogger(RootView.class);
 
-    public RootViewModel() {
+    public RootView() {
         this.sessions = FXCollections.observableArrayList();
     }
 
 
     @FXML
     public void initialize() {
+        menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
+        menuItemLoadSession.setOnAction(e -> handleLoadSessionMenuItemClicked());
+        menuItemStoreSession.setOnAction(e -> handleStoreSessionMenuItemClicked());
+
         loadSessionView();
         openNewTab();
     }
+
 
     private void loadSessionView() {
         //TODO Fill with socket Data
         sessions.add("Array 1");
         sessions.add("Graph 1");
         sessions.add("Array 2");
+
         sessionListView.setItems(sessions);
     }
 
@@ -65,6 +77,19 @@ public class RootViewModel {
             SingleSelectionModel<Tab> selectionModel = sessionTabPane.getSelectionModel();
             selectionModel.select(newTab);
         });
+    }
+
+    private void handleStoreSessionMenuItemClicked() {
+        //TODO
+    }
+
+    private void handleLoadSessionMenuItemClicked() {
+        //TODO
+    }
+
+    private void handleCloseMenuItemClicked() {
+        Platform.exit();
+        System.exit(0);
     }
 
 }
