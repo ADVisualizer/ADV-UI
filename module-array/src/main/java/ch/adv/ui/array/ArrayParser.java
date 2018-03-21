@@ -27,7 +27,8 @@ public class ArrayParser implements Parser {
 
     @Override
     public Session parse(String json) {
-        logger.info("Parse json: \n {}", json);
+        logger.info("Parsing json...");
+        logger.debug("json: \n {}", json);
         Session session = gson.fromJson(json, Session.class);
         return session;
     }

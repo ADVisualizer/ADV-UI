@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 public class RootViewModel {
 
-    private ObservableList<String> availableSessions;
+    private ObservableList<Session> availableSessions;
 
     private final SessionStore sessionStore;
     private static final Logger logger = LoggerFactory.getLogger(RootViewModel.class);
@@ -29,7 +29,7 @@ public class RootViewModel {
         sessionStore.addPropertyChangeListener(new SessionPropertyChangeListener());
     }
 
-    public ObservableList<String> getAvailableSessions() {
+    public ObservableList<Session> getAvailableSessions() {
         return availableSessions;
     }
 
@@ -38,10 +38,7 @@ public class RootViewModel {
         public void propertyChange(PropertyChangeEvent evt) {
             logger.debug("SessionStore has updated. Update ListView");
 
-            List<String> availableSessionNames = sessionStore.getSessions().stream().map(s -> {
-                String time =  String.format("%tT", s.getSessionId() - TimeZone.getDefault().getRawOffset());
-                return s.getSessionName() + " - " + time;
-            }).collect(Collectors.toList());
+            List<Session> availableSessionNames = sessionStore.getSessions();
 
             Platform.runLater(() -> {
                 availableSessions.clear();

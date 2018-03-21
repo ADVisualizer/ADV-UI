@@ -18,7 +18,6 @@ public class SessionStore {
     private final Session currentSession;
     private final Snapshot currentSnapshot;
     private final Map<Long, Session> sessions;
-    private final Map<Long, List<Snapshot>> snapshots;
     private final PropertyChangeSupport changeSupport;
 
 
@@ -28,7 +27,6 @@ public class SessionStore {
         this.currentSession = null;
         this.currentSnapshot = null;
         this.sessions = new HashMap<>();
-        this.snapshots = new HashMap<>();
         this.changeSupport = new PropertyChangeSupport(this);
     }
 
@@ -51,24 +49,24 @@ public class SessionStore {
     }
 
     private void mergeSession(Session existing, Session newSession) {
-        long newSessionId = newSession.getSessionId();
         long existingSessionId = existing.getSessionId();
 
-        List<Snapshot> mergedSnapshots = new ArrayList<>(existing.getSnapshots());
-        mergedSnapshots.addAll(newSession.getSnapshots());
-        snapshots.put(existingSessionId, mergedSnapshots);
+        existing.getSnapshots().addAll(newSession.getSnapshots());
 
-        logger.info("Successfully merged session {} into session {}", newSessionId, existingSessionId);
+        logger.info("Successfully merged new snapshots of session {} into existing session", existingSessionId);
     }
 
     public List<Session> getSessions() {
-        return sessions.values().stream().collect(Collectors.toList());
+        return new ArrayList<>(sessions.values());
     }
 
     public List<Snapshot> getSnapshots() {
-        return snapshots.values().stream()
-                .flatMap(l -> l.stream())
-                .collect(Collectors.toList());
+        if (currentSession != null){
+            return currentSession.getSnapshots();
+        }
+        logger.debug("No current session is set. Returning empty Snapshot list.");
+        return new ArrayList<>();
+
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

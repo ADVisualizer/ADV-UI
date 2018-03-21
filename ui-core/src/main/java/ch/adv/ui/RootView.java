@@ -26,7 +26,7 @@ public class RootView {
     public MenuItem menuItemStoreSession;
 
     @FXML
-    private ListView<String> sessionListView;
+    private ListView<Session> sessionListView;
 
     @FXML
     private TabPane sessionTabPane;
@@ -55,13 +55,13 @@ public class RootView {
 
 
     private void openNewTab() {
-        sessionListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, sessionName) -> {
+        sessionListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, session) -> {
 
-            if (sessionName != null) {
+            if (session != null) {
                 Node sessionView = resourceLocator.load(ResourceLocator.Resource.SESSION_VIEW_FXML);
 
-                Optional<Tab> existingTab = sessionTabPane.getTabs().stream().filter(t -> t.getText().equals(sessionName)).findFirst();
-                Tab newTab = existingTab.orElse(new Tab(sessionName, sessionView));
+                Optional<Tab> existingTab = sessionTabPane.getTabs().stream().filter(t -> t.getText().equals(session)).findFirst();
+                Tab newTab = existingTab.orElse(new Tab(session.getSessionName(), sessionView));
 
                 if (!existingTab.isPresent()) {
                     sessionTabPane.getTabs().add(newTab);
