@@ -11,7 +11,7 @@ public class ReplayController {
 
     private DoubleProperty replaySpeed;
 
-    public  ReplayController() {
+    public ReplayController() {
         replaySpeed = new SimpleDoubleProperty();
     }
 

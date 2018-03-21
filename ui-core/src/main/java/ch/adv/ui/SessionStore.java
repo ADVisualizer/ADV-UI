@@ -6,8 +6,11 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Singleton;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  *
@@ -65,7 +68,10 @@ public class SessionStore {
                     if (s1.getSessionId().equals(s2.getSessionId())) {
                         return 0;
                     }
-                    return s1.getSessionId() < s2.getSessionId() ? -1 : 1;
+                    if (s1.getSessionId() < s2.getSessionId()) {
+                        return -1;
+                    }
+                    return 1;
                 }
         );
         return list;

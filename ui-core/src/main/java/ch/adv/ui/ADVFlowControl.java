@@ -18,9 +18,11 @@ public class ADVFlowControl {
     private final SessionStore sessionStore;
     private final JsonParser jsonParser;
 
-    private static final Logger logger = LoggerFactory.getLogger(ADVFlowControl.class);
+    private static final Logger logger = LoggerFactory.getLogger
+            (ADVFlowControl.class);
 
-    private static final Map<String, ADVModule> availableModules = new HashMap<>();
+    private static final Map<String, ADVModule> AVAILABLE_MODULES = new
+            HashMap<>();
 
     @Inject
     public ADVFlowControl(SessionStore sessionStore) {
@@ -42,10 +44,10 @@ public class ADVFlowControl {
 
         logger.info("Parsed module '{}'", parsedModuleName);
 
-        return availableModules.get(parsedModuleName);
+        return AVAILABLE_MODULES.get(parsedModuleName);
     }
 
-    public static void setAvailableModules(Map<String, ADVModule> modules){
-        availableModules.putAll(modules);
+    public static void setAvailableModules(Map<String, ADVModule> modules) {
+        AVAILABLE_MODULES.putAll(modules);
     }
 }

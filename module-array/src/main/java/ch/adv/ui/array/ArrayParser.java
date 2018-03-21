@@ -12,16 +12,21 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Type;
 
+/**
+ * Parses a json of an array session to a Session object.
+ */
 @Singleton
 public class ArrayParser implements Parser {
 
     private final Gson gson;
 
-    private static final Logger logger = LoggerFactory.getLogger(ArrayParser.class);
+    private static final Logger logger = LoggerFactory.getLogger(ArrayParser
+            .class);
 
     public ArrayParser() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Snapshot.class, new SnapshotInstanceCreator());
+        gsonBuilder.registerTypeAdapter(Snapshot.class, new
+                SnapshotInstanceCreator());
         gson = gsonBuilder.create();
     }
 
@@ -33,7 +38,8 @@ public class ArrayParser implements Parser {
         return session;
     }
 
-    private static class SnapshotInstanceCreator implements InstanceCreator<Snapshot> {
+    private static class SnapshotInstanceCreator implements
+            InstanceCreator<Snapshot> {
         @Override
         public Snapshot createInstance(Type type) {
             return new ArraySnapshot();

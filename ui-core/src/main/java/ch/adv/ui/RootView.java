@@ -1,12 +1,9 @@
 package ch.adv.ui;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -72,7 +69,8 @@ public class RootView {
 
                         Optional<Tab> existingTab = sessionTabPane.getTabs()
                                 .stream()
-                                .filter(t -> t.getText().equals(session.toString()))
+                                .filter(t -> t.getText().equals(session
+                                        .toString()))
                                 .findFirst();
                         Tab newTab = existingTab.orElse(new Tab(session
                                 .toString(), sessionView));
@@ -121,7 +119,7 @@ public class RootView {
         private Pane pane = new Pane();
         private Button button = new Button("x");
 
-        public DeletableCell() {
+        DeletableCell() {
             super();
             hbox.getChildren().addAll(label, pane, button);
             HBox.setHgrow(pane, Priority.ALWAYS);

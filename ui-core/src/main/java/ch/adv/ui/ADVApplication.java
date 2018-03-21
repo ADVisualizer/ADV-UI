@@ -19,7 +19,8 @@ import java.util.Map;
  * Main class of ADV UI.
  * Starts the JavaFX GUI and the socket server.
  * <p>
- * Use command-line argument 'port' to configure the socket server: <code>--port=9876</code>
+ * Use command-line argument 'port' to configure the socket server:
+ * <code>--port=9876</code>
  *
  * @author mwieland
  */
@@ -35,14 +36,16 @@ public class ADVApplication extends Application {
     private Stage primaryStage;
     private Image advIconImage;
 
-    private static final Logger logger = LoggerFactory.getLogger(ADVApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger
+            (ADVApplication.class);
 
     @Override
     public void start(Stage primaryStage) {
         Injector injector = Guice.createInjector(new GuiceBaseModule());
         injector.injectMembers(this);
 
-        this.advIconImage = new Image(resourceLocator.getResourceAsStream(ResourceLocator.Resource.ICON_IMAGE));
+        this.advIconImage = new Image(resourceLocator.getResourceAsStream
+                (ResourceLocator.Resource.ICON_IMAGE));
         this.primaryStage = primaryStage;
         // use command line arguments before socketServer is started
         retrieveCLIParams();
@@ -68,7 +71,8 @@ public class ADVApplication extends Application {
     }
 
     private void setupStage() {
-        Parent rootLayout = resourceLocator.load(ResourceLocator.Resource.ROOT_LAYOUT_FXML);
+        Parent rootLayout = resourceLocator.load(ResourceLocator.Resource
+                .ROOT_LAYOUT_FXML);
         Scene scene = new Scene(rootLayout);
 
         primaryStage.setTitle("ADV UI");

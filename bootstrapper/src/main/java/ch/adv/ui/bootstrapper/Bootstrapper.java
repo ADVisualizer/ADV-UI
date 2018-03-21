@@ -19,13 +19,14 @@ import java.util.Map;
  */
 public class Bootstrapper {
 
-    private static final Map<String, ADVModule> registeredModules;
-    private static final Logger logger = LoggerFactory.getLogger(Bootstrapper.class);
+    private static final Map<String, ADVModule> REGISTERED_MODULES;
+    private static final Logger logger = LoggerFactory.getLogger(Bootstrapper
+            .class);
 
     public static void main(String[] args) {
         logger.info("Bootstrapping ADV UI");
 
-        ADVFlowControl.setAvailableModules(registeredModules);
+        ADVFlowControl.setAvailableModules(REGISTERED_MODULES);
         Application.launch(ADVApplication.class, args);
     }
 
@@ -33,6 +34,6 @@ public class Bootstrapper {
         Map<String, ADVModule> modules = new HashMap<>();
         modules.put("array", new ArrayModule());
 
-        registeredModules = Collections.unmodifiableMap(modules);
+        REGISTERED_MODULES = Collections.unmodifiableMap(modules);
     }
 }

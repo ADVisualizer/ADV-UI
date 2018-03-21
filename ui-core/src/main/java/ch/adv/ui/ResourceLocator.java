@@ -19,22 +19,26 @@ import java.net.URL;
 public class ResourceLocator {
 
     @Inject
-    Injector injector;
+    private Injector injector;
 
-    private static final Logger logger = LoggerFactory.getLogger(ResourceLocator.class);
+    private static final Logger logger = LoggerFactory.getLogger
+            (ResourceLocator.class);
 
     public URL getResourcePath(Resource res) {
-        return ResourceLocator.class.getClassLoader().getResource(res.getRelativePath());
+        return ResourceLocator.class.getClassLoader().getResource(res
+                .getRelativePath());
     }
 
     public InputStream getResourceAsStream(Resource res) {
-        return ResourceLocator.class.getClassLoader().getResourceAsStream(res.getRelativePath());
+        return ResourceLocator.class.getClassLoader().getResourceAsStream(res
+                .getRelativePath());
     }
 
     public Parent load(Resource resource) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getResourcePath(resource));
-        loader.setControllerFactory(instantiatedClass -> injector.getInstance(instantiatedClass));
+        loader.setControllerFactory(instantiatedClass -> injector.getInstance
+                (instantiatedClass));
         try {
             return loader.load();
         } catch (IOException e) {
@@ -64,7 +68,7 @@ public class ResourceLocator {
         }
 
         public void setRelativePath(String relativePath) {
-            if (relativePath != null){
+            if (relativePath != null) {
                 this.relativePath = relativePath;
             }
         }

@@ -1,7 +1,5 @@
 package ch.adv.ui;
 
-import com.google.j2objc.annotations.ObjectiveCName;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
@@ -47,8 +45,9 @@ public class Session {
     }
 
     @Override
-    public String toString(){
-        String time =  String.format("%tT", sessionId - TimeZone.getDefault().getRawOffset());
+    public String toString() {
+        String time = String.format("%tT", sessionId - TimeZone.getDefault()
+                .getRawOffset());
         return sessionName + " - " + time;
     }
 }

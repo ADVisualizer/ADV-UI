@@ -56,7 +56,8 @@ public class SessionView {
     private final FontAwesomeIconView pauseIcon;
     private final FontAwesomeIconView playIcon;
 
-    private static final Logger logger = LoggerFactory.getLogger(SessionView.class);
+    private static final Logger logger = LoggerFactory.getLogger(SessionView
+            .class);
 
     public SessionView() {
         this.pauseIcon = new FontAwesomeIconView();
@@ -75,7 +76,8 @@ public class SessionView {
         stepForwardButton.setOnAction(e -> handleStepForwardButtonClicked());
         stepLastButton.setOnAction(e -> handleStepLastButtonClicked());
 
-        replayController.getReplaySpeed().bind(replaySpeedSlider.valueProperty());
+        replayController.getReplaySpeed().bind(replaySpeedSlider
+                .valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
     }
 

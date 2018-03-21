@@ -11,7 +11,8 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Listens for incoming snapshot transmissions and routes it to the correct module parser.
+ * Listens for incoming snapshot transmissions and routes it to the correct
+ * module parser.
  *
  * @author mtrentini
  */
@@ -25,7 +26,8 @@ public class SocketServer extends Thread {
     private static final int DEFAULT_PORT = 8765;
 
     private static final String THREAD_NAME = "SocketServer Thread";
-    private static final Logger logger = LoggerFactory.getLogger(SocketServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SocketServer
+            .class);
 
     @Inject
     public SocketServer(ADVFlowControl flowControl) {
@@ -35,7 +37,8 @@ public class SocketServer extends Thread {
     }
 
     /**
-     * Accepts socket connections, acknowledges incoming snapshots and routes the data to the corresponding parser.
+     * Accepts socket connections, acknowledges incoming snapshots and routes
+     * the data to the corresponding parser.
      * Receiving the 'END' tag results in accepting new socket connections.
      */
     @Override
@@ -45,9 +48,12 @@ public class SocketServer extends Thread {
         while (true) {
             try {
                 Socket socket = javaSocket.accept();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+                BufferedReader reader = new BufferedReader(new
+                        InputStreamReader(socket.getInputStream(),
+                        StandardCharsets.UTF_8));
                 PrintWriter writer = new PrintWriter(new OutputStreamWriter(
-                        socket.getOutputStream(), StandardCharsets.UTF_8), true);
+                        socket.getOutputStream(), StandardCharsets.UTF_8),
+                        true);
 
                 String sessionJSON;
                 while ((sessionJSON = reader.readLine()) != null) {

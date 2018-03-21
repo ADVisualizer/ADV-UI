@@ -10,23 +10,22 @@ import javax.inject.Inject;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class RootViewModel {
 
     private ObservableList<Session> availableSessions;
 
     private final SessionStore sessionStore;
-    private static final Logger logger = LoggerFactory.getLogger(RootViewModel.class);
+    private static final Logger logger = LoggerFactory.getLogger
+            (RootViewModel.class);
 
     @Inject
-    public  RootViewModel(SessionStore sessionStore) {
+    public RootViewModel(SessionStore sessionStore) {
         this.sessionStore = sessionStore;
         this.availableSessions = FXCollections.observableArrayList();
 
-        sessionStore.addPropertyChangeListener(new SessionPropertyChangeListener());
+        sessionStore.addPropertyChangeListener(new
+                SessionPropertyChangeListener());
     }
 
     public ObservableList<Session> getAvailableSessions() {
@@ -37,7 +36,8 @@ public class RootViewModel {
         sessionStore.deleteSession(session);
     }
 
-    private class SessionPropertyChangeListener implements PropertyChangeListener {
+    private class SessionPropertyChangeListener implements
+            PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             logger.debug("SessionStore has updated. Update ListView");
