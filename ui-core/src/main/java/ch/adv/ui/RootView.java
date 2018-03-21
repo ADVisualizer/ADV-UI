@@ -1,12 +1,16 @@
 package ch.adv.ui;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleListProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.skin.TabPaneSkin;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,16 +18,19 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.util.Optional;
 
+import static javafx.scene.control.Tab.CLOSED_EVENT;
+import static javafx.scene.control.Tab.TAB_CLOSE_REQUEST_EVENT;
+
 public class RootView {
 
     @FXML
-    public MenuItem menuItemClose;
+    private MenuItem menuItemClose;
 
     @FXML
-    public MenuItem menuItemLoadSession;
+    private MenuItem menuItemLoadSession;
 
     @FXML
-    public MenuItem menuItemStoreSession;
+    private MenuItem menuItemStoreSession;
 
     @FXML
     private ListView<Session> sessionListView;
@@ -36,7 +43,8 @@ public class RootView {
 
     private final RootViewModel rootViewModel;
 
-    private static final Logger logger = LoggerFactory.getLogger(RootView.class);
+    private static final Logger logger = LoggerFactory.getLogger(RootView
+            .class);
 
     @Inject
     public RootView(RootViewModel viewModel) {
@@ -46,31 +54,75 @@ public class RootView {
     @FXML
     public void initialize() {
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
-        menuItemLoadSession.setOnAction(e -> handleLoadSessionMenuItemClicked());
-        menuItemStoreSession.setOnAction(e -> handleStoreSessionMenuItemClicked());
+        menuItemLoadSession.setOnAction(e -> handleLoadSessionMenuItemClicked
+                ());
+        menuItemStoreSession.setOnAction(e ->
+                handleStoreSessionMenuItemClicked());
         sessionListView.setItems(rootViewModel.getAvailableSessions());
+
+        sessionListView.setCellFactory(lv -> new DeletableCell());
 
         openNewTab();
     }
 
+    private void handleDeleteSessionClicked(Session session) {
+        logger.info("Deleting session {} ({})", session.getSessionName(),
+                session.getSessionId());
+        rootViewModel.deleteSession(session);
+        Optional<Tab> existingTab = sessionTabPane.getTabs()
+                .stream()
+                .filter(t -> t.getText().equals(session.toString()))
+                .findFirst();
+        if (existingTab.isPresent()) {
+            Tab tabToBeClosed = existingTab.get();
+            sessionTabPane.getTabs().remove(tabToBeClosed);
+          /*  Event.fireEvent(tabToBeClosed, new Event(TAB_CLOSE_REQUEST_EVENT));
+            sessionTabPane.getTabs().remove(tabToBeClosed);
+            Event.fireEvent(tabToBeClosed, new Event(CLOSED_EVENT));
+
+            EventHandler<Event> handler = tabToBeClosed.getOnClosed();
+            if (handler != null) {
+                handler.handle(null);
+            } else {
+                sessionTabPane.getTabs().remove(tabToBeClosed);
+            }
+
+
+            ObservableList<Tab> tabs = sessionTabPane.getTabs();
+            tabs.remove(existingTab);
+            if (!tabs.isEmpty()) {
+                sessionTabPane
+                        .getSelectionModel().select(tabs.get(0));
+            } */
+        }
+    }
+
 
     private void openNewTab() {
-        sessionListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, session) -> {
+        sessionListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, session) -> {
 
-            if (session != null) {
-                Node sessionView = resourceLocator.load(ResourceLocator.Resource.SESSION_VIEW_FXML);
+                    if (session != null) {
+                        Node sessionView = resourceLocator.load(ResourceLocator
+                                .Resource.SESSION_VIEW_FXML);
 
-                Optional<Tab> existingTab = sessionTabPane.getTabs().stream().filter(t -> t.getText().equals(session)).findFirst();
-                Tab newTab = existingTab.orElse(new Tab(session.getSessionName(), sessionView));
+                        Optional<Tab> existingTab = sessionTabPane.getTabs()
+                                .stream()
+                                .filter(t -> t.getText().equals(session.toString()))
+                                .findFirst();
+                        Tab newTab = existingTab.orElse(new Tab(session
+                                .toString(), sessionView));
 
-                if (!existingTab.isPresent()) {
-                    sessionTabPane.getTabs().add(newTab);
-                }
+                        if (!existingTab.isPresent()) {
+                            sessionTabPane.getTabs().add(newTab);
+                        }
 
-                SingleSelectionModel<Tab> selectionModel = sessionTabPane.getSelectionModel();
-                selectionModel.select(newTab);
-            }
-        });
+                        SingleSelectionModel<Tab> selectionModel =
+                                sessionTabPane
+                                        .getSelectionModel();
+                        selectionModel.select(newTab);
+                    }
+                });
     }
 
     private void handleStoreSessionMenuItemClicked() {
@@ -84,6 +136,39 @@ public class RootView {
     private void handleCloseMenuItemClicked() {
         Platform.exit();
         System.exit(0);
+    }
+
+    class DeletableCell extends ListCell<Session> {
+        private HBox hbox = new HBox();
+        private Label label = new Label("(empty)");
+        private Pane pane = new Pane();
+        private Button button = new Button("x");
+
+        public DeletableCell() {
+            super();
+            hbox.getChildren().addAll(label, pane, button);
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            button.setOnAction(event -> handleDeleteSessionClicked(getItem()));
+        }
+
+
+        /**
+         * {@inheritDoc}
+         *
+         * @param session the new session to be displayed
+         */
+        @Override
+        protected void updateItem(Session session, boolean empty) {
+            super.updateItem(session, empty);
+            setText(null);  // No text in label of super class
+            if (empty || session == null) {
+                label.setText("null");
+                setGraphic(null);
+            } else {
+                label.setText(session.toString());
+                setGraphic(hbox);
+            }
+        }
     }
 
 }

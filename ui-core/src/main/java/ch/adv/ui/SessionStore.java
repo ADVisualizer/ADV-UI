@@ -73,4 +73,17 @@ public class SessionStore {
         changeSupport.addPropertyChangeListener(listener);
     }
 
+    public void deleteSession(Session session) {
+        if (session != null) {
+            long id = session.getSessionId();
+            Session existing = sessions.get(id);
+
+            if (existing != null) {
+                sessions.remove(session.getSessionId());
+                logger.info("Session {} deleted from SessionStore", id);
+            }
+            logger.debug("Fire change event");
+            changeSupport.firePropertyChange("session", existing, null);
+        }
+    }
 }

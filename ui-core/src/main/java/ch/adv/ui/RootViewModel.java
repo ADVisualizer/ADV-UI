@@ -33,16 +33,20 @@ public class RootViewModel {
         return availableSessions;
     }
 
+    public void deleteSession(Session session) {
+        sessionStore.deleteSession(session);
+    }
+
     private class SessionPropertyChangeListener implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             logger.debug("SessionStore has updated. Update ListView");
 
-            List<Session> availableSessionNames = sessionStore.getSessions();
+            List<Session> sessions = sessionStore.getSessions();
 
             Platform.runLater(() -> {
                 availableSessions.clear();
-                availableSessions.addAll(availableSessionNames);
+                availableSessions.addAll(sessions);
             });
         }
     }
