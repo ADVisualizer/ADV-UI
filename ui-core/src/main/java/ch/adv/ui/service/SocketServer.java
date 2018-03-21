@@ -1,4 +1,4 @@
-package ch.adv.ui;
+package ch.adv.ui.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

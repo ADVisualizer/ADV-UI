@@ -1,7 +1,7 @@
 package ch.adv.ui.bootstrapper;
 
 import ch.adv.ui.ADVApplication;
-import ch.adv.ui.ADVFlowControl;
+import ch.adv.ui.service.ADVFlowControl;
 import ch.adv.ui.ADVModule;
 import ch.adv.ui.array.ArrayModule;
 import javafx.application.Application;

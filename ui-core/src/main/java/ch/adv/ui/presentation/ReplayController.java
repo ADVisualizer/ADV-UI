@@ -1,4 +1,4 @@
-package ch.adv.ui;
+package ch.adv.ui.presentation;
 
 
 import javafx.beans.property.DoubleProperty;

@@ -1,6 +1,6 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.Stringifyer;
+import ch.adv.ui.access.Stringifyer;
 
 public class ArrayStringifyer implements Stringifyer {
 

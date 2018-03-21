@@ -1,5 +1,8 @@
-package ch.adv.ui;
+package ch.adv.ui.service;
 
+import ch.adv.ui.ADVModule;
+import ch.adv.ui.logic.SessionStore;
+import ch.adv.ui.logic.model.Session;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

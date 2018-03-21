@@ -1,6 +1,6 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.Snapshot;
+import ch.adv.ui.logic.model.Snapshot;
 
 public class ArraySnapshot implements Snapshot {
 

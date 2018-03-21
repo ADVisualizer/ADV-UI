@@ -1,4 +1,4 @@
-package ch.adv.ui;
+package ch.adv.ui.presentation;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;

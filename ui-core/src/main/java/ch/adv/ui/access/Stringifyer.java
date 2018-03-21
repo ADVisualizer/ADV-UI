@@ -1,4 +1,4 @@
-package ch.adv.ui;
+package ch.adv.ui.access;
 
 
 public interface Stringifyer {

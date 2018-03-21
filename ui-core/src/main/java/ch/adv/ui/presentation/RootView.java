@@ -1,5 +1,7 @@
-package ch.adv.ui;
+package ch.adv.ui.presentation;
 
+import ch.adv.ui.util.ResourceLocator;
+import ch.adv.ui.logic.model.Session;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;

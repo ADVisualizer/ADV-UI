@@ -1,9 +1,9 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.ADVModule;
-import ch.adv.ui.Layouter;
-import ch.adv.ui.Parser;
-import ch.adv.ui.Stringifyer;
+import ch.adv.ui.logic.Layouter;
+import ch.adv.ui.access.Parser;
+import ch.adv.ui.access.Stringifyer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

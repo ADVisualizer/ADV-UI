@@ -1,8 +1,8 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.Parser;
-import ch.adv.ui.Session;
-import ch.adv.ui.Snapshot;
+import ch.adv.ui.access.Parser;
+import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.logic.model.Snapshot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;

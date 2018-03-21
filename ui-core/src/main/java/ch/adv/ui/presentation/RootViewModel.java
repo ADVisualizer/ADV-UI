@@ -1,5 +1,7 @@
-package ch.adv.ui;
+package ch.adv.ui.presentation;
 
+import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.logic.SessionStore;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
