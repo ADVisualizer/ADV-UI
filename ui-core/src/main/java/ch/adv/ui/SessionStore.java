@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Singleton;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -21,7 +18,8 @@ public class SessionStore {
     private final PropertyChangeSupport changeSupport;
 
 
-    private static final Logger logger = LoggerFactory.getLogger(SessionStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(SessionStore
+            .class);
 
     public SessionStore() {
         this.currentSession = null;
@@ -53,18 +51,29 @@ public class SessionStore {
 
         existing.getSnapshots().addAll(newSession.getSnapshots());
 
-        logger.info("Successfully merged new snapshots of session {} into existing session", existingSessionId);
+        logger.info("Successfully merged new snapshots of session {} into " +
+                "existing session", existingSessionId);
     }
 
     public List<Session> getSessions() {
-        return new ArrayList<>(sessions.values());
+        ArrayList<Session> list = new ArrayList<>(sessions.values());
+        list.sort(
+                (s1, s2) -> {
+                    if (s1.getSessionId().equals(s2.getSessionId())) {
+                        return 0;
+                    }
+                    return s1.getSessionId() < s2.getSessionId() ? -1 : 1;
+                }
+        );
+        return list;
     }
 
     public List<Snapshot> getSnapshots() {
-        if (currentSession != null){
+        if (currentSession != null) {
             return currentSession.getSnapshots();
         }
-        logger.debug("No current session is set. Returning empty Snapshot list.");
+        logger.debug("No current session is set. Returning empty Snapshot " +
+                "list.");
         return new ArrayList<>();
 
     }
