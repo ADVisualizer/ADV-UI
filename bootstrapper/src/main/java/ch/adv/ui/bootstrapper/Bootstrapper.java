@@ -25,7 +25,7 @@ public class Bootstrapper {
     public static void main(String[] args) {
         logger.info("Bootstrapping ADV UI");
 
-        ADVFlowControl.availableModules = registeredModules;
+        ADVFlowControl.setAvailableModules(registeredModules);
         Application.launch(ADVApplication.class, args);
     }
 

@@ -33,7 +33,7 @@ public class ArrayParser implements Parser {
         return session;
     }
 
-    private class SnapshotInstanceCreator implements InstanceCreator<Snapshot> {
+    private static class SnapshotInstanceCreator implements InstanceCreator<Snapshot> {
         @Override
         public Snapshot createInstance(Type type) {
             return new ArraySnapshot();

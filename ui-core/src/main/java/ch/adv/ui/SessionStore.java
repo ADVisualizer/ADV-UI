@@ -9,6 +9,9 @@ import java.beans.PropertyChangeSupport;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ *
+ */
 @Singleton
 public class SessionStore {
 

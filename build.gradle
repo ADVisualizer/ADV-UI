@@ -40,6 +40,10 @@ subprojects {
         coverageFormats = ['xml']
     }
 
+    spotbugs {
+        excludeFilter = file("$project.rootDir/excludeFilter.xml")
+    }
+
     // To generate an HTML report instead of XML
     tasks.withType(com.github.spotbugs.SpotBugsTask) {
         reports {

@@ -8,6 +8,7 @@ import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -19,7 +20,7 @@ public class ADVFlowControl {
 
     private static final Logger logger = LoggerFactory.getLogger(ADVFlowControl.class);
 
-    public static Map<String, ADVModule> availableModules;
+    private static final Map<String, ADVModule> availableModules = new HashMap<>();
 
     @Inject
     public ADVFlowControl(SessionStore sessionStore) {
@@ -42,5 +43,9 @@ public class ADVFlowControl {
         logger.info("Parsed module '{}'", parsedModuleName);
 
         return availableModules.get(parsedModuleName);
+    }
+
+    public static void setAvailableModules(Map<String, ADVModule> modules){
+        availableModules.putAll(modules);
     }
 }

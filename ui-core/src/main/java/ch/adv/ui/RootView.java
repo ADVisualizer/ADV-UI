@@ -8,7 +8,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.skin.TabPaneSkin;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -18,8 +17,6 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.util.Optional;
 
-import static javafx.scene.control.Tab.CLOSED_EVENT;
-import static javafx.scene.control.Tab.TAB_CLOSE_REQUEST_EVENT;
 
 public class RootView {
 
@@ -65,39 +62,6 @@ public class RootView {
         openNewTab();
     }
 
-    private void handleDeleteSessionClicked(Session session) {
-        logger.info("Deleting session {} ({})", session.getSessionName(),
-                session.getSessionId());
-        rootViewModel.deleteSession(session);
-        Optional<Tab> existingTab = sessionTabPane.getTabs()
-                .stream()
-                .filter(t -> t.getText().equals(session.toString()))
-                .findFirst();
-        if (existingTab.isPresent()) {
-            Tab tabToBeClosed = existingTab.get();
-            sessionTabPane.getTabs().remove(tabToBeClosed);
-          /*  Event.fireEvent(tabToBeClosed, new Event(TAB_CLOSE_REQUEST_EVENT));
-            sessionTabPane.getTabs().remove(tabToBeClosed);
-            Event.fireEvent(tabToBeClosed, new Event(CLOSED_EVENT));
-
-            EventHandler<Event> handler = tabToBeClosed.getOnClosed();
-            if (handler != null) {
-                handler.handle(null);
-            } else {
-                sessionTabPane.getTabs().remove(tabToBeClosed);
-            }
-
-
-            ObservableList<Tab> tabs = sessionTabPane.getTabs();
-            tabs.remove(existingTab);
-            if (!tabs.isEmpty()) {
-                sessionTabPane
-                        .getSelectionModel().select(tabs.get(0));
-            } */
-        }
-    }
-
-
     private void openNewTab() {
         sessionListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, session) -> {
@@ -136,6 +100,19 @@ public class RootView {
     private void handleCloseMenuItemClicked() {
         Platform.exit();
         System.exit(0);
+    }
+
+    private void handleDeleteSessionClicked(Session session) {
+        logger.info("Deleting session {} ({})", session.getSessionName(),
+                session.getSessionId());
+        rootViewModel.deleteSession(session);
+        Optional<Tab> existingTab = sessionTabPane.getTabs()
+                .stream()
+                .filter(t -> t.getText().equals(session.toString()))
+                .findFirst();
+        if (existingTab.isPresent()) {
+            sessionTabPane.getTabs().remove(existingTab.get());
+        }
     }
 
     class DeletableCell extends ListCell<Session> {
