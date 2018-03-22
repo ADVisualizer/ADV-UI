@@ -9,11 +9,6 @@ public class ArraySnapshot implements Snapshot {
     }
 
     @Override
-    public int getSnapshotCounter() {
-        return 0;
-    }
-
-    @Override
     public long getSnapshotId() {
         return 0;
     }
