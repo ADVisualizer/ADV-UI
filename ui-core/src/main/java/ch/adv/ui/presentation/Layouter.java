@@ -1,4 +1,4 @@
-package ch.adv.ui.logic;
+package ch.adv.ui.presentation;
 
 public interface Layouter {
     void layout();

@@ -43,10 +43,12 @@ public class SocketServer extends Thread {
      */
     @Override
     public void run() {
-        initializeServer();
+        try {
+            javaSocket = new ServerSocket(portNr);
+            logger.info("Server socket created on port {}", portNr);
 
-        while (true) {
-            try {
+            while (true) {
+
                 Socket socket = javaSocket.accept();
                 BufferedReader reader = new BufferedReader(new
                         InputStreamReader(socket.getInputStream(),
@@ -67,18 +69,10 @@ public class SocketServer extends Thread {
 
                     flowControl.process(sessionJSON);
                 }
-            } catch (IOException e) {
-                logger.error("Unable to read incoming transmissions", e);
-            }
-        }
-    }
 
-    public void initializeServer() {
-        try {
-            javaSocket = new ServerSocket(portNr);
-            logger.info("Server socket created on port {}", portNr);
+            }
         } catch (IOException e) {
-            logger.error("Could not initialize java.net.ServerSocket", e);
+            logger.error("Unable to read incoming transmissions", e);
         }
     }
 
