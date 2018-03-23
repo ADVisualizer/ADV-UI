@@ -20,22 +20,28 @@ import java.util.Map;
 @Singleton
 public class SessionStore {
 
-    private final Session currentSession;
-    private final Snapshot currentSnapshot;
+    private Session currentSession;
+    private Snapshot currentSnapshot;
+
     private final Map<Long, Session> sessions;
     private final PropertyChangeSupport changeSupport;
 
+    private static final String SESSION_EVENT = "session";
 
     private static final Logger logger = LoggerFactory.getLogger(SessionStore
             .class);
 
     public SessionStore() {
-        this.currentSession = null;
-        this.currentSnapshot = null;
         this.sessions = new HashMap<>();
         this.changeSupport = new PropertyChangeSupport(this);
     }
 
+    /**
+     * Add specified session to the store. If the session already exists:
+     * merge snapshots of both sessions into one session.
+     *
+     * @param newSession the session to add
+     */
     public void addSession(Session newSession) {
         if (newSession != null) {
             long id = newSession.getSessionId();
@@ -45,12 +51,14 @@ public class SessionStore {
                 mergeSession(existing, newSession);
             } else {
                 sessions.put(id, newSession);
+                currentSession = newSession;
                 logger.info("New session {} added to SessionStore", id);
             }
 
             logger.debug("Fire change event");
 
-            changeSupport.firePropertyChange("session", existing, newSession);
+            changeSupport.firePropertyChange(SESSION_EVENT, existing,
+                    newSession);
         }
     }
 
@@ -63,11 +71,15 @@ public class SessionStore {
                 "existing session", existingSessionId);
     }
 
+    /**
+     * @return sorted list of sessions
+     */
     public List<Session> getSessions() {
         ArrayList<Session> list = new ArrayList<>(sessions.values());
         list.sort(
                 (s1, s2) -> {
-                    if (s1.getSessionId() == s2.getSessionId()) {
+                    if (Long.compare(s1.getSessionId(), s2.getSessionId()) ==
+                            0) {
                         return 0;
                     }
                     if (s1.getSessionId() < s2.getSessionId()) {
@@ -79,6 +91,14 @@ public class SessionStore {
         return list;
     }
 
+    public Session getCurrentSession() {
+        return currentSession;
+    }
+
+    /**
+     * @return snapshots of current session or empty List if no current
+     * session is set.
+     */
     public List<Snapshot> getSnapshots() {
         if (currentSession != null) {
             return currentSession.getSnapshots();
@@ -86,13 +106,22 @@ public class SessionStore {
         logger.debug("No current session is set. Returning empty Snapshot " +
                 "list.");
         return new ArrayList<>();
-
     }
 
+    /**
+     * Add change listener to be notified by changes to the session list.
+     *
+     * @param listener to be registered
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Delete the specified session and fire changeEvent.
+     *
+     * @param session to be deleted
+     */
     public void deleteSession(Session session) {
         if (session != null) {
             long id = session.getSessionId();
@@ -100,10 +129,12 @@ public class SessionStore {
 
             if (existing != null) {
                 sessions.remove(session.getSessionId());
+                currentSession = null;
                 logger.info("Session {} deleted from SessionStore", id);
             }
             logger.debug("Fire change event");
-            changeSupport.firePropertyChange("session", existing, null);
+            changeSupport.firePropertyChange(SESSION_EVENT, existing,
+                    null);
         }
     }
 }

@@ -3,6 +3,7 @@ package ch.adv.ui.presentation;
 import ch.adv.ui.util.ResourceLocator;
 import ch.adv.ui.logic.model.Session;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 
@@ -59,34 +60,16 @@ public class RootView {
         sessionListView.setCellFactory(lv -> new DeletableCell());
 
         openNewTab();
+
+
     }
 
     private void openNewTab() {
         sessionListView.getSelectionModel().selectedItemProperty()
-                .addListener((observable, oldValue, session) -> {
+                .addListener(new CreateTabListener().invoke());
 
-                    if (session != null) {
-                        Node sessionView = resourceLocator.load(ResourceLocator
-                                .Resource.SESSION_VIEW_FXML);
-
-                        Optional<Tab> existingTab = sessionTabPane.getTabs()
-                                .stream()
-                                .filter(t -> t.getText().equals(session
-                                        .toString()))
-                                .findFirst();
-                        Tab newTab = existingTab.orElse(new Tab(session
-                                .toString(), sessionView));
-
-                        if (!existingTab.isPresent()) {
-                            sessionTabPane.getTabs().add(newTab);
-                        }
-
-                        SingleSelectionModel<Tab> selectionModel =
-                                sessionTabPane
-                                        .getSelectionModel();
-                        selectionModel.select(newTab);
-                    }
-                });
+        rootViewModel.getCurrentSession().addListener(new CreateTabListener()
+                .invoke());
     }
 
     private void handleStoreSessionMenuItemClicked() {
@@ -148,4 +131,32 @@ public class RootView {
         }
     }
 
+    private class CreateTabListener {
+        public ChangeListener<Session> invoke() {
+            return (observable, oldValue, session) -> {
+
+                if (session != null) {
+                    Node sessionView = resourceLocator.load(ResourceLocator
+                            .Resource.SESSION_VIEW_FXML);
+
+                    Optional<Tab> existingTab = sessionTabPane.getTabs()
+                            .stream()
+                            .filter(t -> t.getText().equals(session
+                                    .toString()))
+                            .findFirst();
+                    Tab newTab = existingTab.orElse(new Tab(session
+                            .toString(), sessionView));
+
+                    if (!existingTab.isPresent()) {
+                        sessionTabPane.getTabs().add(newTab);
+                    }
+
+                    SingleSelectionModel<Tab> selectionModel =
+                            sessionTabPane
+                                    .getSelectionModel();
+                    selectionModel.select(newTab);
+                }
+            };
+        }
+    }
 }
