@@ -1,8 +1,9 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.access.Parser;
+import ch.adv.ui.logic.model.ADVElement;
+import ch.adv.ui.logic.model.ADVRelation;
 import ch.adv.ui.logic.model.Session;
-import ch.adv.ui.logic.model.Snapshot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
@@ -25,8 +26,10 @@ public class ArrayParser implements Parser {
 
     public ArrayParser() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(Snapshot.class, new
-                SnapshotInstanceCreator());
+        gsonBuilder.registerTypeAdapter(ADVElement.class, new
+                ArrayElementInstanceCreator());
+        gsonBuilder.registerTypeAdapter(ADVRelation.class, new
+                ArrayRelationInstanceCreator());
         gson = gsonBuilder.create();
     }
 
@@ -38,11 +41,20 @@ public class ArrayParser implements Parser {
         return session;
     }
 
-    private static class SnapshotInstanceCreator implements
-            InstanceCreator<Snapshot> {
+    private static class ArrayElementInstanceCreator implements
+            InstanceCreator<ADVElement> {
         @Override
-        public Snapshot createInstance(Type type) {
-            return new ArraySnapshot();
+        public ADVElement createInstance(Type type) {
+            return new ArrayElement();
+        }
+
+    }
+
+    private static class ArrayRelationInstanceCreator implements
+            InstanceCreator<ADVRelation> {
+        @Override
+        public ADVRelation createInstance(Type type) {
+            return new ArrayRelation();
         }
 
     }
