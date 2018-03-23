@@ -2,15 +2,19 @@ package ch.adv.ui.presentation;
 
 import ch.adv.ui.util.ResourceLocator;
 import ch.adv.ui.logic.model.Session;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.text.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +44,7 @@ public class RootView {
 
     private final RootViewModel rootViewModel;
 
+
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
 
@@ -55,9 +60,9 @@ public class RootView {
                 ());
         menuItemStoreSession.setOnAction(e ->
                 handleStoreSessionMenuItemClicked());
-        sessionListView.setItems(rootViewModel.getAvailableSessions());
 
-        sessionListView.setCellFactory(lv -> new DeletableCell());
+        sessionListView.setItems(rootViewModel.getAvailableSessions());
+        sessionListView.setCellFactory(lv -> new CustomListCell());
 
         openNewTab();
 
@@ -85,10 +90,10 @@ public class RootView {
         System.exit(0);
     }
 
-    private void handleDeleteSessionClicked(Session session) {
-        logger.info("Deleting session {} ({})", session.getSessionName(),
+    private void handleRemoveSessionClicked(Session session) {
+        logger.info("Removing session {} ({})", session.getSessionName(),
                 session.getSessionId());
-        rootViewModel.deleteSession(session);
+        rootViewModel.removeSession(session);
         Optional<Tab> existingTab = sessionTabPane.getTabs()
                 .stream()
                 .filter(t -> t.getText().equals(session.toString()))
@@ -98,17 +103,44 @@ public class RootView {
         }
     }
 
-    class DeletableCell extends ListCell<Session> {
+    private void handleSaveSessionClicked(Session session) {
+        logger.info("Saving session {} ({})", session.getSessionName(),
+                session.getSessionId());
+        rootViewModel.saveSession(session);
+    }
+
+    private class CustomListCell extends ListCell<Session> {
+
         private HBox hbox = new HBox();
         private Label label = new Label("(empty)");
         private Pane pane = new Pane();
-        private Button button = new Button("x");
+        private Label removeButton = new Label();
+        private Label saveButton = new Label();
 
-        DeletableCell() {
+        private final FontAwesomeIconView saveIcon;
+        private final FontAwesomeIconView removeIcon;
+
+        private static final int ICON_SIZE = 16;
+
+        CustomListCell() {
             super();
-            hbox.getChildren().addAll(label, pane, button);
+
+            this.removeIcon = new FontAwesomeIconView();
+            removeIcon.setIcon(FontAwesomeIcon.TRASH_ALT);
+            removeIcon.setGlyphSize(ICON_SIZE);
+            removeButton.setGraphic(removeIcon);
+            removeButton.setOnMouseClicked(e -> handleRemoveSessionClicked(getItem()));
+
+            this.saveIcon = new FontAwesomeIconView();
+            saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
+            saveIcon.setGlyphSize(ICON_SIZE);
+            saveButton.setGraphic(saveIcon);
+            saveButton.setOnMouseClicked(e -> handleSaveSessionClicked(getItem()));
+
+            hbox.getChildren().addAll(label, pane, saveButton, removeButton);
+            hbox.setSpacing(12);
+            hbox.setAlignment(Pos.CENTER);
             HBox.setHgrow(pane, Priority.ALWAYS);
-            button.setOnAction(event -> handleDeleteSessionClicked(getItem()));
         }
 
 

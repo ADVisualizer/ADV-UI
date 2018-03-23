@@ -46,8 +46,12 @@ public class RootViewModel {
         return currentSession;
     }
 
-    public void deleteSession(Session session) {
+    public void removeSession(Session session) {
         sessionStore.deleteSession(session);
+    }
+
+    public void saveSession(Session session) {
+        //TODO
     }
 
     private class SessionPropertyChangeListener implements
