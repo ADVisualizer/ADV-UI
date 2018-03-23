@@ -37,6 +37,8 @@ public class ADVFlowControl {
         ADVModule currentModule = parseModule(sessionJSON);
 
         Session session = currentModule.getParser().parse(sessionJSON);
+        session.setModule(currentModule);
+
         sessionStore.addSession(session);
     }
 

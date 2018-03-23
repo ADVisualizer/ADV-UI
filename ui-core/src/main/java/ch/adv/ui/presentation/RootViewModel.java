@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.List;
 
 public class RootViewModel {
@@ -50,8 +51,9 @@ public class RootViewModel {
         sessionStore.deleteSession(session);
     }
 
-    public void saveSession(Session session) {
-        //TODO
+    public void saveSession(File file, Session session) {
+        String json = session.getModule().getStringifyer().stringify(session);
+        session.getModule().getDatastore().write(file.getAbsolutePath(), json);
     }
 
     private class SessionPropertyChangeListener implements

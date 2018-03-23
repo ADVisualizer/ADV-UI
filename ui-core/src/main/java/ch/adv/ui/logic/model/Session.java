@@ -1,20 +1,19 @@
 package ch.adv.ui.logic.model;
 
+import ch.adv.ui.ADVModule;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
 
 public class Session {
 
-    private String module;
     private long sessionId;
     private String sessionName;
 
-    private final List<Snapshot> snapshots;
+    private transient ADVModule module;
 
-    public Session() {
-        this.snapshots = new ArrayList<>();
-    }
+    private final List<Snapshot> snapshots = new ArrayList<>();
 
     public long getSessionId() {
         return sessionId;
@@ -24,7 +23,7 @@ public class Session {
         return sessionName;
     }
 
-    public String getModule() {
+    public ADVModule getModule() {
         return module;
     }
 
@@ -32,7 +31,7 @@ public class Session {
         return snapshots;
     }
 
-    public void setModule(String module) {
+    public void setModule(ADVModule module) {
         this.module = module;
     }
 

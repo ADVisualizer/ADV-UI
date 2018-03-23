@@ -15,10 +15,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.util.Optional;
 
 
@@ -43,6 +47,8 @@ public class RootView {
     private ResourceLocator resourceLocator;
 
     private final RootViewModel rootViewModel;
+    private final FileChooser fileChooser = new FileChooser();
+
 
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
@@ -51,6 +57,11 @@ public class RootView {
     @Inject
     public RootView(RootViewModel viewModel) {
         this.rootViewModel = viewModel;
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter
+                ("ADV files (*.adv)",
+                "*.adv");
+        fileChooser.getExtensionFilters().add(extensionFilter);
+
     }
 
     @FXML
@@ -104,9 +115,21 @@ public class RootView {
     }
 
     private void handleSaveSessionClicked(Session session) {
-        logger.info("Saving session {} ({})", session.getSessionName(),
-                session.getSessionId());
-        rootViewModel.saveSession(session);
+        Window stage =  sessionTabPane.getScene().getWindow();
+        fileChooser.setTitle("Save Session File");
+        File file = fileChooser.showSaveDialog(stage);
+
+        String chosenFilePath = file.getPath();
+        if (!chosenFilePath.endsWith(".adv")) {
+            File fileWithExtension = new File(file.getPath() + ".adv");
+            if (fileWithExtension.exists()) {
+                file = new File(chosenFilePath + "_copy.adv");
+            } else {
+                file = fileWithExtension;
+            }
+        }
+
+        rootViewModel.saveSession(file, session);
     }
 
     private class CustomListCell extends ListCell<Session> {

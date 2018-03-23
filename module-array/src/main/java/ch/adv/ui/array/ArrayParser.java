@@ -35,8 +35,7 @@ public class ArrayParser implements Parser {
 
     @Override
     public Session parse(String json) {
-        logger.info("Parsing json...");
-        logger.debug("json: \n {}", json);
+        logger.debug("Parsing json: \n {}", json);
         Session session = gson.fromJson(json, Session.class);
         return session;
     }
