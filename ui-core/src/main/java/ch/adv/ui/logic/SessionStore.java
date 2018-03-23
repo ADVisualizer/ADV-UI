@@ -67,7 +67,7 @@ public class SessionStore {
         ArrayList<Session> list = new ArrayList<>(sessions.values());
         list.sort(
                 (s1, s2) -> {
-                    if (s1.getSessionId().equals(s2.getSessionId())) {
+                    if (s1.getSessionId() == s2.getSessionId()) {
                         return 0;
                     }
                     if (s1.getSessionId() < s2.getSessionId()) {

@@ -7,7 +7,7 @@ import java.util.TimeZone;
 public class Session {
 
     private String module;
-    private Long sessionId;
+    private long sessionId;
     private String sessionName;
 
     private final List<Snapshot> snapshots;
@@ -16,7 +16,7 @@ public class Session {
         this.snapshots = new ArrayList<>();
     }
 
-    public Long getSessionId() {
+    public long getSessionId() {
         return sessionId;
     }
 
