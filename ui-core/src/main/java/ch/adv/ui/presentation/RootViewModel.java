@@ -53,7 +53,7 @@ public class RootViewModel {
 
     public void saveSession(File file, Session session) {
         String json = session.getModule().getStringifyer().stringify(session);
-        session.getModule().getDatastore().write(file.getAbsolutePath(), json);
+        session.getModule().getDatastore().write(file, json);
     }
 
     private class SessionPropertyChangeListener implements

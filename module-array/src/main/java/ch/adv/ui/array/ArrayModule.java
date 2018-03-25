@@ -1,12 +1,11 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.ADVModule;
-import ch.adv.ui.access.Datastore;
-import ch.adv.ui.access.FileDatastore;
+import ch.adv.ui.access.DatastoreAccess;
+import ch.adv.ui.access.FileDatastoreAccess;
 import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.access.Parser;
 import ch.adv.ui.access.Stringifyer;
-import com.google.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +39,7 @@ public class ArrayModule implements ADVModule {
     }
 
     @Override
-    public Datastore getDatastore() {
-        return new FileDatastore();
+    public DatastoreAccess getDatastore() {
+        return new FileDatastoreAccess();
     }
 }
