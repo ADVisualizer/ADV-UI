@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/root-layout.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.adv.ui.presentation.RootView">
 
     <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -18,13 +20,11 @@
      <menus>
        <Menu mnemonicParsing="false" text="ADV">
          <items>
-           <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" />
-         </items>
-       </Menu>
-       <Menu mnemonicParsing="false" text="Session">
-         <items>
-           <MenuItem fx:id="menuItemLoadSession" mnemonicParsing="false" text="Load" />
-           <MenuItem fx:id="menuItemStoreSession" mnemonicParsing="false" text="Store" />
+           <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" accelerator="Shortcut+Q">
+             <graphic>
+                 <FontAwesomeIconView glyphName="SIGN_OUT" />
+             </graphic>
+           </MenuItem>
          </items>
        </Menu>
      </menus>

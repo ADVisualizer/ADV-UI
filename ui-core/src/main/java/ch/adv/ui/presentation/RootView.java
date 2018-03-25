@@ -32,12 +32,6 @@ public class RootView {
     private MenuItem menuItemClose;
 
     @FXML
-    private MenuItem menuItemLoadSession;
-
-    @FXML
-    private MenuItem menuItemStoreSession;
-
-    @FXML
     private ListView<Session> sessionListView;
 
     @FXML
@@ -67,10 +61,6 @@ public class RootView {
     @FXML
     public void initialize() {
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
-        menuItemLoadSession.setOnAction(e -> handleLoadSessionMenuItemClicked
-                ());
-        menuItemStoreSession.setOnAction(e ->
-                handleStoreSessionMenuItemClicked());
 
         sessionListView.setItems(rootViewModel.getAvailableSessions());
         sessionListView.setCellFactory(lv -> new CustomListCell());
@@ -119,17 +109,20 @@ public class RootView {
         fileChooser.setTitle("Save Session File");
         File file = fileChooser.showSaveDialog(stage);
 
-        String chosenFilePath = file.getPath();
-        if (!chosenFilePath.endsWith(".adv")) {
-            File fileWithExtension = new File(file.getPath() + ".adv");
-            if (fileWithExtension.exists()) {
-                file = new File(chosenFilePath + "_copy.adv");
-            } else {
-                file = fileWithExtension;
+        if (file != null) {
+            String chosenFilePath = file.getPath();
+            if (!chosenFilePath.endsWith(".adv")) {
+                File fileWithExtension = new File(file.getPath() + ".adv");
+                if (fileWithExtension.exists()) {
+                    file = new File(chosenFilePath + "_copy.adv");
+                } else {
+                    file = fileWithExtension;
+                }
             }
+
+            rootViewModel.saveSession(file, session);
         }
 
-        rootViewModel.saveSession(file, session);
     }
 
     private class CustomListCell extends ListCell<Session> {
