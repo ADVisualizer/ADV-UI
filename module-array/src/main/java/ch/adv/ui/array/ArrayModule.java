@@ -15,8 +15,6 @@ import org.slf4j.LoggerFactory;
 public class ArrayModule implements ADVModule {
 
     private static final String MODULE_NAME = "array";
-    private static final Logger logger = LoggerFactory.getLogger(ArrayModule
-            .class);
 
     @Override
     public String getName() {
@@ -38,8 +36,4 @@ public class ArrayModule implements ADVModule {
         return new ArrayParser();
     }
 
-    @Override
-    public DatastoreAccess getDatastore() {
-        return new FileDatastoreAccess();
-    }
 }

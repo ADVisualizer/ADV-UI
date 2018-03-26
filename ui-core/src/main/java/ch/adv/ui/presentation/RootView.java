@@ -30,6 +30,10 @@ public class RootView {
     private MenuItem menuItemClose;
 
     @FXML
+    private Button loadSessionButton;
+
+
+    @FXML
     private ListView<Session> sessionListView;
 
     @FXML
@@ -41,7 +45,10 @@ public class RootView {
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
 
@@ -59,13 +66,16 @@ public class RootView {
     @FXML
     public void initialize() {
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
-
+        loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
         sessionListView.setItems(rootViewModel.getAvailableSessions());
         sessionListView.setCellFactory(lv -> new CustomListCell());
 
         openNewTab();
+    }
 
-
+    private void handleCloseMenuItemClicked() {
+        Platform.exit();
+        System.exit(0);
     }
 
     private void openNewTab() {
@@ -77,6 +87,7 @@ public class RootView {
                 .invoke());
     }
 
+<<<<<<< Updated upstream
     private void handleStoreSessionMenuItemClicked() {
         //TODO
     }
@@ -103,8 +114,18 @@ public class RootView {
         }
     }
 
+    private void handleLoadSessionClicked() {
+        Window stage =  sessionTabPane.getScene().getWindow();
+        fileChooser.setTitle("Load Session File");
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null && file.exists()) {
+            rootViewModel.loadSession(file);
+        }
+    }
+
     private void handleSaveSessionClicked(final Session session) {
-        Window stage = sessionTabPane.getScene().getWindow();
+        Window stage =  sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Save Session File");
         File file = fileChooser.showSaveDialog(stage);
 
@@ -121,7 +142,6 @@ public class RootView {
 
             rootViewModel.saveSession(file, session);
         }
-
     }
 
     private class CustomListCell extends ListCell<Session> {

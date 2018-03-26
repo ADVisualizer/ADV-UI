@@ -13,5 +13,4 @@ public interface ADVModule {
     Layouter getLayouter();
     Stringifyer getStringifyer();
     Parser getParser();
-    DatastoreAccess getDatastore();
 }

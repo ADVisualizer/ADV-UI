@@ -10,10 +10,10 @@ public class Session {
 
     private long sessionId;
     private String sessionName;
-
+    private String moduleName;
     private transient ADVModule module;
-
     private final List<Snapshot> snapshots = new ArrayList<>();
+
 
     public long getSessionId() {
         return sessionId;
@@ -31,16 +31,21 @@ public class Session {
         return snapshots;
     }
 
-    public void setModule(final ADVModule module) {
-        this.module = module;
-    }
-
     public void setSessionId(Long sessionId) {
         this.sessionId = sessionId;
     }
 
     public void setSessionName(String sessionName) {
         this.sessionName = sessionName;
+    }
+
+    public void setModule(ADVModule module) {
+        this.module = module;
+        if (module!= null) {
+            this.moduleName = module.getName();
+        } else {
+            moduleName = "";
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ch.adv.ui.bootstrapper;
 
 import ch.adv.ui.ADVApplication;
+import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.service.ADVFlowControl;
 import ch.adv.ui.ADVModule;
 import ch.adv.ui.array.ArrayModule;
@@ -34,7 +35,7 @@ public class Bootstrapper {
     public static void main(String[] args) {
         logger.info("Bootstrapping ADV UI");
 
-        ADVFlowControl.setAvailableModules(REGISTERED_MODULES);
+        ModuleStore.setAvailableModules(REGISTERED_MODULES);
         Application.launch(ADVApplication.class, args);
     }
 

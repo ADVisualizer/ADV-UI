@@ -1,6 +1,7 @@
 package ch.adv.ui.service;
 
 import ch.adv.ui.ADVModule;
+import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
 import ch.adv.ui.logic.model.Session;
 import com.google.gson.JsonElement;
@@ -19,22 +20,19 @@ import java.util.Map;
 public class ADVFlowControl {
 
     private final SessionStore sessionStore;
-    private final JsonParser jsonParser;
+    private final ModuleStore moduleStore;
 
     private static final Logger logger = LoggerFactory.getLogger
             (ADVFlowControl.class);
 
-    private static final Map<String, ADVModule> AVAILABLE_MODULES = new
-            HashMap<>();
-
     @Inject
-    public ADVFlowControl(SessionStore sessionStore) {
+    public ADVFlowControl(SessionStore sessionStore, ModuleStore moduleStore) {
         this.sessionStore = sessionStore;
-        this.jsonParser = new JsonParser();
+        this.moduleStore = moduleStore;
     }
 
     public void process(String sessionJSON) {
-        ADVModule currentModule = parseModule(sessionJSON);
+        ADVModule currentModule = moduleStore.parseModule(sessionJSON);
 
         Session session = currentModule.getParser().parse(sessionJSON);
         session.setModule(currentModule);
@@ -42,17 +40,4 @@ public class ADVFlowControl {
         sessionStore.addSession(session);
     }
 
-    private ADVModule parseModule(String sessionJSON) {
-        JsonElement sessionElement = jsonParser.parse(sessionJSON);
-        JsonObject sessionObject = sessionElement.getAsJsonObject();
-        String parsedModuleName = sessionObject.get("module").getAsString();
-
-        logger.info("Parsed module '{}'", parsedModuleName);
-
-        return AVAILABLE_MODULES.get(parsedModuleName);
-    }
-
-    public static void setAvailableModules(Map<String, ADVModule> modules) {
-        AVAILABLE_MODULES.putAll(modules);
-    }
 }

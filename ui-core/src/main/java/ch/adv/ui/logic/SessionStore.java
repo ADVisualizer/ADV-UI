@@ -76,18 +76,7 @@ public class SessionStore {
      */
     public List<Session> getSessions() {
         ArrayList<Session> list = new ArrayList<>(sessions.values());
-        list.sort(
-                (s1, s2) -> {
-                    if (Long.compare(s1.getSessionId(), s2.getSessionId()) ==
-                            0) {
-                        return 0;
-                    }
-                    if (s1.getSessionId() < s2.getSessionId()) {
-                        return -1;
-                    }
-                    return 1;
-                }
-        );
+        list.sort( (s1, s2) -> (int) (s2.getSessionId() - s1.getSessionId()));
         return list;
     }
 

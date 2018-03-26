@@ -1,5 +1,9 @@
 package ch.adv.ui.presentation;
 
+import ch.adv.ui.ADVModule;
+import ch.adv.ui.access.DatastoreAccess;
+import ch.adv.ui.access.FileDatastoreAccess;
+import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.model.Session;
 import ch.adv.ui.logic.SessionStore;
 import javafx.application.Platform;
@@ -20,14 +24,20 @@ public class RootViewModel {
 
     private final ObservableList<Session> availableSessions;
     private final ObjectProperty<Session> currentSession;
+    private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
+    private final ModuleStore moduleStore;
 
     private static final Logger logger = LoggerFactory.getLogger
             (RootViewModel.class);
 
     @Inject
-    public RootViewModel(SessionStore sessionStore) {
+    public RootViewModel(SessionStore sessionStore, ModuleStore moduleStore,
+                         FileDatastoreAccess fileAccess) {
         this.sessionStore = sessionStore;
+        this.moduleStore = moduleStore;
+        this.fileAccess = fileAccess;
+
         this.availableSessions = FXCollections.observableArrayList();
         this.currentSession = new SimpleObjectProperty<>();
 
@@ -60,7 +70,15 @@ public class RootViewModel {
      */
     public void saveSession(final File file, final Session session) {
         String json = session.getModule().getStringifyer().stringify(session);
-        session.getModule().getDatastore().write(file, json);
+        fileAccess.write(file, json);
+    }
+
+    public void loadSession(File file) {
+        String json = fileAccess.read(file);
+        ADVModule module = moduleStore.parseModule(json);
+        Session loadedSession = module.getParser().parse(json);
+        loadedSession.setModule(module);
+        sessionStore.addSession(loadedSession);
     }
 
     private class SessionPropertyChangeListener implements
