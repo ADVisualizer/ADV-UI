@@ -7,13 +7,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+<<<<<<< HEAD
  * Generates a json representation of an array session.
+=======
+ * Creates a json string from a given Session
+>>>>>>> f1457411b4b98cb9c67e4f1a8a944b994fd11ff0
  */
 public class ArrayStringifyer implements Stringifyer {
 
-    private static final String EXPECTED_MODULE = "array";
     private final GsonProvider gsonProvider;
 
+    private static final String EXPECTED_MODULE = "array";
     private static final Logger logger = LoggerFactory.getLogger
             (ArrayStringifyer.class);
 
@@ -42,8 +46,6 @@ public class ArrayStringifyer implements Stringifyer {
                     EXPECTED_MODULE);
             return null;
         }
-
-
     }
 }
 

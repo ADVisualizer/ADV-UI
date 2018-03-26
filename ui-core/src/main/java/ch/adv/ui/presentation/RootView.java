@@ -32,7 +32,6 @@ public class RootView {
     @FXML
     private Button loadSessionButton;
 
-
     @FXML
     private ListView<Session> sessionListView;
 
@@ -69,6 +68,11 @@ public class RootView {
         openNewTab();
     }
 
+    private void handleCloseMenuItemClicked() {
+        Platform.exit();
+        System.exit(0);
+    }
+
     private void openNewTab() {
         sessionListView.getSelectionModel().selectedItemProperty()
                 .addListener(new CreateTabListener().invoke());
@@ -76,19 +80,6 @@ public class RootView {
         rootViewModel.currentSessionProperty().addListener(new
                 CreateTabListener()
                 .invoke());
-    }
-
-    private void handleStoreSessionMenuItemClicked() {
-        //TODO
-    }
-
-    private void handleLoadSessionMenuItemClicked() {
-        //TODO
-    }
-
-    private void handleCloseMenuItemClicked() {
-        Platform.exit();
-        System.exit(0);
     }
 
     private void handleRemoveSessionClicked(final Session session) {

@@ -3,6 +3,9 @@ package ch.adv.ui.access;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Provides preconfigured GsonBuilder
+ */
 public class GsonProvider {
     private final GsonBuilder minifier;
     private final GsonBuilder prettifyer;

@@ -26,17 +26,14 @@ import java.util.Map;
 @Singleton
 public class ADVApplication extends Application {
 
-    @Inject
-    private SocketServer socketServer;
-
-    @Inject
-    private ResourceLocator resourceLocator;
-
-    private Stage primaryStage;
-    private Image advIconImage;
-
     private static final Logger logger = LoggerFactory.getLogger
             (ADVApplication.class);
+    @Inject
+    private SocketServer socketServer;
+    @Inject
+    private ResourceLocator resourceLocator;
+    private Stage primaryStage;
+    private Image advIconImage;
 
     @Override
     public void start(Stage primaryStage) {

@@ -19,9 +19,9 @@
         </module>
         <module name="JavadocType"/>
         <module name="JavadocVariable">
-            <property name="severity" value="ignore"/>
-            <metadata name="net.sf.eclipsecs.core.lastEnabledSeverity" value="inherit"/>
+            <property name="scope" value="public"/>
         </module>
+
         <module name="ConstantName">
             <property name="format" value="^([A-Z][A-Z0-9]*(_[A-Z0-9]+)*|logger)$"/>
         </module>

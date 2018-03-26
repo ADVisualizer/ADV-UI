@@ -11,28 +11,43 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Stores all available modules.
+ */
 @Singleton
 public class ModuleStore {
 
-    private final JsonParser JSON_PARSER = new JsonParser();
-
     private static final Map<String, ADVModule> AVAILABLE_MODULES = new
             HashMap<>();
-
     private static final Logger logger = LoggerFactory.getLogger
             (ModuleStore.class);
+    private final JsonParser jsonParser = new JsonParser();
 
-    public ADVModule parseModule(String sessionJSON) {
-        JsonElement sessionElement = JSON_PARSER.parse(sessionJSON);
+    /**
+     * Sets available modules.
+     * Should only be called by the bootstrapper component.
+     *
+     * @param modules available modules
+     */
+    public static void setAvailableModules(final Map<String, ADVModule>
+                                                   modules) {
+        AVAILABLE_MODULES.putAll(modules);
+    }
+
+    /**
+     * Parses the <code>moduleName</code> field of the given sessionJSON.
+     * If the module is known by the sessionStore it will return it.
+     *
+     * @param sessionJSON json string
+     * @return parsed module
+     */
+    public ADVModule parseModule(final String sessionJSON) {
+        JsonElement sessionElement = jsonParser.parse(sessionJSON);
         JsonObject sessionObject = sessionElement.getAsJsonObject();
         String parsedModuleName = sessionObject.get("moduleName").getAsString();
 
         logger.info("Parsed module '{}'", parsedModuleName);
 
         return AVAILABLE_MODULES.get(parsedModuleName);
-    }
-
-    public static void setAvailableModules(Map<String, ADVModule> modules) {
-        AVAILABLE_MODULES.putAll(modules);
     }
 }

@@ -24,6 +24,9 @@ public class ArrayParser implements Parser {
     private static final Logger logger = LoggerFactory.getLogger(ArrayParser
             .class);
 
+    /**
+     * Registers Array specific types to the GsonBuilder
+     */
     public ArrayParser() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ADVElement.class, new
@@ -33,6 +36,9 @@ public class ArrayParser implements Parser {
         gson = gsonBuilder.create();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     public Session parse(String json) {
         logger.debug("Parsing json: \n {}", json);
@@ -40,8 +46,15 @@ public class ArrayParser implements Parser {
         return session;
     }
 
+    /**
+     * Gson Instance creator for @see{ArrayElement}s
+     */
     private static class ArrayElementInstanceCreator implements
             InstanceCreator<ADVElement> {
+
+        /**
+         * @inheritDoc
+         */
         @Override
         public ADVElement createInstance(Type type) {
             return new ArrayElement();
@@ -49,8 +62,15 @@ public class ArrayParser implements Parser {
 
     }
 
+    /**
+     * Gson Instance creator for {@link ch.adv.ui.array.ArrayRelation}
+     */
     private static class ArrayRelationInstanceCreator implements
             InstanceCreator<ADVRelation> {
+
+        /**
+         * @inheritDoc
+         */
         @Override
         public ADVRelation createInstance(Type type) {
             return new ArrayRelation();
