@@ -8,19 +8,26 @@ import java.util.TimeZone;
 
 public class Session {
 
+    private final List<Snapshot> snapshots = new ArrayList<>();
     private long sessionId;
     private String sessionName;
     private String moduleName;
     private transient ADVModule module;
-    private final List<Snapshot> snapshots = new ArrayList<>();
-
 
     public long getSessionId() {
         return sessionId;
     }
 
+    public void setSessionId(final Long sessionId) {
+        this.sessionId = sessionId;
+    }
+
     public String getSessionName() {
         return sessionName;
+    }
+
+    public void setSessionName(final String sessionName) {
+        this.sessionName = sessionName;
     }
 
     public String getModuleName() {
@@ -31,25 +38,17 @@ public class Session {
         return module;
     }
 
-    public List<Snapshot> getSnapshots() {
-        return snapshots;
-    }
-
-    public void setSessionId(Long sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public void setSessionName(String sessionName) {
-        this.sessionName = sessionName;
-    }
-
-    public void setModule(ADVModule module) {
+    public void setModule(final ADVModule module) {
         this.module = module;
-        if (module!= null) {
+        if (module != null) {
             this.moduleName = module.getName();
         } else {
             moduleName = "";
         }
+    }
+
+    public List<Snapshot> getSnapshots() {
+        return snapshots;
     }
 
     @Override

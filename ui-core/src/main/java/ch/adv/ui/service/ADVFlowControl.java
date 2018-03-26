@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Framework component which controls the default visualization flow.
+ */
 @Singleton
 public class ADVFlowControl {
 
@@ -31,6 +33,11 @@ public class ADVFlowControl {
         this.moduleStore = moduleStore;
     }
 
+    /**
+     * Parses and stores incoming json
+     *
+     * @param sessionJSON json
+     */
     public void process(String sessionJSON) {
         ADVModule currentModule = moduleStore.parseModule(sessionJSON);
 
