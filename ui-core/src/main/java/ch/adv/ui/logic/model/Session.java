@@ -52,6 +52,13 @@ public class Session {
         return snapshots;
     }
 
+    public Snapshot getFirstSnapshot(){
+        if (snapshots.isEmpty()){
+            return new Snapshot();
+        }
+        return snapshots.get(0);
+    }
+
     @Override
     public String toString() {
         String time = String.format("%tT", sessionId - TimeZone.getDefault()

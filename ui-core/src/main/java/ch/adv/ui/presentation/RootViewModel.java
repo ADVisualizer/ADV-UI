@@ -89,7 +89,7 @@ public class RootViewModel {
         Layouter layouter = module.getLayouter();
 
         snapshotStore.addSnapshotPane(sessionId, layouter.layout(loadedSession
-                .getSnapshots().get(0)));
+                .getFirstSnapshot()));
     }
 
     private class SessionPropertyChangeListener implements

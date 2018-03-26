@@ -49,7 +49,7 @@ public class ADVFlowControl {
         Layouter layouter = currentModule.getLayouter();
 
         snapshotStore.addSnapshotPane(sessionId, layouter.layout(session
-                .getSnapshots().get(0)));
+                .getFirstSnapshot()));
     }
 
 }
