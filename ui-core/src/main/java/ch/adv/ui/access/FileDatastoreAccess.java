@@ -21,7 +21,7 @@ public class FileDatastoreAccess implements DatastoreAccess {
 
     private static final Logger logger = LoggerFactory.getLogger
             (FileDatastoreAccess
-            .class);
+                    .class);
 
     /**
      * Reads the given file if it exists, using the jvm default charset.
@@ -57,7 +57,7 @@ public class FileDatastoreAccess implements DatastoreAccess {
      * Writes the given json payload to the given file, using
      * the jvm default charset.
      *
-     * @param file new or existing file
+     * @param file        new or existing file
      * @param jsonPayload data
      * @return whether operation was successful or not
      */

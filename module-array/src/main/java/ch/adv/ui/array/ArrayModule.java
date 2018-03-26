@@ -1,9 +1,9 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.ADVModule;
-import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.access.Parser;
 import ch.adv.ui.access.Stringifyer;
+import ch.adv.ui.presentation.Layouter;
 
 /**
  * Module encapsulating module specific Stringifyer, Parser and Layouter.

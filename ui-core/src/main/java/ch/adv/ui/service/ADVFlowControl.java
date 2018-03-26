@@ -4,16 +4,10 @@ import ch.adv.ui.ADVModule;
 import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
 import ch.adv.ui.logic.model.Session;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Framework component which controls the default visualization flow.

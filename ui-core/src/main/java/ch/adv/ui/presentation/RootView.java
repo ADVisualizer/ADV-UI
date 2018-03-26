@@ -1,7 +1,7 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.util.ResourceLocator;
 import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.util.ResourceLocator;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
@@ -9,7 +9,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -96,7 +95,7 @@ public class RootView {
     }
 
     private void handleLoadSessionClicked() {
-        Window stage =  sessionTabPane.getScene().getWindow();
+        Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Load Session File");
         File file = fileChooser.showOpenDialog(stage);
 
@@ -106,7 +105,7 @@ public class RootView {
     }
 
     private void handleSaveSessionClicked(final Session session) {
-        Window stage =  sessionTabPane.getScene().getWindow();
+        Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Save Session File");
         File file = fileChooser.showSaveDialog(stage);
 

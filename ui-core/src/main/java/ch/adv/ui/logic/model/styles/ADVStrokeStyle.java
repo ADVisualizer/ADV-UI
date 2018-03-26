@@ -2,19 +2,19 @@ package ch.adv.ui.logic.model.styles;
 
 public enum ADVStrokeStyle {
 
-  DOTTED("dotted"), DASHED("dashed"), THROUGH("through");
+    DOTTED("dotted"), DASHED("dashed"), THROUGH("through");
 
-  private String style;
+    private String style;
 
-  ADVStrokeStyle(String style) {
-    this.style = style.toLowerCase();
-  }
+    ADVStrokeStyle(String style) {
+        this.style = style.toLowerCase();
+    }
 
-  public String getStyle() {
-    return style;
-  }
+    public String getStyle() {
+        return style;
+    }
 
-  public static ADVStrokeStyle byName(String styleName) {
-    return valueOf(styleName.toUpperCase());
-  }
+    public static ADVStrokeStyle byName(String styleName) {
+        return valueOf(styleName.toUpperCase());
+    }
 }

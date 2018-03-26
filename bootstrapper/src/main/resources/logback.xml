@@ -3,7 +3,7 @@
 
     <!-- Allow changing log level at runtime -->
     <contextName>ADV-Logger</contextName>
-    <jmxConfigurator />
+    <jmxConfigurator/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -29,7 +29,7 @@
     </appender>
 
     <root level="DEBUG">
-        <appender-ref ref="FILE" />
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
     </root>
 </configuration>

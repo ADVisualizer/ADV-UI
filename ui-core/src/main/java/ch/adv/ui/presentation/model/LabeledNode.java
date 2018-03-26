@@ -43,11 +43,11 @@ public class LabeledNode extends StackPane {
         this.y.set(y);
     }
 
-    public void setBackgroundColor(Paint color){
+    public void setBackgroundColor(Paint color) {
         e.setFill(color);
     }
 
-    public void setFontColor(Paint color){
+    public void setFontColor(Paint color) {
         l.setTextFill(color);
     }
 

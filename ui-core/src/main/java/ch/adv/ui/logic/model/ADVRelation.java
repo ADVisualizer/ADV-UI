@@ -7,7 +7,8 @@ public interface ADVRelation {
     long getSourceElementId();
 
     /**
-     * Sets the source of the relation. For example the starting node of an edge.
+     * Sets the source of the relation. For example the starting node of an
+     * edge.
      *
      * @param sourceElementId id of the source
      */
@@ -34,7 +35,8 @@ public interface ADVRelation {
     ADVStyle getStyle();
 
     /**
-     * Sets the style of the relation to visually differentiate it from other relations. For example to show a change to the previous snapshot.
+     * Sets the style of the relation to visually differentiate it from other
+     * relations. For example to show a change to the previous snapshot.
      *
      * @param style for the relation
      */

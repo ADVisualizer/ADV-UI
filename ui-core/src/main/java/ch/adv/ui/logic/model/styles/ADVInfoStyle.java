@@ -1,6 +1,6 @@
 package ch.adv.ui.logic.model.styles;
 
-public class ADVInfoStyle implements ADVStyle{
+public class ADVInfoStyle implements ADVStyle {
     @Override
     public String getFillColor() {
         return ADVColor.STANDARD.getColor();

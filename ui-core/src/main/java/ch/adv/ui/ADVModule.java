@@ -11,6 +11,7 @@ public interface ADVModule {
 
     /**
      * Returns module name
+     *
      * @return moduleName
      */
     String getName();
@@ -26,6 +27,7 @@ public interface ADVModule {
     /**
      * Returns the module specific stringifyer, which serializes module
      * specific objects into json
+     *
      * @return ADV stringifyer
      */
     Stringifyer getStringifyer();
@@ -33,6 +35,7 @@ public interface ADVModule {
     /**
      * Returns the module specific parser, which deserializes json into
      * module specific objects
+     *
      * @return ADV parser
      */
     Parser getParser();
