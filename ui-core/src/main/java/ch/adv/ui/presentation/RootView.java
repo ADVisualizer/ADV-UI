@@ -45,10 +45,6 @@ public class RootView {
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
 
@@ -73,11 +69,6 @@ public class RootView {
         openNewTab();
     }
 
-    private void handleCloseMenuItemClicked() {
-        Platform.exit();
-        System.exit(0);
-    }
-
     private void openNewTab() {
         sessionListView.getSelectionModel().selectedItemProperty()
                 .addListener(new CreateTabListener().invoke());
@@ -87,7 +78,6 @@ public class RootView {
                 .invoke());
     }
 
-<<<<<<< Updated upstream
     private void handleStoreSessionMenuItemClicked() {
         //TODO
     }

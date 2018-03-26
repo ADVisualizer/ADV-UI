@@ -78,7 +78,7 @@ public class RootViewModel {
         ADVModule module = moduleStore.parseModule(json);
         Session loadedSession = module.getParser().parse(json);
         loadedSession.setModule(module);
-        sessionStore.addSession(loadedSession);
+        sessionStore.addSession(loadedSession, true);
     }
 
     private class SessionPropertyChangeListener implements

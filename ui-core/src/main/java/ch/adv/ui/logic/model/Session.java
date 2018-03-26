@@ -4,6 +4,7 @@ import ch.adv.ui.ADVModule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class Session {
@@ -53,5 +54,23 @@ public class Session {
         String time = String.format("%tT", sessionId - TimeZone.getDefault()
                 .getRawOffset());
         return sessionName + " - " + time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Session session = (Session) o;
+        return sessionId == session.sessionId;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(sessionId);
     }
 }

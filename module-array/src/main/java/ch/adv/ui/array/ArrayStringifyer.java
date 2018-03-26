@@ -6,9 +6,12 @@ import ch.adv.ui.logic.model.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Generates a json representation of an array session.
+ */
 public class ArrayStringifyer implements Stringifyer {
 
-    public static final String EXPECTED_MODULE = "array";
+    private static final String EXPECTED_MODULE = "array";
     private final GsonProvider gsonProvider;
 
     private static final Logger logger = LoggerFactory.getLogger
