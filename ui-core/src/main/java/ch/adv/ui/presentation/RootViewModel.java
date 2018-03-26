@@ -15,11 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 
+@Singleton
 public class RootViewModel {
 
     private final ObservableList<Session> availableSessions;
@@ -86,7 +88,6 @@ public class RootViewModel {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             logger.debug("SessionStore has updated. Update ListView");
-            logger.info(evt.getPropertyName());
             List<Session> sessions = sessionStore.getSessions();
 
             Platform.runLater(() -> {

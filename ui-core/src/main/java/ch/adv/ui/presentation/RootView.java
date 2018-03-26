@@ -205,6 +205,7 @@ public class RootView {
                             sessionTabPane
                                     .getSelectionModel();
                     selectionModel.select(newTab);
+                    logger.debug("selected new tab for {}", session.getSessionId());
                 }
             };
         }

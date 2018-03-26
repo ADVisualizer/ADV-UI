@@ -1,5 +1,6 @@
 package ch.adv.ui.presentation;
 
+import ch.adv.ui.logic.model.Session;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
@@ -52,6 +53,7 @@ public class SessionView {
     @Inject
     private ReplaySliderStringConverter replaySliderStringConverter;
 
+    private final SessionViewModel sessionViewModel;
 
     private final FontAwesomeIconView pauseIcon;
     private final FontAwesomeIconView playIcon;
@@ -59,12 +61,17 @@ public class SessionView {
     private static final Logger logger = LoggerFactory.getLogger(SessionView
             .class);
 
-    public SessionView() {
-        this.pauseIcon = new FontAwesomeIconView();
+    @Inject
+    public SessionView(SessionViewModel sessionViewModel, FontAwesomeIconView
+            fontAwesomePauseView, FontAwesomeIconView fontAwesomePlayView) {
+        this.sessionViewModel = sessionViewModel;
+
+        this.pauseIcon = fontAwesomePauseView;
         pauseIcon.setIcon(FontAwesomeIcon.PAUSE);
 
-        this.playIcon = new FontAwesomeIconView();
+        this.playIcon = fontAwesomePlayView;
         playIcon.setIcon(FontAwesomeIcon.PLAY);
+
     }
 
     @FXML
@@ -79,6 +86,9 @@ public class SessionView {
         replayController.getReplaySpeed().bind(replaySpeedSlider
                 .valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
+
+        this.contentPane.getChildren().add(sessionViewModel
+                .currentSnapshotPaneProperty().get());
     }
 
     private void handleReplayButtonClicked() {
