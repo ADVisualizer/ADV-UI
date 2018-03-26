@@ -31,7 +31,7 @@ public class Session {
         return snapshots;
     }
 
-    public void setModule(ADVModule module) {
+    public void setModule(final ADVModule module) {
         this.module = module;
     }
 

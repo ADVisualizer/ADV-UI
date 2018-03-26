@@ -25,6 +25,9 @@ public class Bootstrapper {
 
     /**
      * ADV UI entry point
+     * <p>
+     * Use command-line argument 'port' to configure the socket server:
+     * <code>--port=9876</code>
      *
      * @param args cli arguments
      */

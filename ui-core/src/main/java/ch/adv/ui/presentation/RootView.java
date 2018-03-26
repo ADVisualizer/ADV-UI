@@ -14,9 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,16 +42,16 @@ public class RootView {
     private final FileChooser fileChooser = new FileChooser();
 
 
-
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
 
     @Inject
     public RootView(RootViewModel viewModel) {
         this.rootViewModel = viewModel;
-        FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter
+        FileChooser.ExtensionFilter extensionFilter = new FileChooser
+                .ExtensionFilter
                 ("ADV files (*.adv)",
-                "*.adv");
+                        "*.adv");
         fileChooser.getExtensionFilters().add(extensionFilter);
 
     }
@@ -74,7 +72,8 @@ public class RootView {
         sessionListView.getSelectionModel().selectedItemProperty()
                 .addListener(new CreateTabListener().invoke());
 
-        rootViewModel.getCurrentSession().addListener(new CreateTabListener()
+        rootViewModel.currentSessionProperty().addListener(new
+                CreateTabListener()
                 .invoke());
     }
 
@@ -91,7 +90,7 @@ public class RootView {
         System.exit(0);
     }
 
-    private void handleRemoveSessionClicked(Session session) {
+    private void handleRemoveSessionClicked(final Session session) {
         logger.info("Removing session {} ({})", session.getSessionName(),
                 session.getSessionId());
         rootViewModel.removeSession(session);
@@ -104,8 +103,8 @@ public class RootView {
         }
     }
 
-    private void handleSaveSessionClicked(Session session) {
-        Window stage =  sessionTabPane.getScene().getWindow();
+    private void handleSaveSessionClicked(final Session session) {
+        Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Save Session File");
         File file = fileChooser.showSaveDialog(stage);
 
@@ -137,6 +136,7 @@ public class RootView {
         private final FontAwesomeIconView removeIcon;
 
         private static final int ICON_SIZE = 16;
+        private static final int SPACING = 12;
 
         CustomListCell() {
             super();
@@ -145,16 +145,18 @@ public class RootView {
             removeIcon.setIcon(FontAwesomeIcon.TRASH_ALT);
             removeIcon.setGlyphSize(ICON_SIZE);
             removeButton.setGraphic(removeIcon);
-            removeButton.setOnMouseClicked(e -> handleRemoveSessionClicked(getItem()));
+            removeButton.setOnMouseClicked(e -> handleRemoveSessionClicked
+                    (getItem()));
 
             this.saveIcon = new FontAwesomeIconView();
             saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
             saveIcon.setGlyphSize(ICON_SIZE);
             saveButton.setGraphic(saveIcon);
-            saveButton.setOnMouseClicked(e -> handleSaveSessionClicked(getItem()));
+            saveButton.setOnMouseClicked(e -> handleSaveSessionClicked
+                    (getItem()));
 
             hbox.getChildren().addAll(label, pane, saveButton, removeButton);
-            hbox.setSpacing(12);
+            hbox.setSpacing(SPACING);
             hbox.setAlignment(Pos.CENTER);
             HBox.setHgrow(pane, Priority.ALWAYS);
         }

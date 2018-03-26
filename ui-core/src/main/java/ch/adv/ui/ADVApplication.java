@@ -20,9 +20,6 @@ import java.util.Map;
 /**
  * Main class of ADV UI.
  * Starts the JavaFX GUI and the socket server.
- * <p>
- * Use command-line argument 'port' to configure the socket server:
- * <code>--port=9876</code>
  *
  * @author mwieland
  */

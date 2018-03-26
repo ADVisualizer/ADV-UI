@@ -12,14 +12,26 @@ public class GsonProvider {
         this.prettifyer.setPrettyPrinting();
 
         this.minifier = new GsonBuilder();
+        this.minifier.setPrettyPrinting();
         this.minifier.excludeFieldsWithModifiers(java.lang.reflect
                 .Modifier.TRANSIENT);
     }
 
+    /**
+     * Get a pretty-printing json serializer to write to the data store.
+     *
+     * @return a pretty-printing json serializer
+     */
     public Gson getMinifier() {
         return minifier.create();
     }
 
+    /**
+     * Get a pretty-printing json serializer to create a json representation
+     * of an object.
+     *
+     * @return a pretty-printing json serializer
+     */
     public Gson getPrettifyer() {
         return prettifyer.create();
     }

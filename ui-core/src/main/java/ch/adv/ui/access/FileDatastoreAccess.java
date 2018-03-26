@@ -28,7 +28,7 @@ public class FileDatastoreAccess implements DatastoreAccess {
      * @return null or json payload
      */
     @Override
-    public String read(File file) {
+    public String read(final File file) {
         if (file.exists()) {
             Path path = Paths.get(file.getAbsolutePath());
             try (BufferedReader reader = Files.newBufferedReader(path,
@@ -60,7 +60,7 @@ public class FileDatastoreAccess implements DatastoreAccess {
      * @return whether operation was successful or not
      */
     @Override
-    public boolean write(File file, String jsonPayload) {
+    public boolean write(final File file, String jsonPayload) {
         Path path = Paths.get(file.getAbsolutePath());
 
         try (BufferedWriter writer = Files.newBufferedWriter(path, Charset
