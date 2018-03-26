@@ -29,16 +29,19 @@ public class RootViewModel {
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final ModuleStore moduleStore;
+    private final SnapshotStore snapshotStore;
 
     private static final Logger logger = LoggerFactory.getLogger
             (RootViewModel.class);
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ModuleStore moduleStore,
-                         FileDatastoreAccess fileAccess) {
+                         FileDatastoreAccess fileAccess, SnapshotStore
+                                     snapshotStore) {
         this.sessionStore = sessionStore;
         this.moduleStore = moduleStore;
         this.fileAccess = fileAccess;
+        this.snapshotStore = snapshotStore;
 
         this.availableSessions = FXCollections.observableArrayList();
         this.currentSession = new SimpleObjectProperty<>();
@@ -81,12 +84,18 @@ public class RootViewModel {
         Session loadedSession = module.getParser().parse(json);
         loadedSession.setModule(module);
         sessionStore.addSession(loadedSession, true);
+
+        long sessionId = loadedSession.getSessionId();
+        Layouter layouter = module.getLayouter();
+
+        snapshotStore.addSnapshotPane(sessionId, layouter.layout(loadedSession
+                .getSnapshots().get(0)));
     }
 
     private class SessionPropertyChangeListener implements
             PropertyChangeListener {
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
+        public void propertyChange(PropertyChangeEvent event) {
             logger.debug("SessionStore has updated. Update ListView");
             List<Session> sessions = sessionStore.getSessions();
 

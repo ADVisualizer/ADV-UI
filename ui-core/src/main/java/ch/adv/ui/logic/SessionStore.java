@@ -109,6 +109,7 @@ public class SessionStore {
      * @return snapshots of current session or empty List if no current
      * session is set.
      */
+    //TODO: probably not used -> snapshotStore
     public List<Snapshot> getSnapshots() {
         if (currentSession != null) {
             return currentSession.getSnapshots();
