@@ -4,8 +4,12 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class InterfaceAdapter<T> implements
-        JsonDeserializer<T> {
+/**
+ * JSON Deserializer for a specific class
+ *
+ * @param <T>
+ */
+public class InterfaceAdapter<T> implements JsonDeserializer<T> {
 
     private final Class className;
 
@@ -13,13 +17,14 @@ public class InterfaceAdapter<T> implements
         this.className = className;
     }
 
+    /**
+     * @inheritDoc
+     */
     public T deserialize(JsonElement jsonElement, Type type,
-                         JsonDeserializationContext
-                                 jsonDeserializationContext) throws
-            JsonParseException {
+                         JsonDeserializationContext context)
+            throws JsonParseException {
 
         JsonObject jsonObject = jsonElement.getAsJsonObject();
-        return jsonDeserializationContext.deserialize(jsonObject,
-                className);
+        return context.deserialize(jsonObject, className);
     }
 }
