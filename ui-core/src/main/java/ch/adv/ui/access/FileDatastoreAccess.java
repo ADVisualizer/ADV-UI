@@ -1,5 +1,6 @@
 package ch.adv.ui.access;
 
+import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +16,7 @@ import java.nio.file.Paths;
 /**
  * Stores and reads JSON Files on the filesystem
  */
+@Singleton
 public class FileDatastoreAccess implements DatastoreAccess {
 
     private static final Logger logger = LoggerFactory.getLogger

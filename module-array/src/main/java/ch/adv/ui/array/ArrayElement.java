@@ -3,7 +3,11 @@ package ch.adv.ui.array;
 import ch.adv.ui.logic.model.ADVElement;
 import ch.adv.ui.logic.model.styles.ADVStyle;
 
+/**
+ * Represents one Item in a Array
+ */
 public class ArrayElement implements ADVElement {
+
     private long id;
     private ADVStyle style;
     private int fixedPosX;

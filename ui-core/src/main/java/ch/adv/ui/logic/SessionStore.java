@@ -37,28 +37,49 @@ public class SessionStore {
     }
 
     /**
-     * Add specified session to the store. If the session already exists:
-     * merge snapshots of both sessions into one session.
+     * Add specified session to the store and set it as current session.
      *
      * @param newSession the session to add
      */
     public void addSession(Session newSession) {
+        addSession(newSession, false);
+    }
+
+    /**
+     * Add specified session to the store and set it as current session. If the
+     * session already exists:
+     * either merge its snapshots with existing session (for sessions
+     * received over the socket)
+     * or
+     * ignore it (for sessions loaded via the ui)
+     *
+     * @param newSession      the session to add
+     * @param isLoadedSession true if the session is loaded through the ui
+     */
+    public void addSession(Session newSession, boolean isLoadedSession) {
         if (newSession != null) {
             long id = newSession.getSessionId();
             Session existing = sessions.get(id);
-
-            if (existing != null) {
-                mergeSession(existing, newSession);
-            } else {
+            if (existing == null) {
                 sessions.put(id, newSession);
-                currentSession = newSession;
                 logger.info("New session {} added to SessionStore", id);
+                currentSession = newSession;
+
+            } else if (isLoadedSession) {
+                currentSession = existing;
+                logger.debug("Loaded session {} already exists", id);
+                newSession = null;
+            } else {
+                mergeSession(existing, newSession);
+                currentSession = newSession;
             }
 
             logger.debug("Fire change event");
 
             changeSupport.firePropertyChange(SESSION_EVENT, existing,
                     newSession);
+
+
         }
     }
 
@@ -76,18 +97,7 @@ public class SessionStore {
      */
     public List<Session> getSessions() {
         ArrayList<Session> list = new ArrayList<>(sessions.values());
-        list.sort(
-                (s1, s2) -> {
-                    if (Long.compare(s1.getSessionId(), s2.getSessionId()) ==
-                            0) {
-                        return 0;
-                    }
-                    if (s1.getSessionId() < s2.getSessionId()) {
-                        return -1;
-                    }
-                    return 1;
-                }
-        );
+        list.sort((s1, s2) -> (int) (s2.getSessionId() - s1.getSessionId()));
         return list;
     }
 
