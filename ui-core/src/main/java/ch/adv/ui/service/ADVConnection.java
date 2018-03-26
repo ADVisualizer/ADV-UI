@@ -65,13 +65,20 @@ public class ADVConnection {
                 logger.debug("Process json: \n {}", sessionJSON);
                 flowControl.process(request.getJson());
             } catch (Exception e) {
-                logger.error("Exception occurred during execution of " +
-                        "ADV UI. Send exception to Lib", e);
+                logger.error("Exception occurred during execution of "
+                        + "ADV UI. Send exception to Lib", e);
 
                 ADVResponse exceptionResponse = new ADVResponse
-                        (ProtocolCommand.EXCEPTION, e.getMessage());
+                        (ProtocolCommand.EXCEPTION, getStacktraceString(e));
                 writer.println(exceptionResponse.toJson());
             }
         }
+    }
+
+    private String getStacktraceString(Exception exception) {
+        StringWriter stringWriter = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(stringWriter);
+        exception.printStackTrace(printWriter);
+        return stringWriter.toString();
     }
 }
