@@ -5,6 +5,12 @@ import ch.adv.ui.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 
+/**
+ * Guice DI configuration class.
+ * <p>
+ * If this class grows to a certain extend, it should be split up in
+ * multiple modules.
+ */
 public class GuiceBaseModule extends AbstractModule {
 
     @Override

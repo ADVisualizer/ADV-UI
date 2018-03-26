@@ -18,7 +18,8 @@ public class GsonProvider {
         this.prettifyer.excludeFieldsWithModifiers(Modifier.TRANSIENT);
 
         // transient and static fields are excluded by default. we only want
-        // transient fields to be excluded. That's why we exclude them explicitly!
+        // transient fields to be excluded. That's why we exclude them
+        // explicitly!
         this.minifier = new GsonBuilder();
         this.minifier.excludeFieldsWithModifiers(Modifier.TRANSIENT);
     }
