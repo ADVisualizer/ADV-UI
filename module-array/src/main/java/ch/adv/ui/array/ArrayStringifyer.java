@@ -6,13 +6,15 @@ import ch.adv.ui.logic.model.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Creates a json string from a given Session
+ */
 public class ArrayStringifyer implements Stringifyer {
 
-    public static final String EXPECTED_MODULE = "array";
-    private final GsonProvider gsonProvider;
-
+    private static final String EXPECTED_MODULE = "array";
     private static final Logger logger = LoggerFactory.getLogger
             (ArrayStringifyer.class);
+    private final GsonProvider gsonProvider;
 
     //can't be injected, because has to be instantiated with 'new' keyword in
     // Module implementations (default methods of interfaces)
@@ -39,8 +41,6 @@ public class ArrayStringifyer implements Stringifyer {
                     EXPECTED_MODULE);
             return null;
         }
-
-
     }
 }
 
