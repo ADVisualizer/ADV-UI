@@ -32,7 +32,6 @@ public class RootView {
     @FXML
     private Button loadSessionButton;
 
-
     @FXML
     private ListView<Session> sessionListView;
 
@@ -45,10 +44,6 @@ public class RootView {
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
 
@@ -85,20 +80,6 @@ public class RootView {
         rootViewModel.currentSessionProperty().addListener(new
                 CreateTabListener()
                 .invoke());
-    }
-
-<<<<<<< Updated upstream
-    private void handleStoreSessionMenuItemClicked() {
-        //TODO
-    }
-
-    private void handleLoadSessionMenuItemClicked() {
-        //TODO
-    }
-
-    private void handleCloseMenuItemClicked() {
-        Platform.exit();
-        System.exit(0);
     }
 
     private void handleRemoveSessionClicked(final Session session) {

@@ -23,6 +23,10 @@ public class Session {
         return sessionName;
     }
 
+    public String getModuleName() {
+        return moduleName;
+    }
+
     public ADVModule getModule() {
         return module;
     }
