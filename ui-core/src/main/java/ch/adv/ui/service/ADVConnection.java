@@ -1,5 +1,6 @@
 package ch.adv.ui.service;
 
+import ch.adv.ui.access.GsonProvider;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +16,18 @@ public class ADVConnection {
             .class);
 
     private final Socket socket;
-    private final RequestParser parser;
+    private final GsonProvider gsonProvider;
     private final ADVFlowControl flowControl;
     private BufferedReader reader;
     private PrintWriter writer;
 
     @Inject
-    public ADVConnection(ADVFlowControl flowControl, RequestParser parser,
+    public ADVConnection(ADVFlowControl flowControl, GsonProvider gsonProvider,
                          @Assisted
                                  Socket socket) {
         this.socket = socket;
         this.flowControl = flowControl;
-        this.parser = parser;
+        this.gsonProvider = gsonProvider;
     }
 
     public void process() throws IOException {
@@ -47,8 +48,9 @@ public class ADVConnection {
         String sessionJSON;
         while ((sessionJSON = reader.readLine()) != null) {
 
-            logger.debug("Parse incomming request");
-            ADVRequest request = parser.parse(sessionJSON);
+            logger.debug("Parse incoming request");
+            ADVRequest request = gsonProvider.getMinifier().fromJson
+                    (sessionJSON, ADVRequest.class);
 
             if (request.getCommand().equals(ProtocolCommand.END)) {
                 logger.info("End of session transmission");
