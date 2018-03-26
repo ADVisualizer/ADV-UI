@@ -24,7 +24,6 @@ public class SocketServer extends Thread {
     private static final Logger logger = LoggerFactory.getLogger(SocketServer
             .class);
 
-
     private ServerSocket javaSocket;
     private int portNr;
 
@@ -60,7 +59,6 @@ public class SocketServer extends Thread {
                 logger.error("Unable to accept socket connection", e);
             }
         }
-
     }
 
     /**

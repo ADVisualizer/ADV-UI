@@ -15,6 +15,7 @@ public class GsonProvider {
     public GsonProvider() {
         this.prettifyer = new GsonBuilder();
         this.prettifyer.setPrettyPrinting();
+        this.prettifyer.excludeFieldsWithModifiers(Modifier.TRANSIENT);
 
         // transient and static fields are excluded by default. we only want
         // transient fields to be excluded. That's why we exclude them explicitly!

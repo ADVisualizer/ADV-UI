@@ -23,8 +23,7 @@ public class ADVConnection {
 
     @Inject
     public ADVConnection(ADVFlowControl flowControl, GsonProvider gsonProvider,
-                         @Assisted
-                                 Socket socket) {
+                         @Assisted Socket socket) {
         this.socket = socket;
         this.flowControl = flowControl;
         this.gsonProvider = gsonProvider;
@@ -70,8 +69,7 @@ public class ADVConnection {
                         "ADV UI. Send exception to Lib", e);
 
                 ADVResponse exceptionResponse = new ADVResponse
-                        (ProtocolCommand
-                                .EXCEPTION, e.getMessage());
+                        (ProtocolCommand.EXCEPTION, e.getMessage());
                 writer.println(exceptionResponse.toJson());
             }
         }

@@ -78,8 +78,6 @@ public class SessionStore {
 
             changeSupport.firePropertyChange(SESSION_EVENT, existing,
                     newSession);
-
-
         }
     }
 
