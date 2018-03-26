@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.io.*;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Listens for incoming snapshot transmissions and routes it to the correct
@@ -19,21 +18,21 @@ import java.nio.charset.StandardCharsets;
 @Singleton
 public class SocketServer extends Thread {
 
-    private ADVFlowControl flowControl;
-    private ServerSocket javaSocket;
-
-    private int portNr;
+    private final ADVConnectionFactory connectionFactory;
     private static final int DEFAULT_PORT = 8765;
-
     private static final String THREAD_NAME = "SocketServer Thread";
     private static final Logger logger = LoggerFactory.getLogger(SocketServer
             .class);
 
+
+    private ServerSocket javaSocket;
+    private int portNr;
+
     @Inject
-    public SocketServer(ADVFlowControl flowControl) {
+    public SocketServer(ADVConnectionFactory connectionFactory) {
         super(THREAD_NAME);
+        this.connectionFactory = connectionFactory;
         portNr = DEFAULT_PORT;
-        this.flowControl = flowControl;
     }
 
     /**
@@ -43,37 +42,25 @@ public class SocketServer extends Thread {
      */
     @Override
     public void run() {
+
         try {
             javaSocket = new ServerSocket(portNr);
-            logger.info("Server socket created on port {}", portNr);
-
-            while (true) {
-
-                Socket socket = javaSocket.accept();
-                BufferedReader reader = new BufferedReader(new
-                        InputStreamReader(socket.getInputStream(),
-                        StandardCharsets.UTF_8));
-                PrintWriter writer = new PrintWriter(new OutputStreamWriter(
-                        socket.getOutputStream(), StandardCharsets.UTF_8),
-                        true);
-
-                String sessionJSON;
-                while ((sessionJSON = reader.readLine()) != null) {
-                    if (sessionJSON.equals("END")) {
-                        logger.info("End of session transmission");
-                        break;
-                    }
-                    logger.debug("Snapshot received: " + sessionJSON);
-
-                    writer.println("OK");
-
-                    flowControl.process(sessionJSON);
-                }
-
-            }
+            logger.info("Server socket started on port {}", portNr);
         } catch (IOException e) {
-            logger.error("Unable to read incoming transmissions", e);
+            logger.error("Unable to start socket server on port {}", portNr, e);
         }
+
+        while (true) {
+
+            try {
+                Socket socket = javaSocket.accept();
+                ADVConnection connection = connectionFactory.create(socket);
+                connection.process();
+            } catch (IOException e) {
+                logger.error("Unable to accept socket connection", e);
+            }
+        }
+
     }
 
     /**
