@@ -23,6 +23,14 @@ public class Bootstrapper {
     private static final Logger logger = LoggerFactory.getLogger(Bootstrapper
             .class);
 
+    /**
+     * ADV UI entry point
+     * <p>
+     * Use command-line argument 'port' to configure the socket server:
+     * <code>--port=9876</code>
+     *
+     * @param args cli arguments
+     */
     public static void main(String[] args) {
         logger.info("Bootstrapping ADV UI");
 
@@ -30,6 +38,10 @@ public class Bootstrapper {
         Application.launch(ADVApplication.class, args);
     }
 
+
+    /**
+     * Static map of all available modules
+     */
     static {
         Map<String, ADVModule> modules = new HashMap<>();
         modules.put("array", new ArrayModule());

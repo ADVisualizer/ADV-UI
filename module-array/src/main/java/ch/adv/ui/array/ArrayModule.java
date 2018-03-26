@@ -1,6 +1,8 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.ADVModule;
+import ch.adv.ui.access.DatastoreAccess;
+import ch.adv.ui.access.FileDatastoreAccess;
 import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.access.Parser;
 import ch.adv.ui.access.Stringifyer;
@@ -11,8 +13,15 @@ import org.slf4j.LoggerFactory;
  * Module encapsulating module specific Stringifyer, Parser and Layouter.
  */
 public class ArrayModule implements ADVModule {
+
+    private static final String MODULE_NAME = "array";
     private static final Logger logger = LoggerFactory.getLogger(ArrayModule
             .class);
+
+    @Override
+    public String getName() {
+        return MODULE_NAME;
+    }
 
     @Override
     public Layouter getLayouter() {
@@ -27,5 +36,10 @@ public class ArrayModule implements ADVModule {
     @Override
     public Parser getParser() {
         return new ArrayParser();
+    }
+
+    @Override
+    public DatastoreAccess getDatastore() {
+        return new FileDatastoreAccess();
     }
 }

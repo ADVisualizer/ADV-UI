@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.List;
 
 public class RootViewModel {
@@ -38,16 +39,28 @@ public class RootViewModel {
         return availableSessions;
     }
 
-    public ObjectProperty<Session> getCurrentSession() {
-        return currentSession;
-    }
-
     public ObjectProperty<Session> currentSessionProperty() {
         return currentSession;
     }
 
-    public void deleteSession(Session session) {
+    /**
+     * Delegates removing sessions to the business logic
+     *
+     * @param session to be removed
+     */
+    public void removeSession(final Session session) {
         sessionStore.deleteSession(session);
+    }
+
+    /**
+     * Delegates saving sessions to the business logic
+     *
+     * @param file    to be saved to
+     * @param session to be saved
+     */
+    public void saveSession(final File file, final Session session) {
+        String json = session.getModule().getStringifyer().stringify(session);
+        session.getModule().getDatastore().write(file, json);
     }
 
     private class SessionPropertyChangeListener implements
