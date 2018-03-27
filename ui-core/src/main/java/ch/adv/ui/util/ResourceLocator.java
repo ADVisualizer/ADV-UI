@@ -43,8 +43,8 @@ public class ResourceLocator {
             return loader.load();
         } catch (IOException e) {
             logger.debug("Cannot load resource {}", resource, e);
+            return null;
         }
-        return null;
     }
 
     public enum Resource {

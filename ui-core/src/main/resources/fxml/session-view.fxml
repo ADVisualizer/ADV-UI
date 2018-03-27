@@ -51,7 +51,7 @@
                         </graphic>
                     </Button>
 
-                    <ProgressBar fx:id="stepProgressBar" prefHeight="30" prefWidth="200.0" progress="0.0"/>
+                    <ProgressBar fx:id="stepProgressBar" prefHeight="30" progress="0.0"/>
                 </HBox>
             </items>
         </ToolBar>
@@ -66,7 +66,7 @@
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
             </padding>
             <children>
-                <TextArea fx:id="snapshotDescription" prefHeight="80.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                <TextArea fx:id="snapshotDescription" prefHeight="80.0" AnchorPane.bottomAnchor="0.0"
                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
             </children>
         </AnchorPane>

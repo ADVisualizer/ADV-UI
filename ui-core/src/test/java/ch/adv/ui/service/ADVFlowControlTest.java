@@ -1,6 +1,6 @@
 package ch.adv.ui.service;
 
-import ch.adv.ui.ADVModule;
+import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.access.Parser;
 import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;

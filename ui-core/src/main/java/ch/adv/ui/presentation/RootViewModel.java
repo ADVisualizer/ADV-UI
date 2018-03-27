@@ -1,6 +1,6 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.ADVModule;
+import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.access.DatastoreAccess;
 import ch.adv.ui.access.FileDatastoreAccess;
 import ch.adv.ui.logic.ModuleStore;
@@ -82,6 +82,11 @@ public class RootViewModel {
         fileAccess.write(file, json);
     }
 
+    /**
+     * Loads a existing session from filesystem.
+     *
+     * @param file file to open
+     */
     public void loadSession(File file) {
         String json = fileAccess.read(file);
         ADVModule module = moduleStore.parseModule(json);
@@ -99,8 +104,12 @@ public class RootViewModel {
         });
     }
 
+    /**
+     * Update listener if session store has changed.
+     */
     private class SessionPropertyChangeListener implements
             PropertyChangeListener {
+
         @Override
         public void propertyChange(final PropertyChangeEvent event) {
             logger.debug("SessionStore has updated. Update ListView");

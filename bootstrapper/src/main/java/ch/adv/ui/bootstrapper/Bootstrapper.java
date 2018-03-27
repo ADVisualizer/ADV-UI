@@ -1,7 +1,7 @@
 package ch.adv.ui.bootstrapper;
 
 import ch.adv.ui.ADVApplication;
-import ch.adv.ui.ADVModule;
+import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.array.ArrayModule;
 import ch.adv.ui.logic.ModuleStore;
 import javafx.application.Application;
