@@ -57,7 +57,7 @@
         </ToolBar>
     </top>
     <center>
-        <AnchorPane fx:id="contentPane" styleClass="contentPane" prefHeight="222.0" prefWidth="600.0"
+        <AnchorPane fx:id="contentPane" prefHeight="222.0" prefWidth="600.0"
                     BorderPane.alignment="CENTER"/>
     </center>
     <bottom>
