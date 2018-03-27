@@ -36,6 +36,8 @@ public class RootView {
     @FXML
     private Button loadSessionButton;
     @FXML
+    private Button clearAllSessionsButton;
+    @FXML
     private ListView<Session> sessionListView;
     @FXML
     private TabPane sessionTabPane;
@@ -49,6 +51,8 @@ public class RootView {
                 .ExtensionFilter
                 ("ADV files (*.adv)",
                         "*.adv");
+
+        FontAwesomeIconView test = new FontAwesomeIconView();
         fileChooser.getExtensionFilters().add(extensionFilter);
     }
 
@@ -56,12 +60,14 @@ public class RootView {
     public void initialize() {
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
+        clearAllSessionsButton.setOnAction(e -> handleClearAllSessionsClicked());
         sessionListView.setItems(rootViewModel.getAvailableSessions());
         sessionListView.setCellFactory(lv -> new CustomListCell());
 
         handleLogoVisibility();
         openNewTab();
     }
+
 
     private void handleCloseMenuItemClicked() {
         Platform.exit();
@@ -131,8 +137,19 @@ public class RootView {
         }
 
         rootViewModel.removeSession(session);
-        event.consume();
+
+        if (event != null) {
+            event.consume();
+        }
     }
+
+
+    private void handleClearAllSessionsClicked() {
+        sessionListView.getItems().forEach(session -> {
+            handleRemoveSessionClicked(session, null);
+        });
+    }
+
 
     private void handleLoadSessionClicked() {
         Window stage = sessionTabPane.getScene().getWindow();

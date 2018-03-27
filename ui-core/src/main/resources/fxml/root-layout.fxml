@@ -38,6 +38,12 @@
                     <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
                 </graphic>
             </Button>
+
+            <Button fx:id="clearAllSessionsButton" mnemonicParsing="false" text="Clear all Sessions">
+                <graphic>
+                    <FontAwesomeIconView glyphName="ERASER"/>
+                </graphic>
+            </Button>
         </items>
     </ToolBar>
 
@@ -56,7 +62,7 @@
             </AnchorPane>
             <AnchorPane>
                 <children>
-                    <TabPane fx:id="sessionTabPane" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0"
+                    <TabPane fx:id="sessionTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                 </children>
             </AnchorPane>
