@@ -14,7 +14,8 @@ import java.util.Map;
 
 
 /**
- *
+ * Holds all active sessions. Fires change event, if new session is added or
+ * a session is removed.
  */
 @Singleton
 public class SessionStore {

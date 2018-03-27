@@ -5,11 +5,8 @@ import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.presentation.model.LabeledNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 /**
  * Positions the ArrayElements on the Pane
@@ -17,7 +14,7 @@ import javafx.scene.shape.Circle;
 public class ArrayLayouter implements Layouter {
 
     @Override
-    public Pane layout(Snapshot snapshot) {
+    public Pane layout(final Snapshot snapshot) {
         VBox vBox = new VBox();
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITE,
                 CornerRadii.EMPTY,

@@ -21,6 +21,10 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Handles presentation logic for the {@link RootView}. Delegates tasks to
+ * the business logic layer.
+ */
 @Singleton
 public class RootViewModel {
 
@@ -36,8 +40,8 @@ public class RootViewModel {
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ModuleStore moduleStore,
-                         FileDatastoreAccess fileAccess, SnapshotStore
-                                     snapshotStore) {
+                         final FileDatastoreAccess fileAccess, SnapshotStore
+                                 snapshotStore) {
         this.sessionStore = sessionStore;
         this.moduleStore = moduleStore;
         this.fileAccess = fileAccess;
@@ -88,14 +92,17 @@ public class RootViewModel {
         long sessionId = loadedSession.getSessionId();
         Layouter layouter = module.getLayouter();
 
-        snapshotStore.addSnapshotPane(sessionId, layouter.layout(loadedSession
-                .getFirstSnapshot()));
+        //TODO: maybe do work in different thread
+        loadedSession.getSnapshots().forEach(s -> {
+            snapshotStore.addSnapshot(sessionId, s);
+            snapshotStore.addSnapshotPane(sessionId, layouter.layout(s));
+        });
     }
 
     private class SessionPropertyChangeListener implements
             PropertyChangeListener {
         @Override
-        public void propertyChange(PropertyChangeEvent event) {
+        public void propertyChange(final PropertyChangeEvent event) {
             logger.debug("SessionStore has updated. Update ListView");
             List<Session> sessions = sessionStore.getSessions();
 

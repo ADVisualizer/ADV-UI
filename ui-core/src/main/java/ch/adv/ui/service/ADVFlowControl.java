@@ -4,6 +4,7 @@ import ch.adv.ui.ADVModule;
 import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
 import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.logic.model.Snapshot;
 import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.presentation.SnapshotStore;
 import com.google.inject.Inject;
@@ -25,8 +26,8 @@ public class ADVFlowControl {
             (ADVFlowControl.class);
 
     @Inject
-    public ADVFlowControl(ModuleStore moduleStore, SessionStore sessionStore,
-                          SnapshotStore snapshotStore) {
+    public ADVFlowControl(final ModuleStore moduleStore, SessionStore
+            sessionStore, final SnapshotStore snapshotStore) {
         this.moduleStore = moduleStore;
         this.sessionStore = sessionStore;
         this.snapshotStore = snapshotStore;
@@ -48,8 +49,11 @@ public class ADVFlowControl {
         long sessionId = session.getSessionId();
         Layouter layouter = currentModule.getLayouter();
 
-        snapshotStore.addSnapshotPane(sessionId, layouter.layout(session
-                .getFirstSnapshot()));
+        Snapshot newSnapshot = session.getFirstSnapshot();
+
+        snapshotStore.addSnapshotPane(sessionId, layouter.layout(newSnapshot));
+
+        snapshotStore.addSnapshot(sessionId, newSnapshot);
     }
 
 }

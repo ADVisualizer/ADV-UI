@@ -16,6 +16,7 @@
         <module name="JavadocMethod">
             <property name="allowMissingPropertyJavadoc" value="true"/>
             <property name="excludeScope" value="private"/>
+            <property name="tokens" value="METHOD_DEF,ANNOTATION_FIELD_DEF"/>
         </module>
         <module name="JavadocType"/>
         <module name="JavadocVariable">

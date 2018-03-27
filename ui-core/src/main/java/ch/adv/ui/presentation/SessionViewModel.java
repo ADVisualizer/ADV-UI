@@ -1,6 +1,7 @@
 package ch.adv.ui.presentation;
 
 import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.logic.model.Snapshot;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -14,33 +15,42 @@ import javax.inject.Inject;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * Handles presentation logic for the {@link SessionView}. Delegates tasks to
+ * the business logic layer.
+ */
 public class SessionViewModel {
 
     private Session session;
 
     private final ObservableList<Pane> availableSnapshotPanes;
-    private final ObjectProperty<Pane> currentSnapshotPane;
+    private final ObjectProperty<Pane> currentSnapshotPaneProperty;
+    private final ObjectProperty<String> currentSnapshotDescriptionProperty;
     private final SnapshotStore snapshotStore;
 
 
-    private static final Logger logger = LoggerFactory.getLogger
-            (SessionViewModel.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            SessionViewModel.class);
 
     @Inject
-    public SessionViewModel(RootViewModel rootViewModel, SnapshotStore
+    public SessionViewModel(final RootViewModel rootViewModel, SnapshotStore
             snapshotStore) {
         logger.debug("init sessionViewModel");
         this.availableSnapshotPanes = FXCollections.observableArrayList();
-        this.currentSnapshotPane = new SimpleObjectProperty<>();
+        this.currentSnapshotPaneProperty = new SimpleObjectProperty<>();
+        this.currentSnapshotDescriptionProperty = new SimpleObjectProperty<>();
         this.snapshotStore = snapshotStore;
         this.session = rootViewModel.currentSessionProperty().get();
 
         snapshotStore.addPropertyChangeListener(session.getSessionId(), new
                 SnapshotPropertyChangeListener());
 
-        this.availableSnapshotPanes.addAll(snapshotStore.getSnapshotPanes
-                (session.getSessionId()));
-        this.currentSnapshotPane.set(availableSnapshotPanes.get(0));
+        this.availableSnapshotPanes.addAll(snapshotStore.getSnapshotPanes(
+                session.getSessionId()));
+        this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
+        String snapshotDescription = snapshotStore.getSnapshots(session
+                .getSessionId()).get(0).getSnapshotDescription();
+        this.currentSnapshotDescriptionProperty.set(snapshotDescription);
     }
 
     public ObservableList<Pane> getAvailableSnapshotPanes() {
@@ -48,10 +58,14 @@ public class SessionViewModel {
     }
 
     public ObjectProperty<Pane> currentSnapshotPaneProperty() {
-        return currentSnapshotPane;
+        return currentSnapshotPaneProperty;
     }
 
-    public void setSession(Session session) {
+    public ObjectProperty<String> currentSnapshotDescriptionProperty() {
+        return currentSnapshotDescriptionProperty;
+    }
+
+    public void setSession(final Session session) {
         this.session = session;
     }
 
@@ -61,12 +75,18 @@ public class SessionViewModel {
         public void propertyChange(PropertyChangeEvent event) {
             Pane newSnapshot = (Pane) event.getNewValue();
 
-            logger.debug("SnapshotStore for session {} has updated. Add {} to" +
-                            " available snapshots", session.getSessionId(),
+            logger.debug("SnapshotStore for session {} has updated. Add {} to"
+                            + " available snapshots", session.getSessionId(),
                     newSnapshot);
+
+
+            Snapshot s = snapshotStore.getNewestSnapshot(
+                    session.getSessionId());
 
             Platform.runLater(() -> {
                 availableSnapshotPanes.add(newSnapshot);
+                currentSnapshotDescriptionProperty.set(s
+                        .getSnapshotDescription());
             });
         }
     }

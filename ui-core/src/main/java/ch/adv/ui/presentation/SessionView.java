@@ -1,26 +1,25 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.logic.model.Session;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-
+/**
+ * The JavaFX Controller class for session-view.fxml. Initializes the view
+ * and holds bindings to the {@link SessionViewModel}.
+ */
 public class SessionView {
 
-    public static final double NO_MARGIN_ANCHOR = 0.0;
+    private static final double NO_MARGIN_ANCHOR = 0.0;
     @FXML
     private Button replayButton;
 
@@ -66,8 +65,10 @@ public class SessionView {
             .class);
 
     @Inject
-    public SessionView(SessionViewModel sessionViewModel, FontAwesomeIconView
-            fontAwesomePauseView, FontAwesomeIconView fontAwesomePlayView) {
+    public SessionView(final SessionViewModel sessionViewModel,
+                       FontAwesomeIconView
+            fontAwesomePauseView, final FontAwesomeIconView
+                                   fontAwesomePlayView) {
         this.sessionViewModel = sessionViewModel;
 
         this.pauseIcon = fontAwesomePauseView;
@@ -97,6 +98,8 @@ public class SessionView {
                 -> {
             setCurrentSnapshotAsContent();
         });
+        this.snapshotDescription.textProperty().bind(sessionViewModel
+                .currentSnapshotDescriptionProperty());
 
 
     }
@@ -108,7 +111,7 @@ public class SessionView {
         setAnchors(currentSnapshot);
     }
 
-    private void setAnchors(Pane currentSnapshot) {
+    private void setAnchors(final Pane currentSnapshot) {
         AnchorPane.setBottomAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
         AnchorPane.setTopAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
         AnchorPane.setLeftAnchor(currentSnapshot, NO_MARGIN_ANCHOR);

@@ -12,11 +12,9 @@ import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
-import org.jukito.TestScope;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.HashMap;
@@ -25,7 +23,6 @@ import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @RunWith(JukitoRunner.class)
 public class ADVFlowControlTest {

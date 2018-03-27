@@ -52,8 +52,14 @@ public class Session {
         return snapshots;
     }
 
-    public Snapshot getFirstSnapshot(){
-        if (snapshots.isEmpty()){
+    /**
+     * Returns the first Snapshot (index 0) of all snapshots if it exists.
+     * Otherwise returns a new Snapshot.
+     *
+     * @return the first Snapshot or a new Snapshot
+     */
+    public Snapshot getFirstSnapshot() {
+        if (snapshots.isEmpty()) {
             return new Snapshot();
         }
         return snapshots.get(0);

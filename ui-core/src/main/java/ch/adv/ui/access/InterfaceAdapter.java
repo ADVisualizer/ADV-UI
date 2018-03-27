@@ -13,13 +13,14 @@ public class InterfaceAdapter<T> implements JsonDeserializer<T> {
 
     private final Class className;
 
-    public InterfaceAdapter(Class className) {
+    public InterfaceAdapter(final Class className) {
         this.className = className;
     }
 
     /**
      * @inheritDoc
      */
+    @Override
     public T deserialize(JsonElement jsonElement, Type type,
                          JsonDeserializationContext context)
             throws JsonParseException {
