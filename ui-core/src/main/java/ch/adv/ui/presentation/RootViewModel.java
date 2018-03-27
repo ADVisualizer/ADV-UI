@@ -1,6 +1,6 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.ADVModule;
+import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.access.DatastoreAccess;
 import ch.adv.ui.access.FileDatastoreAccess;
 import ch.adv.ui.logic.ModuleStore;

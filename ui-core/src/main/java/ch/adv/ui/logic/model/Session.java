@@ -1,6 +1,6 @@
 package ch.adv.ui.logic.model;
 
-import ch.adv.ui.ADVModule;
+import ch.adv.ui.logic.ADVModule;
 
 import java.util.ArrayList;
 import java.util.List;
