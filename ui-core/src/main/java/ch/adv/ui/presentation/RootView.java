@@ -52,7 +52,6 @@ public class RootView {
                 ("ADV files (*.adv)",
                         "*.adv");
 
-        FontAwesomeIconView test = new FontAwesomeIconView();
         fileChooser.getExtensionFilters().add(extensionFilter);
     }
 
