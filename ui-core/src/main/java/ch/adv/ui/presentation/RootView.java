@@ -99,27 +99,21 @@ public class RootView {
                                        observableValue, Session oldSession,
                                Session session) {
         if (session != null) {
-            Node sessionView = resourceLocator.load(ResourceLocator
-                    .Resource.SESSION_VIEW_FXML);
 
             Optional<Tab> existingTab = sessionTabPane.getTabs()
                     .stream()
-                    .filter(t -> t.getText().equals(session
-                            .toString()))
+                    .filter(t -> t.getText().equals(session.toString()))
                     .findFirst();
-            Tab newTab = existingTab.orElse(new Tab(session
-                    .toString(), sessionView));
 
             if (!existingTab.isPresent()) {
+                Node sessionView = resourceLocator.load(ResourceLocator
+                        .Resource.SESSION_VIEW_FXML);
+                Tab newTab = new Tab(session.toString(), sessionView);
                 sessionTabPane.getTabs().add(newTab);
+                sessionTabPane.getSelectionModel().select(newTab);
+            } else {
+                sessionTabPane.getSelectionModel().select(existingTab.get());
             }
-
-            SingleSelectionModel<Tab> selectionModel =
-                    sessionTabPane
-                            .getSelectionModel();
-            selectionModel.select(newTab);
-            logger.debug("selected new tab for {}", session
-                    .getSessionId());
         }
     }
 

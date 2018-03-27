@@ -7,12 +7,11 @@ import ch.adv.ui.logic.model.ADVRelation;
 import ch.adv.ui.logic.model.Session;
 import ch.adv.ui.logic.model.styles.ADVDefaultStyle;
 import ch.adv.ui.logic.model.styles.ADVStyle;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Type;
 
 /**
  * Parses a json of an array session to a Session object.

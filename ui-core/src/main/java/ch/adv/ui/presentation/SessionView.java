@@ -7,7 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,55 +21,41 @@ import javax.inject.Inject;
 public class SessionView {
 
     private static final double NO_MARGIN_ANCHOR = 0.0;
-    @FXML
-    private Button replayButton;
-
-    @FXML
-    private Button cancelReplayButton;
-
-    @FXML
-    private Button stepFirstButton;
-
-    @FXML
-    private Button stepBackwardButton;
-
-    @FXML
-    private Button stepForwardButton;
-
-    @FXML
-    private Button stepLastButton;
-
-    @FXML
-    private Slider replaySpeedSlider;
-
-    @FXML
-    private ProgressBar stepProgressBar;
-
-    @FXML
-    private AnchorPane contentPane;
-
-    @FXML
-    private TextArea snapshotDescription;
-
-    @Inject
-    private ReplayController replayController;
-
-    @Inject
-    private ReplaySliderStringConverter replaySliderStringConverter;
-
-    private final SessionViewModel sessionViewModel;
-
-    private final FontAwesomeIconView pauseIcon;
-    private final FontAwesomeIconView playIcon;
-
     private static final Logger logger = LoggerFactory.getLogger(SessionView
             .class);
+    private final SessionViewModel sessionViewModel;
+    private final FontAwesomeIconView pauseIcon;
+    private final FontAwesomeIconView playIcon;
+    @FXML
+    private Button replayButton;
+    @FXML
+    private Button cancelReplayButton;
+    @FXML
+    private Button stepFirstButton;
+    @FXML
+    private Button stepBackwardButton;
+    @FXML
+    private Button stepForwardButton;
+    @FXML
+    private Button stepLastButton;
+    @FXML
+    private Slider replaySpeedSlider;
+    @FXML
+    private ProgressBar stepProgressBar;
+    @FXML
+    private AnchorPane contentPane;
+    @FXML
+    private TextArea snapshotDescription;
+    @Inject
+    private ReplayController replayController;
+    @Inject
+    private ReplaySliderStringConverter replaySliderStringConverter;
 
     @Inject
     public SessionView(final SessionViewModel sessionViewModel,
                        FontAwesomeIconView
-            fontAwesomePauseView, final FontAwesomeIconView
-                                   fontAwesomePlayView) {
+                               fontAwesomePauseView, final FontAwesomeIconView
+                               fontAwesomePlayView) {
         this.sessionViewModel = sessionViewModel;
 
         this.pauseIcon = fontAwesomePauseView;
@@ -93,11 +80,9 @@ public class SessionView {
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
 
         setCurrentSnapshotAsContent();
-        sessionViewModel
-                .currentSnapshotPaneProperty().addListener((event, oldV, newV)
-                -> {
-            setCurrentSnapshotAsContent();
-        });
+        sessionViewModel.currentSnapshotPaneProperty().addListener(
+                (event, oldV, newV) -> setCurrentSnapshotAsContent());
+
         this.snapshotDescription.textProperty().bind(sessionViewModel
                 .currentSnapshotDescriptionProperty());
 
@@ -105,8 +90,8 @@ public class SessionView {
     }
 
     private void setCurrentSnapshotAsContent() {
-        Pane currentSnapshot = sessionViewModel
-                .currentSnapshotPaneProperty().get();
+        Pane currentSnapshot = sessionViewModel.currentSnapshotPaneProperty()
+                .get();
         this.contentPane.getChildren().add(currentSnapshot);
         setAnchors(currentSnapshot);
     }

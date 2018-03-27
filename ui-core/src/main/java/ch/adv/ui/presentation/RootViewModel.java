@@ -84,6 +84,7 @@ public class RootViewModel {
 
     /**
      * Loads a existing session from filesystem.
+     *
      * @param file file to open
      */
     public void loadSession(File file) {
