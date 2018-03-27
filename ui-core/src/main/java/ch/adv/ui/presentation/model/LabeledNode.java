@@ -21,18 +21,18 @@ public class LabeledNode extends StackPane {
         getChildren().addAll(e, l);
     }
 
-    private void bindProperties() {
-        e.centerXProperty().bind(this.x);
-        e.centerYProperty().bind(this.y);
-        e.radiusXProperty().bind(this.widthProperty().divide(2));
-        e.radiusYProperty().bind(this.heightProperty().divide(2));
-    }
-
     private void initializeFields() {
         l = new Label();
         e = new Ellipse();
         this.x = new SimpleDoubleProperty();
         this.y = new SimpleDoubleProperty();
+    }
+
+    private void bindProperties() {
+        e.centerXProperty().bind(this.x);
+        e.centerYProperty().bind(this.y);
+        e.radiusXProperty().bind(this.widthProperty().divide(2));
+        e.radiusYProperty().bind(this.heightProperty().divide(2));
     }
 
     public void setX(int x) {

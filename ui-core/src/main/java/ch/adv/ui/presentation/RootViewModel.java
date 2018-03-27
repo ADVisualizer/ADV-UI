@@ -15,11 +15,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 
+/**
+ * Handles presentation logic for the {@link RootView}. Delegates tasks to
+ * the business logic layer.
+ */
+@Singleton
 public class RootViewModel {
 
     private final ObservableList<Session> availableSessions;
@@ -27,16 +33,19 @@ public class RootViewModel {
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final ModuleStore moduleStore;
+    private final SnapshotStore snapshotStore;
 
     private static final Logger logger = LoggerFactory.getLogger
             (RootViewModel.class);
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ModuleStore moduleStore,
-                         FileDatastoreAccess fileAccess) {
+                         final FileDatastoreAccess fileAccess, SnapshotStore
+                                 snapshotStore) {
         this.sessionStore = sessionStore;
         this.moduleStore = moduleStore;
         this.fileAccess = fileAccess;
+        this.snapshotStore = snapshotStore;
 
         this.availableSessions = FXCollections.observableArrayList();
         this.currentSession = new SimpleObjectProperty<>();
@@ -79,14 +88,22 @@ public class RootViewModel {
         Session loadedSession = module.getParser().parse(json);
         loadedSession.setModule(module);
         sessionStore.addSession(loadedSession, true);
+
+        long sessionId = loadedSession.getSessionId();
+        Layouter layouter = module.getLayouter();
+
+        //TODO: maybe do work in different thread
+        loadedSession.getSnapshots().forEach(s -> {
+            snapshotStore.addSnapshot(sessionId, s);
+            snapshotStore.addSnapshotPane(sessionId, layouter.layout(s));
+        });
     }
 
     private class SessionPropertyChangeListener implements
             PropertyChangeListener {
         @Override
-        public void propertyChange(PropertyChangeEvent evt) {
+        public void propertyChange(final PropertyChangeEvent event) {
             logger.debug("SessionStore has updated. Update ListView");
-            logger.info(evt.getPropertyName());
             List<Session> sessions = sessionStore.getSessions();
 
             Platform.runLater(() -> {

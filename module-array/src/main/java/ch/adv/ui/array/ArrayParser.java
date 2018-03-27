@@ -1,12 +1,13 @@
 package ch.adv.ui.array;
 
+import ch.adv.ui.access.InterfaceAdapter;
 import ch.adv.ui.access.Parser;
 import ch.adv.ui.logic.model.ADVElement;
 import ch.adv.ui.logic.model.ADVRelation;
 import ch.adv.ui.logic.model.Session;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.InstanceCreator;
+import ch.adv.ui.logic.model.styles.ADVDefaultStyle;
+import ch.adv.ui.logic.model.styles.ADVStyle;
+import com.google.gson.*;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +31,12 @@ public class ArrayParser implements Parser {
     public ArrayParser() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ADVElement.class, new
-                ArrayElementInstanceCreator());
+                InterfaceAdapter(ArrayElement.class));
         gsonBuilder.registerTypeAdapter(ADVRelation.class, new
-                ArrayRelationInstanceCreator());
+                InterfaceAdapter(ArrayElement.class));
+        //TODO: handle style parsing!
+        gsonBuilder.registerTypeAdapter(ADVStyle.class, new
+                InterfaceAdapter(ADVDefaultStyle.class));
         gson = gsonBuilder.create();
     }
 
@@ -44,38 +48,6 @@ public class ArrayParser implements Parser {
         logger.debug("Parsing json: \n {}", json);
         Session session = gson.fromJson(json, Session.class);
         return session;
-    }
-
-    /**
-     * Gson Instance creator for @see{ArrayElement}s
-     */
-    private static class ArrayElementInstanceCreator implements
-            InstanceCreator<ADVElement> {
-
-        /**
-         * @inheritDoc
-         */
-        @Override
-        public ADVElement createInstance(Type type) {
-            return new ArrayElement();
-        }
-
-    }
-
-    /**
-     * Gson Instance creator for {@link ch.adv.ui.array.ArrayRelation}
-     */
-    private static class ArrayRelationInstanceCreator implements
-            InstanceCreator<ADVRelation> {
-
-        /**
-         * @inheritDoc
-         */
-        @Override
-        public ADVRelation createInstance(Type type) {
-            return new ArrayRelation();
-        }
-
     }
 
 }

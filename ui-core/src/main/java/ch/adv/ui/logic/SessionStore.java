@@ -1,7 +1,6 @@
 package ch.adv.ui.logic;
 
 import ch.adv.ui.logic.model.Session;
-import ch.adv.ui.logic.model.Snapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,13 +14,13 @@ import java.util.Map;
 
 
 /**
- *
+ * Holds all active sessions. Fires change event, if new session is added or
+ * a session is removed.
  */
 @Singleton
 public class SessionStore {
 
     private Session currentSession;
-    private Snapshot currentSnapshot;
 
     private final Map<Long, Session> sessions;
     private final PropertyChangeSupport changeSupport;
@@ -101,19 +100,6 @@ public class SessionStore {
 
     public Session getCurrentSession() {
         return currentSession;
-    }
-
-    /**
-     * @return snapshots of current session or empty List if no current
-     * session is set.
-     */
-    public List<Snapshot> getSnapshots() {
-        if (currentSession != null) {
-            return currentSession.getSnapshots();
-        }
-        logger.debug("No current session is set. Returning empty Snapshot " +
-                "list.");
-        return new ArrayList<>();
     }
 
     /**

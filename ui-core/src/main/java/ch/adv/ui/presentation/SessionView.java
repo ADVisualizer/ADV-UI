@@ -7,15 +7,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-
+/**
+ * The JavaFX Controller class for session-view.fxml. Initializes the view
+ * and holds bindings to the {@link SessionViewModel}.
+ */
 public class SessionView {
 
+    private static final double NO_MARGIN_ANCHOR = 0.0;
     @FXML
     private Button replayButton;
 
@@ -52,6 +56,7 @@ public class SessionView {
     @Inject
     private ReplaySliderStringConverter replaySliderStringConverter;
 
+    private final SessionViewModel sessionViewModel;
 
     private final FontAwesomeIconView pauseIcon;
     private final FontAwesomeIconView playIcon;
@@ -59,12 +64,19 @@ public class SessionView {
     private static final Logger logger = LoggerFactory.getLogger(SessionView
             .class);
 
-    public SessionView() {
-        this.pauseIcon = new FontAwesomeIconView();
+    @Inject
+    public SessionView(final SessionViewModel sessionViewModel,
+                       FontAwesomeIconView
+            fontAwesomePauseView, final FontAwesomeIconView
+                                   fontAwesomePlayView) {
+        this.sessionViewModel = sessionViewModel;
+
+        this.pauseIcon = fontAwesomePauseView;
         pauseIcon.setIcon(FontAwesomeIcon.PAUSE);
 
-        this.playIcon = new FontAwesomeIconView();
+        this.playIcon = fontAwesomePlayView;
         playIcon.setIcon(FontAwesomeIcon.PLAY);
+
     }
 
     @FXML
@@ -79,6 +91,31 @@ public class SessionView {
         replayController.getReplaySpeed().bind(replaySpeedSlider
                 .valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
+
+        setCurrentSnapshotAsContent();
+        sessionViewModel
+                .currentSnapshotPaneProperty().addListener((event, oldV, newV)
+                -> {
+            setCurrentSnapshotAsContent();
+        });
+        this.snapshotDescription.textProperty().bind(sessionViewModel
+                .currentSnapshotDescriptionProperty());
+
+
+    }
+
+    private void setCurrentSnapshotAsContent() {
+        Pane currentSnapshot = sessionViewModel
+                .currentSnapshotPaneProperty().get();
+        this.contentPane.getChildren().add(currentSnapshot);
+        setAnchors(currentSnapshot);
+    }
+
+    private void setAnchors(final Pane currentSnapshot) {
+        AnchorPane.setBottomAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
+        AnchorPane.setTopAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
+        AnchorPane.setLeftAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
+        AnchorPane.setRightAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
     }
 
     private void handleReplayButtonClicked() {
