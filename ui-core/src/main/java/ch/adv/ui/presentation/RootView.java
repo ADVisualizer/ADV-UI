@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -80,7 +81,6 @@ public class RootView {
     }
 
     private void openNewTab() {
-
         rootViewModel.currentSessionProperty().addListener(this::openTabAction);
         sessionListView.setOnMouseClicked(e -> {
             int selectedItem = sessionListView.getSelectionModel()
@@ -117,10 +117,10 @@ public class RootView {
         }
     }
 
-    private void handleRemoveSessionClicked(final Session session) {
+    private void handleRemoveSessionClicked(final Session session, final
+    MouseEvent event) {
         logger.info("Removing session {} ({})", session.getSessionName(),
                 session.getSessionId());
-        rootViewModel.removeSession(session);
         Optional<Tab> existingTab = sessionTabPane.getTabs()
                 .stream()
                 .filter(t -> t.getText().equals(session.toString()))
@@ -129,6 +129,9 @@ public class RootView {
         if (existingTab.isPresent()) {
             sessionTabPane.getTabs().remove(existingTab.get());
         }
+
+        rootViewModel.removeSession(session);
+        event.consume();
     }
 
     private void handleLoadSessionClicked() {
@@ -181,7 +184,7 @@ public class RootView {
             removeIcon.setGlyphSize(ICON_SIZE);
             removeButton.setGraphic(removeIcon);
             removeButton.setOnMouseClicked(e -> handleRemoveSessionClicked
-                    (getItem()));
+                    (getItem(), e));
 
             this.saveIcon = new FontAwesomeIconView();
             saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
