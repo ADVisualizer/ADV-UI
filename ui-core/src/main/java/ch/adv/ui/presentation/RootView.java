@@ -5,7 +5,8 @@ import ch.adv.ui.util.ResourceLocator;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -25,26 +26,20 @@ import java.util.Optional;
 
 public class RootView {
 
-    @FXML
-    private MenuItem menuItemClose;
-
-    @FXML
-    private Button loadSessionButton;
-
-    @FXML
-    private ListView<Session> sessionListView;
-
-    @FXML
-    private TabPane sessionTabPane;
-
-    @Inject
-    private ResourceLocator resourceLocator;
-
-    private final RootViewModel rootViewModel;
-    private final FileChooser fileChooser = new FileChooser();
-
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
+    private final RootViewModel rootViewModel;
+    private final FileChooser fileChooser = new FileChooser();
+    @FXML
+    private MenuItem menuItemClose;
+    @FXML
+    private Button loadSessionButton;
+    @FXML
+    private ListView<Session> sessionListView;
+    @FXML
+    private TabPane sessionTabPane;
+    @Inject
+    private ResourceLocator resourceLocator;
 
     @Inject
     public RootView(RootViewModel viewModel) {
@@ -54,7 +49,6 @@ public class RootView {
                 ("ADV files (*.adv)",
                         "*.adv");
         fileChooser.getExtensionFilters().add(extensionFilter);
-
     }
 
     @FXML
@@ -64,6 +58,7 @@ public class RootView {
         sessionListView.setItems(rootViewModel.getAvailableSessions());
         sessionListView.setCellFactory(lv -> new CustomListCell());
 
+        handleLogoVisibility();
         openNewTab();
     }
 
@@ -72,13 +67,60 @@ public class RootView {
         System.exit(0);
     }
 
-    private void openNewTab() {
-        sessionListView.getSelectionModel().selectedItemProperty()
-                .addListener(new CreateTabListener().invoke());
+    private void handleLogoVisibility() {
+        sessionTabPane.getStyleClass().add("logo");
+        sessionTabPane.getTabs().addListener((ListChangeListener) c -> {
+            int tabNumber = sessionTabPane.getTabs().size();
+            if (tabNumber == 0) {
+                sessionTabPane.getStyleClass().add("logo");
+            } else {
+                sessionTabPane.getStyleClass().remove("logo");
+            }
+        });
+    }
 
-        rootViewModel.currentSessionProperty().addListener(new
-                CreateTabListener()
-                .invoke());
+    private void openNewTab() {
+
+        rootViewModel.currentSessionProperty().addListener(this::openTabAction);
+        sessionListView.setOnMouseClicked(e -> {
+            int selectedItem = sessionListView.getSelectionModel()
+                    .getSelectedIndex();
+            if (sessionListView.getFocusModel().isFocused(selectedItem)) {
+                sessionListView.getSelectionModel().select(-1);
+                sessionListView.getSelectionModel().select(selectedItem);
+            }
+        });
+        sessionListView.getSelectionModel().selectedItemProperty().addListener(
+                this::openTabAction);
+
+    }
+
+    private void openTabAction(ObservableValue<? extends Session>
+                                       observableValue, Session oldSession,
+                               Session session) {
+        if (session != null) {
+            Node sessionView = resourceLocator.load(ResourceLocator
+                    .Resource.SESSION_VIEW_FXML);
+
+            Optional<Tab> existingTab = sessionTabPane.getTabs()
+                    .stream()
+                    .filter(t -> t.getText().equals(session
+                            .toString()))
+                    .findFirst();
+            Tab newTab = existingTab.orElse(new Tab(session
+                    .toString(), sessionView));
+
+            if (!existingTab.isPresent()) {
+                sessionTabPane.getTabs().add(newTab);
+            }
+
+            SingleSelectionModel<Tab> selectionModel =
+                    sessionTabPane
+                            .getSelectionModel();
+            selectionModel.select(newTab);
+            logger.debug("selected new tab for {}", session
+                    .getSessionId());
+        }
     }
 
     private void handleRemoveSessionClicked(final Session session) {
@@ -89,6 +131,7 @@ public class RootView {
                 .stream()
                 .filter(t -> t.getText().equals(session.toString()))
                 .findFirst();
+
         if (existingTab.isPresent()) {
             sessionTabPane.getTabs().remove(existingTab.get());
         }
@@ -126,17 +169,15 @@ public class RootView {
 
     private class CustomListCell extends ListCell<Session> {
 
+        private static final int ICON_SIZE = 16;
+        private static final int SPACING = 12;
+        private final FontAwesomeIconView saveIcon;
+        private final FontAwesomeIconView removeIcon;
         private HBox hbox = new HBox();
         private Label label = new Label("(empty)");
         private Pane pane = new Pane();
         private Label removeButton = new Label();
         private Label saveButton = new Label();
-
-        private final FontAwesomeIconView saveIcon;
-        private final FontAwesomeIconView removeIcon;
-
-        private static final int ICON_SIZE = 16;
-        private static final int SPACING = 12;
 
         CustomListCell() {
             super();
@@ -181,33 +222,4 @@ public class RootView {
         }
     }
 
-    private class CreateTabListener {
-        public ChangeListener<Session> invoke() {
-            return (observable, oldValue, session) -> {
-
-                if (session != null) {
-                    Node sessionView = resourceLocator.load(ResourceLocator
-                            .Resource.SESSION_VIEW_FXML);
-
-                    Optional<Tab> existingTab = sessionTabPane.getTabs()
-                            .stream()
-                            .filter(t -> t.getText().equals(session
-                                    .toString()))
-                            .findFirst();
-                    Tab newTab = existingTab.orElse(new Tab(session
-                            .toString(), sessionView));
-
-                    if (!existingTab.isPresent()) {
-                        sessionTabPane.getTabs().add(newTab);
-                    }
-
-                    SingleSelectionModel<Tab> selectionModel =
-                            sessionTabPane
-                                    .getSelectionModel();
-                    selectionModel.select(newTab);
-                    logger.debug("selected new tab for {}", session.getSessionId());
-                }
-            };
-        }
-    }
 }

@@ -56,8 +56,8 @@
             </AnchorPane>
             <AnchorPane>
                 <children>
-                    <TabPane fx:id="sessionTabPane" styleClass="logo" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0"
-                             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    <TabPane fx:id="sessionTabPane" tabClosingPolicy="ALL_TABS" AnchorPane.bottomAnchor="0.0"
+                             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                 </children>
             </AnchorPane>
         </items>
