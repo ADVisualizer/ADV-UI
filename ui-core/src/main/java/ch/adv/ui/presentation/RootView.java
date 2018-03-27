@@ -59,7 +59,8 @@ public class RootView {
     public void initialize() {
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
-        clearAllSessionsButton.setOnAction(e -> handleClearAllSessionsClicked());
+        clearAllSessionsButton.setOnAction(e -> handleClearAllSessionsClicked
+                ());
         sessionListView.setItems(rootViewModel.getAvailableSessions());
         sessionListView.setCellFactory(lv -> new CustomListCell());
 

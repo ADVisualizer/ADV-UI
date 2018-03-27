@@ -1,8 +1,8 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.access.Parser;
 import ch.adv.ui.access.Stringifyer;
+import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.presentation.Layouter;
 
 /**
