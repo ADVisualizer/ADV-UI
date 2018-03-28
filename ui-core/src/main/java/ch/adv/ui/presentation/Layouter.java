@@ -15,5 +15,5 @@ public interface Layouter {
      * @param snapshot to be layouted
      * @return a JavaFX Pane containing the snapshot elements
      */
-    Pane layout(final Snapshot snapshot);
+    Pane layout(Snapshot snapshot);
 }

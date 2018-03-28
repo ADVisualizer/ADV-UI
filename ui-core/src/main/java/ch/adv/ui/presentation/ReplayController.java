@@ -11,6 +11,8 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class ReplayController {
+    private static final double SLIDER_MIN = 1.0;
+    private static final double SLIDER_MAX = 3.0;
 
     private DoubleProperty replaySpeed;
 
@@ -18,7 +20,16 @@ public class ReplayController {
         replaySpeed = new SimpleDoubleProperty();
     }
 
-    public DoubleProperty getReplaySpeed() {
+    public DoubleProperty getReplaySpeedProperty() {
         return replaySpeed;
     }
+
+    /**
+     * @return the currently selected replay speed as a relative value [1..3]
+     */
+    public long getReplaySpeed() {
+        double speed = SLIDER_MIN + SLIDER_MAX - replaySpeed.get();
+        return (long) speed;
+    }
+
 }

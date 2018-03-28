@@ -2,6 +2,7 @@ package ch.adv.ui.presentation;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
@@ -67,20 +68,20 @@ public class SessionView {
     }
 
     /**
-     * Will be called once on an controller when the contents of
-     * its associated document have been completely loaded
+     * Will be called once on a controller when the content of
+     * its associated document has been completely loaded
      */
     @FXML
     public void initialize() {
-        replayButton.setOnAction(e -> handleReplayButtonClicked());
-        cancelReplayButton.setOnAction(e -> handleCancelReplayButtonClicked());
-        stepFirstButton.setOnAction(e -> handleStepFirstButtonClicked());
-        stepBackwardButton.setOnAction(e -> handleStepBackwardButtonClicked());
-        stepForwardButton.setOnAction(e -> handleStepForwardButtonClicked());
-        stepLastButton.setOnAction(e -> handleStepLastButtonClicked());
+        setButtonActions();
+        bindButtonDisableProperties();
+        bindReplayIcons();
 
-        replayController.getReplaySpeed().bind(replaySpeedSlider
-                .valueProperty());
+        replaySpeedSlider.disableProperty().bind(sessionViewModel
+                .getSpeedsliderDisableProperty());
+
+        replayController.getReplaySpeedProperty()
+                .bindBidirectional(replaySpeedSlider.valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
 
         setCurrentSnapshotAsContent();
@@ -89,13 +90,45 @@ public class SessionView {
 
         this.snapshotDescription.textProperty().bind(sessionViewModel
                 .getCurrentSnapshotDescriptionProperty());
+    }
 
+    private void setButtonActions() {
+        replayButton.setOnAction(e -> handleReplayButtonClicked());
+        cancelReplayButton.setOnAction(e -> handleCancelReplayButtonClicked());
+        stepFirstButton.setOnAction(e -> handleStepFirstButtonClicked());
+        stepBackwardButton.setOnAction(e -> handleStepBackwardButtonClicked());
+        stepForwardButton.setOnAction(e -> handleStepForwardButtonClicked());
+        stepLastButton.setOnAction(e -> handleStepLastButtonClicked());
+    }
 
+    private void bindReplayIcons() {
+        sessionViewModel.isReplayingProperty()
+                .addListener((ObservableValue<? extends Boolean> observable,
+                              Boolean oldValue, Boolean newValue) -> {
+                    if (newValue) {
+                        replayButton.setGraphic(pauseIcon);
+                    } else {
+                        replayButton.setGraphic(playIcon);
+                    }
+                });
+    }
+
+    private void bindButtonDisableProperties() {
+        stepFirstButton.disableProperty().bind(sessionViewModel
+                .getStepFirstBtnDisableProperty());
+        stepBackwardButton.disableProperty().bind(sessionViewModel
+                .getStepBackwardBtnDisableProperty());
+        stepForwardButton.disableProperty().bind(sessionViewModel
+                .getStepForwardBtnDisableProperty());
+        stepLastButton.disableProperty().bind(sessionViewModel
+                .getStepLastBtnDisableProperty());
     }
 
     private void setCurrentSnapshotAsContent() {
-        Pane currentSnapshot = sessionViewModel.getCurrentSnapshotPaneProperty()
+        Pane currentSnapshot = sessionViewModel
+                .getCurrentSnapshotPaneProperty()
                 .get();
+        this.contentPane.getChildren().clear();
         this.contentPane.getChildren().add(currentSnapshot);
         setAnchors(currentSnapshot);
     }
@@ -108,27 +141,31 @@ public class SessionView {
     }
 
     private void handleReplayButtonClicked() {
-        replayButton.setGraphic(pauseIcon);
+        if (sessionViewModel.isReplayingProperty().get()) {
+            sessionViewModel.pauseReplay();
+        } else {
+            sessionViewModel.replay();
+        }
     }
 
     private void handleCancelReplayButtonClicked() {
-        replayButton.setGraphic(playIcon);
+        sessionViewModel.cancelReplay();
     }
 
     private void handleStepFirstButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.FIRST);
     }
 
     private void handleStepBackwardButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.BACKWARD);
     }
 
     private void handleStepForwardButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.FORWARD);
     }
 
     private void handleStepLastButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.LAST);
     }
 
 }
