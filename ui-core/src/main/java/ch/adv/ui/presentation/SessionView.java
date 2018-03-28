@@ -79,6 +79,8 @@ public class SessionView {
         stepForwardButton.setOnAction(e -> handleStepForwardButtonClicked());
         stepLastButton.setOnAction(e -> handleStepLastButtonClicked());
 
+        bindButtonDisableProperties();
+
         replayController.getReplaySpeed().bind(replaySpeedSlider
                 .valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
@@ -93,9 +95,21 @@ public class SessionView {
 
     }
 
+    private void bindButtonDisableProperties() {
+        stepFirstButton.disableProperty().bind(sessionViewModel
+                .stepFirstBtnDisableProperty());
+        stepBackwardButton.disableProperty().bind(sessionViewModel
+                .stepBackwardBtnDisableProperty());
+        stepForwardButton.disableProperty().bind(sessionViewModel
+                .stepForwardBtnDisableProperty());
+        stepLastButton.disableProperty().bind(sessionViewModel
+                .stepLastBtnDisableProperty());
+    }
+
     private void setCurrentSnapshotAsContent() {
         Pane currentSnapshot = sessionViewModel.getCurrentSnapshotPaneProperty()
                 .get();
+        this.contentPane.getChildren().clear();
         this.contentPane.getChildren().add(currentSnapshot);
         setAnchors(currentSnapshot);
     }
@@ -116,19 +130,19 @@ public class SessionView {
     }
 
     private void handleStepFirstButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.FIRST);
     }
 
     private void handleStepBackwardButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.BACKWARD);
     }
 
     private void handleStepForwardButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.FORWARD);
     }
 
     private void handleStepLastButtonClicked() {
-        //TODO
+        sessionViewModel.navigateSnapshot(Navigate.LAST);
     }
 
 }

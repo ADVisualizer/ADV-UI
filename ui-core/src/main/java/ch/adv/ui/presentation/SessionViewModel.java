@@ -3,7 +3,9 @@ package ch.adv.ui.presentation;
 import ch.adv.ui.logic.model.Session;
 import ch.adv.ui.logic.model.Snapshot;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +30,11 @@ public class SessionViewModel {
     private final ObjectProperty<Pane> currentSnapshotPaneProperty;
     private final ObjectProperty<String> currentSnapshotDescriptionProperty;
     private final SnapshotStore snapshotStore;
+    private final BooleanProperty stepFirstBtnDisableProperty;
+    private final BooleanProperty stepBackwardBtnDisableProperty;
+    private final BooleanProperty stepForwardBtnDisableProperty;
+    private final BooleanProperty stepLastBtnDisableProperty;
+    private int currentSnapshotIndex;
     private Session session;
 
     @Inject
@@ -37,6 +44,10 @@ public class SessionViewModel {
         this.availableSnapshotPanes = FXCollections.observableArrayList();
         this.currentSnapshotPaneProperty = new SimpleObjectProperty<>();
         this.currentSnapshotDescriptionProperty = new SimpleObjectProperty<>();
+        this.stepFirstBtnDisableProperty = new SimpleBooleanProperty();
+        this.stepBackwardBtnDisableProperty = new SimpleBooleanProperty();
+        this.stepForwardBtnDisableProperty = new SimpleBooleanProperty();
+        this.stepLastBtnDisableProperty = new SimpleBooleanProperty();
         this.snapshotStore = snapshotStore;
         this.session = rootViewModel.getCurrentSessionPropertyProperty().get();
 
@@ -67,6 +78,84 @@ public class SessionViewModel {
         this.session = session;
     }
 
+    public void navigateSnapshot(Navigate navigate) {
+        switch (navigate) {
+            case FIRST:
+                currentSnapshotIndex = 0;
+                updateStepButtonDisabilities();
+                updateSnapshotDescription();
+                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
+                        (currentSnapshotIndex));
+                break;
+            case BACKWARD:
+                currentSnapshotIndex--;
+                updateStepButtonDisabilities();
+                updateSnapshotDescription();
+                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
+                        (currentSnapshotIndex));
+                break;
+            case FORWARD:
+                currentSnapshotIndex++;
+                updateStepButtonDisabilities();
+                updateSnapshotDescription();
+                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
+                        (currentSnapshotIndex));
+                break;
+            case LAST:
+                currentSnapshotIndex = availableSnapshotPanes.size() - 1;
+                updateStepButtonDisabilities();
+                updateSnapshotDescription();
+                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
+                        (currentSnapshotIndex));
+                break;
+        }
+    }
+
+    private void updateSnapshotDescription() {
+        Snapshot s = snapshotStore.getSnapshots(
+                session.getSessionId()).get(currentSnapshotIndex);
+        currentSnapshotDescriptionProperty.set(s.getSnapshotDescription());
+    }
+
+    private void updateStepButtonDisabilities() {
+        int maxIndex = availableSnapshotPanes.size() - 1;
+        if (maxIndex <= 1) {
+            disableStepButtons(true, true, true, true);
+        } else {
+            if (currentSnapshotIndex == 0) {
+                disableStepButtons(true, true, false, false);
+            } else if (currentSnapshotIndex == maxIndex) {
+                disableStepButtons(false, false, true, true);
+            } else {
+                disableStepButtons(false, false, false, false);
+            }
+        }
+    }
+
+    private void disableStepButtons(boolean first, boolean backward, boolean
+            forward, boolean last) {
+        stepFirstBtnDisableProperty.set(first);
+        stepBackwardBtnDisableProperty.set(backward);
+        stepForwardBtnDisableProperty.set(forward);
+        stepLastBtnDisableProperty.set(last);
+    }
+
+    public BooleanProperty stepFirstBtnDisableProperty() {
+        return stepFirstBtnDisableProperty;
+    }
+
+    public BooleanProperty stepBackwardBtnDisableProperty() {
+        return stepBackwardBtnDisableProperty;
+    }
+
+    public BooleanProperty stepForwardBtnDisableProperty() {
+        return stepForwardBtnDisableProperty;
+    }
+
+    public BooleanProperty stepLastBtnDisableProperty() {
+        return stepLastBtnDisableProperty;
+    }
+
     /**
      * Change listener if the a new snapshot was added to the snapshot store
      */
@@ -82,13 +171,9 @@ public class SessionViewModel {
                     session.getSessionId(),
                     newSnapshot);
 
-            Snapshot s = snapshotStore.getNewestSnapshot(
-                    session.getSessionId());
-
             Platform.runLater(() -> {
                 availableSnapshotPanes.add(newSnapshot);
-                currentSnapshotDescriptionProperty.set(s
-                        .getSnapshotDescription());
+                updateStepButtonDisabilities();
             });
         }
     }
