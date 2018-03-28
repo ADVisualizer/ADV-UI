@@ -52,6 +52,11 @@
                     </Button>
 
                     <ProgressBar fx:id="stepProgressBar" prefHeight="30" progress="0.0"/>
+                    <HBox spacing="5" alignment="CENTER">
+                        <Label fx:id="currentIndex"/>
+                        <Label>/</Label>
+                        <Label fx:id="maxIndex"/>
+                    </HBox>
                 </HBox>
             </items>
         </ToolBar>

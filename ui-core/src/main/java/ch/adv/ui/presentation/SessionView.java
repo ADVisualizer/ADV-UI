@@ -4,10 +4,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -43,6 +40,10 @@ public class SessionView {
     private Slider replaySpeedSlider;
     @FXML
     private ProgressBar stepProgressBar;
+    @FXML
+    private Label currentIndex;
+    @FXML
+    private Label maxIndex;
     @FXML
     private AnchorPane contentPane;
     @FXML
@@ -83,6 +84,14 @@ public class SessionView {
         replayController.getReplaySpeedProperty()
                 .bindBidirectional(replaySpeedSlider.valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
+
+        stepProgressBar.progressProperty().bind(sessionViewModel
+                .getProgressProperty());
+
+        currentIndex.textProperty().bind(sessionViewModel
+                .getCurrentIndexStringProperty());
+        maxIndex.textProperty().bind(sessionViewModel
+                .getMaxIndexStringProperty());
 
         setCurrentSnapshotAsContent();
         sessionViewModel.getCurrentSnapshotPaneProperty().addListener(
