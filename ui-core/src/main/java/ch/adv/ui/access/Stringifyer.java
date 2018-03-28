@@ -11,7 +11,8 @@ public interface Stringifyer {
     /**
      * Serializes the given Session into JSON
      *
-     * @param session
+     * @param session {@link Session} to stringify
+     * @return json string
      */
     String stringify(Session session);
 }

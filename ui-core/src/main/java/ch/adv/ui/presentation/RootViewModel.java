@@ -28,15 +28,15 @@ import java.util.List;
 @Singleton
 public class RootViewModel {
 
+    private static final Logger logger = LoggerFactory.getLogger(
+            RootViewModel.class);
+
     private final ObservableList<Session> availableSessions;
-    private final ObjectProperty<Session> currentSession;
+    private final ObjectProperty<Session> currentSessionProperty;
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final ModuleStore moduleStore;
     private final SnapshotStore snapshotStore;
-
-    private static final Logger logger = LoggerFactory.getLogger
-            (RootViewModel.class);
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ModuleStore moduleStore,
@@ -48,7 +48,7 @@ public class RootViewModel {
         this.snapshotStore = snapshotStore;
 
         this.availableSessions = FXCollections.observableArrayList();
-        this.currentSession = new SimpleObjectProperty<>();
+        this.currentSessionProperty = new SimpleObjectProperty<>();
 
         sessionStore.addPropertyChangeListener(new
                 SessionPropertyChangeListener());
@@ -58,8 +58,9 @@ public class RootViewModel {
         return availableSessions;
     }
 
-    public ObjectProperty<Session> currentSessionProperty() {
-        return currentSession;
+
+    public ObjectProperty<Session> getCurrentSessionPropertyProperty() {
+        return currentSessionProperty;
     }
 
     /**
@@ -116,7 +117,8 @@ public class RootViewModel {
             List<Session> sessions = sessionStore.getSessions();
 
             Platform.runLater(() -> {
-                currentSession.setValue(sessionStore.getCurrentSession());
+                currentSessionProperty.setValue(sessionStore
+                        .getCurrentSession());
                 availableSessions.clear();
                 availableSessions.addAll(sessions);
             });

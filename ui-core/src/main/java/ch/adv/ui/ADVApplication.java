@@ -26,8 +26,8 @@ import java.util.Map;
 @Singleton
 public class ADVApplication extends Application {
 
-    private static final Logger logger = LoggerFactory.getLogger
-            (ADVApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            ADVApplication.class);
     @Inject
     private SocketServer socketServer;
     @Inject
@@ -36,13 +36,13 @@ public class ADVApplication extends Application {
     private Image advIconImage;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         Injector injector = Guice.createInjector(new GuiceBaseModule());
         injector.injectMembers(this);
 
-        this.advIconImage = new Image(resourceLocator.getResourceAsStream
-                (ResourceLocator.Resource.ICON_IMAGE));
-        this.primaryStage = primaryStage;
+        this.primaryStage = stage;
+        this.advIconImage = new Image(resourceLocator.getResourceAsStream(
+                ResourceLocator.Resource.ICON_IMAGE));
         // use command line arguments before socketServer is started
         retrieveCLIParams();
 
@@ -67,7 +67,7 @@ public class ADVApplication extends Application {
     }
 
     private void setupStage() {
-        Parent rootLayout = resourceLocator.load(ResourceLocator.Resource
+        Parent rootLayout = resourceLocator.loadFXML(ResourceLocator.Resource
                 .ROOT_LAYOUT_FXML);
         Scene scene = new Scene(rootLayout);
 

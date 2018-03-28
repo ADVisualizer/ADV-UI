@@ -2,6 +2,9 @@ package ch.adv.ui.service;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Available commands for the ADV protocol.
+ */
 public enum ProtocolCommand {
 
     @SerializedName("TRANSMIT")

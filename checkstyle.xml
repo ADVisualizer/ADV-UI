@@ -22,9 +22,9 @@
             <property name="excludeScope" value="private"/>
         </module>
 
-        <module name="JavadocType"/>
         <module name="JavadocVariable">
             <property name="scope" value="public"/>
+            <property name="tokens" value="VARIABLE_DEF"/>
         </module>
 
         <module name="ConstantName">
@@ -45,6 +45,7 @@
             <property name="ignoreSetter" value="true"/>
         </module>
 
+        <module name="JavadocType"/>
         <module name="LocalFinalVariableName"/>
         <module name="LocalVariableName"/>
         <module name="MemberName"/>

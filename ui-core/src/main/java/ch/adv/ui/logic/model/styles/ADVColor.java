@@ -1,6 +1,10 @@
 package ch.adv.ui.logic.model.styles;
 
+/**
+ * Available CSS Colors in ADV
+ */
 public enum ADVColor {
+
     STANDARD("standard"), BLACK("black"), WHITE("white"), DARKGREY(
             "darkgrey"), GREY("grey"), LIGHTGREY("lightgrey"), BLUE(
             "blue"), LIGHTBLUE("lightblue"), RED(
@@ -16,6 +20,12 @@ public enum ADVColor {
         return color;
     }
 
+    /**
+     * Cases insensitive lookup for the color
+     *
+     * @param colorName name
+     * @return ADVColor enum instance
+     */
     public static ADVColor byName(String colorName) {
         return valueOf(colorName.toUpperCase());
     }

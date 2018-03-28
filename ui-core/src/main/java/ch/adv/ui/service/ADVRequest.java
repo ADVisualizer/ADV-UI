@@ -1,5 +1,9 @@
 package ch.adv.ui.service;
 
+
+/**
+ * Encapsulates a request from the ADV Lib.
+ */
 public class ADVRequest {
 
     private final ProtocolCommand command;

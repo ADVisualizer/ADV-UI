@@ -18,8 +18,8 @@ public class ModuleStore {
 
     private static final Map<String, ADVModule> AVAILABLE_MODULES = new
             HashMap<>();
-    private static final Logger logger = LoggerFactory.getLogger
-            (ModuleStore.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            ModuleStore.class);
     private final JsonParser jsonParser = new JsonParser();
 
     /**

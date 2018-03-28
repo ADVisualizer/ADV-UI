@@ -18,12 +18,12 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class ADVFlowControl {
 
+    private static final Logger logger = LoggerFactory.getLogger(
+            ADVFlowControl.class);
+
     private final ModuleStore moduleStore;
     private final SessionStore sessionStore;
     private final SnapshotStore snapshotStore;
-
-    private static final Logger logger = LoggerFactory.getLogger
-            (ADVFlowControl.class);
 
     @Inject
     public ADVFlowControl(final ModuleStore moduleStore, SessionStore

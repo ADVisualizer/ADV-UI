@@ -19,9 +19,8 @@ import java.nio.file.Paths;
 @Singleton
 public class FileDatastoreAccess implements DatastoreAccess {
 
-    private static final Logger logger = LoggerFactory.getLogger
-            (FileDatastoreAccess
-                    .class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            FileDatastoreAccess.class);
 
     /**
      * Reads the given file if it exists, using the jvm default charset.

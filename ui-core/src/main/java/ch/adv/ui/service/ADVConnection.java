@@ -10,6 +10,9 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * A incomming connection from the ADV Lib
+ */
 public class ADVConnection {
 
     private static final Logger logger = LoggerFactory.getLogger(ADVConnection
@@ -29,17 +32,23 @@ public class ADVConnection {
         this.gsonProvider = gsonProvider;
     }
 
+    /**
+     * Processes the incomming connection
+     *
+     * @throws IOException r/w exception
+     */
     public void process() throws IOException {
         initializeStreams();
         readData();
     }
 
     private void initializeStreams() throws IOException {
-        reader = new BufferedReader(new
-                InputStreamReader(socket.getInputStream(),
-                StandardCharsets.UTF_8));
-        writer = new PrintWriter(new OutputStreamWriter(
-                socket.getOutputStream(), StandardCharsets.UTF_8),
+        reader = new BufferedReader(
+                new InputStreamReader(socket.getInputStream(),
+                        StandardCharsets.UTF_8));
+        writer = new PrintWriter(
+                new OutputStreamWriter(socket.getOutputStream(),
+                        StandardCharsets.UTF_8),
                 true);
     }
 
@@ -48,8 +57,8 @@ public class ADVConnection {
         while ((sessionJSON = reader.readLine()) != null) {
 
             logger.debug("Parse incoming request");
-            ADVRequest request = gsonProvider.getMinifier().fromJson
-                    (sessionJSON, ADVRequest.class);
+            ADVRequest request = gsonProvider.getMinifier().fromJson(
+                    sessionJSON, ADVRequest.class);
 
             if (request.getCommand().equals(ProtocolCommand.END)) {
                 logger.info("End of session transmission");
@@ -57,8 +66,8 @@ public class ADVConnection {
             }
 
             logger.debug("Acknowledge received json");
-            ADVResponse response = new ADVResponse(ProtocolCommand
-                    .ACKNOWLEDGE);
+            ADVResponse response = new ADVResponse(
+                    ProtocolCommand.ACKNOWLEDGE);
             writer.println(response.toJson());
 
             try {
@@ -68,8 +77,8 @@ public class ADVConnection {
                 logger.error("Exception occurred during execution of "
                         + "ADV UI. Send exception to Lib", e);
 
-                ADVResponse exceptionResponse = new ADVResponse
-                        (ProtocolCommand.EXCEPTION, getStacktraceString(e));
+                ADVResponse exceptionResponse = new ADVResponse(
+                        ProtocolCommand.EXCEPTION, getStacktraceString(e));
                 writer.println(exceptionResponse.toJson());
             }
         }

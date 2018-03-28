@@ -34,6 +34,11 @@ public class SnapshotStore {
         this.changeSupport = new PropertyChangeSupport(this);
     }
 
+    /**
+     * Adds a new {@link Pane} to the Snapshot store
+     * @param sessionId related session id
+     * @param newPane the Pane to add
+     */
     public void addSnapshotPane(final long sessionId, Pane newPane) {
         List<Pane> snapshotPanes = snapshotPaneMap.get(sessionId);
         if (snapshotPanes == null) {
@@ -46,10 +51,20 @@ public class SnapshotStore {
                 newPane);
     }
 
+    /**
+     * Returns all Pane's for the given session id
+     * @param sessionId session id
+     * @return List of stored Pane's
+     */
     public List<Pane> getSnapshotPanes(final long sessionId) {
         return snapshotPaneMap.get(sessionId);
     }
 
+    /**
+     * Adds a new {@link Snapshot} to the Snapshot store
+     * @param sessionId related session id
+     * @param snapshot the session to add
+     */
     public void addSnapshot(long sessionId, final Snapshot snapshot) {
         List<Snapshot> snapshotList = snapshotMap.get(sessionId);
         if (snapshotList == null) {
@@ -59,10 +74,21 @@ public class SnapshotStore {
         snapshotList.add(snapshot);
     }
 
+    /**
+     * Returns all Snapshots for the given session id
+     * @param sessionId session id
+     * @return List of stored Snapshots
+     */
     public List<Snapshot> getSnapshots(final long sessionId) {
         return snapshotMap.get(sessionId);
     }
 
+    /**
+     * Returns the snapshot at the end of the ordered list
+     *
+     * @param sessionId session id
+     * @return Snapshot
+     */
     public Snapshot getNewestSnapshot(final long sessionId) {
         List<Snapshot> list = snapshotMap.get(sessionId);
         return list.get(list.size() - 1);

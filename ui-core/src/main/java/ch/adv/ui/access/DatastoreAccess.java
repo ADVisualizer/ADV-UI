@@ -2,7 +2,11 @@ package ch.adv.ui.access;
 
 import java.io.File;
 
+/**
+ * Datastore interface to store sessions
+ */
 public interface DatastoreAccess {
+
     /**
      * Read the file from the datastore.
      *

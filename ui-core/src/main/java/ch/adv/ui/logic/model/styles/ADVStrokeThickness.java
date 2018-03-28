@@ -1,5 +1,10 @@
 package ch.adv.ui.logic.model.styles;
 
+/**
+ * Represents a stroke thickness
+ * <p>
+ * Available options: STANDARD, BOLD, SLIGHT, FAT
+ */
 public enum ADVStrokeThickness {
 
     STANDARD("standard"), BOLD("bold"), SLIGHT("slight"), FAT("fat");
@@ -14,6 +19,12 @@ public enum ADVStrokeThickness {
         return thickness;
     }
 
+    /**
+     * Cases insensitive lookup for the stroke thickness
+     *
+     * @param ticknessName name
+     * @return stroke thickness
+     */
     public static ADVStrokeThickness byName(String ticknessName) {
         return valueOf(ticknessName.toUpperCase());
     }

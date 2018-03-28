@@ -6,6 +6,9 @@ import javafx.beans.property.SimpleDoubleProperty;
 
 import javax.inject.Singleton;
 
+/**
+ * Controller for the replay of the snapshot navigation
+ */
 @Singleton
 public class ReplayController {
 

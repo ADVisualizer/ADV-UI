@@ -20,15 +20,12 @@ import java.util.Map;
 @Singleton
 public class SessionStore {
 
-    private Session currentSession;
-
-    private final Map<Long, Session> sessions;
-    private final PropertyChangeSupport changeSupport;
-
     private static final String SESSION_EVENT = "session";
-
     private static final Logger logger = LoggerFactory.getLogger(SessionStore
             .class);
+    private final Map<Long, Session> sessions;
+    private final PropertyChangeSupport changeSupport;
+    private Session currentSession;
 
     public SessionStore() {
         this.sessions = new HashMap<>();
@@ -85,8 +82,8 @@ public class SessionStore {
 
         existing.getSnapshots().addAll(newSession.getSnapshots());
 
-        logger.info("Successfully merged new snapshots of session {} into " +
-                "existing session", existingSessionId);
+        logger.info("Successfully merged new snapshots of session {} into "
+                + "existing session", existingSessionId);
     }
 
     /**

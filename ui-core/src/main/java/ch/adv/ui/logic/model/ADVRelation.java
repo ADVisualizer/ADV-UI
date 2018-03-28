@@ -2,8 +2,16 @@ package ch.adv.ui.logic.model;
 
 import ch.adv.ui.logic.model.styles.ADVStyle;
 
+/**
+ * Represents a relation between to {@link ADVElement}
+ *
+ */
 public interface ADVRelation {
 
+    /**
+     * Returns the source {@link ADVElement} id
+     * @return id
+     */
     long getSourceElementId();
 
     /**
@@ -14,6 +22,10 @@ public interface ADVRelation {
      */
     void setSourceElementId(long sourceElementId);
 
+    /**
+     * Returns the target {@link ADVElement} id
+     * @return id
+     */
     long getTargetElementId();
 
     /**
@@ -23,6 +35,10 @@ public interface ADVRelation {
      */
     void setTargetElementId(long targetElementId);
 
+    /**
+     * Returns relation label
+     * @return label
+     */
     String getLabel();
 
     /**
@@ -32,6 +48,10 @@ public interface ADVRelation {
      */
     void setLabel(String label);
 
+    /**
+     * Returns the relation style
+     * @return style
+     */
     ADVStyle getStyle();
 
     /**

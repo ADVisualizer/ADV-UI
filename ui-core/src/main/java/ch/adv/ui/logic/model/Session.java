@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
 
+/**
+ * Represents the session which holds multiple snapshots
+ */
 public class Session {
 
     private final List<Snapshot> snapshots = new ArrayList<>();
@@ -19,7 +22,7 @@ public class Session {
         return sessionId;
     }
 
-    public void setSessionId(final Long sessionId) {
+    public void setSessionId(Long sessionId) {
         this.sessionId = sessionId;
     }
 
@@ -27,7 +30,7 @@ public class Session {
         return sessionName;
     }
 
-    public void setSessionName(final String sessionName) {
+    public void setSessionName(String sessionName) {
         this.sessionName = sessionName;
     }
 
@@ -39,7 +42,13 @@ public class Session {
         return module;
     }
 
-    public void setModule(final ADVModule module) {
+    /**
+     * Sets the related {@link ADVModule} and stores its name, which needs to
+     * be stringified to the filesystem.
+     *
+     * @param module related module
+     */
+    public void setModule(ADVModule module) {
         this.module = module;
         if (module != null) {
             this.moduleName = module.getName();

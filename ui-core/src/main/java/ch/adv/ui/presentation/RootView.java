@@ -24,7 +24,9 @@ import javax.inject.Inject;
 import java.io.File;
 import java.util.Optional;
 
-
+/**
+ * Main UI View
+ */
 public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
@@ -48,19 +50,21 @@ public class RootView {
     public RootView(RootViewModel viewModel) {
         this.rootViewModel = viewModel;
         FileChooser.ExtensionFilter extensionFilter = new FileChooser
-                .ExtensionFilter
-                ("ADV files (*.adv)",
-                        "*.adv");
+                .ExtensionFilter("ADV files (*.adv)", "*.adv");
 
         fileChooser.getExtensionFilters().add(extensionFilter);
     }
 
+    /**
+     * Will be called once on an controller when the contents of
+     * its associated document have been completely loaded
+     */
     @FXML
     public void initialize() {
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
-        clearAllSessionsButton.setOnAction(e -> handleClearAllSessionsClicked
-                ());
+        clearAllSessionsButton.setOnAction(event ->
+                handleClearAllSessionsClicked());
         sessionListView.setItems(rootViewModel.getAvailableSessions());
         sessionListView.setCellFactory(lv -> new CustomListCell());
 
@@ -87,7 +91,8 @@ public class RootView {
     }
 
     private void openNewTab() {
-        rootViewModel.currentSessionProperty().addListener(this::openTabAction);
+        rootViewModel.getCurrentSessionPropertyProperty().addListener(
+                this::openTabAction);
         sessionListView.setOnMouseClicked(e -> {
             int selectedItem = sessionListView.getSelectionModel()
                     .getSelectedIndex();
@@ -112,7 +117,7 @@ public class RootView {
                     .findFirst();
 
             if (!existingTab.isPresent()) {
-                Node sessionView = resourceLocator.load(ResourceLocator
+                Node sessionView = resourceLocator.loadFXML(ResourceLocator
                         .Resource.SESSION_VIEW_FXML);
                 Tab newTab = new Tab(session.toString(), sessionView);
                 sessionTabPane.getTabs().add(newTab);
@@ -181,6 +186,11 @@ public class RootView {
         }
     }
 
+    /**
+     * Represents a ListCell in the {@link ListView}.
+     * <p>
+     * It contains the label and a save and remove button.
+     */
     private class CustomListCell extends ListCell<Session> {
 
         private static final int ICON_SIZE = 16;
@@ -200,15 +210,15 @@ public class RootView {
             removeIcon.setIcon(FontAwesomeIcon.TRASH_ALT);
             removeIcon.setGlyphSize(ICON_SIZE);
             removeButton.setGraphic(removeIcon);
-            removeButton.setOnMouseClicked(e -> handleRemoveSessionClicked
-                    (getItem(), e));
+            removeButton.setOnMouseClicked(event -> handleRemoveSessionClicked(
+                    getItem(), event));
 
             this.saveIcon = new FontAwesomeIconView();
             saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
             saveIcon.setGlyphSize(ICON_SIZE);
             saveButton.setGraphic(saveIcon);
-            saveButton.setOnMouseClicked(e -> handleSaveSessionClicked
-                    (getItem()));
+            saveButton.setOnMouseClicked(e -> handleSaveSessionClicked(
+                    getItem()));
 
             hbox.getChildren().addAll(label, pane, saveButton, removeButton);
             hbox.setSpacing(SPACING);

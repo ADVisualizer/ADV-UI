@@ -1,6 +1,10 @@
 package ch.adv.ui.logic.model.styles;
 
+/**
+ * Preconfigured warning style
+ */
 public class ADVWarningStyle implements ADVStyle {
+
     @Override
     public String getFillColor() {
         return ADVColor.STANDARD.getColor();

@@ -1,5 +1,8 @@
 package ch.adv.ui.logic.model.styles;
 
+/**
+ * Preconfigured info style
+ */
 public class ADVErrorStyle implements ADVStyle {
 
     @Override

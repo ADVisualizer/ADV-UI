@@ -21,16 +21,14 @@ import java.beans.PropertyChangeListener;
  */
 public class SessionViewModel {
 
-    private Session session;
+    private static final Logger logger = LoggerFactory.getLogger(
+            SessionViewModel.class);
 
     private final ObservableList<Pane> availableSnapshotPanes;
     private final ObjectProperty<Pane> currentSnapshotPaneProperty;
     private final ObjectProperty<String> currentSnapshotDescriptionProperty;
     private final SnapshotStore snapshotStore;
-
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            SessionViewModel.class);
+    private Session session;
 
     @Inject
     public SessionViewModel(final RootViewModel rootViewModel, SnapshotStore
@@ -40,7 +38,7 @@ public class SessionViewModel {
         this.currentSnapshotPaneProperty = new SimpleObjectProperty<>();
         this.currentSnapshotDescriptionProperty = new SimpleObjectProperty<>();
         this.snapshotStore = snapshotStore;
-        this.session = rootViewModel.currentSessionProperty().get();
+        this.session = rootViewModel.getCurrentSessionPropertyProperty().get();
 
         snapshotStore.addPropertyChangeListener(session.getSessionId(), new
                 SnapshotPropertyChangeListener());
@@ -57,11 +55,11 @@ public class SessionViewModel {
         return availableSnapshotPanes;
     }
 
-    public ObjectProperty<Pane> currentSnapshotPaneProperty() {
+    public ObjectProperty<Pane> getCurrentSnapshotPaneProperty() {
         return currentSnapshotPaneProperty;
     }
 
-    public ObjectProperty<String> currentSnapshotDescriptionProperty() {
+    public ObjectProperty<String> getCurrentSnapshotDescriptionProperty() {
         return currentSnapshotDescriptionProperty;
     }
 
@@ -69,16 +67,20 @@ public class SessionViewModel {
         this.session = session;
     }
 
+    /**
+     * Change listener if the a new snapshot was added to the snapshot store
+     */
     private class SnapshotPropertyChangeListener implements
             PropertyChangeListener {
+
         @Override
         public void propertyChange(PropertyChangeEvent event) {
             Pane newSnapshot = (Pane) event.getNewValue();
 
             logger.debug("SnapshotStore for session {} has updated. Add {} to"
-                            + " available snapshots", session.getSessionId(),
+                            + " available snapshots",
+                    session.getSessionId(),
                     newSnapshot);
-
 
             Snapshot s = snapshotStore.getNewestSnapshot(
                     session.getSessionId());

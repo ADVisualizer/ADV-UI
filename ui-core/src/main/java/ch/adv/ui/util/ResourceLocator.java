@@ -13,40 +13,64 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
+ * Contains all static resources (FXML, Images, CSS) and provides loadFXML
+ * methods
+ *
  * @author mwieland
  */
 @Singleton
 public class ResourceLocator {
 
+    private static final Logger logger = LoggerFactory.getLogger(
+            ResourceLocator.class);
+
     @Inject
     private Injector injector;
 
-    private static final Logger logger = LoggerFactory.getLogger
-            (ResourceLocator.class);
-
-    public URL getResourcePath(Resource res) {
-        return ResourceLocator.class.getClassLoader().getResource(res
-                .getRelativePath());
+    /**
+     * Returns the relative path to the resources
+     *
+     * @param resource resource
+     * @return url
+     */
+    public URL getResourcePath(Resource resource) {
+        return ResourceLocator.class.getClassLoader().getResource(
+                resource.getRelativePath());
     }
 
-    public InputStream getResourceAsStream(Resource res) {
-        return ResourceLocator.class.getClassLoader().getResourceAsStream(res
-                .getRelativePath());
+    /**
+     * Returns the resource as stream
+     *
+     * @param resource resource
+     * @return inputstream
+     */
+    public InputStream getResourceAsStream(Resource resource) {
+        return ResourceLocator.class.getClassLoader().getResourceAsStream(
+                resource.getRelativePath());
     }
 
-    public Parent load(Resource resource) {
+    /**
+     * Loads the FXML resource
+     *
+     * @param resource resource
+     * @return fxml element
+     */
+    public Parent loadFXML(Resource resource) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getResourcePath(resource));
-        loader.setControllerFactory(instantiatedClass -> injector.getInstance
-                (instantiatedClass));
+        loader.setControllerFactory(instantiatedClass -> injector.getInstance(
+                instantiatedClass));
         try {
             return loader.load();
         } catch (IOException e) {
-            logger.debug("Cannot load resource {}", resource, e);
+            logger.debug("Cannot loadFXML resource {}", resource, e);
             return null;
         }
     }
 
+    /**
+     * Enum for all avaible static resources in /src/main/resources/
+     */
     public enum Resource {
 
         ROOT_LAYOUT_FXML("fxml/root-layout.fxml"),
@@ -67,6 +91,10 @@ public class ResourceLocator {
             return relativePath;
         }
 
+        /**
+         * Sets the relative path of the resource enum
+         * @param relativePath relative path
+         */
         public void setRelativePath(String relativePath) {
             if (relativePath != null) {
                 this.relativePath = relativePath;

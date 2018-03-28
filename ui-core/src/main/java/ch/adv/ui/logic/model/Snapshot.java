@@ -35,10 +35,18 @@ public class Snapshot {
         this.snapshotDescription = snapshotDescription;
     }
 
+    /**
+     * Adds a element to the snapshot
+     * @param element element to add
+     */
     public void addElement(ADVElement<?> element) {
         elements.add(element);
     }
 
+    /**
+     * Adds a relation to the snapshot
+     * @param relation relation to add
+     */
     public void addRelation(ADVRelation relation) {
         relations.add(relation);
     }

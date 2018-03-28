@@ -1,5 +1,8 @@
 package ch.adv.ui.logic.model.styles;
 
+/**
+ * Preconfigured success style
+ */
 public class ADVSuccessStyle implements ADVStyle {
 
     @Override

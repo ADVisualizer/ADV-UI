@@ -66,6 +66,10 @@ public class SessionView {
 
     }
 
+    /**
+     * Will be called once on an controller when the contents of
+     * its associated document have been completely loaded
+     */
     @FXML
     public void initialize() {
         replayButton.setOnAction(e -> handleReplayButtonClicked());
@@ -80,17 +84,17 @@ public class SessionView {
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
 
         setCurrentSnapshotAsContent();
-        sessionViewModel.currentSnapshotPaneProperty().addListener(
+        sessionViewModel.getCurrentSnapshotPaneProperty().addListener(
                 (event, oldV, newV) -> setCurrentSnapshotAsContent());
 
         this.snapshotDescription.textProperty().bind(sessionViewModel
-                .currentSnapshotDescriptionProperty());
+                .getCurrentSnapshotDescriptionProperty());
 
 
     }
 
     private void setCurrentSnapshotAsContent() {
-        Pane currentSnapshot = sessionViewModel.currentSnapshotPaneProperty()
+        Pane currentSnapshot = sessionViewModel.getCurrentSnapshotPaneProperty()
                 .get();
         this.contentPane.getChildren().add(currentSnapshot);
         setAnchors(currentSnapshot);

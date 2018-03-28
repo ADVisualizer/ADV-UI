@@ -11,11 +11,10 @@ import org.slf4j.LoggerFactory;
  */
 public class ArrayStringifyer implements Stringifyer {
 
-    private final GsonProvider gsonProvider;
-
     private static final String EXPECTED_MODULE = "array";
-    private static final Logger logger = LoggerFactory.getLogger
-            (ArrayStringifyer.class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            ArrayStringifyer.class);
+    private final GsonProvider gsonProvider;
 
     //can't be injected, because has to be instantiated with 'new' keyword in
     // Module implementations (default methods of interfaces)
@@ -32,13 +31,12 @@ public class ArrayStringifyer implements Stringifyer {
     @Override
     public String stringify(final Session session) {
         if (EXPECTED_MODULE.equals(session.getModule().getName())) {
-            logger.debug("resulting json: " + gsonProvider
-                    .getPrettifyer().toJson(session));
-            return gsonProvider.getMinifier().toJson
-                    (session);
+            logger.debug("resulting json: {}", gsonProvider.getPrettifyer()
+                    .toJson(session));
+            return gsonProvider.getMinifier().toJson(session);
         } else {
-            logger.error("Wrong session for this Stringifyer. Module name is " +
-                            "{} but should be {}", session.getSessionName(),
+            logger.error("Wrong session for this Stringifyer. Module name is "
+                            + "{} but should be {}", session.getSessionName(),
                     EXPECTED_MODULE);
             return null;
         }
