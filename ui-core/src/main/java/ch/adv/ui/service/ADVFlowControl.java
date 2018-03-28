@@ -48,7 +48,8 @@ public class ADVFlowControl {
         sessionStore.addSession(session);
 
         session.getSnapshots().forEach(snapshot -> {
-
+            //TODO: add !snapshot.isLayouted() as soon as we have a wrapper for
+            //TODO:  Snapshot and Snapshot Pane -> only layout if isLayouted = false
             // layout
             Layouter layouter = currentModule.getLayouter();
             Pane newSnapshotPane = layouter.layout(snapshot);

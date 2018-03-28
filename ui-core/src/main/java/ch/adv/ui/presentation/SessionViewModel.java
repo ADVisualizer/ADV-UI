@@ -81,6 +81,9 @@ public class SessionViewModel {
                 .getSessionId()).get(0).getSnapshotDescription();
         this.currentSnapshotDescriptionProperty.set(snapshotDescription);
 
+        updateProgress();
+        updateStepButtonDisabilities();
+
         replayingProperty.addListener((e, oldV, newV) -> {
             updateStepButtonDisabilities();
             if (newV) {
@@ -160,6 +163,7 @@ public class SessionViewModel {
     }
 
     private void updateProgress() {
+        maxSnapshotIndex = availableSnapshotPanes.size() - 1;
         progressProperty.set((1 + (float) currentSnapshotIndex) / (1 +
                 maxSnapshotIndex)
         );
@@ -174,8 +178,7 @@ public class SessionViewModel {
     }
 
     private void updateStepButtonDisabilities() {
-        maxSnapshotIndex = availableSnapshotPanes.size() - 1;
-        if (maxSnapshotIndex <= 1 || replayingProperty.get()) {
+        if (maxSnapshotIndex == 0 || replayingProperty.get()) {
             disableStepButtons(true, true, true, true);
         } else {
             if (currentSnapshotIndex == 0) {
@@ -281,17 +284,12 @@ public class SessionViewModel {
 
         @Override
         public void propertyChange(PropertyChangeEvent event) {
-            Pane newSnapshot = (Pane) event.getNewValue();
-
-            logger.debug("SnapshotStore for session {} has updated. Add {} to"
-                            + " available snapshots",
-                    session.getSessionId(),
-                    newSnapshot);
-
             Platform.runLater(() -> {
-                availableSnapshotPanes.add(newSnapshot);
-                updateStepButtonDisabilities();
+                availableSnapshotPanes.clear();
+                availableSnapshotPanes.addAll(snapshotStore.getSnapshotPanes
+                        (session.getSessionId()));
                 updateProgress();
+                updateStepButtonDisabilities();
             });
         }
     }
