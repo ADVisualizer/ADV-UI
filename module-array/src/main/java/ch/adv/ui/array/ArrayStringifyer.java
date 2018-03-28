@@ -33,7 +33,7 @@ public class ArrayStringifyer implements Stringifyer {
         if (EXPECTED_MODULE.equals(session.getModule().getName())) {
             logger.debug("resulting json: {}", gsonProvider.getPrettifyer()
                     .toJson(session));
-            return gsonProvider.getMinifier().toJson(session);
+            return gsonProvider.getPrettifyer().toJson(session);
         } else {
             logger.error("Wrong session for this Stringifyer. Module name is "
                             + "{} but should be {}", session.getSessionName(),

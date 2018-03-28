@@ -12,9 +12,9 @@ import javax.inject.Singleton;
 @Singleton
 public class ReplaySliderStringConverter extends StringConverter<Double> {
 
-    private static final double SLIDER_SLOW = 0.0;
-    private static final double SLIDER_MEDIUM = 1.0;
-    private static final double SLIDER_FAST = 2.0;
+    private static final double SLIDER_SLOW = 1.0;
+    private static final double SLIDER_MEDIUM = 2.0;
+    private static final double SLIDER_FAST = 3.0;
 
     private static final String SLOW = "slow";
     private static final String MEDIUM = "medium";

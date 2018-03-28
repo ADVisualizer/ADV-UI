@@ -103,7 +103,6 @@ public class RootView {
         });
         sessionListView.getSelectionModel().selectedItemProperty().addListener(
                 this::openTabAction);
-
     }
 
     private void openTabAction(ObservableValue<? extends Session>

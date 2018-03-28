@@ -1,6 +1,7 @@
 package ch.adv.ui;
 
 
+import ch.adv.ui.presentation.SessionReplayFactory;
 import ch.adv.ui.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -17,6 +18,7 @@ public class GuiceBaseModule extends AbstractModule {
     protected void configure() {
         install(new FactoryModuleBuilder()
                 .build(ADVConnectionFactory.class));
+        install(new FactoryModuleBuilder().build(SessionReplayFactory.class));
 
     }
 }
