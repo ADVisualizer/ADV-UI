@@ -1,6 +1,7 @@
 package ch.adv.ui.logic;
 
 import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.logic.model.Snapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 /**
@@ -23,22 +26,15 @@ public class SessionStore {
     private static final String SESSION_EVENT = "session";
     private static final Logger logger = LoggerFactory.getLogger(SessionStore
             .class);
+
     private final Map<Long, Session> sessions;
     private final PropertyChangeSupport changeSupport;
+
     private Session currentSession;
 
     public SessionStore() {
         this.sessions = new HashMap<>();
         this.changeSupport = new PropertyChangeSupport(this);
-    }
-
-    /**
-     * Add specified session to the store and set it as current session.
-     *
-     * @param newSession the session to add
-     */
-    public void addSession(Session newSession) {
-        addSession(newSession, false);
     }
 
     /**
@@ -49,22 +45,16 @@ public class SessionStore {
      * or
      * ignore it (for sessions loaded via the ui)
      *
-     * @param newSession      the session to add
-     * @param isLoadedSession true if the session is loaded through the ui
+     * @param newSession the session to add
      */
-    public void addSession(Session newSession, boolean isLoadedSession) {
+    public void addSession(Session newSession) {
         if (newSession != null) {
             long id = newSession.getSessionId();
             Session existing = sessions.get(id);
             if (existing == null) {
                 sessions.put(id, newSession);
-                logger.info("New session {} added to SessionStore", id);
                 currentSession = newSession;
-
-            } else if (isLoadedSession) {
-                currentSession = existing;
-                logger.debug("Loaded session {} already exists", id);
-                newSession = null;
+                logger.info("New session {} added to SessionStore", id);
             } else {
                 mergeSession(existing, newSession);
                 currentSession = newSession;
@@ -77,13 +67,31 @@ public class SessionStore {
         }
     }
 
+    /**
+     * Merges the new session into the existing session.
+     *
+     * @param existing   master
+     * @param newSession slave
+     */
     private void mergeSession(Session existing, Session newSession) {
-        long existingSessionId = existing.getSessionId();
+        logger.debug("Merge session {}", existing.getSessionId());
 
-        existing.getSnapshots().addAll(newSession.getSnapshots());
+        Map<Long, Snapshot> existingSnapshots = existing.getSnapshots()
+                .stream().collect(Collectors.toMap(Snapshot::getSnapshotId,
+                        Function.identity()));
 
-        logger.info("Successfully merged new snapshots of session {} into "
-                + "existing session", existingSessionId);
+        newSession.getSnapshots().forEach(newSnapshot -> {
+            Snapshot existingSnapshot = existingSnapshots.get(newSnapshot
+                    .getSnapshotId());
+            if (existingSnapshot == null) {
+                existing.getSnapshots().add(newSnapshot);
+                logger.debug("Add snapshot {} to session {}",
+                        newSnapshot.getSnapshotId(), existing.getSessionId());
+            }
+        });
+
+        logger.debug("Successfully merged new snapshots of session {} into "
+                + "existing session", existing.getSessionId());
     }
 
     /**

@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,15 +27,6 @@ import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(JukitoRunner.class)
 public class ADVFlowControlTest {
-
-    public static class Module extends JukitoModule {
-
-        @Override
-        protected void configureTest() {
-            forceMock(Session.class);
-        }
-    }
-
 
     @Inject
     private ADVModule testModule;
@@ -59,11 +51,15 @@ public class ADVFlowControlTest {
 
     @Before
     public void setUp() {
-        Mockito.doReturn(testSnapshot).when(testSession).getFirstSnapshot();
+        List<Snapshot> snapshots = new ArrayList<>();
+        snapshots.add(testSnapshot);
+        Mockito.when(testSession.getSnapshots()).thenReturn(snapshots);
+
         Mockito.doReturn(testSession).when(testParser).parse(any());
         Mockito.doReturn(testParser).when(testModule).getParser();
         Mockito.doReturn(testLayouter).when(testModule).getLayouter();
         Mockito.doReturn(testPane).when(testLayouter).layout(any());
+
 
         Map<String, ADVModule> modules = new HashMap<>();
         modules.put("testModule", testModule);
@@ -78,9 +74,17 @@ public class ADVFlowControlTest {
         List<Session> sessions = testSessionStore.getSessions();
         assertTrue(sessions.contains(testSession));
 
-        List<Pane> snapshots = testSnapshotStore.getSnapshotPanes(testSession
-                .getSessionId());
-        assertTrue(snapshots.contains(testPane));
+        long testSessionId = testSession.getSessionId();
+        List<Pane> panes = testSnapshotStore.getSnapshotPanes(testSessionId);
+        assertTrue(panes.contains(testPane));
+    }
+
+    public static class Module extends JukitoModule {
+
+        @Override
+        protected void configureTest() {
+            forceMock(Session.class);
+        }
     }
 
 

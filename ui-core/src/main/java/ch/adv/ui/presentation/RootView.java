@@ -110,10 +110,7 @@ public class RootView {
                                Session session) {
         if (session != null) {
 
-            Optional<Tab> existingTab = sessionTabPane.getTabs()
-                    .stream()
-                    .filter(t -> t.getText().equals(session.toString()))
-                    .findFirst();
+            Optional<Tab> existingTab = getExistingTab(session);
 
             if (!existingTab.isPresent()) {
                 Node sessionView = resourceLocator.loadFXML(ResourceLocator
@@ -127,14 +124,24 @@ public class RootView {
         }
     }
 
+    /**
+     * Checks if a Tab is already existing for the given session
+     * @param session session to check
+     * @return optional tab
+     */
+    private Optional<Tab> getExistingTab(Session session) {
+        return sessionTabPane.getTabs()
+                        .stream()
+                        .filter(t -> t.getText().equals(session.toString()))
+                        .findFirst();
+    }
+
     private void handleRemoveSessionClicked(final Session session, final
     MouseEvent event) {
         logger.info("Removing session {} ({})", session.getSessionName(),
                 session.getSessionId());
-        Optional<Tab> existingTab = sessionTabPane.getTabs()
-                .stream()
-                .filter(t -> t.getText().equals(session.toString()))
-                .findFirst();
+
+        Optional<Tab> existingTab = getExistingTab(session);
 
         if (existingTab.isPresent()) {
             sessionTabPane.getTabs().remove(existingTab.get());

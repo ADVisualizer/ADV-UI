@@ -4,11 +4,11 @@ import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
 import ch.adv.ui.logic.model.Session;
-import ch.adv.ui.logic.model.Snapshot;
 import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.presentation.SnapshotStore;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,21 +39,25 @@ public class ADVFlowControl {
      * @param sessionJSON json
      */
     public void process(String sessionJSON) {
+        // parse module
         ADVModule currentModule = moduleStore.parseModule(sessionJSON);
 
+        // parse session
         Session session = currentModule.getParser().parse(sessionJSON);
         session.setModule(currentModule);
-
         sessionStore.addSession(session);
 
-        long sessionId = session.getSessionId();
-        Layouter layouter = currentModule.getLayouter();
+        session.getSnapshots().forEach(snapshot -> {
 
-        Snapshot newSnapshot = session.getFirstSnapshot();
+            // layout
+            Layouter layouter = currentModule.getLayouter();
+            Pane newSnapshotPane = layouter.layout(snapshot);
 
-        snapshotStore.addSnapshot(sessionId, newSnapshot);
-
-        snapshotStore.addSnapshotPane(sessionId, layouter.layout(newSnapshot));
+            // store pane
+            long sessionId = session.getSessionId();
+            snapshotStore.addSnapshot(sessionId, snapshot);
+            snapshotStore.addSnapshotPane(sessionId, newSnapshotPane);
+        });
     }
 
 }

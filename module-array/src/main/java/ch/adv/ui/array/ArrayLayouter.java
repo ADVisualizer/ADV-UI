@@ -13,8 +13,15 @@ import javafx.scene.paint.Color;
  */
 public class ArrayLayouter implements Layouter {
 
+    /**
+     * Layouts an Array snapshot if it is not already layouted
+     * @param snapshot to be layouted
+     * @return
+     */
     @Override
-    public Pane layout(final Snapshot snapshot) {
+    public Pane layout(Snapshot snapshot) {
+        //TODO: add !snapshot.isLayouted() as soon as we have a wrapper for
+        //TODO:  Snapshot and Snapshot Pane -> only layout if isLayouted = false
         VBox vBox = new VBox();
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITE,
                 CornerRadii.EMPTY,
@@ -33,6 +40,9 @@ public class ArrayLayouter implements Layouter {
         });
 
         vBox.getChildren().add(hbox);
+
+        snapshot.setLayouted(true);
         return vBox;
+
     }
 }
