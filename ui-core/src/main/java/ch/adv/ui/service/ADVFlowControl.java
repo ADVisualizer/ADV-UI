@@ -51,9 +51,9 @@ public class ADVFlowControl {
 
         Snapshot newSnapshot = session.getFirstSnapshot();
 
-        snapshotStore.addSnapshotPane(sessionId, layouter.layout(newSnapshot));
-
         snapshotStore.addSnapshot(sessionId, newSnapshot);
+
+        snapshotStore.addSnapshotPane(sessionId, layouter.layout(newSnapshot));
     }
 
 }
