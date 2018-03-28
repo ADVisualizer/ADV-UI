@@ -114,35 +114,43 @@ public class SessionViewModel {
         this.session = session;
     }
 
+    /**
+     * Navigate through a session by stepping forward, backward or to the
+     * first or last snapshot.
+     *
+     * @param navigate direction to navigate
+     */
     public void navigateSnapshot(Navigate navigate) {
         switch (navigate) {
             case FIRST:
                 currentSnapshotIndex = 0;
                 updateStepButtonDisabilities();
                 updateSnapshotDescription();
-                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
-                        (currentSnapshotIndex));
+                currentSnapshotPaneProperty.set(availableSnapshotPanes
+                        .get(currentSnapshotIndex));
                 break;
             case BACKWARD:
                 currentSnapshotIndex--;
                 updateStepButtonDisabilities();
                 updateSnapshotDescription();
-                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
-                        (currentSnapshotIndex));
+                currentSnapshotPaneProperty.set(availableSnapshotPanes
+                        .get(currentSnapshotIndex));
                 break;
             case FORWARD:
                 currentSnapshotIndex++;
                 updateStepButtonDisabilities();
                 updateSnapshotDescription();
-                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
-                        (currentSnapshotIndex));
+                currentSnapshotPaneProperty.set(availableSnapshotPanes
+                        .get(currentSnapshotIndex));
                 break;
             case LAST:
                 currentSnapshotIndex = availableSnapshotPanes.size() - 1;
                 updateStepButtonDisabilities();
                 updateSnapshotDescription();
-                currentSnapshotPaneProperty.set(availableSnapshotPanes.get
-                        (currentSnapshotIndex));
+                currentSnapshotPaneProperty.set(availableSnapshotPanes
+                        .get(currentSnapshotIndex));
+                break;
+            default:
                 break;
         }
     }
@@ -176,19 +184,19 @@ public class SessionViewModel {
         stepLastBtnDisableProperty.set(last);
     }
 
-    public BooleanProperty stepFirstBtnDisableProperty() {
+    public BooleanProperty getStepFirstBtnDisableProperty() {
         return stepFirstBtnDisableProperty;
     }
 
-    public BooleanProperty stepBackwardBtnDisableProperty() {
+    public BooleanProperty getStepBackwardBtnDisableProperty() {
         return stepBackwardBtnDisableProperty;
     }
 
-    public BooleanProperty stepForwardBtnDisableProperty() {
+    public BooleanProperty getStepForwardBtnDisableProperty() {
         return stepForwardBtnDisableProperty;
     }
 
-    public BooleanProperty stepLastBtnDisableProperty() {
+    public BooleanProperty getStepLastBtnDisableProperty() {
         return stepLastBtnDisableProperty;
     }
 
@@ -196,10 +204,13 @@ public class SessionViewModel {
         return replayingProperty;
     }
 
-    public BooleanProperty speedsliderDisableProperty() {
+    public BooleanProperty getSpeedsliderDisableProperty() {
         return speedsliderDisableProperty;
     }
 
+    /**
+     * Stop the current replay and stay at the current snapshot
+     */
     public void pauseReplay() {
         replayingProperty.set(false);
         if (this.currentReplayThread != null) {
@@ -208,6 +219,9 @@ public class SessionViewModel {
         }
     }
 
+    /**
+     * Start replaying the snapshots of this session.
+     */
     public void replay() {
         logger.info("Replaying current session...");
         replayingProperty.set(true);
@@ -226,6 +240,9 @@ public class SessionViewModel {
         }
     }
 
+    /**
+     * Cancel the running replay and step to the first snapshot.
+     */
     public void cancelReplay() {
         pauseReplay();
         navigateSnapshot(Navigate.FIRST);

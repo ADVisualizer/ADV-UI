@@ -78,9 +78,9 @@ public class SessionView {
         bindReplayIcons();
 
         replaySpeedSlider.disableProperty().bind(sessionViewModel
-                .speedsliderDisableProperty());
+                .getSpeedsliderDisableProperty());
 
-        replayController.replaySpeedProperty()
+        replayController.getReplaySpeedProperty()
                 .bindBidirectional(replaySpeedSlider.valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
 
@@ -115,13 +115,13 @@ public class SessionView {
 
     private void bindButtonDisableProperties() {
         stepFirstButton.disableProperty().bind(sessionViewModel
-                .stepFirstBtnDisableProperty());
+                .getStepFirstBtnDisableProperty());
         stepBackwardButton.disableProperty().bind(sessionViewModel
-                .stepBackwardBtnDisableProperty());
+                .getStepBackwardBtnDisableProperty());
         stepForwardButton.disableProperty().bind(sessionViewModel
-                .stepForwardBtnDisableProperty());
+                .getStepForwardBtnDisableProperty());
         stepLastButton.disableProperty().bind(sessionViewModel
-                .stepLastBtnDisableProperty());
+                .getStepLastBtnDisableProperty());
     }
 
     private void setCurrentSnapshotAsContent() {

@@ -20,10 +20,13 @@ public class ReplayController {
         replaySpeed = new SimpleDoubleProperty();
     }
 
-    public DoubleProperty replaySpeedProperty() {
+    public DoubleProperty getReplaySpeedProperty() {
         return replaySpeed;
     }
 
+    /**
+     * @return the currently selected replay speed as a relative value [1..3]
+     */
     public long getReplaySpeed() {
         double speed = SLIDER_MIN + SLIDER_MAX - replaySpeed.get();
         return (long) speed;
