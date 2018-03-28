@@ -1,6 +1,7 @@
 package ch.adv.ui.logic;
 
 import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.logic.model.Snapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 /**
@@ -52,13 +55,9 @@ public class SessionStore {
                 sessions.put(id, newSession);
                 currentSession = newSession;
                 logger.info("New session {} added to SessionStore", id);
-            } else if (newSession.getSnapshots().size() == 1) {
+            } else {
                 mergeSession(existing, newSession);
                 currentSession = newSession;
-            } else {
-                currentSession = existing;
-                logger.debug("Loaded session {} already exists", id);
-                newSession = null;
             }
 
             logger.debug("Fire change event");
@@ -68,13 +67,31 @@ public class SessionStore {
         }
     }
 
+    /**
+     * Merges the new session into the existing session.
+     *
+     * @param existing   master
+     * @param newSession slave
+     */
     private void mergeSession(Session existing, Session newSession) {
-        long existingSessionId = existing.getSessionId();
+        logger.debug("Merge session {}", existing.getSessionId());
 
-        existing.getSnapshots().addAll(newSession.getSnapshots());
+        Map<Long, Snapshot> existingSnapshots = existing.getSnapshots()
+                .stream().collect(Collectors.toMap(Snapshot::getSnapshotId,
+                        Function.identity()));
 
-        logger.info("Successfully merged new snapshots of session {} into "
-                + "existing session", existingSessionId);
+        newSession.getSnapshots().forEach(newSnapshot -> {
+            Snapshot existingSnapshot = existingSnapshots.get(newSnapshot
+                    .getSnapshotId());
+            if (existingSnapshot == null) {
+                existing.getSnapshots().add(newSnapshot);
+                logger.debug("Add snapshot {} to session {}",
+                        newSnapshot.getSnapshotId(), existing.getSessionId());
+            }
+        });
+
+        logger.debug("Successfully merged new snapshots of session {} into "
+                + "existing session", existing.getSessionId());
     }
 
     /**
