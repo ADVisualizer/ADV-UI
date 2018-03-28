@@ -14,12 +14,12 @@ import javafx.scene.paint.Color;
 public class ArrayLayouter implements Layouter {
 
     /**
-     * Layouts a Array snapshot if it is not already layouted
+     * Layouts an Array snapshot if it is not already layouted
      * @param snapshot to be layouted
      * @return
      */
     @Override
-    public Pane layout(final Snapshot snapshot) {
+    public Pane layout(Snapshot snapshot) {
         //TODO: add !snapshot.isLayouted() as soon as we have a wrapper for
         //TODO:  Snapshot and Snapshot Pane -> only layout if isLayouted = false
         VBox vBox = new VBox();
