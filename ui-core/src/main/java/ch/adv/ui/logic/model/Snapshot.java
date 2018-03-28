@@ -10,12 +10,16 @@ import java.util.concurrent.atomic.AtomicInteger;
  * ADV UI to be displayed.
  */
 public class Snapshot {
+
+    private static final transient AtomicInteger SNAPSHOT_COUNTER = new
+            AtomicInteger(0);
+
     private final long snapshotId;
+
+    private transient boolean isLayouted;
     private String snapshotDescription;
     private List<ADVElement> elements;
     private List<ADVRelation> relations;
-    private static final transient AtomicInteger SNAPSHOT_COUNTER = new
-            AtomicInteger(0);
 
     public Snapshot() {
         snapshotId = SNAPSHOT_COUNTER.incrementAndGet();
@@ -37,6 +41,7 @@ public class Snapshot {
 
     /**
      * Adds a element to the snapshot
+     *
      * @param element element to add
      */
     public void addElement(ADVElement<?> element) {
@@ -45,6 +50,7 @@ public class Snapshot {
 
     /**
      * Adds a relation to the snapshot
+     *
      * @param relation relation to add
      */
     public void addRelation(ADVRelation relation) {
@@ -57,5 +63,13 @@ public class Snapshot {
 
     public List<ADVRelation> getRelations() {
         return relations;
+    }
+
+    public boolean isLayouted() {
+        return isLayouted;
+    }
+
+    public void setLayouted(boolean layouted) {
+        isLayouted = layouted;
     }
 }

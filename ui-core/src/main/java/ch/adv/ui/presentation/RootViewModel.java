@@ -2,10 +2,9 @@ package ch.adv.ui.presentation;
 
 import ch.adv.ui.access.DatastoreAccess;
 import ch.adv.ui.access.FileDatastoreAccess;
-import ch.adv.ui.logic.ADVModule;
-import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
 import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.service.ADVFlowControl;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -35,15 +34,15 @@ public class RootViewModel {
     private final ObjectProperty<Session> currentSessionProperty;
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
-    private final ModuleStore moduleStore;
+    private final ADVFlowControl flowControl;
     private final SnapshotStore snapshotStore;
 
     @Inject
-    public RootViewModel(SessionStore sessionStore, ModuleStore moduleStore,
+    public RootViewModel(SessionStore sessionStore, ADVFlowControl flowControl,
                          final FileDatastoreAccess fileAccess, SnapshotStore
                                  snapshotStore) {
         this.sessionStore = sessionStore;
-        this.moduleStore = moduleStore;
+        this.flowControl = flowControl;
         this.fileAccess = fileAccess;
         this.snapshotStore = snapshotStore;
 
@@ -90,19 +89,7 @@ public class RootViewModel {
      */
     public void loadSession(File file) {
         String json = fileAccess.read(file);
-        ADVModule module = moduleStore.parseModule(json);
-        Session loadedSession = module.getParser().parse(json);
-        loadedSession.setModule(module);
-        sessionStore.addSession(loadedSession, true);
-
-        long sessionId = loadedSession.getSessionId();
-        Layouter layouter = module.getLayouter();
-
-        //TODO: maybe do work in different thread
-        loadedSession.getSnapshots().forEach(s -> {
-            snapshotStore.addSnapshot(sessionId, s);
-            snapshotStore.addSnapshotPane(sessionId, layouter.layout(s));
-        });
+        flowControl.process(json);
     }
 
     /**

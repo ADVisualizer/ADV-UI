@@ -23,22 +23,15 @@ public class SessionStore {
     private static final String SESSION_EVENT = "session";
     private static final Logger logger = LoggerFactory.getLogger(SessionStore
             .class);
+
     private final Map<Long, Session> sessions;
     private final PropertyChangeSupport changeSupport;
+
     private Session currentSession;
 
     public SessionStore() {
         this.sessions = new HashMap<>();
         this.changeSupport = new PropertyChangeSupport(this);
-    }
-
-    /**
-     * Add specified session to the store and set it as current session.
-     *
-     * @param newSession the session to add
-     */
-    public void addSession(Session newSession) {
-        addSession(newSession, false);
     }
 
     /**
@@ -49,25 +42,23 @@ public class SessionStore {
      * or
      * ignore it (for sessions loaded via the ui)
      *
-     * @param newSession      the session to add
-     * @param isLoadedSession true if the session is loaded through the ui
+     * @param newSession the session to add
      */
-    public void addSession(Session newSession, boolean isLoadedSession) {
+    public void addSession(Session newSession) {
         if (newSession != null) {
             long id = newSession.getSessionId();
             Session existing = sessions.get(id);
             if (existing == null) {
                 sessions.put(id, newSession);
-                logger.info("New session {} added to SessionStore", id);
                 currentSession = newSession;
-
-            } else if (isLoadedSession) {
+                logger.info("New session {} added to SessionStore", id);
+            } else if (newSession.getSnapshots().size() == 1) {
+                mergeSession(existing, newSession);
+                currentSession = newSession;
+            } else {
                 currentSession = existing;
                 logger.debug("Loaded session {} already exists", id);
                 newSession = null;
-            } else {
-                mergeSession(existing, newSession);
-                currentSession = newSession;
             }
 
             logger.debug("Fire change event");
