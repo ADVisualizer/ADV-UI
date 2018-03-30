@@ -164,8 +164,8 @@ public class SessionViewModel {
 
     private void updateProgress() {
         maxSnapshotIndex = availableSnapshotPanes.size() - 1;
-        progressProperty.set((1 + (float) currentSnapshotIndex) / (1 +
-                maxSnapshotIndex)
+        progressProperty.set(
+                (1 + (float) currentSnapshotIndex) / (1 + maxSnapshotIndex)
         );
         currentIndexStringProperty.set(currentSnapshotIndex + 1 + "");
         maxIndexStringProperty.set(maxSnapshotIndex + 1 + "");
@@ -286,8 +286,8 @@ public class SessionViewModel {
         public void propertyChange(PropertyChangeEvent event) {
             Platform.runLater(() -> {
                 availableSnapshotPanes.clear();
-                availableSnapshotPanes.addAll(snapshotStore.getSnapshotPanes
-                        (session.getSessionId()));
+                availableSnapshotPanes.addAll(snapshotStore
+                        .getSnapshotPanes(session.getSessionId()));
                 updateProgress();
                 updateStepButtonDisabilities();
             });
