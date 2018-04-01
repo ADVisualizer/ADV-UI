@@ -3,10 +3,7 @@ package ch.adv.ui.presentation;
 import ch.adv.ui.logic.model.Session;
 import ch.adv.ui.logic.model.Snapshot;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.layout.Pane;
@@ -29,23 +26,36 @@ public class SessionViewModel {
     private static final long HALF_SECOND_MS = 500;
 
     private final ObservableList<Pane> availableSnapshotPanes;
-    private final ObjectProperty<Pane> currentSnapshotPaneProperty;
-    private final ObjectProperty<String> currentSnapshotDescriptionProperty;
+    private final ObjectProperty<Pane> currentSnapshotPaneProperty = new
+            SimpleObjectProperty<>();
+    private final ObjectProperty<String> currentSnapshotDescriptionProperty =
+            new SimpleObjectProperty<>();
     private final SnapshotStore snapshotStore;
-    private final BooleanProperty stepFirstBtnDisableProperty;
-    private final BooleanProperty stepBackwardBtnDisableProperty;
-    private final BooleanProperty stepForwardBtnDisableProperty;
-    private final BooleanProperty stepLastBtnDisableProperty;
-    private final BooleanProperty speedsliderDisableProperty;
-    private final BooleanProperty replayingProperty;
+    private final BooleanProperty stepFirstBtnDisableProperty = new
+            SimpleBooleanProperty();
+    private final BooleanProperty stepBackwardBtnDisableProperty = new
+            SimpleBooleanProperty();
+    private final BooleanProperty stepForwardBtnDisableProperty = new
+            SimpleBooleanProperty();
+    private final BooleanProperty stepLastBtnDisableProperty = new
+            SimpleBooleanProperty();
+    private final BooleanProperty speedsliderDisableProperty = new
+            SimpleBooleanProperty();
+    private final BooleanProperty replayingProperty = new
+            SimpleBooleanProperty();
+    private final FloatProperty progressProperty = new
+            SimpleFloatProperty();
     private final SessionReplayFactory sessionReplayFactory;
     private final ReplayController replayController;
-
-
+    private final StringProperty currentIndexStringProperty = new
+            SimpleStringProperty();
+    private final StringProperty maxIndexStringProperty = new
+            SimpleStringProperty();
     private int currentSnapshotIndex;
     private int maxSnapshotIndex;
     private Session session;
     private SessionReplay currentReplayThread;
+
 
     @Inject
     public SessionViewModel(RootViewModel rootViewModel, SnapshotStore
@@ -59,14 +69,6 @@ public class SessionViewModel {
 
         //instantiate property instances
         this.availableSnapshotPanes = FXCollections.observableArrayList();
-        this.currentSnapshotPaneProperty = new SimpleObjectProperty<>();
-        this.currentSnapshotDescriptionProperty = new SimpleObjectProperty<>();
-        this.stepFirstBtnDisableProperty = new SimpleBooleanProperty();
-        this.stepBackwardBtnDisableProperty = new SimpleBooleanProperty();
-        this.stepForwardBtnDisableProperty = new SimpleBooleanProperty();
-        this.stepLastBtnDisableProperty = new SimpleBooleanProperty();
-        this.speedsliderDisableProperty = new SimpleBooleanProperty();
-        this.replayingProperty = new SimpleBooleanProperty();
 
         //initialize properties
         snapshotStore.addPropertyChangeListener(session.getSessionId(), new
@@ -78,6 +80,9 @@ public class SessionViewModel {
         String snapshotDescription = snapshotStore.getSnapshots(session
                 .getSessionId()).get(0).getSnapshotDescription();
         this.currentSnapshotDescriptionProperty.set(snapshotDescription);
+
+        updateProgress();
+        updateStepButtonDisabilities();
 
         replayingProperty.addListener((e, oldV, newV) -> {
             updateStepButtonDisabilities();
@@ -124,35 +129,46 @@ public class SessionViewModel {
         switch (navigate) {
             case FIRST:
                 currentSnapshotIndex = 0;
-                updateStepButtonDisabilities();
-                updateSnapshotDescription();
+                handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
                 break;
             case BACKWARD:
                 currentSnapshotIndex--;
-                updateStepButtonDisabilities();
-                updateSnapshotDescription();
+                handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
                 break;
             case FORWARD:
                 currentSnapshotIndex++;
-                updateStepButtonDisabilities();
-                updateSnapshotDescription();
+                handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
                 break;
             case LAST:
                 currentSnapshotIndex = availableSnapshotPanes.size() - 1;
-                updateStepButtonDisabilities();
-                updateSnapshotDescription();
+                handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
                 break;
             default:
                 break;
         }
+    }
+
+    private void handleNavigationStep() {
+        updateProgress();
+        updateStepButtonDisabilities();
+        updateSnapshotDescription();
+    }
+
+    private void updateProgress() {
+        maxSnapshotIndex = availableSnapshotPanes.size() - 1;
+        progressProperty.set(
+                (1 + (float) currentSnapshotIndex) / (1 + maxSnapshotIndex)
+        );
+        currentIndexStringProperty.set(currentSnapshotIndex + 1 + "");
+        maxIndexStringProperty.set(maxSnapshotIndex + 1 + "");
     }
 
     private void updateSnapshotDescription() {
@@ -162,8 +178,7 @@ public class SessionViewModel {
     }
 
     private void updateStepButtonDisabilities() {
-        maxSnapshotIndex = availableSnapshotPanes.size() - 1;
-        if (maxSnapshotIndex <= 1 || replayingProperty.get()) {
+        if (maxSnapshotIndex == 0 || replayingProperty.get()) {
             disableStepButtons(true, true, true, true);
         } else {
             if (currentSnapshotIndex == 0) {
@@ -248,6 +263,18 @@ public class SessionViewModel {
         navigateSnapshot(Navigate.FIRST);
     }
 
+    public FloatProperty getProgressProperty() {
+        return progressProperty;
+    }
+
+    public StringProperty getCurrentIndexStringProperty() {
+        return currentIndexStringProperty;
+    }
+
+    public StringProperty getMaxIndexStringProperty() {
+        return maxIndexStringProperty;
+    }
+
 
     /**
      * Change listener if a new snapshot was added to the snapshot store
@@ -257,15 +284,11 @@ public class SessionViewModel {
 
         @Override
         public void propertyChange(PropertyChangeEvent event) {
-            Pane newSnapshot = (Pane) event.getNewValue();
-
-            logger.debug("SnapshotStore for session {} has updated. Add {} to"
-                            + " available snapshots",
-                    session.getSessionId(),
-                    newSnapshot);
-
             Platform.runLater(() -> {
-                availableSnapshotPanes.add(newSnapshot);
+                availableSnapshotPanes.clear();
+                availableSnapshotPanes.addAll(snapshotStore
+                        .getSnapshotPanes(session.getSessionId()));
+                updateProgress();
                 updateStepButtonDisabilities();
             });
         }

@@ -20,8 +20,6 @@ public class ArrayLayouter implements Layouter {
      */
     @Override
     public Pane layout(Snapshot snapshot) {
-        //TODO: add !snapshot.isLayouted() as soon as we have a wrapper for
-        //TODO:  Snapshot and Snapshot Pane -> only layout if isLayouted = false
         VBox vBox = new VBox();
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITE,
                 CornerRadii.EMPTY,
