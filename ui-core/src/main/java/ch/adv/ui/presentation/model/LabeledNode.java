@@ -11,7 +11,7 @@ import javafx.scene.shape.Ellipse;
  * Widget component for a labeled node
  */
 public class LabeledNode extends StackPane {
-    private final static int PADDING = 5;
+    private static final int PADDING = 5;
     private Ellipse e;
     private Label l;
 
