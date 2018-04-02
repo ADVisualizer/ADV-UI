@@ -2,6 +2,7 @@ package ch.adv.ui.logic.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -16,7 +17,6 @@ public class Snapshot {
 
     private final long snapshotId;
 
-    private transient boolean isLayouted;
     private String snapshotDescription;
     private List<ADVElement> elements;
     private List<ADVRelation> relations;
@@ -65,11 +65,25 @@ public class Snapshot {
         return relations;
     }
 
-    public boolean isLayouted() {
-        return isLayouted;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Snapshot snapshot = (Snapshot) o;
+        return snapshotId == snapshot.snapshotId
+                && Objects.equals(snapshotDescription, snapshot
+                .snapshotDescription)
+                && elements.size() == snapshot.elements.size()
+                && relations.size() == snapshot.relations.size();
     }
 
-    public void setLayouted(boolean layouted) {
-        isLayouted = layouted;
+    @Override
+    public int hashCode() {
+        return Objects.hash(snapshotId, snapshotDescription, elements,
+                relations);
     }
 }

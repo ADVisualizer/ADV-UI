@@ -32,7 +32,7 @@ public class ArrayParser implements Parser {
         gsonBuilder.registerTypeAdapter(ADVElement.class, new
                 InterfaceAdapter(ArrayElement.class));
         gsonBuilder.registerTypeAdapter(ADVRelation.class, new
-                InterfaceAdapter(ArrayElement.class));
+                InterfaceAdapter(ArrayRelation.class));
         //TODO: handle style parsing!
         gsonBuilder.registerTypeAdapter(ADVStyle.class, new
                 InterfaceAdapter(ADVDefaultStyle.class));
