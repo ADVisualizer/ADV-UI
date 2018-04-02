@@ -45,6 +45,7 @@ public class ADVFlowControl {
      * @param sessionJSON json
      */
     public void process(String sessionJSON) {
+        logger.info("Processing JSON...");
         // parse module
         ADVModule currentModule = moduleStore.parseModule(sessionJSON);
 
@@ -77,6 +78,8 @@ public class ADVFlowControl {
         } else {
             sessionStore.setCurrentSession(sessionId);
         }
+        logger.info("Process finished: delegated session and snapshot " +
+                "creation.");
     }
 
 }

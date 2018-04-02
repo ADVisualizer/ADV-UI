@@ -97,4 +97,13 @@ public class SnapshotStore {
         return snapshotMap.get(sessionId).stream().map(wrapper -> wrapper
                 .getPane()).collect(Collectors.toList());
     }
+
+    /**
+     * Delete all snapshots belongign to the specified sessionId
+     *
+     * @param sessionId of the deleted session
+     */
+    public void deleteSession(long sessionId) {
+        snapshotMap.remove(sessionId);
+    }
 }

@@ -69,6 +69,7 @@ public class RootViewModel {
      */
     public void removeSession(final Session session) {
         sessionStore.deleteSession(session);
+        snapshotStore.deleteSession(session.getSessionId());
     }
 
     /**
