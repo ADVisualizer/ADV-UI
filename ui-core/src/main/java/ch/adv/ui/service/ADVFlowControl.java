@@ -67,7 +67,6 @@ public class ADVFlowControl {
             // layout
             Pane newSnapshotPane = layouter.layout(snapshot);
             wrapper.setPane(newSnapshotPane);
-            wrapper.setLayouted(true);
 
             // store pane
             snapshotStore.addWrapper(sessionId, wrapper);

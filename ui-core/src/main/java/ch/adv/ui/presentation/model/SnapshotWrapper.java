@@ -5,11 +5,12 @@ import javafx.scene.layout.Pane;
 
 import java.util.Objects;
 
+/**
+ * Wrappes a {@link Snapshot} and a corresponding Pane
+ */
 public class SnapshotWrapper {
     private Snapshot snapshot;
     private Pane pane;
-    private long sessionId;
-    private boolean isLayouted;
 
     public Snapshot getSnapshot() {
         return snapshot;
@@ -27,22 +28,6 @@ public class SnapshotWrapper {
         this.pane = pane;
     }
 
-    public long getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(long sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public boolean isLayouted() {
-        return isLayouted;
-    }
-
-    public void setLayouted(boolean layouted) {
-        isLayouted = layouted;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -52,12 +37,11 @@ public class SnapshotWrapper {
             return false;
         }
         SnapshotWrapper that = (SnapshotWrapper) o;
-        return sessionId == that.sessionId &&
-                Objects.equals(snapshot, that.snapshot);
+        return Objects.equals(snapshot, that.snapshot);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(snapshot, sessionId);
+        return Objects.hash(snapshot);
     }
 }

@@ -74,11 +74,11 @@ public class Snapshot {
             return false;
         }
         Snapshot snapshot = (Snapshot) o;
-        return snapshotId == snapshot.snapshotId &&
-                Objects.equals(snapshotDescription, snapshot
-                        .snapshotDescription) &&
-                elements.size() == snapshot.elements.size() &&
-                relations.size() == snapshot.relations.size();
+        return snapshotId == snapshot.snapshotId
+                && Objects.equals(snapshotDescription, snapshot
+                .snapshotDescription)
+                && elements.size() == snapshot.elements.size()
+                && relations.size() == snapshot.relations.size();
     }
 
     @Override

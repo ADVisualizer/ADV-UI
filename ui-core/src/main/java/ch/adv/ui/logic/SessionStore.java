@@ -107,6 +107,12 @@ public class SessionStore {
         return currentSession;
     }
 
+    /**
+     * Sets the current session to the session with the specified id. Fires a
+     * change event to inform listeners of the change.
+     *
+     * @param sessionId of the current session
+     */
     public void setCurrentSession(long sessionId) {
         this.currentSession = sessions.get(sessionId);
         logger.debug("Fire change event");

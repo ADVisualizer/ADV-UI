@@ -75,9 +75,13 @@ public class SnapshotStore {
         changeSupport.addPropertyChangeListener(sessionId + "", listener);
     }
 
-
+    /**
+     * @param sessionId of the snapshot
+     * @param snapshot  to check
+     * @return true if the specified snapshot is already stored
+     */
     public boolean hasSnapshot(long sessionId, Snapshot snapshot) {
-        if (snapshotMap.get(sessionId) == null){
+        if (snapshotMap.get(sessionId) == null) {
             return false;
         }
         return snapshotMap.get(sessionId).stream().anyMatch(wrapper -> wrapper
@@ -85,6 +89,10 @@ public class SnapshotStore {
                 .equals(snapshot));
     }
 
+    /**
+     * @param sessionId of the snapshots
+     * @return a list of all the Panes of a session
+     */
     public List<Pane> getSnapshotPanes(long sessionId) {
         return snapshotMap.get(sessionId).stream().map(wrapper -> wrapper
                 .getPane()).collect(Collectors.toList());
