@@ -59,7 +59,7 @@ public class SnapshotStore {
      * @param sessionId session id
      * @return List of stored Snapshots
      */
-    public List<SnapshotWrapper> getSnapshots(long sessionId) {
+    public List<SnapshotWrapper> getWrapper(long sessionId) {
         return snapshotMap.get(sessionId);
     }
 

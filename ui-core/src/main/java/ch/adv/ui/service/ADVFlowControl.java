@@ -61,6 +61,7 @@ public class ADVFlowControl {
                 .filter(s -> !snapshotStore.hasSnapshot(sessionId, s))
                 .collect(Collectors.toList());
 
+        // Layout only snapshots that have not yet been layouted
         newSnapshots.forEach(snapshot -> {
             SnapshotWrapper wrapper = new SnapshotWrapper();
             wrapper.setSnapshot(snapshot);
