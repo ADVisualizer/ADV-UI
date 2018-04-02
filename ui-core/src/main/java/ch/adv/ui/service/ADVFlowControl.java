@@ -78,8 +78,8 @@ public class ADVFlowControl {
         } else {
             sessionStore.setCurrentSession(sessionId);
         }
-        logger.info("Process finished: delegated session and snapshot " +
-                "creation.");
+        logger.info("Process finished: delegated session and snapshot "
+                + "creation.");
     }
 
 }
