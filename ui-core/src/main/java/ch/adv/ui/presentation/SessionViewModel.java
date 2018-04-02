@@ -78,7 +78,7 @@ public class SessionViewModel {
                 session.getSessionId()));
         this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
         String snapshotDescription = snapshotStore.getSnapshots(session
-                .getSessionId()).get(0).getSnapshotDescription();
+                .getSessionId()).get(0).getSnapshot().getSnapshotDescription();
         this.currentSnapshotDescriptionProperty.set(snapshotDescription);
 
         updateProgress();
@@ -173,7 +173,7 @@ public class SessionViewModel {
 
     private void updateSnapshotDescription() {
         Snapshot s = snapshotStore.getSnapshots(
-                session.getSessionId()).get(currentSnapshotIndex);
+                session.getSessionId()).get(currentSnapshotIndex).getSnapshot();
         currentSnapshotDescriptionProperty.set(s.getSnapshotDescription());
     }
 

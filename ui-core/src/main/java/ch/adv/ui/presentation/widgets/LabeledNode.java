@@ -1,4 +1,4 @@
-package ch.adv.ui.presentation.model;
+package ch.adv.ui.presentation.widgets;
 
 
 import javafx.geometry.Insets;

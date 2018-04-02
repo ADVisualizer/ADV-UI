@@ -1,6 +1,7 @@
 package ch.adv.ui.presentation;
 
 import ch.adv.ui.logic.model.Snapshot;
+import ch.adv.ui.presentation.model.SnapshotWrapper;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -22,60 +24,33 @@ import java.util.Map;
 public class SnapshotStore {
     private static final Logger logger = LoggerFactory.getLogger(
             SnapshotStore.class);
-    private final Map<Long, List<Pane>> snapshotPaneMap;
-    private final Map<Long, List<Snapshot>> snapshotMap;
+    private final Map<Long, List<SnapshotWrapper>> snapshotMap;
     private final PropertyChangeSupport changeSupport;
 
 
     public SnapshotStore() {
-        this.snapshotPaneMap = new HashMap<>();
         this.snapshotMap = new HashMap<>();
         this.changeSupport = new PropertyChangeSupport(this);
     }
 
     /**
-     * Adds a new {@link Pane} to the Snapshot store
+     * Adds a new {@link SnapshotWrapper} to the Snapshot store
      *
      * @param sessionId related session id
-     * @param newPane   the Pane to add
+     * @param wrapper   the snapshotwrapper to add
      */
-    public void addSnapshotPane(final long sessionId, Pane newPane) {
-        List<Pane> snapshotPanes = snapshotPaneMap.get(sessionId);
-        if (snapshotPanes == null) {
-            snapshotPanes = new ArrayList<>();
-            snapshotPaneMap.put(sessionId, snapshotPanes);
-        }
-        snapshotPanes.add(newPane);
-        logger.debug("Fire change event");
-        changeSupport.firePropertyChange(sessionId + "", null,
-                newPane);
-    }
-
-    /**
-     * Returns all Pane's for the given session id
-     *
-     * @param sessionId session id
-     * @return List of stored Pane's
-     */
-    public List<Pane> getSnapshotPanes(final long sessionId) {
-        return snapshotPaneMap.get(sessionId);
-    }
-
-    /**
-     * Adds a new {@link Snapshot} to the Snapshot store
-     *
-     * @param sessionId related session id
-     * @param snapshot  the session to add
-     */
-    public void addSnapshot(long sessionId, final Snapshot snapshot) {
-        List<Snapshot> snapshotList = snapshotMap.get(sessionId);
+    public void addWrapper(long sessionId, SnapshotWrapper wrapper) {
+        List<SnapshotWrapper> snapshotList = snapshotMap.get(sessionId);
         if (snapshotList == null) {
             snapshotList = new ArrayList<>();
             snapshotMap.put(sessionId, snapshotList);
         }
-        if (!snapshotList.contains(snapshot)) {
-            snapshotList.add(snapshot);
+        if (!snapshotList.contains(wrapper)) {
+            snapshotList.add(wrapper);
         }
+        logger.debug("Fire change event");
+        changeSupport.firePropertyChange(sessionId + "", null,
+                wrapper);
     }
 
     /**
@@ -84,7 +59,7 @@ public class SnapshotStore {
      * @param sessionId session id
      * @return List of stored Snapshots
      */
-    public List<Snapshot> getSnapshots(final long sessionId) {
+    public List<SnapshotWrapper> getSnapshots(long sessionId) {
         return snapshotMap.get(sessionId);
     }
 
@@ -98,5 +73,20 @@ public class SnapshotStore {
                                           final PropertyChangeListener
                                                   listener) {
         changeSupport.addPropertyChangeListener(sessionId + "", listener);
+    }
+
+
+    public boolean hasSnapshot(long sessionId, Snapshot snapshot) {
+        if (snapshotMap.get(sessionId) == null){
+            return false;
+        }
+        return snapshotMap.get(sessionId).stream().anyMatch(wrapper -> wrapper
+                .getSnapshot()
+                .equals(snapshot));
+    }
+
+    public List<Pane> getSnapshotPanes(long sessionId) {
+        return snapshotMap.get(sessionId).stream().map(wrapper -> wrapper
+                .getPane()).collect(Collectors.toList());
     }
 }

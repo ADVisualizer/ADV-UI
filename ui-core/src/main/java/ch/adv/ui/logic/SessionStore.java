@@ -107,6 +107,14 @@ public class SessionStore {
         return currentSession;
     }
 
+    public void setCurrentSession(long sessionId) {
+        this.currentSession = sessions.get(sessionId);
+        logger.debug("Fire change event");
+
+        changeSupport.firePropertyChange(SESSION_EVENT, null,
+                currentSession);
+    }
+
     /**
      * Add change listener to be notified by changes to the session list.
      *

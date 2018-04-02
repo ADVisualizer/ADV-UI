@@ -2,7 +2,7 @@ package ch.adv.ui.array;
 
 import ch.adv.ui.logic.model.Snapshot;
 import ch.adv.ui.presentation.Layouter;
-import ch.adv.ui.presentation.model.LabeledNode;
+import ch.adv.ui.presentation.widgets.LabeledNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
@@ -39,7 +39,6 @@ public class ArrayLayouter implements Layouter {
 
         vBox.getChildren().add(hbox);
 
-        snapshot.setLayouted(true);
         return vBox;
 
     }

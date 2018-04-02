@@ -4,13 +4,18 @@ import ch.adv.ui.logic.ADVModule;
 import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
 import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.logic.model.Snapshot;
 import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.presentation.SnapshotStore;
+import ch.adv.ui.presentation.model.SnapshotWrapper;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Framework component which controls the default visualization flow.
@@ -34,7 +39,8 @@ public class ADVFlowControl {
     }
 
     /**
-     * Parses and stores incoming json. Kicks off the layouting process.
+     * Parses and stores incoming json either from the socket or the file
+     * system. Kicks off the layouting process.
      *
      * @param sessionJSON json
      */
@@ -45,23 +51,33 @@ public class ADVFlowControl {
         // parse session
         Session session = currentModule.getParser().parse(sessionJSON);
         session.setModule(currentModule);
-        sessionStore.addSession(session);
+        long sessionId = session.getSessionId();
 
         Layouter layouter = currentModule.getLayouter();
 
-        session.getSnapshots().forEach(snapshot -> {
-            //TODO: add !snapshot.isLayouted() as soon as we have a wrapper for
-            //TODO:  Snapshot and Snapshot Pane -> only layout if isLayouted
-            // = false
+        // filter new snapshots
+        List<Snapshot> newSnapshots = session.getSnapshots().stream()
+                .filter(s -> !snapshotStore.hasSnapshot(sessionId, s))
+                .collect(Collectors.toList());
+
+        newSnapshots.forEach(snapshot -> {
+            SnapshotWrapper wrapper = new SnapshotWrapper();
+            wrapper.setSnapshot(snapshot);
 
             // layout
             Pane newSnapshotPane = layouter.layout(snapshot);
+            wrapper.setPane(newSnapshotPane);
+            wrapper.setLayouted(true);
 
             // store pane
-            long sessionId = session.getSessionId();
-            snapshotStore.addSnapshot(sessionId, snapshot);
-            snapshotStore.addSnapshotPane(sessionId, newSnapshotPane);
+            snapshotStore.addWrapper(sessionId, wrapper);
         });
+
+        if (!newSnapshots.isEmpty()) {
+            sessionStore.addSession(session);
+        } else {
+            sessionStore.setCurrentSession(sessionId);
+        }
     }
 
 }
