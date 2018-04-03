@@ -70,6 +70,16 @@ public class SnapshotStoreTest {
         assertEquals(2, storeUnderTest.getWrappers(sessionId).size());
     }
 
+    @Test
+    public void addExistingSessionTest(){
+        storeUnderTest.addWrapper(sessionId, wrapper1);
+        storeUnderTest.addWrapper(sessionId, wrapper1);
+        assertTrue(storeUnderTest
+                .hasSnapshot(sessionId, snapshot1));
+        assertEquals(1, storeUnderTest.getSnapshotPanes(sessionId).size());
+        assertEquals(1, storeUnderTest.getWrappers(sessionId).size());
+    }
+
 
     @Test
     public void receiveChangeEventOnMySessionTest() {
