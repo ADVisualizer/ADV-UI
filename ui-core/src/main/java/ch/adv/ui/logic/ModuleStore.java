@@ -36,6 +36,7 @@ public class ModuleStore {
     /**
      * Parses the <code>moduleName</code> field of the given sessionJSON.
      * If the module is known by the sessionStore it will return it.
+     * Otherwise returns null.
      *
      * @param sessionJSON json string
      * @return parsed module
