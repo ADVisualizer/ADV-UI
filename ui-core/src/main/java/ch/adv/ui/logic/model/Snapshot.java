@@ -3,7 +3,7 @@ package ch.adv.ui.logic.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Represents the state of a data structure in the user's module
@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Snapshot {
 
-    private static final transient AtomicInteger SNAPSHOT_COUNTER = new
-            AtomicInteger(0);
+    private static final transient AtomicLong SNAPSHOT_COUNTER = new
+            AtomicLong(0);
 
     private final long snapshotId;
 
@@ -79,6 +79,7 @@ public class Snapshot {
                 .snapshotDescription)
                 && elements.size() == snapshot.elements.size()
                 && relations.size() == snapshot.relations.size();
+
     }
 
     @Override
