@@ -1,0 +1,17 @@
+{
+  "snapshots": [
+    {
+      "snapshotId": 3,
+      "snapshotDescription": "1",
+      "elements": [
+
+      ],
+      "relations": [
+
+      ]
+    }
+  ],
+  "sessionId": 123789,
+  "sessionName": "TestSession",
+  "moduleName": "test"
+}

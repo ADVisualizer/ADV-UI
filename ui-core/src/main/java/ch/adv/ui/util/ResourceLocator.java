@@ -69,7 +69,7 @@ public class ResourceLocator {
     }
 
     /**
-     * Enum for all avaible static resources in /src/main/resources/
+     * Enum for all available static resources in /src/main/resources/
      */
     public enum Resource {
 

@@ -19,10 +19,10 @@ import static org.mockito.ArgumentMatchers.any;
 public class SnapshotStoreTest {
     private static final long sessionId = 123456;
     //don't inject these. we need two different instances of each obj
-    private Snapshot snapshot1 = new Snapshot();
-    private Snapshot snapshot2 = new Snapshot();
-    private SnapshotWrapper wrapper1 = new SnapshotWrapper();
-    private SnapshotWrapper wrapper2 = new SnapshotWrapper();
+    private static final Snapshot snapshot1 = new Snapshot();
+    private static final Snapshot snapshot2 = new Snapshot();
+    private static final SnapshotWrapper wrapper1 = new SnapshotWrapper();
+    private static final SnapshotWrapper wrapper2 = new SnapshotWrapper();
 
     @Inject
     private Pane pane;
@@ -71,7 +71,7 @@ public class SnapshotStoreTest {
     }
 
     @Test
-    public void addExistingSessionTest(){
+    public void addExistingSessionTest() {
         storeUnderTest.addWrapper(sessionId, wrapper1);
         storeUnderTest.addWrapper(sessionId, wrapper1);
         assertTrue(storeUnderTest

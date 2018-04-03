@@ -57,7 +57,7 @@ public class SessionStore {
                 logger.info("New session {} added to SessionStore", id);
             } else {
                 mergeSession(existing, newSession);
-                currentSession = newSession;
+                currentSession = existing;
             }
 
             logger.debug("Fire change event");
