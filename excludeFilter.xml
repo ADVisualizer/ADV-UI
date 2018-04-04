@@ -8,7 +8,7 @@
     <!-- For help creating filter: http://spotbugs.readthedocs.io/en/latest/filter.html#match-a-particular-bug-pattern-in-a-particular-method -->
     <!-- Match a particular bug pattern in a particular method -->
     <Match>
-        <Class name="ch.adv.ui.presentation.RootView"/>
+        <Class name="ch.adv.ui.core.presentation.RootView"/>
         <Method name="handleCloseMenuItemClicked"/>
         <Bug pattern="DM_EXIT"/>
     </Match>

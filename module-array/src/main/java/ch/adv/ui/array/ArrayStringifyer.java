@@ -1,8 +1,8 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.access.GsonProvider;
-import ch.adv.ui.access.Stringifyer;
-import ch.adv.ui.domain.Session;
+import ch.adv.ui.core.access.GsonProvider;
+import ch.adv.ui.core.access.Stringifyer;
+import ch.adv.ui.core.domain.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

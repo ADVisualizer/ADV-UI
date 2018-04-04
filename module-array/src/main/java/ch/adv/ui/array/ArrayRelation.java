@@ -1,10 +1,10 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.domain.ADVRelation;
-import ch.adv.ui.domain.styles.ADVStyle;
+import ch.adv.ui.core.domain.ADVRelation;
+import ch.adv.ui.core.domain.styles.ADVStyle;
 
 /**
- * Relation between two {@link ch.adv.ui.array.ArrayElement}s
+ * Relation between two {@link ArrayElement}s
  */
 public class ArrayRelation implements ADVRelation {
 

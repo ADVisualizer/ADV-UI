@@ -1,9 +1,9 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.domain.Snapshot;
-import ch.adv.ui.presentation.Layouter;
-import ch.adv.ui.presentation.domain.SnapshotWrapper;
-import ch.adv.ui.presentation.widgets.LabeledNode;
+import ch.adv.ui.core.domain.Snapshot;
+import ch.adv.ui.core.presentation.Layouter;
+import ch.adv.ui.core.presentation.domain.SnapshotWrapper;
+import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
