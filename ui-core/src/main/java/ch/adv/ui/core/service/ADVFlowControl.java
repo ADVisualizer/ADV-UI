@@ -65,10 +65,11 @@ public class ADVFlowControl {
         newSnapshots.forEach(snapshot -> {
 
             // layout
-            LayoutedSnapshot wrapper = layouter.layout(snapshot);
+            LayoutedSnapshot layoutedSnapshot = layouter.layout(snapshot);
 
-            // store pane
-            layoutedSnapshotStore.addWrapper(sessionId, wrapper);
+            // store layouted snapshot
+            layoutedSnapshotStore
+                    .addLayoutedSnapshot(sessionId, layoutedSnapshot);
         });
 
         if (!newSnapshots.isEmpty()) {

@@ -35,21 +35,22 @@ public class LayoutedSnapshotStore {
     /**
      * Adds a new {@link LayoutedSnapshot} to the Snapshot store
      *
-     * @param sessionId related session id
-     * @param wrapper   the snapshotwrapper to add
+     * @param sessionId        related session id
+     * @param layoutedSnapshot the layouted snapshot to add
      */
-    public void addWrapper(long sessionId, LayoutedSnapshot wrapper) {
+    public void addLayoutedSnapshot(long sessionId, LayoutedSnapshot
+            layoutedSnapshot) {
         List<LayoutedSnapshot> snapshotList = snapshotMap.get(sessionId);
         if (snapshotList == null) {
             snapshotList = new ArrayList<>();
             snapshotMap.put(sessionId, snapshotList);
         }
-        if (!snapshotList.contains(wrapper)) {
-            snapshotList.add(wrapper);
+        if (!snapshotList.contains(layoutedSnapshot)) {
+            snapshotList.add(layoutedSnapshot);
         }
         logger.debug("Fire change event");
         changeSupport.firePropertyChange(sessionId + "", null,
-                wrapper);
+                layoutedSnapshot);
     }
 
     /**
@@ -58,7 +59,7 @@ public class LayoutedSnapshotStore {
      * @param sessionId session id
      * @return List of stored Snapshots
      */
-    public List<LayoutedSnapshot> getWrappers(long sessionId) {
+    public List<LayoutedSnapshot> getLayoutedSnapshots(long sessionId) {
         return snapshotMap.get(sessionId);
     }
 
@@ -93,8 +94,9 @@ public class LayoutedSnapshotStore {
      * @return a list of all the Panes of a session
      */
     public List<Pane> getSnapshotPanes(long sessionId) {
-        return snapshotMap.get(sessionId).stream().map(wrapper -> wrapper
-                .getPane()).collect(Collectors.toList());
+        return snapshotMap.get(sessionId).stream()
+                .map(layoutedSnapshot -> layoutedSnapshot
+                        .getPane()).collect(Collectors.toList());
     }
 
     /**

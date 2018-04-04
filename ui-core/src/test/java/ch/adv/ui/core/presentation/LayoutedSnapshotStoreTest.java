@@ -45,20 +45,20 @@ public class LayoutedSnapshotStoreTest {
 
     @Test
     public void storeSnapshotTest() {
-        storeUnderTest.addWrapper(sessionId, layoutedSnapshot1);
+        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot1);
         assertTrue(storeUnderTest.hasSnapshot(sessionId,
                 layoutedSnapshot1.getSnapshotId()));
         assertEquals(1, storeUnderTest.getSnapshotPanes(sessionId).size());
         assertEquals(pane, storeUnderTest.getSnapshotPanes(sessionId).get(0));
-        assertEquals(1, storeUnderTest.getWrappers(sessionId).size());
-        assertEquals(layoutedSnapshot1, storeUnderTest.getWrappers(sessionId)
+        assertEquals(1, storeUnderTest.getLayoutedSnapshots(sessionId).size());
+        assertEquals(layoutedSnapshot1, storeUnderTest.getLayoutedSnapshots(sessionId)
                 .get(0));
     }
 
     @Test
     public void mergeSessionTest() {
-        storeUnderTest.addWrapper(sessionId, layoutedSnapshot1);
-        storeUnderTest.addWrapper(sessionId, layoutedSnapshot2);
+        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot1);
+        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot2);
 
         assertTrue(storeUnderTest
                 .hasSnapshot(sessionId, layoutedSnapshot1.getSnapshotId()));
@@ -70,24 +70,24 @@ public class LayoutedSnapshotStoreTest {
         assertEquals(pane, storeUnderTest.getSnapshotPanes(sessionId).get(0));
         assertEquals(pane, storeUnderTest.getSnapshotPanes(sessionId).get(1));
 
-        assertEquals(2, storeUnderTest.getWrappers(sessionId).size());
+        assertEquals(2, storeUnderTest.getLayoutedSnapshots(sessionId).size());
     }
 
     @Test
     public void addExistingSessionTest() {
-        storeUnderTest.addWrapper(sessionId, layoutedSnapshot1);
-        storeUnderTest.addWrapper(sessionId, layoutedSnapshot1);
+        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot1);
+        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot1);
         assertTrue(storeUnderTest
                 .hasSnapshot(sessionId, layoutedSnapshot1.getSnapshotId()));
         assertEquals(1, storeUnderTest.getSnapshotPanes(sessionId).size());
-        assertEquals(1, storeUnderTest.getWrappers(sessionId).size());
+        assertEquals(1, storeUnderTest.getLayoutedSnapshots(sessionId).size());
     }
 
 
     @Test
     public void receiveChangeEventOnMySessionTest() {
         storeUnderTest.addPropertyChangeListener(sessionId, listener);
-        storeUnderTest.addWrapper(sessionId, layoutedSnapshot1);
+        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot1);
 
         Mockito.verify(listener).propertyChange(any());
     }
@@ -96,14 +96,14 @@ public class LayoutedSnapshotStoreTest {
     public void receiveNoChangeEventOnOtherSessionTest() {
         storeUnderTest.addPropertyChangeListener(sessionId, listener);
         long otherId = 123789;
-        storeUnderTest.addWrapper(otherId, layoutedSnapshot1);
+        storeUnderTest.addLayoutedSnapshot(otherId, layoutedSnapshot1);
 
         Mockito.verify(listener, Mockito.times(0)).propertyChange(any());
     }
 
     @Test
     public void deleteSessionTest() {
-        storeUnderTest.addWrapper(sessionId, layoutedSnapshot1);
+        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot1);
         assertTrue(storeUnderTest
                 .hasSnapshot(sessionId, layoutedSnapshot1.getSnapshotId()));
         storeUnderTest.deleteSession(sessionId);
