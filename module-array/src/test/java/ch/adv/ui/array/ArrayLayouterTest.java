@@ -32,7 +32,7 @@ public class ArrayLayouterTest extends JavafxViewTest {
 
     @Before
     public void setUp() {
-        URL url = ArrayStringifyerTest.class.getClassLoader()
+        URL url = ArrayLayouterTest.class.getClassLoader()
                 .getResource("session1.json");
 
         String testJson = reader.read(new File(url.getPath()));

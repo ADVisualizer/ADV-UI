@@ -80,8 +80,8 @@ public class RootView {
 
     private void handleLogoVisibility() {
         sessionTabPane.getStyleClass().add("logo");
-        sessionTabPane.getTabs().addListener((ListChangeListener<? super
-                Tab>) c -> {
+        sessionTabPane.getTabs().addListener((ListChangeListener<? super Tab>)
+                c -> {
             int tabNumber = sessionTabPane.getTabs().size();
             if (tabNumber == 0) {
                 sessionTabPane.getStyleClass().add("logo");
