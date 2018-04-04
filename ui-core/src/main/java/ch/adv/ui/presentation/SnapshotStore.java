@@ -1,7 +1,7 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.logic.model.Snapshot;
-import ch.adv.ui.presentation.model.SnapshotWrapper;
+import ch.adv.ui.domain.Snapshot;
+import ch.adv.ui.presentation.domain.SnapshotWrapper;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

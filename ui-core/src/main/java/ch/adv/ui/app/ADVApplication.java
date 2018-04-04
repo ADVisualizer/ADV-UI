@@ -1,4 +1,4 @@
-package ch.adv.ui;
+package ch.adv.ui.app;
 
 import ch.adv.ui.service.SocketServer;
 import ch.adv.ui.util.ResourceLocator;

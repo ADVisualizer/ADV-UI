@@ -1,13 +1,14 @@
 package ch.adv.ui.service;
 
 import ch.adv.ui.access.Parser;
-import ch.adv.ui.logic.ADVModule;
+import ch.adv.ui.app.ADVModule;
 import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
-import ch.adv.ui.logic.model.Session;
-import ch.adv.ui.logic.model.Snapshot;
+import ch.adv.ui.domain.Session;
+import ch.adv.ui.domain.Snapshot;
 import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.presentation.SnapshotStore;
+import ch.adv.ui.presentation.domain.SnapshotWrapper;
 import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoModule;
@@ -39,6 +40,8 @@ public class ADVFlowControlTest {
     @Inject
     private Snapshot testSnapshot;
     @Inject
+    private SnapshotWrapper testWrapper;
+    @Inject
     private Pane testPane;
     @Inject
     private SessionStore testSessionStore;
@@ -55,11 +58,13 @@ public class ADVFlowControlTest {
         snapshots.add(testSnapshot);
         Mockito.when(testSession.getSnapshots()).thenReturn(snapshots);
 
+        testWrapper.setPane(testPane);
+        testWrapper.setSnapshot(testSnapshot);
+
         Mockito.doReturn(testSession).when(testParser).parse(any());
         Mockito.doReturn(testParser).when(testModule).getParser();
         Mockito.doReturn(testLayouter).when(testModule).getLayouter();
-        Mockito.doReturn(testPane).when(testLayouter).layout(any());
-
+        Mockito.doReturn(testWrapper).when(testLayouter).layout(any());
 
         Map<String, ADVModule> modules = new HashMap<>();
         modules.put("testModule", testModule);

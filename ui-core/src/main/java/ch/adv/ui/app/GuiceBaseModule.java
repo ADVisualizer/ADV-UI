@@ -1,4 +1,4 @@
-package ch.adv.ui;
+package ch.adv.ui.app;
 
 
 import ch.adv.ui.presentation.SessionReplayFactory;

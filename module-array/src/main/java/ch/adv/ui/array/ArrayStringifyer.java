@@ -2,7 +2,7 @@ package ch.adv.ui.array;
 
 import ch.adv.ui.access.GsonProvider;
 import ch.adv.ui.access.Stringifyer;
-import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.domain.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

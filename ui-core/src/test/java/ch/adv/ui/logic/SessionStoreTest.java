@@ -1,7 +1,7 @@
 package ch.adv.ui.logic;
 
 import ch.adv.ui.access.FileDatastoreAccess;
-import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.domain.Session;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;

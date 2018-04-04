@@ -1,7 +1,8 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.logic.model.Snapshot;
+import ch.adv.ui.domain.Snapshot;
 import ch.adv.ui.presentation.Layouter;
+import ch.adv.ui.presentation.domain.SnapshotWrapper;
 import ch.adv.ui.presentation.widgets.LabeledNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +20,7 @@ public class ArrayLayouter implements Layouter {
      * @return
      */
     @Override
-    public Pane layout(Snapshot snapshot) {
+    public SnapshotWrapper layout(Snapshot snapshot) {
         VBox vBox = new VBox();
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITE,
                 CornerRadii.EMPTY,
@@ -39,7 +40,10 @@ public class ArrayLayouter implements Layouter {
 
         vBox.getChildren().add(hbox);
 
-        return vBox;
+        SnapshotWrapper wrapper = new SnapshotWrapper();
+        wrapper.setSnapshot(snapshot);
+        wrapper.setPane(vBox);
 
+        return wrapper;
     }
 }

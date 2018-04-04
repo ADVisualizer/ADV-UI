@@ -1,7 +1,7 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.logic.model.Session;
-import ch.adv.ui.logic.model.Snapshot;
+import ch.adv.ui.domain.Session;
+import ch.adv.ui.domain.Snapshot;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

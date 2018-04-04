@@ -1,4 +1,4 @@
-package ch.adv.ui.logic.model.styles;
+package ch.adv.ui.domain.styles;
 
 /**
  * Encapsulates the style of an element of a relation.

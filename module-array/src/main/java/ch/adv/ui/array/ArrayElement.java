@@ -1,7 +1,7 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.logic.model.ADVElement;
-import ch.adv.ui.logic.model.styles.ADVStyle;
+import ch.adv.ui.domain.ADVElement;
+import ch.adv.ui.domain.styles.ADVStyle;
 
 /**
  * Represents one Item in a Array

@@ -1,6 +1,6 @@
-package ch.adv.ui.logic.model;
+package ch.adv.ui.domain;
 
-import ch.adv.ui.logic.model.styles.ADVStyle;
+import ch.adv.ui.domain.styles.ADVStyle;
 
 /**
  * Represents a generic elements which is displayed on the ADV UI.

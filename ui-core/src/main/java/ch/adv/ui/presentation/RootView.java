@@ -1,6 +1,6 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.domain.Session;
 import ch.adv.ui.util.ResourceLocator;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
