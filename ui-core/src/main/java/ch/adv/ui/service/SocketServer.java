@@ -18,12 +18,11 @@ import java.net.Socket;
 @Singleton
 public class SocketServer extends Thread {
 
-    private final ADVConnectionFactory connectionFactory;
     private static final int DEFAULT_PORT = 8765;
     private static final String THREAD_NAME = "SocketServer Thread";
     private static final Logger logger = LoggerFactory.getLogger(SocketServer
             .class);
-
+    private final ADVConnectionFactory connectionFactory;
     private ServerSocket javaSocket;
     private int portNr;
 
@@ -44,13 +43,12 @@ public class SocketServer extends Thread {
 
         try {
             javaSocket = new ServerSocket(portNr);
-            logger.info("Server socket started on port {}", portNr);
+            logger.info("Socket server started on port {}", portNr);
         } catch (IOException e) {
             logger.error("Unable to start socket server on port {}", portNr, e);
         }
 
         while (true) {
-
             try {
                 Socket socket = javaSocket.accept();
                 ADVConnection connection = connectionFactory.create(socket);
