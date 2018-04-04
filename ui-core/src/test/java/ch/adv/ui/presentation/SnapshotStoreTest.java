@@ -1,7 +1,7 @@
 package ch.adv.ui.presentation;
 
-import ch.adv.ui.logic.model.Snapshot;
-import ch.adv.ui.presentation.model.SnapshotWrapper;
+import ch.adv.ui.domain.Snapshot;
+import ch.adv.ui.presentation.domain.SnapshotWrapper;
 import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoRunner;

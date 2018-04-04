@@ -1,4 +1,4 @@
-package ch.adv.ui.logic;
+package ch.adv.ui.app;
 
 import ch.adv.ui.access.Parser;
 import ch.adv.ui.access.Stringifyer;

@@ -1,4 +1,4 @@
-package ch.adv.ui.logic.model;
+package ch.adv.ui.domain;
 
 import java.util.ArrayList;
 import java.util.List;

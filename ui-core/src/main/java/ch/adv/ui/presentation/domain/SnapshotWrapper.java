@@ -1,6 +1,6 @@
-package ch.adv.ui.presentation.model;
+package ch.adv.ui.presentation.domain;
 
-import ch.adv.ui.logic.model.Snapshot;
+import ch.adv.ui.domain.Snapshot;
 import javafx.scene.layout.Pane;
 
 import java.util.Objects;

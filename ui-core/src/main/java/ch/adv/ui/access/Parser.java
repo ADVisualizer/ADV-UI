@@ -1,6 +1,6 @@
 package ch.adv.ui.access;
 
-import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.domain.Session;
 
 /**
  * Session parser

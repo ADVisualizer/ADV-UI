@@ -1,9 +1,9 @@
-package ch.adv.ui.logic.model.styles;
+package ch.adv.ui.domain.styles;
 
 /**
- * Preconfigured info style
+ * Preconfigured success style
  */
-public class ADVInfoStyle implements ADVStyle {
+public class ADVSuccessStyle implements ADVStyle {
 
     @Override
     public String getFillColor() {
@@ -12,16 +12,16 @@ public class ADVInfoStyle implements ADVStyle {
 
     @Override
     public String getStrokeColor() {
-        return ADVColor.LIGHTBLUE.getColor();
+        return ADVColor.GREEN.getColor();
     }
 
     @Override
     public String getStrokeStyle() {
-        return ADVStrokeStyle.DASHED.getStyle();
+        return ADVStrokeStyle.THROUGH.getStyle();
     }
 
     @Override
     public String getStrokeThickness() {
-        return ADVStrokeThickness.SLIGHT.getThickness();
+        return ADVStrokeThickness.STANDARD.getThickness();
     }
 }

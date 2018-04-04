@@ -1,16 +1,15 @@
 package ch.adv.ui.service;
 
-import ch.adv.ui.logic.ADVModule;
+import ch.adv.ui.app.ADVModule;
 import ch.adv.ui.logic.ModuleStore;
 import ch.adv.ui.logic.SessionStore;
-import ch.adv.ui.logic.model.Session;
-import ch.adv.ui.logic.model.Snapshot;
+import ch.adv.ui.domain.Session;
+import ch.adv.ui.domain.Snapshot;
 import ch.adv.ui.presentation.Layouter;
 import ch.adv.ui.presentation.SnapshotStore;
-import ch.adv.ui.presentation.model.SnapshotWrapper;
+import ch.adv.ui.presentation.domain.SnapshotWrapper;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,12 +62,9 @@ public class ADVFlowControl {
 
         // Layout only snapshots that have not yet been layouted
         newSnapshots.forEach(snapshot -> {
-            SnapshotWrapper wrapper = new SnapshotWrapper();
-            wrapper.setSnapshot(snapshot);
 
             // layout
-            Pane newSnapshotPane = layouter.layout(snapshot);
-            wrapper.setPane(newSnapshotPane);
+            SnapshotWrapper wrapper = layouter.layout(snapshot);
 
             // store pane
             snapshotStore.addWrapper(sessionId, wrapper);

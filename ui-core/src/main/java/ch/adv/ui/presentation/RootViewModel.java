@@ -3,7 +3,7 @@ package ch.adv.ui.presentation;
 import ch.adv.ui.access.DatastoreAccess;
 import ch.adv.ui.access.FileDatastoreAccess;
 import ch.adv.ui.logic.SessionStore;
-import ch.adv.ui.logic.model.Session;
+import ch.adv.ui.domain.Session;
 import ch.adv.ui.service.ADVFlowControl;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;

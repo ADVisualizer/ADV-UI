@@ -1,4 +1,4 @@
-package ch.adv.ui.logic.model.styles;
+package ch.adv.ui.domain.styles;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

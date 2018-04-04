@@ -1,5 +1,6 @@
 package ch.adv.ui.logic;
 
+import ch.adv.ui.app.ADVModule;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

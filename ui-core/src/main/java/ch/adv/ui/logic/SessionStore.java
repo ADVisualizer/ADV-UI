@@ -1,7 +1,7 @@
 package ch.adv.ui.logic;
 
-import ch.adv.ui.logic.model.Session;
-import ch.adv.ui.logic.model.Snapshot;
+import ch.adv.ui.domain.Session;
+import ch.adv.ui.domain.Snapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

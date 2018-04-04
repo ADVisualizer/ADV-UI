@@ -1,7 +1,7 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.logic.model.ADVRelation;
-import ch.adv.ui.logic.model.styles.ADVStyle;
+import ch.adv.ui.domain.ADVRelation;
+import ch.adv.ui.domain.styles.ADVStyle;
 
 /**
  * Relation between two {@link ch.adv.ui.array.ArrayElement}s

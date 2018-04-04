@@ -1,6 +1,7 @@
 package ch.adv.ui.logic;
 
 import ch.adv.ui.access.FileDatastoreAccess;
+import ch.adv.ui.app.ADVModule;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
