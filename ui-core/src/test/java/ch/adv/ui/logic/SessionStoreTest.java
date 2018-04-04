@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 public class SessionStoreTest {
 
     private Session session1;
+    // both session have the same session id
     private Session session2_1;
     private Session session2_2;
 

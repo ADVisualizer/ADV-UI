@@ -32,8 +32,8 @@ public class ModuleStoreTest {
         modules.put("test", testModule);
         storeUnderTest.setAvailableModules(modules);
 
-        URL url = SessionStoreTest.class.getClassLoader().getResource(""
-                + "session1.json");
+        URL url = SessionStoreTest.class.getClassLoader()
+                .getResource("session1.json");
 
         testJson = reader.read(new File(url.getPath()));
     }
