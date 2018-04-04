@@ -30,7 +30,7 @@ public class ArrayStringifyer implements Stringifyer {
      */
     @Override
     public String stringify(final Session session) {
-        if (EXPECTED_MODULE.equals(session.getModule().getName())) {
+        if (EXPECTED_MODULE.equals(session.getModuleName())) {
             logger.debug("resulting json: {}", gsonProvider.getPrettifyer()
                     .toJson(session));
             return gsonProvider.getPrettifyer().toJson(session);
