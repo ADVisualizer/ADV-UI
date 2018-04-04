@@ -1,7 +1,6 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.domain.Snapshot;
-import ch.adv.ui.core.presentation.domain.SnapshotWrapper;
+import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,26 +20,26 @@ import java.util.stream.Collectors;
  * change event, if new snapshot arrives.
  */
 @Singleton
-public class SnapshotStore {
+public class LayoutedSnapshotStore {
     private static final Logger logger = LoggerFactory.getLogger(
-            SnapshotStore.class);
-    private final Map<Long, List<SnapshotWrapper>> snapshotMap;
+            LayoutedSnapshotStore.class);
+    private final Map<Long, List<LayoutedSnapshot>> snapshotMap;
     private final PropertyChangeSupport changeSupport;
 
 
-    public SnapshotStore() {
+    public LayoutedSnapshotStore() {
         this.snapshotMap = new HashMap<>();
         this.changeSupport = new PropertyChangeSupport(this);
     }
 
     /**
-     * Adds a new {@link SnapshotWrapper} to the Snapshot store
+     * Adds a new {@link LayoutedSnapshot} to the Snapshot store
      *
      * @param sessionId related session id
      * @param wrapper   the snapshotwrapper to add
      */
-    public void addWrapper(long sessionId, SnapshotWrapper wrapper) {
-        List<SnapshotWrapper> snapshotList = snapshotMap.get(sessionId);
+    public void addWrapper(long sessionId, LayoutedSnapshot wrapper) {
+        List<LayoutedSnapshot> snapshotList = snapshotMap.get(sessionId);
         if (snapshotList == null) {
             snapshotList = new ArrayList<>();
             snapshotMap.put(sessionId, snapshotList);
@@ -59,7 +58,7 @@ public class SnapshotStore {
      * @param sessionId session id
      * @return List of stored Snapshots
      */
-    public List<SnapshotWrapper> getWrappers(long sessionId) {
+    public List<LayoutedSnapshot> getWrappers(long sessionId) {
         return snapshotMap.get(sessionId);
     }
 
@@ -76,17 +75,17 @@ public class SnapshotStore {
     }
 
     /**
-     * @param sessionId of the snapshot
-     * @param snapshot  to check
+     * @param sessionId  of the snapshot
+     * @param snapshotId to check
      * @return true if the specified snapshot is already stored
      */
-    public boolean hasSnapshot(long sessionId, Snapshot snapshot) {
+    public boolean hasSnapshot(long sessionId, long snapshotId) {
         if (snapshotMap.get(sessionId) == null) {
             return false;
         }
-        return snapshotMap.get(sessionId).stream().anyMatch(wrapper -> wrapper
-                .getSnapshot()
-                .equals(snapshot));
+        return snapshotMap.get(sessionId).stream().anyMatch(
+                layoutedSnapshot -> layoutedSnapshot
+                        .getSnapshotId() == snapshotId);
     }
 
     /**

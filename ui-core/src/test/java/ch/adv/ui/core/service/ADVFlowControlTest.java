@@ -7,8 +7,8 @@ import ch.adv.ui.core.domain.Snapshot;
 import ch.adv.ui.core.logic.ModuleStore;
 import ch.adv.ui.core.logic.SessionStore;
 import ch.adv.ui.core.presentation.Layouter;
-import ch.adv.ui.core.presentation.SnapshotStore;
-import ch.adv.ui.core.presentation.domain.SnapshotWrapper;
+import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
+import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoModule;
@@ -40,7 +40,7 @@ public class ADVFlowControlTest {
     @Inject
     private Snapshot testSnapshot;
     @Inject
-    private SnapshotWrapper testWrapper;
+    private LayoutedSnapshot testLayoutedSnapshot;
     @Inject
     private Pane testPane;
     @Inject
@@ -48,7 +48,7 @@ public class ADVFlowControlTest {
     @Inject
     private ModuleStore testModuleStore;
     @Inject
-    private SnapshotStore testSnapshotStore;
+    private LayoutedSnapshotStore testLayoutedSnapshotStore;
     @Inject
     private ADVFlowControl flowControl;
 
@@ -58,13 +58,12 @@ public class ADVFlowControlTest {
         snapshots.add(testSnapshot);
         Mockito.when(testSession.getSnapshots()).thenReturn(snapshots);
 
-        testWrapper.setPane(testPane);
-        testWrapper.setSnapshot(testSnapshot);
+        testLayoutedSnapshot.setPane(testPane);
 
         Mockito.doReturn(testSession).when(testParser).parse(any());
         Mockito.doReturn(testParser).when(testModule).getParser();
         Mockito.doReturn(testLayouter).when(testModule).getLayouter();
-        Mockito.doReturn(testWrapper).when(testLayouter).layout(any());
+        Mockito.doReturn(testLayoutedSnapshot).when(testLayouter).layout(any());
 
         Map<String, ADVModule> modules = new HashMap<>();
         modules.put("testModule", testModule);
@@ -80,7 +79,7 @@ public class ADVFlowControlTest {
         assertTrue(sessions.contains(testSession));
 
         long testSessionId = testSession.getSessionId();
-        List<Pane> panes = testSnapshotStore.getSnapshotPanes(testSessionId);
+        List<Pane> panes = testLayoutedSnapshotStore.getSnapshotPanes(testSessionId);
         assertTrue(panes.contains(testPane));
     }
 

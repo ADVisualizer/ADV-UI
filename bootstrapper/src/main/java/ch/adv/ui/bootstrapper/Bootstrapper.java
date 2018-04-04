@@ -1,4 +1,4 @@
-package ch.adv.ui.core.bootstrapper;
+package ch.adv.ui.bootstrapper;
 
 import ch.adv.ui.core.app.ADVApplication;
 import ch.adv.ui.array.ArrayModule;

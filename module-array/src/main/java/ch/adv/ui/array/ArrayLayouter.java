@@ -2,7 +2,7 @@ package ch.adv.ui.array;
 
 import ch.adv.ui.core.domain.Snapshot;
 import ch.adv.ui.core.presentation.Layouter;
-import ch.adv.ui.core.presentation.domain.SnapshotWrapper;
+import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,11 +16,12 @@ public class ArrayLayouter implements Layouter {
 
     /**
      * Layouts an Array snapshot if it is not already layouted
+     *
      * @param snapshot to be layouted
-     * @return
+     * @return layouted snapshot
      */
     @Override
-    public SnapshotWrapper layout(Snapshot snapshot) {
+    public LayoutedSnapshot layout(Snapshot snapshot) {
         VBox vBox = new VBox();
         vBox.setBackground(new Background(new BackgroundFill(Color.WHITE,
                 CornerRadii.EMPTY,
@@ -40,10 +41,12 @@ public class ArrayLayouter implements Layouter {
 
         vBox.getChildren().add(hbox);
 
-        SnapshotWrapper wrapper = new SnapshotWrapper();
-        wrapper.setSnapshot(snapshot);
-        wrapper.setPane(vBox);
+        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot();
+        layoutedSnapshot
+                .setSnapshotDescription(snapshot.getSnapshotDescription());
+        layoutedSnapshot.setSnapshotId(snapshot.getSnapshotId());
+        layoutedSnapshot.setPane(vBox);
 
-        return wrapper;
+        return layoutedSnapshot;
     }
 }

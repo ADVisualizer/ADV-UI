@@ -1,7 +1,6 @@
 package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.domain.Session;
-import ch.adv.ui.core.domain.Snapshot;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -30,7 +29,7 @@ public class SessionViewModel {
             SimpleObjectProperty<>();
     private final ObjectProperty<String> currentSnapshotDescriptionProperty =
             new SimpleObjectProperty<>();
-    private final SnapshotStore snapshotStore;
+    private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final BooleanProperty stepFirstBtnDisableProperty = new
             SimpleBooleanProperty();
     private final BooleanProperty stepBackwardBtnDisableProperty = new
@@ -58,27 +57,29 @@ public class SessionViewModel {
 
 
     @Inject
-    public SessionViewModel(RootViewModel rootViewModel, SnapshotStore
-            snapshotStore, SessionReplayFactory sessionReplayFactory,
+    public SessionViewModel(RootViewModel rootViewModel, LayoutedSnapshotStore
+            layoutedSnapshotStore, SessionReplayFactory sessionReplayFactory,
                             ReplayController replayController) {
         logger.debug("init sessionViewModel");
         this.sessionReplayFactory = sessionReplayFactory;
         this.replayController = replayController;
-        this.snapshotStore = snapshotStore;
+        this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.session = rootViewModel.getCurrentSessionPropertyProperty().get();
 
         //instantiate property instances
         this.availableSnapshotPanes = FXCollections.observableArrayList();
 
         //initialize properties
-        snapshotStore.addPropertyChangeListener(session.getSessionId(), new
-                SnapshotPropertyChangeListener());
+        layoutedSnapshotStore
+                .addPropertyChangeListener(session.getSessionId(), new
+                        SnapshotPropertyChangeListener());
 
-        this.availableSnapshotPanes.addAll(snapshotStore.getSnapshotPanes(
-                session.getSessionId()));
+        this.availableSnapshotPanes
+                .addAll(layoutedSnapshotStore.getSnapshotPanes(
+                        session.getSessionId()));
         this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
-        String snapshotDescription = snapshotStore.getWrappers(session
-                .getSessionId()).get(0).getSnapshot().getSnapshotDescription();
+        String snapshotDescription = layoutedSnapshotStore.getWrappers(session
+                .getSessionId()).get(0).getSnapshotDescription();
         this.currentSnapshotDescriptionProperty.set(snapshotDescription);
 
         updateProgress();
@@ -172,9 +173,10 @@ public class SessionViewModel {
     }
 
     private void updateSnapshotDescription() {
-        Snapshot s = snapshotStore.getWrappers(
-                session.getSessionId()).get(currentSnapshotIndex).getSnapshot();
-        currentSnapshotDescriptionProperty.set(s.getSnapshotDescription());
+        String description = layoutedSnapshotStore.getWrappers(
+                session.getSessionId()).get(currentSnapshotIndex)
+                .getSnapshotDescription();
+        currentSnapshotDescriptionProperty.set(description);
     }
 
     private void updateStepButtonDisabilities() {
@@ -286,7 +288,7 @@ public class SessionViewModel {
         public void propertyChange(PropertyChangeEvent event) {
             Platform.runLater(() -> {
                 availableSnapshotPanes.clear();
-                availableSnapshotPanes.addAll(snapshotStore
+                availableSnapshotPanes.addAll(layoutedSnapshotStore
                         .getSnapshotPanes(session.getSessionId()));
                 updateProgress();
                 updateStepButtonDisabilities();

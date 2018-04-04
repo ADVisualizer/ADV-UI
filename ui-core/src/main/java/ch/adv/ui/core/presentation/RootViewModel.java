@@ -35,16 +35,18 @@ public class RootViewModel {
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final ADVFlowControl flowControl;
-    private final SnapshotStore snapshotStore;
+    private final LayoutedSnapshotStore layoutedSnapshotStore;
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ADVFlowControl flowControl,
-                         final FileDatastoreAccess fileAccess, SnapshotStore
-                                 snapshotStore) {
+                         final FileDatastoreAccess fileAccess,
+                         LayoutedSnapshotStore
+
+                                 layoutedSnapshotStore) {
         this.sessionStore = sessionStore;
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
-        this.snapshotStore = snapshotStore;
+        this.layoutedSnapshotStore = layoutedSnapshotStore;
 
         this.availableSessions = FXCollections.observableArrayList();
         this.currentSessionProperty = new SimpleObjectProperty<>();
@@ -69,7 +71,7 @@ public class RootViewModel {
      */
     public void removeSession(final Session session) {
         sessionStore.deleteSession(session);
-        snapshotStore.deleteSession(session.getSessionId());
+        layoutedSnapshotStore.deleteSession(session.getSessionId());
     }
 
     /**

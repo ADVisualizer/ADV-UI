@@ -5,9 +5,9 @@ import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.domain.Snapshot;
 import ch.adv.ui.core.logic.ModuleStore;
 import ch.adv.ui.core.logic.SessionStore;
-import ch.adv.ui.core.presentation.SnapshotStore;
-import ch.adv.ui.core.presentation.domain.SnapshotWrapper;
+import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.Layouter;
+import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
@@ -27,14 +27,14 @@ public class ADVFlowControl {
 
     private final ModuleStore moduleStore;
     private final SessionStore sessionStore;
-    private final SnapshotStore snapshotStore;
+    private final LayoutedSnapshotStore layoutedSnapshotStore;
 
     @Inject
     public ADVFlowControl(final ModuleStore moduleStore, SessionStore
-            sessionStore, final SnapshotStore snapshotStore) {
+            sessionStore, final LayoutedSnapshotStore layoutedSnapshotStore) {
         this.moduleStore = moduleStore;
         this.sessionStore = sessionStore;
-        this.snapshotStore = snapshotStore;
+        this.layoutedSnapshotStore = layoutedSnapshotStore;
     }
 
     /**
@@ -57,17 +57,18 @@ public class ADVFlowControl {
 
         // filter new snapshots
         List<Snapshot> newSnapshots = session.getSnapshots().stream()
-                .filter(s -> !snapshotStore.hasSnapshot(sessionId, s))
+                .filter(s -> !layoutedSnapshotStore.hasSnapshot(sessionId,
+                        s.getSnapshotId()))
                 .collect(Collectors.toList());
 
         // Layout only snapshots that have not yet been layouted
         newSnapshots.forEach(snapshot -> {
 
             // layout
-            SnapshotWrapper wrapper = layouter.layout(snapshot);
+            LayoutedSnapshot wrapper = layouter.layout(snapshot);
 
             // store pane
-            snapshotStore.addWrapper(sessionId, wrapper);
+            layoutedSnapshotStore.addWrapper(sessionId, wrapper);
         });
 
         if (!newSnapshots.isEmpty()) {
