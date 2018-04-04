@@ -23,14 +23,10 @@ import java.util.stream.Collectors;
 public class LayoutedSnapshotStore {
     private static final Logger logger = LoggerFactory.getLogger(
             LayoutedSnapshotStore.class);
-    private final Map<Long, List<LayoutedSnapshot>> snapshotMap;
-    private final PropertyChangeSupport changeSupport;
-
-
-    public LayoutedSnapshotStore() {
-        this.snapshotMap = new HashMap<>();
-        this.changeSupport = new PropertyChangeSupport(this);
-    }
+    private final Map<Long, List<LayoutedSnapshot>> snapshotMap = new
+            HashMap<>();
+    private final PropertyChangeSupport changeSupport = new
+            PropertyChangeSupport(this);
 
     /**
      * Adds a new {@link LayoutedSnapshot} to the Snapshot store

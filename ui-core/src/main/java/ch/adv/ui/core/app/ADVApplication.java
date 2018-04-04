@@ -1,7 +1,7 @@
 package ch.adv.ui.core.app;
 
-import ch.adv.ui.core.util.ResourceLocator;
 import ch.adv.ui.core.service.SocketServer;
+import ch.adv.ui.core.util.ResourceLocator;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Main class of ADV UI.
@@ -28,16 +29,46 @@ public class ADVApplication extends Application {
 
     private static final Logger logger = LoggerFactory.getLogger(
             ADVApplication.class);
+
+    private static CountDownLatch latch = new CountDownLatch(1);
+    private static ADVApplication instance;
+
+    private final Injector injector;
+
     @Inject
     private SocketServer socketServer;
+
     @Inject
     private ResourceLocator resourceLocator;
+
     private Stage primaryStage;
     private Image advIconImage;
 
+    public ADVApplication() {
+        this.injector = Guice.createInjector(new GuiceBaseModule());
+        instance = this;
+        latch.countDown();
+    }
+
+    /**
+     * Waits until the Application got initiated by JavaFX
+     * @return application instance
+     */
+    public static ADVApplication waitForADVApplication() {
+        try {
+            latch.await();
+        } catch (InterruptedException e) {
+            logger.error("ADVApplication not started");
+        }
+        return instance;
+    }
+
+    public Injector getInjector() {
+        return injector;
+    }
+
     @Override
     public void start(Stage stage) {
-        Injector injector = Guice.createInjector(new GuiceBaseModule());
         injector.injectMembers(this);
 
         this.primaryStage = stage;

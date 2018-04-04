@@ -1,6 +1,9 @@
 package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.ADVEvent;
+import ch.adv.ui.core.logic.EventManager;
+import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -25,6 +28,7 @@ public class SessionViewModel {
     private static final long HALF_SECOND_MS = 500;
 
     private final ObservableList<Pane> availableSnapshotPanes;
+
     private final ObjectProperty<Pane> currentSnapshotPaneProperty = new
             SimpleObjectProperty<>();
     private final ObjectProperty<String> currentSnapshotDescriptionProperty =
@@ -44,12 +48,15 @@ public class SessionViewModel {
             SimpleBooleanProperty();
     private final FloatProperty progressProperty = new
             SimpleFloatProperty();
+
+    private final EventManager eventManager;
     private final SessionReplayFactory sessionReplayFactory;
     private final ReplayController replayController;
     private final StringProperty currentIndexStringProperty = new
             SimpleStringProperty();
     private final StringProperty maxIndexStringProperty = new
             SimpleStringProperty();
+
     private int currentSnapshotIndex;
     private int maxSnapshotIndex;
     private Session session;
@@ -58,8 +65,10 @@ public class SessionViewModel {
 
     @Inject
     public SessionViewModel(RootViewModel rootViewModel, LayoutedSnapshotStore
-            layoutedSnapshotStore, SessionReplayFactory sessionReplayFactory,
+            layoutedSnapshotStore, EventManager eventManager,
+                            SessionReplayFactory sessionReplayFactory,
                             ReplayController replayController) {
+        this.eventManager = eventManager;
         logger.debug("init sessionViewModel");
         this.sessionReplayFactory = sessionReplayFactory;
         this.replayController = replayController;
@@ -70,17 +79,17 @@ public class SessionViewModel {
         this.availableSnapshotPanes = FXCollections.observableArrayList();
 
         //initialize properties
-        layoutedSnapshotStore
-                .addPropertyChangeListener(session.getSessionId(), new
-                        SnapshotPropertyChangeListener());
+        long sessionId = session.getSessionId();
+        layoutedSnapshotStore.addPropertyChangeListener(sessionId, new
+                SnapshotPropertyChangeListener());
 
         this.availableSnapshotPanes
-                .addAll(layoutedSnapshotStore.getSnapshotPanes(
-                        session.getSessionId()));
+                .addAll(layoutedSnapshotStore.getSnapshotPanes(sessionId));
         this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
+
         String snapshotDescription = layoutedSnapshotStore
-                .getLayoutedSnapshots(session
-                        .getSessionId()).get(0).getSnapshotDescription();
+                .getLayoutedSnapshots(sessionId).get(0)
+                .getSnapshotDescription();
         this.currentSnapshotDescriptionProperty.set(snapshotDescription);
 
         updateProgress();
@@ -128,27 +137,46 @@ public class SessionViewModel {
      * @param navigate direction to navigate
      */
     public void navigateSnapshot(Navigate navigate) {
+
+        int oldIndex = currentSnapshotIndex;
+
         switch (navigate) {
             case FIRST:
                 currentSnapshotIndex = 0;
+
+                callHookMethod(ADVEvent.STEP_FIRST, oldIndex,
+                        currentSnapshotIndex);
+
                 handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
                 break;
             case BACKWARD:
                 currentSnapshotIndex--;
+
+                callHookMethod(ADVEvent.STEP_BACKWARD, oldIndex,
+                        currentSnapshotIndex);
+
                 handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
                 break;
             case FORWARD:
                 currentSnapshotIndex++;
+
+                callHookMethod(ADVEvent.STEP_FORWARD, oldIndex,
+                        currentSnapshotIndex);
+
                 handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
                 break;
             case LAST:
                 currentSnapshotIndex = availableSnapshotPanes.size() - 1;
+
+                callHookMethod(ADVEvent.STEP_LAST, oldIndex,
+                        currentSnapshotIndex);
+
                 handleNavigationStep();
                 currentSnapshotPaneProperty.set(availableSnapshotPanes
                         .get(currentSnapshotIndex));
@@ -162,6 +190,16 @@ public class SessionViewModel {
         updateProgress();
         updateStepButtonDisabilities();
         updateSnapshotDescription();
+    }
+
+    private void callHookMethod(ADVEvent event, int oldIndex, int newIndex) {
+        LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore
+                .getLayoutedSnapshots(session.getSessionId()).get(oldIndex);
+
+        LayoutedSnapshot newLayoutedSnapshot = layoutedSnapshotStore
+                .getLayoutedSnapshots(session.getSessionId()).get(newIndex);
+
+        eventManager.fire(event, oldLayoutedSnapshot, newLayoutedSnapshot);
     }
 
     private void updateProgress() {

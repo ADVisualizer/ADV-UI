@@ -80,7 +80,8 @@ public class RootView {
 
     private void handleLogoVisibility() {
         sessionTabPane.getStyleClass().add("logo");
-        sessionTabPane.getTabs().addListener((ListChangeListener) c -> {
+        sessionTabPane.getTabs().addListener((ListChangeListener<? super
+                Tab>) c -> {
             int tabNumber = sessionTabPane.getTabs().size();
             if (tabNumber == 0) {
                 sessionTabPane.getStyleClass().add("logo");
@@ -126,14 +127,15 @@ public class RootView {
 
     /**
      * Checks if a Tab is already existing for the given session
+     *
      * @param session session to check
      * @return optional tab
      */
     private Optional<Tab> getExistingTab(Session session) {
         return sessionTabPane.getTabs()
-                        .stream()
-                        .filter(t -> t.getText().equals(session.toString()))
-                        .findFirst();
+                .stream()
+                .filter(t -> t.getText().equals(session.toString()))
+                .findFirst();
     }
 
     private void handleRemoveSessionClicked(final Session session, final
