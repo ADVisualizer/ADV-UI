@@ -38,6 +38,10 @@ public class Session {
         return moduleName;
     }
 
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
+    }
+
     public ADVModule getModule() {
         return module;
     }
@@ -50,11 +54,6 @@ public class Session {
      */
     public void setModule(ADVModule module) {
         this.module = module;
-        if (module != null) {
-            this.moduleName = module.getName();
-        } else {
-            moduleName = "";
-        }
     }
 
     public List<Snapshot> getSnapshots() {

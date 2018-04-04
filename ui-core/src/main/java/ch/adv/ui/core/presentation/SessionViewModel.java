@@ -78,8 +78,9 @@ public class SessionViewModel {
                 .addAll(layoutedSnapshotStore.getSnapshotPanes(
                         session.getSessionId()));
         this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
-        String snapshotDescription = layoutedSnapshotStore.getLayoutedSnapshots(session
-                .getSessionId()).get(0).getSnapshotDescription();
+        String snapshotDescription = layoutedSnapshotStore
+                .getLayoutedSnapshots(session
+                        .getSessionId()).get(0).getSnapshotDescription();
         this.currentSnapshotDescriptionProperty.set(snapshotDescription);
 
         updateProgress();
