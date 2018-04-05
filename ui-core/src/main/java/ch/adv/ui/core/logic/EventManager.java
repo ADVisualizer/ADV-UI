@@ -47,8 +47,8 @@ public class EventManager {
      * Registers a listener for multiple events
      * <p>
      * If filter arguments are provided, they are added to the event handle.
-     * This can be handy if you want narrow the context of event. (e.g. only
-     * listen for added snapshots in the session with id XY)
+     * This can be handy if you want to narrow the context of an event. (e.g.
+     * only listen for added snapshots in the session with id XY)
      *
      * @param listener   listener
      * @param events     ADV events handle
