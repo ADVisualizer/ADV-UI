@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * This class is responsible for the event dispatching of all ADVEvents
  * It uses the {@link java.beans.PropertyChangeSupport} internally.
- *
+ * <p>
  * Modules can register {@link java.beans.PropertyChangeListener} to listen
  * for specific Events which are called by the ADV framework.
  */
@@ -26,49 +26,51 @@ public class EventManager {
 
     /**
      * Registers a listener for a specific event
+     *
      * @param listener listener
-     * @param event ADV event
+     * @param event    ADV event
      */
-    public void addEventListener(PropertyChangeListener listener,
-                                 ADVEvent event) {
+    public void subscribe(PropertyChangeListener listener, ADVEvent event) {
         eventStore.addPropertyChangeListener(event.toString(), listener);
     }
 
     /**
      * Registers a listener for multiple events
+     *
      * @param listener listener
-     * @param events ADV events
+     * @param events   ADV events
      */
-    public void addEventListener(PropertyChangeListener listener,
-                                 List<ADVEvent> events) {
-        events.forEach(e -> addEventListener(listener, e));
+    public void subscribe(PropertyChangeListener listener,
+                          List<ADVEvent> events) {
+        events.forEach(e -> subscribe(listener, e));
     }
 
     /**
      * Removes the listener for a specific event
+     *
      * @param listener listener
-     * @param event ADV event
+     * @param event    ADV event
      */
-    public void removeEventListener(PropertyChangeListener listener,
-                                    ADVEvent event) {
+    public void unsubscribe(PropertyChangeListener listener, ADVEvent event) {
         eventStore.removePropertyChangeListener(event.toString(), listener);
     }
 
     /**
      * Removes the listener for multiple events
+     *
      * @param listener listener
-     * @param events ADV events
+     * @param events   ADV events
      */
-    public void removeEventListener(PropertyChangeListener listener,
-                                    List<ADVEvent> events) {
-        events.forEach(e -> removeEventListener(listener, e));
+    public void unsubscribe(PropertyChangeListener listener,
+                            List<ADVEvent> events) {
+        events.forEach(e -> unsubscribe(listener, e));
     }
 
     /**
      * Executes an ADV event and transmits the old and the new
      * value to all subscribers.
      *
-     * @param event event
+     * @param event  event
      * @param oldVal value before change
      * @param newVal value after change
      */

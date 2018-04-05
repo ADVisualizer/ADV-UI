@@ -30,7 +30,7 @@ public class StepEventController implements PropertyChangeListener {
     public StepEventController(EventManager eventManager) {
         this.eventManager = eventManager;
 
-        eventManager.addEventListener(this, NAVIGATION_EVENTS);
+        eventManager.subscribe(this, NAVIGATION_EVENTS);
     }
 
     /**
