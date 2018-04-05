@@ -18,6 +18,7 @@ import static org.junit.Assert.assertNull;
 
 @RunWith(JukitoRunner.class)
 public class ModuleStoreTest {
+
     @Inject
     private ADVModule testModule;
     @Inject
