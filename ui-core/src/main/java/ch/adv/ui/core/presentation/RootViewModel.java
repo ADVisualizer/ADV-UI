@@ -52,8 +52,9 @@ public class RootViewModel {
         this.fileAccess = fileAccess;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
 
-        eventManager.subscribe(new SessionStoreListener(),
-                ADVEvent.CURRENT_SESSION_CHANGED);
+        eventManager.subscribe(new SessionStoreListener(), List.of(ADVEvent
+                .CURRENT_SESSION_CHANGED, ADVEvent.SESSION_REMOVED)
+        );
     }
 
     public ObservableList<Session> getAvailableSessions() {
