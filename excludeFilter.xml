@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FindBugsFilter
+        xmlns="https://github.com/spotbugs/filter/3.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="https://github.com/spotbugs/filter/3.0.0 https://raw.githubusercontent.com/spotbugs/spotbugs/3.1.0/spotbugs/etc/findbugsfilter.xsd">
+
+
+    <!-- For help creating filter: http://spotbugs.readthedocs.io/en/latest/filter.html#match-a-particular-bug-pattern-in-a-particular-method -->
+    <!-- Match a particular bug pattern in a particular method -->
+    <Match>
+        <Class name="ch.adv.ui.core.presentation.RootView"/>
+        <Method name="handleCloseMenuItemClicked"/>
+        <Bug pattern="DM_EXIT"/>
+    </Match>
+
+    <Match>
+        <Class name="ch.adv.ui.core.app.ADVApplication"/>
+        <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    </Match>
+
+</FindBugsFilter>

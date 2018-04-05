@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ProjectResources">
+    <resource url="http://www.puppycrawl.com/dtds/configuration_1_3.dtd" location="$USER_HOME$/Library/Caches/IntelliJIdea2017.3/extResources/1524e8b2_configuration_1_3.dtd" />
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_9" project-jdk-name="9.0" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>

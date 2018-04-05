@@ -1,3 +1,0 @@
-dependencies {
-    compile 'org.controlsfx:controlsfx:8+'
-}

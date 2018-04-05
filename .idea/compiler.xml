@@ -6,8 +6,14 @@
       <module name="adv-parent_test" target="1.9" />
       <module name="adv-root_main" target="1.9" />
       <module name="adv-root_test" target="1.9" />
+      <module name="adv-ui_main" target="1.9" />
+      <module name="adv-ui_test" target="1.9" />
       <module name="adv_main" target="1.9" />
       <module name="adv_test" target="1.9" />
+      <module name="bootstraper_main" target="1.9" />
+      <module name="bootstraper_test" target="1.9" />
+      <module name="bootstrapper_main" target="1.9" />
+      <module name="bootstrapper_test" target="1.9" />
       <module name="common_main" target="1.9" />
       <module name="common_test" target="1.9" />
       <module name="core_main" target="1.9" />
@@ -24,6 +30,8 @@
       <module name="module-sort_test" target="1.9" />
       <module name="module_main" target="1.9" />
       <module name="module_test" target="1.9" />
+      <module name="ui-core_main" target="1.9" />
+      <module name="ui-core_test" target="1.9" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/root-layout.css"
+            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ch.adv.ui.core.presentation.RootView">
+
+    <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="ADV">
+                <items>
+                    <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" accelerator="Shortcut+Q">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="SIGN_OUT"/>
+                        </graphic>
+                    </MenuItem>
+                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <items>
+                    <MenuItem mnemonicParsing="false" text="Help" accelerator="Shortcut+H">
+                        <graphic>
+                            <FontAwesomeIconView glyphName="INFO"/>
+                        </graphic>
+                    </MenuItem>
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+    <ToolBar prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+             AnchorPane.topAnchor="28.0">
+        <items>
+            <Button fx:id="loadSessionButton" mnemonicParsing="false" text="Load existing Session">
+                <graphic>
+                    <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
+                </graphic>
+            </Button>
+
+            <Button fx:id="clearAllSessionsButton" mnemonicParsing="false" text="Clear all Sessions">
+                <graphic>
+                    <FontAwesomeIconView glyphName="ERASER"/>
+                </graphic>
+            </Button>
+        </items>
+    </ToolBar>
+
+    <SplitPane dividerPositions="0.28" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="73.0">
+        <items>
+            <AnchorPane>
+                <children>
+                    <TitledPane animated="false" text="Available Sessions" AnchorPane.bottomAnchor="0.0"
+                                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <content>
+                            <ListView fx:id="sessionListView"/>
+                        </content>
+                    </TitledPane>
+                </children>
+            </AnchorPane>
+            <AnchorPane>
+                <children>
+                    <TabPane fx:id="sessionTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
+                             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                </children>
+            </AnchorPane>
+        </items>
+    </SplitPane>
+</AnchorPane>
