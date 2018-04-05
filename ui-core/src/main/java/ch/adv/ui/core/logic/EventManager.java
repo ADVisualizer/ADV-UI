@@ -65,8 +65,8 @@ public class EventManager {
     }
 
     /**
-     * Executes an ADV event and transmits the old Value and and the New
-     * Value to all subscribers.
+     * Executes an ADV event and transmits the old and the new
+     * value to all subscribers.
      *
      * @param event event
      * @param oldVal value before change
