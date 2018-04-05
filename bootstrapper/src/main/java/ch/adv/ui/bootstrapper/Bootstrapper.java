@@ -1,15 +1,15 @@
 package ch.adv.ui.bootstrapper;
 
-import ch.adv.ui.core.app.ADVApplication;
 import ch.adv.ui.array.ArrayModule;
+import ch.adv.ui.core.app.ADVApplication;
 import ch.adv.ui.core.app.ADVModule;
 import ch.adv.ui.core.logic.ModuleStore;
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,11 +17,20 @@ import java.util.Map;
  *
  * @author mwieland
  */
+@Singleton
 public class Bootstrapper {
 
-    private static final Map<String, ADVModule> REGISTERED_MODULES;
     private static final Logger logger = LoggerFactory.getLogger(Bootstrapper
             .class);
+
+    @Inject
+    private ArrayModule arrayModule;
+
+    public Bootstrapper() {
+        ADVApplication instance = ADVApplication.waitForADVApplication();
+        instance.getInjector().injectMembers(this);
+        registerModules();
+    }
 
     /**
      * ADV UI entry point
@@ -34,18 +43,16 @@ public class Bootstrapper {
     public static void main(String[] args) {
         logger.info("Bootstrapping ADV UI");
 
-        ModuleStore.setAvailableModules(REGISTERED_MODULES);
-        Application.launch(ADVApplication.class, args);
+        new Thread(() -> Application.launch(ADVApplication.class, args))
+                .start();
+        new Bootstrapper();
     }
 
+    private void registerModules() {
+        Map<String, ADVModule> modules = Map
+                .ofEntries(Map.entry("array", arrayModule));
 
-    /**
-     * Static map of all available modules
-     */
-    static {
-        Map<String, ADVModule> modules = new HashMap<>();
-        modules.put("array", new ArrayModule());
-
-        REGISTERED_MODULES = Collections.unmodifiableMap(modules);
+        ModuleStore.setAvailableModules(modules);
     }
+
 }

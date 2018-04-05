@@ -69,8 +69,9 @@ subprojects {
         compile group: 'com.google.code.gson', name: 'gson', version: '2+'
 
 
-        testCompile "junit:junit:4+"
+        testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
+        testCompile 'org.hamcrest:hamcrest-library:1+'
     }
 }
 

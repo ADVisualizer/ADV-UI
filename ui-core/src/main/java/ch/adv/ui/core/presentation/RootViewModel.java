@@ -3,6 +3,8 @@ package ch.adv.ui.core.presentation;
 import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.ADVEvent;
+import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.logic.SessionStore;
 import ch.adv.ui.core.service.ADVFlowControl;
 import javafx.application.Platform;
@@ -30,29 +32,30 @@ public class RootViewModel {
     private static final Logger logger = LoggerFactory.getLogger(
             RootViewModel.class);
 
-    private final ObservableList<Session> availableSessions;
-    private final ObjectProperty<Session> currentSessionProperty;
+    private final ObservableList<Session> availableSessions = FXCollections
+            .observableArrayList();
+    private final ObjectProperty<Session> currentSessionProperty = new
+            SimpleObjectProperty<>();
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final ADVFlowControl flowControl;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
+    private final EventManager eventManager;
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ADVFlowControl flowControl,
-                         final FileDatastoreAccess fileAccess,
-                         LayoutedSnapshotStore
+                         FileDatastoreAccess fileAccess,
+                         LayoutedSnapshotStore layoutedSnapshotStore,
+                         EventManager eventManager) {
 
-                                 layoutedSnapshotStore) {
         this.sessionStore = sessionStore;
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
+        this.eventManager = eventManager;
 
-        this.availableSessions = FXCollections.observableArrayList();
-        this.currentSessionProperty = new SimpleObjectProperty<>();
-
-        sessionStore.addPropertyChangeListener(new
-                SessionPropertyChangeListener());
+        eventManager.subscribe(new SessionStoreListener(),
+                ADVEvent.CURRENT_SESSION_CHANGED);
     }
 
     public ObservableList<Session> getAvailableSessions() {
@@ -98,8 +101,7 @@ public class RootViewModel {
     /**
      * Update listener if session store has changed.
      */
-    private class SessionPropertyChangeListener implements
-            PropertyChangeListener {
+    private class SessionStoreListener implements PropertyChangeListener {
 
         @Override
         public void propertyChange(final PropertyChangeEvent event) {

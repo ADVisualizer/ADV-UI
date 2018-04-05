@@ -3,12 +3,14 @@ package ch.adv.ui.array;
 import ch.adv.ui.core.access.GsonProvider;
 import ch.adv.ui.core.access.Stringifyer;
 import ch.adv.ui.core.domain.Session;
+import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Generates a json representation of an array session.
  */
+@Singleton
 public class ArrayStringifyer implements Stringifyer {
 
     private static final String EXPECTED_MODULE = "array";

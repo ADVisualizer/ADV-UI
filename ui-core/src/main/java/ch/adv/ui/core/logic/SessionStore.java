@@ -5,9 +5,8 @@ import ch.adv.ui.core.domain.Snapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,18 +22,17 @@ import java.util.stream.Collectors;
 @Singleton
 public class SessionStore {
 
-    private static final String SESSION_EVENT = "session";
     private static final Logger logger = LoggerFactory.getLogger(SessionStore
             .class);
 
-    private final Map<Long, Session> sessions;
-    private final PropertyChangeSupport changeSupport;
+    private final Map<Long, Session> sessions = new HashMap<>();
+    private final EventManager eventManager;
 
     private Session currentSession;
 
-    public SessionStore() {
-        this.sessions = new HashMap<>();
-        this.changeSupport = new PropertyChangeSupport(this);
+    @Inject
+    public SessionStore(EventManager eventManager) {
+        this.eventManager = eventManager;
     }
 
     /**
@@ -49,21 +47,19 @@ public class SessionStore {
      */
     public void addSession(Session newSession) {
         if (newSession != null) {
+
             long id = newSession.getSessionId();
             Session existing = sessions.get(id);
+
             if (existing == null) {
                 sessions.put(id, newSession);
-                currentSession = newSession;
-                logger.info("New session {} added to SessionStore", id);
+                setCurrentSession(newSession.getSessionId());
             } else {
                 mergeSession(existing, newSession);
-                currentSession = existing;
+                setCurrentSession(existing.getSessionId());
             }
 
-            logger.debug("Fire change event");
-
-            changeSupport.firePropertyChange(SESSION_EVENT, existing,
-                    newSession);
+            eventManager.fire(ADVEvent.SESSION_ADDED, existing, newSession);
         }
     }
 
@@ -114,20 +110,10 @@ public class SessionStore {
      * @param sessionId of the current session
      */
     public void setCurrentSession(long sessionId) {
+        logger.debug("New session {} added to SessionStore", sessionId);
         this.currentSession = sessions.get(sessionId);
-        logger.debug("Fire change event");
-
-        changeSupport.firePropertyChange(SESSION_EVENT, null,
+        eventManager.fire(ADVEvent.CURRENT_SESSION_CHANGED, null,
                 currentSession);
-    }
-
-    /**
-     * Add change listener to be notified by changes to the session list.
-     *
-     * @param listener to be registered
-     */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        changeSupport.addPropertyChangeListener(listener);
     }
 
     /**
@@ -146,8 +132,8 @@ public class SessionStore {
                 logger.info("Session {} deleted from SessionStore", id);
             }
             logger.debug("Fire change event");
-            changeSupport.firePropertyChange(SESSION_EVENT, existing,
-                    null);
+
+            eventManager.fire(ADVEvent.SESSION_REMOVED, existing, null);
         }
     }
 }

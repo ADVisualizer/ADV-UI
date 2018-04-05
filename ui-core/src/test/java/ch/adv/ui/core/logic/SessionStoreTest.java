@@ -102,11 +102,4 @@ public class SessionStoreTest {
         assertEquals(null, storeUnderTest.getCurrentSession());
     }
 
-    @Test
-    public void receiveChangeEventOnMySessionTest() {
-        storeUnderTest.addPropertyChangeListener(listener);
-        storeUnderTest.addSession(session1);
-
-        Mockito.verify(listener).propertyChange(any());
-    }
 }

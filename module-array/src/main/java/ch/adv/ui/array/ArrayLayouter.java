@@ -4,6 +4,7 @@ import ch.adv.ui.core.domain.Snapshot;
 import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
+import com.google.inject.Singleton;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
@@ -12,6 +13,7 @@ import javafx.scene.paint.Color;
 /**
  * Positions the ArrayElements on the Pane
  */
+@Singleton
 public class ArrayLayouter implements Layouter {
 
     /**
