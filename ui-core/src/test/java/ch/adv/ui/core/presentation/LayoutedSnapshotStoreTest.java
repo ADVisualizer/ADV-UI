@@ -1,8 +1,10 @@
 package ch.adv.ui.core.presentation;
 
+import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
+import jdk.jfr.Event;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,10 +29,8 @@ public class LayoutedSnapshotStoreTest {
     private Pane pane;
 
     @Inject
-    private PropertyChangeListener listener;
-
-    @Inject
     private LayoutedSnapshotStore storeUnderTest;
+
 
     @Before
     public void setUp() throws Exception {
@@ -84,22 +84,6 @@ public class LayoutedSnapshotStoreTest {
     }
 
 
-    @Test
-    public void receiveChangeEventOnMySessionTest() {
-        storeUnderTest.addPropertyChangeListener(sessionId, listener);
-        storeUnderTest.addLayoutedSnapshot(sessionId, layoutedSnapshot1);
-
-        Mockito.verify(listener).propertyChange(any());
-    }
-
-    @Test
-    public void receiveNoChangeEventOnOtherSessionTest() {
-        storeUnderTest.addPropertyChangeListener(sessionId, listener);
-        long otherId = 123789;
-        storeUnderTest.addLayoutedSnapshot(otherId, layoutedSnapshot1);
-
-        Mockito.verify(listener, Mockito.times(0)).propertyChange(any());
-    }
 
     @Test
     public void deleteSessionTest() {

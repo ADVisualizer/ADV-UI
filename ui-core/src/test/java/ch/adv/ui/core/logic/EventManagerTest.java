@@ -64,5 +64,26 @@ public class EventManagerTest {
         Mockito.verify(listenerTest, never()).propertyChange(any());
     }
 
+    @Test
+    public void filterEventHandleContext() {
+        long sessionId = 42;
 
+        eventManagerUnterTest.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED,
+                sessionId + "");
+        eventManagerUnterTest.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
+                sessionId + "");
+
+        Mockito.verify(listenerTest).propertyChange(any());
+    }
+
+    @Test
+    public void receiveNoChangeEvent() {
+        long sessionId = 123789;
+
+        eventManagerUnterTest.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED);
+        eventManagerUnterTest.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
+                sessionId + "");
+
+        Mockito.verify(listenerTest, never()).propertyChange(any());
+    }
 }

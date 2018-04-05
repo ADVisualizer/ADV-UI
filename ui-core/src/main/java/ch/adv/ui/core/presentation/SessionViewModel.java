@@ -80,8 +80,8 @@ public class SessionViewModel {
 
         //initialize properties
         long sessionId = session.getSessionId();
-        layoutedSnapshotStore.addPropertyChangeListener(sessionId, new
-                SnapshotPropertyChangeListener());
+        eventManager.subscribe(new SnapshotPropertyChangeListener(), ADVEvent
+                .SNAPSHOT_ADDED, sessionId + "");
 
         this.availableSnapshotPanes
                 .addAll(layoutedSnapshotStore.getSnapshotPanes(sessionId));

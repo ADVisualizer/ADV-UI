@@ -14,6 +14,8 @@ import java.util.List;
  * <p>
  * Modules can register {@link java.beans.PropertyChangeListener} to listen
  * for specific Events which are called by the ADV framework.
+ *
+ * @author mwieland
  */
 @Singleton
 public class EventManager {
@@ -26,56 +28,84 @@ public class EventManager {
 
     /**
      * Registers a listener for a specific event
+     * <p>
+     * If filter arguments are provided, they are added to the event handle.
+     * This can be handy if you want narrow the context of event. (e.g. only
+     * listen for added snapshots in the session with id XY)
      *
-     * @param listener listener
-     * @param event    ADV event
+     * @param listener   listener
+     * @param event      ADV event handle
+     * @param filterArgs optional filter arguments
      */
-    public void subscribe(PropertyChangeListener listener, ADVEvent event) {
-        eventStore.addPropertyChangeListener(event.toString(), listener);
+    public void subscribe(PropertyChangeListener listener, ADVEvent event,
+                          String... filterArgs) {
+        String handle = event.toString() + String.join("-", filterArgs);
+        eventStore.addPropertyChangeListener(handle, listener);
     }
 
     /**
      * Registers a listener for multiple events
+     * <p>
+     * If filter arguments are provided, they are added to the event handle.
+     * This can be handy if you want narrow the context of event. (e.g. only
+     * listen for added snapshots in the session with id XY)
      *
-     * @param listener listener
-     * @param events   ADV events
+     * @param listener   listener
+     * @param events     ADV events handle
+     * @param filterArgs optional filter arguments
      */
     public void subscribe(PropertyChangeListener listener,
-                          List<ADVEvent> events) {
-        events.forEach(e -> subscribe(listener, e));
+                          List<ADVEvent> events, String... filterArgs) {
+        events.forEach(e -> subscribe(listener, e, filterArgs));
     }
 
     /**
      * Removes the listener for a specific event
+     * <p>
+     * If filter arguments are provided, they are added to the event handle.
+     * This can be handy if you want narrow the context of event. (e.g. only
+     * listen for added snapshots in the session with id XY)
      *
-     * @param listener listener
-     * @param event    ADV event
+     * @param listener   listener
+     * @param event      ADV event handle
+     * @param filterArgs optional filter arguments
      */
-    public void unsubscribe(PropertyChangeListener listener, ADVEvent event) {
-        eventStore.removePropertyChangeListener(event.toString(), listener);
+    public void unsubscribe(PropertyChangeListener listener, ADVEvent event,
+                            String... filterArgs) {
+        String handle = event.toString() + String.join("-", filterArgs);
+        eventStore.removePropertyChangeListener(handle, listener);
     }
 
     /**
      * Removes the listener for multiple events
      *
-     * @param listener listener
-     * @param events   ADV events
+     * @param listener   listener
+     * @param events     ADV events
+     * @param filterArgs optional filter arguments
      */
     public void unsubscribe(PropertyChangeListener listener,
-                            List<ADVEvent> events) {
-        events.forEach(e -> unsubscribe(listener, e));
+                            List<ADVEvent> events, String... filterArgs) {
+        events.forEach(e -> unsubscribe(listener, e, filterArgs));
     }
 
     /**
      * Executes an ADV event and transmits the old and the new
      * value to all subscribers.
+     * <p>
+     * If filter arguments are provided, they are added to the event handle.
+     * This can be handy if you want narrow the context of event. (e.g. only
+     * listen for added snapshots in the session with id XY)
      *
-     * @param event  event
-     * @param oldVal value before change
-     * @param newVal value after change
+     * @param event      event handle
+     * @param oldVal     value before change
+     * @param newVal     value after change
+     * @param filterArgs optional filter arguments
      */
-    public void fire(ADVEvent event, Object oldVal, Object newVal) {
-        logger.debug("Fired event {}", event.toString());
-        eventStore.firePropertyChange(event.toString(), oldVal, newVal);
+    public void fire(ADVEvent event, Object oldVal, Object newVal,
+                     String... filterArgs) {
+        String handle = event.toString() + String.join("-", filterArgs);
+        eventStore.firePropertyChange(handle, oldVal, newVal);
+        logger.debug("Fired event {}", handle);
     }
+
 }

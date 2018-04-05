@@ -6,8 +6,12 @@ package ch.adv.ui.core.logic;
  * All module can subscribe for these events.
  */
 public enum ADVEvent {
-    STEP_FIRST(),
+    STEP_FIRST,
     STEP_BACKWARD,
     STEP_FORWARD,
-    STEP_LAST;
+    STEP_LAST,
+    SNAPSHOT_ADDED,
+    SESSION_ADDED,
+    SESSION_REMOVED,
+    CURRENT_SESSION_CHANGED;
 }

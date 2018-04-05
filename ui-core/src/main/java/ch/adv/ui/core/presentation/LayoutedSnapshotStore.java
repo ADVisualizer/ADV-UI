@@ -1,13 +1,14 @@
 package ch.adv.ui.core.presentation;
 
+import ch.adv.ui.core.logic.ADVEvent;
+import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,8 +26,13 @@ public class LayoutedSnapshotStore {
             LayoutedSnapshotStore.class);
     private final Map<Long, List<LayoutedSnapshot>> snapshotMap = new
             HashMap<>();
-    private final PropertyChangeSupport changeSupport = new
-            PropertyChangeSupport(this);
+
+    private final EventManager eventManager;
+
+    @Inject
+    public LayoutedSnapshotStore(EventManager eventManager) {
+        this.eventManager = eventManager;
+    }
 
     /**
      * Adds a new {@link LayoutedSnapshot} to the Snapshot store
@@ -45,8 +51,8 @@ public class LayoutedSnapshotStore {
             snapshotList.add(layoutedSnapshot);
         }
         logger.debug("Fire change event");
-        changeSupport.firePropertyChange(sessionId + "", null,
-                layoutedSnapshot);
+        eventManager.fire(ADVEvent.SNAPSHOT_ADDED, null, layoutedSnapshot,
+                sessionId + "");
     }
 
     /**
@@ -57,18 +63,6 @@ public class LayoutedSnapshotStore {
      */
     public List<LayoutedSnapshot> getLayoutedSnapshots(long sessionId) {
         return snapshotMap.get(sessionId);
-    }
-
-    /**
-     * Add change listener to be notified by changes to the session list.
-     *
-     * @param sessionId key to be registered for
-     * @param listener  to be registered
-     */
-    public void addPropertyChangeListener(long sessionId,
-                                          final PropertyChangeListener
-                                                  listener) {
-        changeSupport.addPropertyChangeListener(sessionId + "", listener);
     }
 
     /**
