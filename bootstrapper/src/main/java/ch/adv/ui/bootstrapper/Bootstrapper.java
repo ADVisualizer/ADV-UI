@@ -10,8 +10,6 @@ import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -27,6 +25,12 @@ public class Bootstrapper {
 
     @Inject
     private ArrayModule arrayModule;
+
+    public Bootstrapper() {
+        ADVApplication instance = ADVApplication.waitForADVApplication();
+        instance.getInjector().injectMembers(this);
+        registerModules();
+    }
 
     /**
      * ADV UI entry point
@@ -44,17 +48,11 @@ public class Bootstrapper {
         new Bootstrapper();
     }
 
-    public Bootstrapper() {
-        ADVApplication instance = ADVApplication.waitForADVApplication();
-        instance.getInjector().injectMembers(this);
-        registerModules();
-    }
-
     private void registerModules() {
-        Map<String, ADVModule> modules = new HashMap<>();
-        modules.put("array", arrayModule);
+        Map<String, ADVModule> modules = Map
+                .ofEntries(Map.entry("array", arrayModule));
 
-        ModuleStore.setAvailableModules(Collections.unmodifiableMap(modules));
+        ModuleStore.setAvailableModules(modules);
     }
 
 }
