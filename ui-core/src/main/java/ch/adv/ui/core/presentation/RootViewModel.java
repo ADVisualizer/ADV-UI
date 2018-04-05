@@ -40,7 +40,6 @@ public class RootViewModel {
     private final SessionStore sessionStore;
     private final ADVFlowControl flowControl;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
-    private final EventManager eventManager;
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ADVFlowControl flowControl,
@@ -52,7 +51,6 @@ public class RootViewModel {
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
-        this.eventManager = eventManager;
 
         eventManager.subscribe(new SessionStoreListener(),
                 ADVEvent.CURRENT_SESSION_CHANGED);
