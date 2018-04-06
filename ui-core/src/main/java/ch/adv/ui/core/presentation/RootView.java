@@ -92,7 +92,7 @@ public class RootView {
     }
 
     private void openNewTab() {
-        rootViewModel.getCurrentSessionPropertyProperty().addListener(
+        rootViewModel.currentSessionProperty().addListener(
                 this::openTabAction);
         sessionListView.setOnMouseClicked(e -> {
             int selectedItem = sessionListView.getSelectionModel()

@@ -5,11 +5,12 @@ import javafx.scene.layout.Pane;
 import java.util.Objects;
 
 /**
- * Wraps the JavaFX Pane and information the displayed infromation of the
+ * Wraps the JavaFX Pane and the displayed information of the
  * snapshot.
  * <p>
- * This class only exists, that we do not mix JavaFX Code with Business
- * Domain objects, in order to keep the ability to replace the UI framework.
+ * This class only exists, so we don't mix JavaFX Code with business
+ * Domain objects, in order to keep the ability to easily replace the UI
+ * framework.
  */
 public class LayoutedSnapshot {
 

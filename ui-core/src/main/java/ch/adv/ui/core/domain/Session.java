@@ -97,4 +97,14 @@ public class Session {
 
         return Objects.hash(sessionId);
     }
+
+    /**
+     * @param id of the snapshot
+     * @return the snapshot with the speified id or a new 'dummy' if no such
+     * snapshot exists.
+     */
+    public Snapshot getSnapshotById(long id) {
+        return snapshots.stream().filter(s -> s
+                .getSnapshotId() == id).findFirst().orElse(new Snapshot());
+    }
 }
