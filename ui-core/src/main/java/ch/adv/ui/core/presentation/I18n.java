@@ -39,7 +39,8 @@ public final class I18n {
      * creates a String binding to a localized String for the given message
      * bundle key
      *
-     * @param key key
+     * @param key  key
+     * @param args optional arguments for the binding
      * @return String binding
      */
     public static StringBinding createStringBinding(final String key,
@@ -75,8 +76,11 @@ public final class I18n {
      */
     private static Locale getDefaultLocale() {
         Locale sysDefault = Locale.getDefault();
-        return getSupportedLocales()
-                .contains(sysDefault) ? sysDefault : Locale.UK;
+        if (getSupportedLocales().contains(sysDefault)) {
+            return sysDefault;
+        } else {
+            return Locale.UK;
+        }
     }
 
     /**
@@ -138,11 +142,19 @@ public final class I18n {
         return LOCALE.get();
     }
 
+    /**
+     * Sets the current locale and updates the corresponding property
+     *
+     * @param locale to be set
+     */
     public static void setLocale(Locale locale) {
         localeProperty().set(locale);
         Locale.setDefault(locale);
     }
 
+    /**
+     * @return the locale property
+     */
     public static ObjectProperty<Locale> localeProperty() {
         return LOCALE;
     }
