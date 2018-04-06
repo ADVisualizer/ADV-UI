@@ -111,6 +111,8 @@ public class SessionView {
     }
 
     private void bindReplayIcons() {
+        this.cancelReplayButton.disableProperty().bind(sessionViewModel
+                .isReplayingProperty().not());
         sessionViewModel.isReplayingProperty()
                 .addListener((ObservableValue<? extends Boolean> observable,
                               Boolean oldValue, Boolean newValue) -> {
