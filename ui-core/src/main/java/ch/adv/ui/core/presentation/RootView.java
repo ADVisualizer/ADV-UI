@@ -17,11 +17,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import org.controlsfx.control.SegmentedButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -43,8 +45,17 @@ public class RootView {
     private ListView<Session> sessionListView;
     @FXML
     private TabPane sessionTabPane;
+    @FXML
+    private TitledPane sessionListViewTitle;
+    @FXML
+    private SegmentedButton changeLanguageButton;
+    @FXML
+    private ToggleButton english;
+    @FXML
+    private ToggleButton german;
     @Inject
     private ResourceLocator resourceLocator;
+
 
     @Inject
     public RootView(RootViewModel viewModel) {
@@ -61,6 +72,7 @@ public class RootView {
      */
     @FXML
     public void initialize() {
+        bindStrings();
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
         clearAllSessionsButton.setOnAction(event ->
@@ -70,6 +82,16 @@ public class RootView {
 
         handleLogoVisibility();
         openNewTab();
+        initLanguageButtons();
+    }
+
+    private void bindStrings() {
+        sessionListViewTitle.textProperty()
+                .bind(I18n.createStringBinding("title.session_list"));
+        english.textProperty().bind(I18n.createStringBinding("tooltip"
+                + ".session-bar.english"));
+        german.textProperty().bind(I18n.createStringBinding("tooltip"
+                + ".session-bar.german"));
     }
 
 
@@ -82,13 +104,13 @@ public class RootView {
         sessionTabPane.getStyleClass().add("logo");
         sessionTabPane.getTabs().addListener((ListChangeListener<? super Tab>)
                 c -> {
-            int tabNumber = sessionTabPane.getTabs().size();
-            if (tabNumber == 0) {
-                sessionTabPane.getStyleClass().add("logo");
-            } else {
-                sessionTabPane.getStyleClass().remove("logo");
-            }
-        });
+                    int tabNumber = sessionTabPane.getTabs().size();
+                    if (tabNumber == 0) {
+                        sessionTabPane.getStyleClass().add("logo");
+                    } else {
+                        sessionTabPane.getStyleClass().remove("logo");
+                    }
+                });
     }
 
     private void openNewTab() {
@@ -136,6 +158,18 @@ public class RootView {
                 .stream()
                 .filter(t -> t.getText().equals(session.toString()))
                 .findFirst();
+    }
+
+    private void initLanguageButtons() {
+        changeLanguageButton.getToggleGroup().selectToggle(english);
+        changeLanguageButton.getToggleGroup().selectedToggleProperty()
+                .addListener((e, oldV, newV) -> {
+                    if (newV == german) {
+                        I18n.setLocale(new Locale("de", "CH"));
+                    } else {
+                        I18n.setLocale(Locale.UK);
+                    }
+                });
     }
 
     private void handleRemoveSessionClicked(final Session session, final

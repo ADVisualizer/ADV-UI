@@ -11,8 +11,6 @@ import javax.inject.Singleton;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Contains all static resources (FXML, Images, CSS) and provides loadFXML
@@ -57,12 +55,8 @@ public class ResourceLocator {
      * @param resource resource
      * @return fxml element
      */
-    //TODO: allow locale to be set dynamically
     public Parent loadFXML(Resource resource) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setResources(ResourceBundle.getBundle("bundles"
-                        + ".ADVBundle",
-                new Locale("en", "EN")));
         loader.setLocation(getResourcePath(resource));
         loader.setControllerFactory(instantiatedClass -> injector.getInstance(
                 instantiatedClass));
@@ -99,6 +93,7 @@ public class ResourceLocator {
 
         /**
          * Sets the relative path of the resource enum
+         *
          * @param relativePath relative path
          */
         public void setRelativePath(String relativePath) {

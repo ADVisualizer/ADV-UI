@@ -48,6 +48,8 @@ public class SessionView {
     private AnchorPane contentPane;
     @FXML
     private TextArea snapshotDescription;
+    @FXML
+    private Label replaySpeedSliderLabel;
     @Inject
     private ReplayController replayController;
     @Inject
@@ -77,6 +79,7 @@ public class SessionView {
         setButtonActions();
         bindButtonDisableProperties();
         bindReplayIcons();
+        bindStrings();
 
         replaySpeedSlider.disableProperty().bind(sessionViewModel
                 .getSpeedsliderDisableProperty());
@@ -99,6 +102,11 @@ public class SessionView {
 
         this.snapshotDescription.textProperty().bind(sessionViewModel
                 .getCurrentSnapshotDescriptionProperty());
+    }
+
+    private void bindStrings() {
+        replaySpeedSliderLabel.textProperty()
+                .bind(I18n.createStringBinding("title.speed"));
     }
 
     private void setButtonActions() {

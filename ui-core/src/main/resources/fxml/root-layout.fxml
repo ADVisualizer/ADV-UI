@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.SegmentedButton?>
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/root-layout.css"
             xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ch.adv.ui.core.presentation.RootView">
@@ -38,12 +39,17 @@
                     <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
                 </graphic>
             </Button>
-
             <Button fx:id="clearAllSessionsButton" mnemonicParsing="false" text="Clear all Sessions">
                 <graphic>
                     <FontAwesomeIconView glyphName="ERASER"/>
                 </graphic>
             </Button>
+            <SegmentedButton fx:id="changeLanguageButton">
+                <buttons>
+                    <ToggleButton fx:id="english" selected="true"/>
+                    <ToggleButton fx:id="german"/>
+                </buttons>
+            </SegmentedButton>
         </items>
     </ToolBar>
 
@@ -52,7 +58,7 @@
         <items>
             <AnchorPane>
                 <children>
-                    <TitledPane animated="false" text="%session_list" AnchorPane.bottomAnchor="0.0"
+                    <TitledPane animated="false" fx:id="sessionListViewTitle" AnchorPane.bottomAnchor="0.0"
                                 AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <content>
                             <ListView fx:id="sessionListView"/>
