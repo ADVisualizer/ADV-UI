@@ -83,6 +83,7 @@ public class RootView {
         handleLogoVisibility();
         openNewTab();
         initLanguageButtons();
+        setToolTips();
     }
 
     private void bindStrings() {
@@ -172,6 +173,15 @@ public class RootView {
                 });
     }
 
+    private void setToolTips() {
+        loadSessionButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.load_session"));
+        clearAllSessionsButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.delete_sessions"));
+        english.setTooltip(I18n.tooltipForKey("tooltip.session-bar.english"));
+        german.setTooltip(I18n.tooltipForKey("tooltip.session-bar.german"));
+    }
+
     private void handleRemoveSessionClicked(final Session session, final
     MouseEvent event) {
         logger.info("Removing session {} ({})", session.getSessionName(),
@@ -252,6 +262,7 @@ public class RootView {
             removeIcon.setIcon(FontAwesomeIcon.TRASH_ALT);
             removeIcon.setGlyphSize(ICON_SIZE);
             removeButton.setGraphic(removeIcon);
+            removeButton.setTooltip(I18n.tooltipForKey("tooltip.session-list.remove_session"));
             removeButton.setOnMouseClicked(event -> handleRemoveSessionClicked(
                     getItem(), event));
 
@@ -259,6 +270,7 @@ public class RootView {
             saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
             saveIcon.setGlyphSize(ICON_SIZE);
             saveButton.setGraphic(saveIcon);
+            saveButton.setTooltip(I18n.tooltipForKey("tooltip.session-list.save_session"));
             saveButton.setOnMouseClicked(e -> handleSaveSessionClicked(
                     getItem()));
 

@@ -80,6 +80,7 @@ public class SessionView {
         bindButtonDisableProperties();
         bindReplayIcons();
         bindStrings();
+        setTooltips();
 
         replaySpeedSlider.disableProperty().bind(sessionViewModel
                 .getSpeedsliderDisableProperty());
@@ -87,6 +88,9 @@ public class SessionView {
         replayController.getReplaySpeedProperty()
                 .bindBidirectional(replaySpeedSlider.valueProperty());
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
+        //TODO: manage to change strings when changing language
+        I18n.localeProperty().addListener((e, o, n) -> replaySpeedSlider
+                .setLabelFormatter(new ReplaySliderStringConverter()));
 
         stepProgressBar.progressProperty().bind(sessionViewModel
                 .getProgressProperty());
@@ -102,6 +106,21 @@ public class SessionView {
 
         this.snapshotDescription.textProperty().bind(sessionViewModel
                 .getCurrentSnapshotDescriptionProperty());
+    }
+
+    private void setTooltips() {
+        stepFirstButton.setTooltip(I18n
+                .tooltipForKey("tooltip.snapshot-bar.step_first"));
+        stepBackwardButton.setTooltip(I18n
+                .tooltipForKey("tooltip.snapshot-bar.step_backward"));
+        stepForwardButton.setTooltip(I18n
+                .tooltipForKey("tooltip.snapshot-bar.step_forward"));
+        stepLastButton.setTooltip(I18n
+                .tooltipForKey("tooltip.snapshot-bar.step_last"));
+        cancelReplayButton
+                .setTooltip(I18n.tooltipForKey("tooltip.snapshot-bar.cancel"));
+        replayButton
+                .setTooltip(I18n.tooltipForKey("tooltip.snapshot-bar.play"));
     }
 
     private void bindStrings() {
@@ -124,8 +143,12 @@ public class SessionView {
                               Boolean oldValue, Boolean newValue) -> {
                     if (newValue) {
                         replayButton.setGraphic(pauseIcon);
+                        replayButton.setTooltip(I18n
+                                .tooltipForKey("tooltip.snapshot-bar.pause"));
                     } else {
                         replayButton.setGraphic(playIcon);
+                        replayButton.setTooltip(I18n
+                                .tooltipForKey("tooltip.snapshot-bar.play"));
                     }
                 });
     }

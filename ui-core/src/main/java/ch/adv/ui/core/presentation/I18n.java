@@ -1,7 +1,8 @@
 /*
  * Copyright (c) 2016 sothawo
  *
- * https://www.sothawo.com/2016/09/how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
+ * https://www.sothawo.com/2016/09/how-to-implement-a-javafx-ui-where-the
+ * -language-can-be-changed-dynamically/
  */
 package ch.adv.ui.core.presentation;
 
@@ -58,21 +59,21 @@ public final class I18n {
     }
 
     /**
-     * get the supported Locales.
+     * Returns the supported Locales.
      *
      * @return List of Locale objects.
      */
-    public static List<Locale> getSupportedLocales() {
+    private static List<Locale> getSupportedLocales() {
         return new ArrayList<>(Arrays.asList(Locale.ENGLISH, Locale.GERMAN));
     }
 
     /**
-     * get the default LOCALE. This is the systems default if contained in
+     * Returns the default LOCALE. This is the systems default if contained in
      * the supported locales, english otherwise.
      *
-     * @return
+     * @return the default LOCALE
      */
-    public static Locale getDefaultLocale() {
+    private static Locale getDefaultLocale() {
         Locale sysDefault = Locale.getDefault();
         return getSupportedLocales()
                 .contains(sysDefault) ? sysDefault : Locale.UK;
@@ -132,7 +133,6 @@ public final class I18n {
         tooltip.textProperty().bind(createStringBinding(key, args));
         return tooltip;
     }
-
 
     public static Locale getLocale() {
         return LOCALE.get();

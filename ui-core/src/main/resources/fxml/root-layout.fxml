@@ -34,12 +34,12 @@
     <ToolBar prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
              AnchorPane.topAnchor="28.0">
         <items>
-            <Button fx:id="loadSessionButton" mnemonicParsing="false" text="Load existing Session">
+            <Button fx:id="loadSessionButton" mnemonicParsing="false">
                 <graphic>
                     <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
                 </graphic>
             </Button>
-            <Button fx:id="clearAllSessionsButton" mnemonicParsing="false" text="Clear all Sessions">
+            <Button fx:id="clearAllSessionsButton" mnemonicParsing="false">
                 <graphic>
                     <FontAwesomeIconView glyphName="ERASER"/>
                 </graphic>
