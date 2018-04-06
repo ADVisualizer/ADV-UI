@@ -36,7 +36,13 @@ public class RootView {
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
     @FXML
+    private Menu menuADV;
+    @FXML
+    private Menu menuHelp;
+    @FXML
     private MenuItem menuItemClose;
+    @FXML
+    private MenuItem menuItemHelp;
     @FXML
     private Button loadSessionButton;
     @FXML
@@ -87,6 +93,14 @@ public class RootView {
     }
 
     private void bindStrings() {
+        menuItemClose.textProperty()
+                .bind(I18n.createStringBinding("menu.item.close"));
+        menuItemHelp.textProperty()
+                .bind(I18n.createStringBinding("menu.item.help"));
+        menuADV.textProperty()
+                .bind(I18n.createStringBinding("menu.adv"));
+        menuHelp.textProperty()
+                .bind(I18n.createStringBinding("menu.help"));
         sessionListViewTitle.textProperty()
                 .bind(I18n.createStringBinding("title.session_list"));
         english.textProperty().bind(I18n.createStringBinding("tooltip"
@@ -262,7 +276,8 @@ public class RootView {
             removeIcon.setIcon(FontAwesomeIcon.TRASH_ALT);
             removeIcon.setGlyphSize(ICON_SIZE);
             removeButton.setGraphic(removeIcon);
-            removeButton.setTooltip(I18n.tooltipForKey("tooltip.session-list.remove_session"));
+            removeButton.setTooltip(I18n
+                    .tooltipForKey("tooltip.session-list.remove_session"));
             removeButton.setOnMouseClicked(event -> handleRemoveSessionClicked(
                     getItem(), event));
 
@@ -270,7 +285,8 @@ public class RootView {
             saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
             saveIcon.setGlyphSize(ICON_SIZE);
             saveButton.setGraphic(saveIcon);
-            saveButton.setTooltip(I18n.tooltipForKey("tooltip.session-list.save_session"));
+            saveButton.setTooltip(I18n
+                    .tooltipForKey("tooltip.session-list.save_session"));
             saveButton.setOnMouseClicked(e -> handleSaveSessionClicked(
                     getItem()));
 

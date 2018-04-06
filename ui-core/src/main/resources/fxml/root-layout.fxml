@@ -10,18 +10,18 @@
 
     <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-            <Menu mnemonicParsing="false" text="ADV">
+            <Menu fx:id="menuADV" mnemonicParsing="false">
                 <items>
-                    <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" accelerator="Shortcut+Q">
+                    <MenuItem fx:id="menuItemClose" mnemonicParsing="false" accelerator="Shortcut+Q">
                         <graphic>
                             <FontAwesomeIconView glyphName="SIGN_OUT"/>
                         </graphic>
                     </MenuItem>
                 </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
+            <Menu fx:id="menuHelp" mnemonicParsing="false" >
                 <items>
-                    <MenuItem mnemonicParsing="false" text="Help" accelerator="Shortcut+H">
+                    <MenuItem fx:id="menuItemHelp" mnemonicParsing="false" accelerator="Shortcut+H">
                         <graphic>
                             <FontAwesomeIconView glyphName="INFO"/>
                         </graphic>
