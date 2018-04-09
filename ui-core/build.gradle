@@ -1,5 +1,4 @@
 dependencies {
     compile 'de.jensd:fontawesomefx-fontawesome:4+'
     compile 'de.jensd:fontawesomefx-commons:9+'
-    compile 'org.controlsfx:controlsfx:8+'
 }

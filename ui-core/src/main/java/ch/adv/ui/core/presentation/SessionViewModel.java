@@ -115,10 +115,6 @@ public class SessionViewModel {
 
     }
 
-    public ObservableList<Pane> getAvailableSnapshotPanes() {
-        return availableSnapshotPanes;
-    }
-
     public ObjectProperty<Pane> getCurrentSnapshotPaneProperty() {
         return currentSnapshotPaneProperty;
     }

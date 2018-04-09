@@ -87,7 +87,8 @@ public class RootViewModel {
                 .forEach(element -> {
                     String description = element.getSnapshotDescription();
                     long id = element.getSnapshotId();
-                    session.getSnapshotById(id).setSnapshotDescription(description);
+                    session.getSnapshotById(id)
+                            .setSnapshotDescription(description);
                 });
         String json = session.getModule().getStringifyer().stringify(session);
         fileAccess.write(file, json);
