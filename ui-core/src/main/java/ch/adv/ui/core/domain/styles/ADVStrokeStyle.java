@@ -1,13 +1,19 @@
 package ch.adv.ui.core.domain.styles;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
- * Represents a stroke style
- * <p>
- * Available options: DOTTED, DASHED, THROUGH
+ * Defines the style of the stroke or border of an element.
  */
 public enum ADVStrokeStyle {
-
-    DOTTED("dotted"), DASHED("dashed"), THROUGH("through");
+    @SerializedName("dotted")
+    DOTTED("dotted"),
+    @SerializedName("dashed")
+    DASHED("dashed"),
+    @SerializedName("solid")
+    SOLID("solid"),
+    @SerializedName("none")
+    NONE("none");
 
     private String style;
 
@@ -15,18 +21,17 @@ public enum ADVStrokeStyle {
         this.style = style.toLowerCase();
     }
 
-    public String getStyle() {
-        return style;
-    }
-
     /**
-     * Cases insensitive lookup for the stroke style
-     * @param styleName name
-     * @return ADVStrokeStyle enum instance
+     * Returns the enum of the specified string.
+     *
+     * @param styleName string linked to the enum value
+     * @return the enum
      */
     public static ADVStrokeStyle byName(String styleName) {
         return valueOf(styleName.toUpperCase());
     }
 
-
+    public String getStyle() {
+        return style;
+    }
 }

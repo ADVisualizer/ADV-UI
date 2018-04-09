@@ -1,23 +1,27 @@
 package ch.adv.ui.core.domain.styles;
 
 /**
- * Encapsulates the style of an element of a relation.
+ * Encapsulates the style of an element or a relation.
  */
 public interface ADVStyle {
     /**
      * Returns the background color. Only relevant for actual nodes (circle,
      * square, ...) not for lines, arrows, path.
+     * <p>
+     * Use hex value of a color.
      *
      * @return the background color
      */
-    String getFillColor();
+    int getFillColor();
 
     /**
      * Returns the color of the stroke or border
+     * <p>
+     * Use hex value of a color.
      *
      * @return the color of the stroke or border
      */
-    String getStrokeColor();
+    int getStrokeColor();
 
     /**
      * Returns the style of the stroke. For example dotted or dashed.
@@ -31,5 +35,5 @@ public interface ADVStyle {
      *
      * @return the thickness of the stroke
      */
-    String getStrokeThickness();
+    int getStrokeThickness();
 }

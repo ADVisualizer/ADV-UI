@@ -1,5 +1,6 @@
-package ch.adv.ui.core.presentation;
+package ch.adv.ui.core.presentation.util;
 
+import ch.adv.ui.core.presentation.I18n;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.StringConverter;
