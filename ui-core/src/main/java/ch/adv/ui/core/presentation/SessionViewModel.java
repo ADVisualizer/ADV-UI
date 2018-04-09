@@ -144,7 +144,7 @@ public class SessionViewModel {
             case FIRST:
                 currentSnapshotIndex = 0;
 
-                callHookMethod(ADVEvent.STEP_FIRST, oldIndex,
+                fireEvent(ADVEvent.STEP_FIRST, oldIndex,
                         currentSnapshotIndex);
 
                 handleNavigationStep();
@@ -154,7 +154,7 @@ public class SessionViewModel {
             case BACKWARD:
                 currentSnapshotIndex--;
 
-                callHookMethod(ADVEvent.STEP_BACKWARD, oldIndex,
+                fireEvent(ADVEvent.STEP_BACKWARD, oldIndex,
                         currentSnapshotIndex);
 
                 handleNavigationStep();
@@ -164,7 +164,7 @@ public class SessionViewModel {
             case FORWARD:
                 currentSnapshotIndex++;
 
-                callHookMethod(ADVEvent.STEP_FORWARD, oldIndex,
+                fireEvent(ADVEvent.STEP_FORWARD, oldIndex,
                         currentSnapshotIndex);
 
                 handleNavigationStep();
@@ -174,7 +174,7 @@ public class SessionViewModel {
             case LAST:
                 currentSnapshotIndex = availableSnapshotPanes.size() - 1;
 
-                callHookMethod(ADVEvent.STEP_LAST, oldIndex,
+                fireEvent(ADVEvent.STEP_LAST, oldIndex,
                         currentSnapshotIndex);
 
                 handleNavigationStep();
@@ -192,7 +192,7 @@ public class SessionViewModel {
         updateSnapshotDescription();
     }
 
-    private void callHookMethod(ADVEvent event, int oldIndex, int newIndex) {
+    private void fireEvent(ADVEvent event, int oldIndex, int newIndex) {
         LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore
                 .getLayoutedSnapshots(session.getSessionId()).get(oldIndex);
 
