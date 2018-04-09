@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<local-project language="java" associate="file:/Users/muriele/GoogleDrive/HSR/Module/6FS18/BA/ADV/101-repo/ADVUI" version="5.0.13325" xml-version="3" flavor="j2se">
+<local-project language="java" version="5.0.13325" xml-version="3" flavor="j2se">
   <property name="publish-architecture-artifacts" value="true" />
   <property name="force-classpath" value="false" />
   <property name="project-type" value="classpath" />

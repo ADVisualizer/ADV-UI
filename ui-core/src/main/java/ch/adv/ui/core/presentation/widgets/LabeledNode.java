@@ -19,8 +19,8 @@ public class LabeledNode extends StackPane {
             SimpleObjectProperty<>();
     private final ObjectProperty<Border> borderProperty = new
             SimpleObjectProperty<>();
-    private Region r = new Region();
-    private Label l = new Label();
+    private Region region = new Region();
+    private Label label = new Label();
     private Paint backgroundColor = Color.BLACK;
     private boolean isRoundedDown;
 
@@ -37,9 +37,9 @@ public class LabeledNode extends StackPane {
     public LabeledNode(String labelText, boolean isRoundedDown) {
         this.isRoundedDown = isRoundedDown;
         setBindings();
-        l.setPadding(new Insets(PADDING));
-        l.setText(labelText);
-        getChildren().addAll(r, l);
+        label.setPadding(new Insets(PADDING));
+        label.setText(labelText);
+        getChildren().addAll(region, label);
     }
 
     private void setBindings() {
@@ -53,10 +53,10 @@ public class LabeledNode extends StackPane {
                         .DEFAULT, Insets.EMPTY)));
 
         this.widthProperty().addListener(this::changeBackground);
-        r.backgroundProperty().addListener(this::changeBackground);
-        r.borderProperty().addListener(this::changeBackground);
-        r.backgroundProperty().bind(backgroundProperty);
-        r.borderProperty().bind(borderProperty);
+        region.backgroundProperty().addListener(this::changeBackground);
+        region.borderProperty().addListener(this::changeBackground);
+        region.backgroundProperty().bind(backgroundProperty);
+        region.borderProperty().bind(borderProperty);
     }
 
     private CornerRadii cornerRadii() {
@@ -117,7 +117,7 @@ public class LabeledNode extends StackPane {
      * @param color color
      */
     public void setFontColor(Paint color) {
-        l.setTextFill(color);
+        label.setTextFill(color);
     }
 
     /**
