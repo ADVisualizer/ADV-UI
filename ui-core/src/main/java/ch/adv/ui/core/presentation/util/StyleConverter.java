@@ -9,14 +9,14 @@ import java.util.HashMap;
  * Creates JavaFX BorderStrokeStyle Enums from Strings.
  */
 public class StyleConverter {
-    private static final HashMap<String, BorderStrokeStyle> map = new
+    private static final HashMap<String, BorderStrokeStyle> MAP = new
             HashMap<>();
 
     static {
-        map.put("dotted", BorderStrokeStyle.DOTTED);
-        map.put("dashed", BorderStrokeStyle.DASHED);
-        map.put("solid", BorderStrokeStyle.SOLID);
-        map.put("none", BorderStrokeStyle.NONE);
+        MAP.put("dotted", BorderStrokeStyle.DOTTED);
+        MAP.put("dashed", BorderStrokeStyle.DASHED);
+        MAP.put("solid", BorderStrokeStyle.SOLID);
+        MAP.put("none", BorderStrokeStyle.NONE);
     }
 
     /**
@@ -24,7 +24,7 @@ public class StyleConverter {
      * @return the corresponding enum from the input string
      */
     public static BorderStrokeStyle getStrokeStyle(String name) {
-        return map.get(name);
+        return MAP.get(name);
     }
 
     /**

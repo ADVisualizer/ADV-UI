@@ -123,8 +123,9 @@ public class LabeledNode extends StackPane {
     /**
      * Sets the border of the rectangle
      *
-     * @param width of the border
-     * @param color of the border
+     * @param width       of the border
+     * @param color       of the border
+     * @param strokeStyle of the border
      */
     public void setBorder(double width, Paint color, BorderStrokeStyle
             strokeStyle) {
