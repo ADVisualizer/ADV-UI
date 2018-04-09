@@ -2,7 +2,6 @@ package ch.adv.ui.array;
 
 import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.domain.Session;
-import com.google.gson.Gson;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -42,7 +41,7 @@ public class ArrayStringifyerTest {
 
         String[] lines = actual.split(System.getProperty("line.separator"));
         assertEquals("  \"snapshots\": [", lines[1]);
-        assertEquals(46, lines.length);
+        assertEquals(62, lines.length);
     }
 
 }

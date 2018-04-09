@@ -1,13 +1,19 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.core.domain.Snapshot;
+import ch.adv.ui.core.domain.styles.ADVStyle;
 import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
+import ch.adv.ui.core.presentation.util.StyleConverter;
 import ch.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+
+<<<<<<<HEAD
+        =======
+        >>>>>>>feature/110-styles
 
 /**
  * Positions the ArrayElements on the Pane
@@ -31,10 +37,15 @@ public class ArrayLayouter implements Layouter {
 
             LabeledNode node = new LabeledNode(arrElement
                     .getContent());
-            //TODO: use arrElement.getStyle()
-            node.setBackgroundColor(Color.BLACK);
+            ADVStyle style = arrElement.getStyle();
+
+            node.setBackgroundColor(StyleConverter
+                    .getColor(style.getFillColor()));
             node.setFontColor(Color.WHITE);
-            node.setBorder(1.0, Color.WHITE);
+
+            node.setBorder(style.getStrokeThickness(),
+                    StyleConverter.getColor(style.getStrokeColor()),
+                    StyleConverter.getStrokeStyle(style.getStrokeStyle()));
             container.getChildren().add(node);
         });
 

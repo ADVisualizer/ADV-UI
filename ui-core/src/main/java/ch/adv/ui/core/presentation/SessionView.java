@@ -1,5 +1,6 @@
 package ch.adv.ui.core.presentation;
 
+import ch.adv.ui.core.presentation.util.ReplaySliderStringConverter;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.value.ObservableValue;

@@ -77,7 +77,7 @@ public class LabeledNode extends StackPane {
                 .getStrokes().get(0);
         Paint color = borderStroke.getTopStroke();
         Border border = new Border(new BorderStroke(color,
-                BorderStrokeStyle.SOLID, cornerRadii(), borderStroke
+                borderStroke.getTopStyle(), cornerRadii(), borderStroke
                 .getWidths(), Insets.EMPTY));
         borderProperty.setValue(border);
     }
@@ -107,8 +107,6 @@ public class LabeledNode extends StackPane {
      */
     public void setBackgroundColor(Paint color) {
         this.backgroundColor = color;
-
-
     }
 
     /**
@@ -123,13 +121,15 @@ public class LabeledNode extends StackPane {
     /**
      * Sets the border of the rectangle
      *
-     * @param width of the border
-     * @param color of the border
+     * @param width       of the border
+     * @param color       of the border
+     * @param strokeStyle of the border
      */
-    public void setBorder(double width, Paint color) {
+    public void setBorder(double width, Paint color, BorderStrokeStyle
+            strokeStyle) {
         borderProperty
-                .setValue(new Border(new BorderStroke(color, BorderStrokeStyle
-                        .SOLID, CornerRadii.EMPTY, new BorderWidths(width),
+                .setValue(new Border(new BorderStroke(color, strokeStyle,
+                        CornerRadii.EMPTY, new BorderWidths(width),
                         new Insets(-1))));
     }
 }
