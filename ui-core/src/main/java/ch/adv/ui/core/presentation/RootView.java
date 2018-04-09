@@ -17,11 +17,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import org.controlsfx.control.SegmentedButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import java.io.File;
+import java.util.Locale;
 import java.util.Optional;
 
 /**
@@ -34,7 +36,13 @@ public class RootView {
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
     @FXML
+    private Menu menuADV;
+    @FXML
+    private Menu menuHelp;
+    @FXML
     private MenuItem menuItemClose;
+    @FXML
+    private MenuItem menuItemHelp;
     @FXML
     private Button loadSessionButton;
     @FXML
@@ -43,8 +51,17 @@ public class RootView {
     private ListView<Session> sessionListView;
     @FXML
     private TabPane sessionTabPane;
+    @FXML
+    private TitledPane sessionListViewTitle;
+    @FXML
+    private SegmentedButton changeLanguageButton;
+    @FXML
+    private ToggleButton english;
+    @FXML
+    private ToggleButton german;
     @Inject
     private ResourceLocator resourceLocator;
+
 
     @Inject
     public RootView(RootViewModel viewModel) {
@@ -61,6 +78,7 @@ public class RootView {
      */
     @FXML
     public void initialize() {
+        bindI18nStrings();
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
         clearAllSessionsButton.setOnAction(event ->
@@ -70,6 +88,25 @@ public class RootView {
 
         handleLogoVisibility();
         openNewTab();
+        initLanguageButtons();
+        setToolTips();
+    }
+
+    private void bindI18nStrings() {
+        menuItemClose.textProperty()
+                .bind(I18n.createStringBinding("menu.item.close"));
+        menuItemHelp.textProperty()
+                .bind(I18n.createStringBinding("menu.item.help"));
+        menuADV.textProperty()
+                .bind(I18n.createStringBinding("menu.adv"));
+        menuHelp.textProperty()
+                .bind(I18n.createStringBinding("menu.help"));
+        sessionListViewTitle.textProperty()
+                .bind(I18n.createStringBinding("title.session_list"));
+        english.textProperty().bind(I18n.createStringBinding(
+                "session-bar.english"));
+        german.textProperty().bind(I18n.createStringBinding(
+                "session-bar.german"));
     }
 
 
@@ -82,13 +119,13 @@ public class RootView {
         sessionTabPane.getStyleClass().add("logo");
         sessionTabPane.getTabs().addListener((ListChangeListener<? super Tab>)
                 c -> {
-            int tabNumber = sessionTabPane.getTabs().size();
-            if (tabNumber == 0) {
-                sessionTabPane.getStyleClass().add("logo");
-            } else {
-                sessionTabPane.getStyleClass().remove("logo");
-            }
-        });
+                    int tabNumber = sessionTabPane.getTabs().size();
+                    if (tabNumber == 0) {
+                        sessionTabPane.getStyleClass().add("logo");
+                    } else {
+                        sessionTabPane.getStyleClass().remove("logo");
+                    }
+                });
     }
 
     private void openNewTab() {
@@ -136,6 +173,27 @@ public class RootView {
                 .stream()
                 .filter(t -> t.getText().equals(session.toString()))
                 .findFirst();
+    }
+
+    private void initLanguageButtons() {
+        changeLanguageButton.getToggleGroup().selectToggle(english);
+        changeLanguageButton.getToggleGroup().selectedToggleProperty()
+                .addListener((e, oldV, newV) -> {
+                    if (newV == german) {
+                        I18n.setLocale(new Locale("de", "CH"));
+                    } else {
+                        I18n.setLocale(Locale.UK);
+                    }
+                });
+    }
+
+    private void setToolTips() {
+        loadSessionButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.load_session"));
+        clearAllSessionsButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.delete_sessions"));
+        english.setTooltip(I18n.tooltipForKey("tooltip.session-bar.english"));
+        german.setTooltip(I18n.tooltipForKey("tooltip.session-bar.german"));
     }
 
     private void handleRemoveSessionClicked(final Session session, final
@@ -218,6 +276,8 @@ public class RootView {
             removeIcon.setIcon(FontAwesomeIcon.TRASH_ALT);
             removeIcon.setGlyphSize(ICON_SIZE);
             removeButton.setGraphic(removeIcon);
+            removeButton.setTooltip(I18n
+                    .tooltipForKey("tooltip.session-list.remove_session"));
             removeButton.setOnMouseClicked(event -> handleRemoveSessionClicked(
                     getItem(), event));
 
@@ -225,6 +285,8 @@ public class RootView {
             saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
             saveIcon.setGlyphSize(ICON_SIZE);
             saveButton.setGraphic(saveIcon);
+            saveButton.setTooltip(I18n
+                    .tooltipForKey("tooltip.session-list.save_session"));
             saveButton.setOnMouseClicked(e -> handleSaveSessionClicked(
                     getItem()));
 

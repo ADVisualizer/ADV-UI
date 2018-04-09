@@ -1,5 +1,7 @@
 package ch.adv.ui.core.presentation;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.util.StringConverter;
 
 import javax.inject.Singleton;
@@ -16,32 +18,35 @@ public class ReplaySliderStringConverter extends StringConverter<Double> {
     private static final double SLIDER_MEDIUM = 2.0;
     private static final double SLIDER_FAST = 3.0;
 
-    private static final String SLOW = "slow";
-    private static final String MEDIUM = "medium";
-    private static final String FAST = "fast";
+    private final StringProperty slow = new SimpleStringProperty();
+    private final StringProperty medium = new SimpleStringProperty();
+    private final StringProperty fast = new SimpleStringProperty();
+
+    public ReplaySliderStringConverter() {
+        slow.bind(I18n.createStringBinding("scale.slow"));
+        medium.bind(I18n.createStringBinding("scale.medium"));
+        fast.bind(I18n.createStringBinding("scale.fast"));
+    }
 
     @Override
     public String toString(Double number) {
         if (number < SLIDER_MEDIUM) {
-            return SLOW;
+            return slow.get();
         } else if (number < SLIDER_FAST) {
-            return MEDIUM;
+            return medium.get();
         } else {
-            return FAST;
+            return fast.get();
         }
     }
 
     @Override
     public Double fromString(String s) {
-        switch (s) {
-            case SLOW:
-                return SLIDER_SLOW;
-            case MEDIUM:
-                return SLIDER_MEDIUM;
-            case FAST:
-                return SLIDER_FAST;
-            default:
-                return SLIDER_MEDIUM;
+        if (s.equals(I18n.get("scale.slow"))) {
+            return SLIDER_SLOW;
+        } else if (s.equals(I18n.get("scale.fast"))) {
+            return SLIDER_FAST;
+        } else {
+            return SLIDER_MEDIUM;
         }
     }
 }

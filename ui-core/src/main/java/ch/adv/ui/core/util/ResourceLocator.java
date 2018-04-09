@@ -93,6 +93,7 @@ public class ResourceLocator {
 
         /**
          * Sets the relative path of the resource enum
+         *
          * @param relativePath relative path
          */
         public void setRelativePath(String relativePath) {
