@@ -73,9 +73,8 @@ public class SessionViewModel {
         this.sessionReplayFactory = sessionReplayFactory;
         this.replayController = replayController;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
-        this.session = rootViewModel.getCurrentSessionPropertyProperty().get();
+        this.session = rootViewModel.getCurrentSessionProperty().get();
 
-        //instantiate property instances
         this.availableSnapshotPanes = FXCollections.observableArrayList();
 
         //initialize properties
@@ -104,10 +103,16 @@ public class SessionViewModel {
             }
         });
 
-    }
+        currentSnapshotDescriptionProperty.addListener((e, oldV, newV) -> {
+            LayoutedSnapshot s = layoutedSnapshotStore
+                    .getLayoutedSnapshots(session.getSessionId())
+                    .get(currentSnapshotIndex);
+            String domainDescription = s.getSnapshotDescription();
+            if (!newV.equals(domainDescription)) {
+                s.setSnapshotDescription(newV);
+            }
+        });
 
-    public ObservableList<Pane> getAvailableSnapshotPanes() {
-        return availableSnapshotPanes;
     }
 
     public ObjectProperty<Pane> getCurrentSnapshotPaneProperty() {
@@ -212,9 +217,9 @@ public class SessionViewModel {
     }
 
     private void updateSnapshotDescription() {
-        String description = layoutedSnapshotStore.getLayoutedSnapshots(
-                session.getSessionId()).get(currentSnapshotIndex)
-                .getSnapshotDescription();
+        String description = layoutedSnapshotStore
+                .getLayoutedSnapshots(session.getSessionId())
+                .get(currentSnapshotIndex).getSnapshotDescription();
         currentSnapshotDescriptionProperty.set(description);
     }
 

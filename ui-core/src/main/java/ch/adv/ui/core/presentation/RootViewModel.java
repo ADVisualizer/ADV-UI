@@ -62,7 +62,7 @@ public class RootViewModel {
     }
 
 
-    public ObjectProperty<Session> getCurrentSessionPropertyProperty() {
+    public ObjectProperty<Session> getCurrentSessionProperty() {
         return currentSessionProperty;
     }
 
@@ -77,12 +77,19 @@ public class RootViewModel {
     }
 
     /**
-     * Delegates saving sessions to the business logic
+     * Delegates saving sessions to the access layer
      *
      * @param file    to be saved to
      * @param session to be saved
      */
     public void saveSession(final File file, final Session session) {
+        layoutedSnapshotStore.getLayoutedSnapshots(session.getSessionId())
+                .forEach(element -> {
+                    String description = element.getSnapshotDescription();
+                    long id = element.getSnapshotId();
+                    session.getSnapshotById(id)
+                            .setSnapshotDescription(description);
+                });
         String json = session.getModule().getStringifyer().stringify(session);
         fileAccess.write(file, json);
     }

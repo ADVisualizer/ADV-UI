@@ -104,8 +104,9 @@ public class SessionView {
         sessionViewModel.getCurrentSnapshotPaneProperty().addListener(
                 (event, oldV, newV) -> setCurrentSnapshotAsContent());
 
-        this.snapshotDescription.textProperty().bind(sessionViewModel
-                .getCurrentSnapshotDescriptionProperty());
+        this.snapshotDescription.textProperty()
+                .bindBidirectional(sessionViewModel
+                        .getCurrentSnapshotDescriptionProperty());
     }
 
     private void setTooltips() {
