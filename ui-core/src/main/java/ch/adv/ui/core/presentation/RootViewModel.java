@@ -62,7 +62,7 @@ public class RootViewModel {
     }
 
 
-    public ObjectProperty<Session> currentSessionProperty() {
+    public ObjectProperty<Session> getCurrentSessionProperty() {
         return currentSessionProperty;
     }
 

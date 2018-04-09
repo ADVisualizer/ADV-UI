@@ -73,7 +73,7 @@ public class SessionViewModel {
         this.sessionReplayFactory = sessionReplayFactory;
         this.replayController = replayController;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
-        this.session = rootViewModel.currentSessionProperty().get();
+        this.session = rootViewModel.getCurrentSessionProperty().get();
 
         this.availableSnapshotPanes = FXCollections.observableArrayList();
 
