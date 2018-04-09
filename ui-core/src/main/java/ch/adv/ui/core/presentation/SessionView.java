@@ -79,7 +79,7 @@ public class SessionView {
         setButtonActions();
         bindButtonDisableProperties();
         bindReplayIcons();
-        bindStrings();
+        bindI18nStrings();
         setTooltips();
 
         replaySpeedSlider.disableProperty().bind(sessionViewModel
@@ -123,7 +123,7 @@ public class SessionView {
                 .setTooltip(I18n.tooltipForKey("tooltip.snapshot-bar.play"));
     }
 
-    private void bindStrings() {
+    private void bindI18nStrings() {
         replaySpeedSliderLabel.textProperty()
                 .bind(I18n.createStringBinding("title.speed"));
     }
