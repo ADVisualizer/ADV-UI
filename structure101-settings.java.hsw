@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<local-project language="java" version="5.0.13248" xml-version="3" flavor="j2se">
+<local-project language="java" associate="file:/Users/muriele/GoogleDrive/HSR/Module/6FS18/BA/ADV/101-repo/ADVUI" version="5.0.13325" xml-version="3" flavor="j2se">
   <property name="publish-architecture-artifacts" value="true" />
   <property name="force-classpath" value="false" />
   <property name="project-type" value="classpath" />
@@ -16,25 +16,26 @@
   <property name="show-needs-to-compile" value="false" />
   <property name="physical-layering-system-file" value="structure101-spec.xml" />
   <classpath>
-    <classpathentry kind="lib" path="bootstrapper/out/production/classes" module="bootstrapper_main" />
     <classpathentry kind="lib" path="ui-core/out/production/classes" module="ui-core_main" />
+    <classpathentry kind="lib" path="bootstrapper/out/production/classes" module="bootstrapper_main" />
+    <classpathentry kind="lib" path="module-array/out/production/classes" module="module-array_main" />
   </classpath>
   <pom-root-files />
   <modules>
-    <module name="adv-ui" kind="ide-project" />
+    <module name="ui-core_main" kind="ide-project" />
+    <module name="ui-core" kind="ide-project" />
     <module name="module-array" kind="ide-project" />
     <module name="bootstrapper" kind="ide-project" />
     <module name="adv-ui_main" kind="ide-project" />
-    <module name="ui-core" kind="ide-project" />
-    <module name="ui-core_main" kind="ide-project" />
-    <module name="adv-ui_test" kind="ide-project">
-      <requires name="adv-ui_main" kind="ide-project" />
-    </module>
+    <module name="adv-ui" kind="ide-project" />
     <module name="ui-core_test" kind="ide-project">
       <requires name="ui-core_main" kind="ide-project" />
     </module>
     <module name="module-array_main" kind="ide-project">
       <requires name="ui-core_main" kind="ide-project" />
+    </module>
+    <module name="adv-ui_test" kind="ide-project">
+      <requires name="adv-ui_main" kind="ide-project" />
     </module>
     <module name="module-array_test" kind="ide-project">
       <requires name="module-array_main" kind="ide-project" />
@@ -45,24 +46,24 @@
       <requires name="ui-core_main" kind="ide-project" />
     </module>
     <module name="bootstrapper_test" kind="ide-project">
-      <requires name="module-array_main" kind="ide-project" />
       <requires name="bootstrapper_main" kind="ide-project" />
+      <requires name="module-array_main" kind="ide-project" />
       <requires name="ui-core_main" kind="ide-project" />
     </module>
   </modules>
   <modules-in-scope>
-    <module name="adv-ui" />
-    <module name="module-array" />
-    <module name="bootstrapper" />
-    <module name="adv-ui_test" />
     <module name="adv-ui_main" />
-    <module name="ui-core" />
-    <module name="ui-core_test" />
+    <module name="bootstrapper" />
+    <module name="adv-ui" />
+    <module name="adv-ui_test" />
+    <module name="module-array" />
     <module name="module-array_test" />
     <module name="module-array_main" />
-    <module name="ui-core_main" />
     <module name="bootstrapper_main" />
     <module name="bootstrapper_test" />
+    <module name="ui-core_main" />
+    <module name="ui-core" />
+    <module name="ui-core_test" />
   </modules-in-scope>
-  <grid-set sep="." version="5.0.13248" />
+  <grid-set sep="." version="5.0.13325" />
 </local-project>

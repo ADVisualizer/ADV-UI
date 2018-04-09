@@ -34,11 +34,14 @@ public class ArrayLayouter implements Layouter {
 
         snapshot.getElements().forEach(e -> {
             ArrayElement arrElement = (ArrayElement) e;
-            LabeledNode n = new LabeledNode(arrElement.getContent());
+
+            LabeledNode node = new LabeledNode(arrElement
+                    .getContent());
             //TODO: use arrElement.getStyle()
-            n.setBackgroundColor(Color.BLACK);
-            n.setFontColor(Color.WHITE);
-            hbox.getChildren().add(n);
+            node.setBackgroundColor(Color.BLACK);
+            node.setFontColor(Color.WHITE);
+            node.setBorder(1.0, Color.WHITE);
+            hbox.getChildren().add(node);
         });
 
         vBox.getChildren().add(hbox);
