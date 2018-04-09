@@ -11,10 +11,6 @@ import com.google.inject.Singleton;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-<<<<<<<HEAD
-        =======
-        >>>>>>>feature/110-styles
-
 /**
  * Positions the ArrayElements on the Pane
  */
