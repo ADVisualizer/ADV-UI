@@ -23,7 +23,11 @@ public class ADVValueStyle implements ADVStyle {
 
     @Override
     public String getStrokeStyle() {
-        return strokeStyle.getStyle();
+        if (strokeStyle == null) {
+            return ADVStrokeStyle.NONE.getStyle();
+        } else {
+            return strokeStyle.getStyle();
+        }
     }
 
     public void setStrokeStyle(ADVStrokeStyle strokeStyle) {
