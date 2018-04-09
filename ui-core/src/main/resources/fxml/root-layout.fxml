@@ -44,6 +44,9 @@
                     <FontAwesomeIconView glyphName="ERASER"/>
                 </graphic>
             </Button>
+
+            <Pane HBox.hgrow="ALWAYS" />
+
             <SegmentedButton fx:id="changeLanguageButton">
                 <buttons>
                     <ToggleButton fx:id="english" selected="true"/>

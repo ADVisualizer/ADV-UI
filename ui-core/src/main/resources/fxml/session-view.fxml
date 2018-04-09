@@ -9,7 +9,6 @@
     <top>
         <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="449.0" BorderPane.alignment="CENTER">
 
-            <items>
 
                 <HBox spacing="10" alignment="CENTER">
 
@@ -62,7 +61,6 @@
 
 
                 </HBox>
-            </items>
         </ToolBar>
     </top>
     <center>

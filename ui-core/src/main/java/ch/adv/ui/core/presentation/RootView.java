@@ -78,7 +78,7 @@ public class RootView {
      */
     @FXML
     public void initialize() {
-        bindStrings();
+        bindI18nStrings();
         menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
         clearAllSessionsButton.setOnAction(event ->
@@ -92,7 +92,7 @@ public class RootView {
         setToolTips();
     }
 
-    private void bindStrings() {
+    private void bindI18nStrings() {
         menuItemClose.textProperty()
                 .bind(I18n.createStringBinding("menu.item.close"));
         menuItemHelp.textProperty()
@@ -103,10 +103,10 @@ public class RootView {
                 .bind(I18n.createStringBinding("menu.help"));
         sessionListViewTitle.textProperty()
                 .bind(I18n.createStringBinding("title.session_list"));
-        english.textProperty().bind(I18n.createStringBinding("tooltip"
-                + ".session-bar.english"));
-        german.textProperty().bind(I18n.createStringBinding("tooltip"
-                + ".session-bar.german"));
+        english.textProperty().bind(I18n.createStringBinding(
+                "session-bar.english"));
+        german.textProperty().bind(I18n.createStringBinding(
+                "session-bar.german"));
     }
 
 
