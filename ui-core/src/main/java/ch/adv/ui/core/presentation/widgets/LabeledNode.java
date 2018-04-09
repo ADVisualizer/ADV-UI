@@ -107,8 +107,6 @@ public class LabeledNode extends StackPane {
      */
     public void setBackgroundColor(Paint color) {
         this.backgroundColor = color;
-
-
     }
 
     /**
