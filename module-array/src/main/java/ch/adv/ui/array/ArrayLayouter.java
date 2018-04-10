@@ -43,8 +43,8 @@ public class ArrayLayouter implements Layouter {
                     StyleConverter.getColor(style.getStrokeColor()),
                     StyleConverter.getStrokeStyle(style.getStrokeStyle()));
 
-            if (arrElement.getFixedPosX() > 0 &&
-                    arrElement.getFixedPosX() > 0) {
+            if (arrElement.getFixedPosX() > 0
+                    && arrElement.getFixedPosY() > 0) {
 
                 node.setY(arrElement.getFixedPosY());
                 node.setX(arrElement.getFixedPosX());
