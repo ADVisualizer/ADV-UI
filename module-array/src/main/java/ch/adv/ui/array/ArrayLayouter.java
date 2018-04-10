@@ -6,12 +6,12 @@ import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import ch.adv.ui.core.presentation.util.StyleConverter;
 import ch.adv.ui.core.presentation.widgets.AutoScalePane;
+import ch.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurve;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,20 +97,11 @@ public class ArrayLayouter implements Layouter {
             Node endNode = nodeMap.get(r.getTargetElementId());
 
             if (sourceNode != null && endNode != null) {
-                CubicCurve curve = new CubicCurve();
-                curve.setStartX(sourceNode.getLayoutX());
-                curve.setStartY(sourceNode.getLayoutY());
-                curve.setEndX(endNode.getLayoutX());
-                curve.setEndY(endNode.getLayoutY());
 
-                ADVStyle style = r.getStyle();
-                curve.setFill((StyleConverter.getColor(
-                        style.getFillColor())));
-                curve.setStroke(StyleConverter.getColor(
-                        style.getStrokeColor()));
-                curve.setStrokeWidth(style.getStrokeThickness());
+                LabeledEdge edge = new LabeledEdge(r.getLabel(), sourceNode,
+                        endNode, true, r.getStyle());
 
-                scalePane.addChildren(curve);
+                scalePane.addChildren(edge);
             }
         });
     }
