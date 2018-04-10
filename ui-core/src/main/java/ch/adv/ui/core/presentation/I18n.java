@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.util.Duration;
 
 import java.text.MessageFormat;
 import java.util.*;
@@ -28,6 +29,7 @@ public final class I18n {
      * the current selected Locale.
      */
     private static final ObjectProperty<Locale> LOCALE;
+    private static final int TOOLTIP_DELAY = 500;
 
     static {
         LOCALE = new SimpleObjectProperty<>(getDefaultLocale());
@@ -135,6 +137,7 @@ public final class I18n {
             args) {
         Tooltip tooltip = new Tooltip();
         tooltip.textProperty().bind(createStringBinding(key, args));
+        tooltip.setShowDelay(new Duration(TOOLTIP_DELAY));
         return tooltip;
     }
 
