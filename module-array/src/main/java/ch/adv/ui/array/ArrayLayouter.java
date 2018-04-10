@@ -8,8 +8,13 @@ import ch.adv.ui.core.presentation.util.StyleConverter;
 import ch.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
+import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.CubicCurve;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Positions the ArrayElements on the Pane
@@ -26,6 +31,27 @@ public class ArrayLayouter implements Layouter {
     @Override
     public LayoutedSnapshot layout(Snapshot snapshot) {
         AutoScalePane scalePane = new AutoScalePane();
+
+        Map<Long, Node> nodeMap = drawElements(snapshot, scalePane);
+        drawRelations(snapshot, scalePane, nodeMap);
+
+        return createLayoutedSnapshot(snapshot, scalePane);
+    }
+
+    private LayoutedSnapshot createLayoutedSnapshot(Snapshot snapshot,
+                                                    AutoScalePane scalePane) {
+
+        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot();
+        layoutedSnapshot
+                .setSnapshotDescription(snapshot.getSnapshotDescription());
+        layoutedSnapshot.setSnapshotId(snapshot.getSnapshotId());
+        layoutedSnapshot.setPane(scalePane);
+        return layoutedSnapshot;
+    }
+
+    private Map<Long, Node> drawElements(Snapshot snapshot, AutoScalePane
+            scalePane) {
+        Map<Long, Node> nodeMap = new HashMap<>();
 
         HBox container = new HBox();
         snapshot.getElements().forEach(e -> {
@@ -55,16 +81,37 @@ public class ArrayLayouter implements Layouter {
             } else {
                 container.getChildren().add(node);
             }
+
+            nodeMap.put(arrElement.getElementId(), node);
         });
 
         scalePane.addChildren(container);
+        return nodeMap;
+    }
 
-        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot();
-        layoutedSnapshot
-                .setSnapshotDescription(snapshot.getSnapshotDescription());
-        layoutedSnapshot.setSnapshotId(snapshot.getSnapshotId());
-        layoutedSnapshot.setPane(scalePane);
+    private void drawRelations(Snapshot snapshot, AutoScalePane scalePane,
+                               Map<Long, Node> nodeMap) {
+        snapshot.getRelations().forEach(r -> {
 
-        return layoutedSnapshot;
+            Node sourceNode = nodeMap.get(r.getSourceElementId());
+            Node endNode = nodeMap.get(r.getTargetElementId());
+
+            if (sourceNode != null && endNode != null) {
+                CubicCurve curve = new CubicCurve();
+                curve.setStartX(sourceNode.getLayoutX());
+                curve.setStartY(sourceNode.getLayoutY());
+                curve.setEndX(endNode.getLayoutX());
+                curve.setEndY(endNode.getLayoutY());
+
+                ADVStyle style = r.getStyle();
+                curve.setFill((StyleConverter.getColor(
+                        style.getFillColor())));
+                curve.setStroke(StyleConverter.getColor(
+                        style.getStrokeColor()));
+                curve.setStrokeWidth(style.getStrokeThickness());
+
+                scalePane.addChildren(curve);
+            }
+        });
     }
 }
