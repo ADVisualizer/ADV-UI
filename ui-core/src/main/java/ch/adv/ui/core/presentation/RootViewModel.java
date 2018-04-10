@@ -105,7 +105,7 @@ public class RootViewModel {
     }
 
     /**
-     * Update listener if session store has changed.
+     * Update ui if session store has changed.
      */
     private class SessionStoreListener implements PropertyChangeListener {
 
