@@ -42,7 +42,19 @@ public class ArrayLayouter implements Layouter {
             node.setBorder(style.getStrokeThickness(),
                     StyleConverter.getColor(style.getStrokeColor()),
                     StyleConverter.getStrokeStyle(style.getStrokeStyle()));
-            container.getChildren().add(node);
+
+            if (arrElement.getFixedPosX() > 0 &&
+                    arrElement.getFixedPosX() > 0) {
+
+                node.setY(arrElement.getFixedPosY());
+                node.setX(arrElement.getFixedPosX());
+
+                // add fixed positioned elements directly on the scale pane
+                // because the hbox would ignore the fixed position.
+                scalePane.addChildren(node);
+            } else {
+                container.getChildren().add(node);
+            }
         });
 
         scalePane.addChildren(container);
