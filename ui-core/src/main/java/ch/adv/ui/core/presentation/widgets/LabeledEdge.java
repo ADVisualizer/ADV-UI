@@ -15,7 +15,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeType;
 
-
 /**
  * Generic component for an labeled edge with optional arrows.
  * <p>
@@ -37,23 +36,27 @@ public class LabeledEdge extends Group {
     private final ObjectProperty<Point2D> endCenter = new
             SimpleObjectProperty<>();
 
+
     public LabeledEdge(String labelText, Node startNode, Node endNode,
                        boolean directed, ADVStyle style) {
 
+        this.style = style;
         this.startNode = startNode;
         this.endNode = endNode;
-        this.style = style;
 
-        label.setManaged(false);
-        curve.setManaged(false);
-
-        startNode.boundsInParentProperty()
-                .addListener(this::computeStartCenter);
-        endNode.boundsInParentProperty().addListener(this::computeEndCenter);
-
+        // bind listener
         startCenter.addListener(this::updateCurvePoints);
         endCenter.addListener(this::updateCurvePoints);
 
+        startNode.layoutBoundsProperty()
+                .addListener(this::computeStartCenterPoint);
+        endNode.layoutBoundsProperty()
+                .addListener(this::computeEndCenterPoint);
+
+        initializeComponent(labelText, directed);
+    }
+
+    public void initializeComponent(String labelText, boolean directed) {
         applyStyle();
         drawLabel(labelText);
         if (directed) {
@@ -62,6 +65,7 @@ public class LabeledEdge extends Group {
 
         getChildren().addAll(curve, label);
     }
+
 
     private void applyStyle() {
         curve.setStrokeWidth(style.getStrokeThickness());
@@ -76,56 +80,48 @@ public class LabeledEdge extends Group {
      * @param labelText text
      */
     private void drawLabel(String labelText) {
-        Binding xProperty = Bindings.createDoubleBinding(() -> {
-            double maxX = Math.max(curve.startXProperty().get(),
-                    curve.endXProperty().get());
-            double minX = Math.min(curve.startXProperty().get(),
-                    curve.endXProperty().get());
-            return (maxX - minX) / 2;
-        }, curve.startXProperty(), curve.endXProperty());
+        Binding xProperty = Bindings.createDoubleBinding(() ->
+                        (curve.getStartX() + curve.getEndX()) / 2,
+                curve.startXProperty(), curve.endXProperty());
 
-        Binding yProperty = Bindings.createDoubleBinding(() -> {
-            double maxY = Math.max(curve.startYProperty().get(),
-                    curve.endYProperty().get());
-            double minY = Math.min(curve.startYProperty().get(),
-                    curve.endYProperty().get());
-            return (maxY - minY) / 2;
-        }, curve.startYProperty(), curve.endYProperty());
+        Binding yProperty = Bindings.createDoubleBinding(() ->
+                        (curve.getStartY() + curve.getEndY()) / 2,
+                curve.startYProperty(), curve.endYProperty());
 
+        label.setText(labelText);
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);
-        label.setText(labelText);
     }
 
-    private void computeStartCenter(Observable o) {
+    private void computeStartCenterPoint(Observable o) {
         if (startNode.getBoundsInParent().getHeight() > 0 &&
                 startNode.getBoundsInParent().getWidth() > 0) {
+
             Point2D center = computeCenter(startNode);
             startCenter.set(center);
         }
     }
 
 
-    private void computeEndCenter(Observable o) {
+    private void computeEndCenterPoint(Observable o) {
         if (endNode.getBoundsInParent().getHeight() > 0 &&
                 endNode.getBoundsInParent().getWidth() > 0) {
+
             Point2D center = computeCenter(endNode);
             endCenter.set(center);
         }
     }
 
     private Point2D computeCenter(Node node) {
-        double centerX = node.getLayoutX() + node.getBoundsInParent()
-                .getWidth() / 2;
-        double centerY = node.getLayoutY() + node.getBoundsInParent()
-                .getHeight() / 2;
-
+        double centerX = node.getLayoutX()
+                + node.getBoundsInParent().getWidth() / 2;
+        double centerY = node.getLayoutY()
+                + node.getBoundsInParent().getHeight() / 2;
         return new Point2D(centerX, centerY);
     }
 
     private void updateCurvePoints(Observable o) {
-        if (startCenter.get() != null && endCenter.get() != null &&
-                startNode != null && endNode != null) {
+        if (startCenter.get() != null && endCenter.get() != null) {
 
             Point2D startIntersection = findIntersectionPoint(startNode,
                     startCenter.get(),
@@ -141,19 +137,22 @@ public class LabeledEdge extends Group {
             curve.setStartY(startIntersection.getY());
             curve.setEndX(endIntersection.getX());
             curve.setEndY(endIntersection.getY());
-            curve.setControlX1(mid.getX());
-            curve.setControlY1(mid.getY());
+            curve.setControlY1(mid.getY() + 2 * startNode.getLayoutBounds()
+                    .getHeight());
+            curve.setControlX2(mid.getX());
+            curve.setControlY2(mid.getY() + 2 * startNode.getLayoutBounds()
+                    .getHeight());
+
         }
     }
 
     /**
-     * Determines the intersection point of the curve and the target node.
-     * The intersection point lays on the border of the node.
+     * Determines the intersection of the curve and the target node.
      *
      * @param targetBounds target node
      * @param outside      point outside the target node
      * @param inside       point inside the target node
-     * @return
+     * @return intersection point
      */
     private Point2D findIntersectionPoint(Node targetBounds,
                                           Point2D inside,
@@ -176,7 +175,6 @@ public class LabeledEdge extends Group {
     }
 
     private void drawArrows() {
-        // TODO:  draw arrowy
+        // TODO: draw arrow
     }
-
 }
