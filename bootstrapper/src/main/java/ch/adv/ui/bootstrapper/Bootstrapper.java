@@ -50,7 +50,7 @@ public class Bootstrapper {
 
     private void registerModules() {
         Map<String, ADVModule> modules = Map
-                .ofEntries(Map.entry("array", arrayModule));
+                .ofEntries(Map.entry(arrayModule.getName(), arrayModule));
 
         ModuleStore.setAvailableModules(modules);
     }
