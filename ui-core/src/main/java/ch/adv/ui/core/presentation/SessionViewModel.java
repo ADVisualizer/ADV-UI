@@ -20,6 +20,8 @@ import java.util.Timer;
 /**
  * Handles presentation logic for the {@link SessionView}. Delegates tasks to
  * the business logic layer.
+ *
+ * @author mtrentini
  */
 public class SessionViewModel {
 

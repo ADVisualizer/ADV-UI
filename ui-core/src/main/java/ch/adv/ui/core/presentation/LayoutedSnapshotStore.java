@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Holds all layouted snapshots on a Pane mapped to their sessionId. Fires
  * change event, if new snapshot arrives.
+ * @author mtrentini
  */
 @Singleton
 public class LayoutedSnapshotStore {

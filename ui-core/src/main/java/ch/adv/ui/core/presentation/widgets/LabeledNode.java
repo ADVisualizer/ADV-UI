@@ -12,6 +12,8 @@ import javafx.scene.paint.Paint;
 
 /**
  * Widget component for a labeled node with optional rounded corners
+ *
+ * @author mtrentini
  */
 public class LabeledNode extends StackPane {
     private static final int PADDING = 5;
