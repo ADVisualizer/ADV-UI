@@ -4,8 +4,12 @@
  ****************************************/
 rootProject.name = 'adv-ui'
 
-// submodules
-include ":bootstrapper"
-include ":ui-core"
+//-- gradle submodules --//
+// ADV Core
+include 'bootstrapper'
+include 'ui-core'
 
-include ":module-array"
+//ADV Modules
+include 'module-array'
+
+
