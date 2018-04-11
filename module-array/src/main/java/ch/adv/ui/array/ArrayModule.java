@@ -33,7 +33,7 @@ public class ArrayModule implements ADVModule {
     }
 
     @Override
-    public String getName() {
+    public String getModuleName() {
         return MODULE_NAME;
     }
 

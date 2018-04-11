@@ -14,7 +14,7 @@ public interface ADVModule {
      *
      * @return moduleName
      */
-    String getName();
+    String getModuleName();
 
     /**
      * Returns the module specific layouter, which positions the nodes on a
