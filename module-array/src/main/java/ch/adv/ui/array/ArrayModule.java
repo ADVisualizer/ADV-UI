@@ -8,7 +8,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 /**
- * Module encapsulating module specific Stringifyer, Parser and Layouter.
+ * Module encapsulating module-specific Stringifyer, Parser and Layouter.
  */
 @Singleton
 public class ArrayModule implements ADVModule {
