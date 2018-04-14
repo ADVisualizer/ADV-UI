@@ -99,7 +99,7 @@ public class ArrayLayouter implements Layouter {
             if (sourceNode != null && endNode != null) {
 
                 LabeledEdge edge = new LabeledEdge(r.getLabel(), sourceNode,
-                        endNode, true, r.getStyle());
+                        endNode, r.getStyle());
 
                 scalePane.addChildren(edge);
             }

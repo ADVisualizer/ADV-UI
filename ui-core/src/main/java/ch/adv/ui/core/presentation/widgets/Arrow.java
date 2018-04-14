@@ -21,12 +21,12 @@ public class Arrow extends Polygon {
 
 
     /**
-     * @param curve           cubic curve
-     * @param positionOnCurve positionOnCurve between 0 (start) and 1 (end)
+     * @param curve              cubic curve
+     * @param relativePosOnCurve positionOnCurve between 0 (start) and 1 (end)
      */
-    public Arrow(CubicCurve curve, float positionOnCurve) {
+    public Arrow(CubicCurve curve, float relativePosOnCurve) {
         this.curve = curve;
-        this.positionOnCurve = positionOnCurve;
+        this.positionOnCurve = relativePosOnCurve;
         this.rotation = new Rotate();
 
         rotation.setAxis(Rotate.Z_AXIS);
@@ -109,6 +109,10 @@ public class Arrow extends Polygon {
                 3 * Math.pow(pos, 2) * curve.getEndY();
 
         return new Point2D(x, y);
+    }
+
+    public enum DirectionType {
+        UNIDIRECTIONAL, BIDIRECTIONAL, NONE;
     }
 }
 

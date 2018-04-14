@@ -24,7 +24,7 @@ import javafx.scene.shape.StrokeType;
  */
 public class LabeledEdge extends Group {
 
-    private final boolean directed;
+    private final Arrow.DirectionType directionType;
 
     private final ADVStyle style;
     private final Node startNode;
@@ -43,15 +43,33 @@ public class LabeledEdge extends Group {
 
 
     public LabeledEdge(String labelText, Node startNode, Node endNode,
-                       boolean directed, ADVStyle style) {
+                       ADVStyle style) {
+        this(labelText, startNode, endNode, style,
+                Arrow.DirectionType.UNIDIRECTIONAL);
+    }
+
+    public LabeledEdge(String labelText, Node startNode, Node endNode,
+                       ADVStyle style, Arrow.DirectionType directionType) {
 
         this.style = style;
         this.startNode = startNode;
         this.endNode = endNode;
-        this.directed = directed;
+        this.directionType = directionType;
 
-        this.startArrow = new Arrow(curve, 0.0f);
-        this.endArrow = new Arrow(curve, 1.0f);
+        // draw arrow
+        if (directionType.equals(Arrow.DirectionType.BIDIRECTIONAL)) {
+            this.startArrow = new Arrow(curve, 0.0f);
+            this.endArrow = new Arrow(curve, 1.0f);
+            getChildren().addAll(startArrow, endArrow);
+        } else if (directionType.equals(Arrow.DirectionType.UNIDIRECTIONAL)) {
+            this.startArrow = null;
+            this.endArrow = new Arrow(curve, 1.0f);
+            getChildren().add(endArrow);
+        } else {
+            this.startArrow = null;
+            this.endArrow = null;
+        }
+
 
         // bind listener
         startCenter.addListener(this::updateCurvePoints);
@@ -70,10 +88,6 @@ public class LabeledEdge extends Group {
         drawLabel(labelText);
 
         getChildren().addAll(curve, label);
-
-        if (directed) {
-            getChildren().addAll(startArrow, endArrow);
-        }
     }
 
 
@@ -154,8 +168,12 @@ public class LabeledEdge extends Group {
             curve.setControlX2(mid.getX());
             curve.setControlY2(mid.getY());
 
-            if (directed) {
-                drawArrows();
+            if (!directionType.equals(Arrow.DirectionType.NONE)) {
+
+                endArrow.update();
+                if (directionType.equals(Arrow.DirectionType.BIDIRECTIONAL)) {
+                    startArrow.update();
+                }
             }
         }
     }
@@ -186,10 +204,5 @@ public class LabeledEdge extends Group {
                 return findIntersectionPoint(targetBounds, inside, middle);
             }
         }
-    }
-
-    private void drawArrows() {
-        startArrow.update();
-        endArrow.update();
     }
 }
