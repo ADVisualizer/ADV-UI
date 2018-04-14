@@ -2,10 +2,7 @@ package ch.adv.ui.core.domain;
 
 import ch.adv.ui.core.app.ADVModule;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * Represents the session which holds multiple snapshots
@@ -76,7 +73,8 @@ public class Session {
     @Override
     public String toString() {
         String time = String.format("%tT", sessionId - TimeZone.getDefault()
-                .getRawOffset());
+                .getRawOffset() + TimeZone.getDefault().getDSTSavings());
+
         return sessionName + " - " + time;
     }
 

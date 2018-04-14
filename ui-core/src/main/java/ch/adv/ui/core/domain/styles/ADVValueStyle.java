@@ -7,7 +7,7 @@ package ch.adv.ui.core.domain.styles;
 public class ADVValueStyle implements ADVStyle {
     private int fillColor;
     private int strokeColor;
-    private ADVStrokeStyle strokeStyle;
+    private String strokeStyle;
     private int strokeThickness;
 
     @Override
@@ -26,12 +26,8 @@ public class ADVValueStyle implements ADVStyle {
         if (strokeStyle == null) {
             return ADVStrokeStyle.NONE.getStyle();
         } else {
-            return strokeStyle.getStyle();
+            return strokeStyle;
         }
-    }
-
-    public void setStrokeStyle(ADVStrokeStyle strokeStyle) {
-        this.strokeStyle = strokeStyle;
     }
 
     @Override
