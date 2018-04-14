@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.text.Font;
 
 /**
  * Generic component for an labeled edge with optional arrows.
@@ -24,17 +25,15 @@ import javafx.scene.shape.StrokeType;
  */
 public class LabeledEdge extends Group {
 
-    private final Arrow.DirectionType directionType;
-
-    private final ADVStyle style;
-    private final Node startNode;
-    private final Node endNode;
-
-    private final Arrow startArrow;
-    private final Arrow endArrow;
-
-    private final CubicCurve curve = new CubicCurve();
-    private final Label label = new Label();
+    private static final int LABEL_FONT_SIZE = 12;
+    protected final CubicCurve curve = new CubicCurve();
+    protected final Label label = new Label();
+    protected final Arrow.DirectionType directionType;
+    protected final ADVStyle style;
+    protected final Arrow startArrow;
+    protected final Arrow endArrow;
+    protected final Node startNode;
+    protected final Node endNode;
 
     private final ObjectProperty<Point2D> startCenter = new
             SimpleObjectProperty<>();
@@ -57,19 +56,21 @@ public class LabeledEdge extends Group {
         this.directionType = directionType;
 
         // draw arrow
-        if (directionType.equals(Arrow.DirectionType.BIDIRECTIONAL)) {
-            this.startArrow = new Arrow(curve, 0.0f);
-            this.endArrow = new Arrow(curve, 1.0f);
-            getChildren().addAll(startArrow, endArrow);
-        } else if (directionType.equals(Arrow.DirectionType.UNIDIRECTIONAL)) {
-            this.startArrow = null;
-            this.endArrow = new Arrow(curve, 1.0f);
-            getChildren().add(endArrow);
-        } else {
-            this.startArrow = null;
-            this.endArrow = null;
+        switch (directionType) {
+            case BIDIRECTIONAL:
+                this.startArrow = new Arrow(curve, 0.0f);
+                this.endArrow = new Arrow(curve, 1.0f);
+                getChildren().addAll(startArrow, endArrow);
+                break;
+            case UNIDIRECTIONAL:
+                this.startArrow = null;
+                this.endArrow = new Arrow(curve, 1.0f);
+                getChildren().add(endArrow);
+                break;
+            default:
+                this.startArrow = null;
+                this.endArrow = null;
         }
-
 
         // bind listener
         startCenter.addListener(this::updateCurvePoints);
@@ -115,6 +116,7 @@ public class LabeledEdge extends Group {
         label.setText(labelText);
         //TODO: replace with fill color
         label.setTextFill(Color.BLACK);
+        label.setFont(new Font(LABEL_FONT_SIZE));
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);
     }
@@ -157,25 +159,30 @@ public class LabeledEdge extends Group {
                     endCenter.get(),
                     startCenter.get());
 
-            Point2D mid = startIntersection.midpoint(endIntersection);
 
             curve.setStartX(startIntersection.getX());
             curve.setStartY(startIntersection.getY());
             curve.setEndX(endIntersection.getX());
             curve.setEndY(endIntersection.getY());
-            curve.setControlX1(mid.getX());
-            curve.setControlY1(mid.getY());
-            curve.setControlX2(mid.getX());
-            curve.setControlY2(mid.getY());
 
-            if (!directionType.equals(Arrow.DirectionType.NONE)) {
+            setControlPoints(startIntersection, endIntersection);
 
-                endArrow.update();
-                if (directionType.equals(Arrow.DirectionType.BIDIRECTIONAL)) {
+            switch (directionType) {
+                case BIDIRECTIONAL:
                     startArrow.update();
-                }
+                case UNIDIRECTIONAL:
+                    endArrow.update();
             }
         }
+    }
+
+    protected void setControlPoints(Point2D start, Point2D endPoint) {
+        // straight line
+        Point2D mid = start.midpoint(endPoint);
+        curve.setControlX1(mid.getX());
+        curve.setControlY1(mid.getY());
+        curve.setControlX2(mid.getX());
+        curve.setControlY2(mid.getY());
     }
 
     /**
@@ -186,9 +193,9 @@ public class LabeledEdge extends Group {
      * @param inside       point inside the target node
      * @return intersection point
      */
-    private Point2D findIntersectionPoint(Node targetBounds,
-                                          Point2D inside,
-                                          Point2D outside) {
+    protected Point2D findIntersectionPoint(Node targetBounds,
+                                            Point2D inside,
+                                            Point2D outside) {
 
         Point2D middle = outside.midpoint(inside);
 
