@@ -15,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generic component for an labeled edge with optional arrows.
@@ -25,15 +27,21 @@ import javafx.scene.text.Font;
  */
 public class LabeledEdge extends Group {
 
-    private static final int LABEL_FONT_SIZE = 12;
-    protected final CubicCurve curve = new CubicCurve();
-    protected final Label label = new Label();
-    protected final Arrow.DirectionType directionType;
-    protected final ADVStyle style;
-    protected final Arrow startArrow;
-    protected final Arrow endArrow;
-    protected final Node startNode;
-    protected final Node endNode;
+    private static final Logger logger = LoggerFactory.getLogger(
+            LabeledEdge.class);
+    private static final int LABEL_MARGIN = 5;
+    private static final int LABEL_FONT_SIZE = 8;
+
+    private final Node startNode;
+    private final Node endNode;
+
+    private final CubicCurve curve = new CubicCurve();
+    private final Label label = new Label();
+    private final ADVStyle style;
+
+    private final Arrow.DirectionType directionType;
+    private final Arrow startArrow;
+    private final Arrow endArrow;
 
     private final ObjectProperty<Point2D> startCenter = new
             SimpleObjectProperty<>();
@@ -84,7 +92,7 @@ public class LabeledEdge extends Group {
         initializeComponent(labelText);
     }
 
-    public void initializeComponent(String labelText) {
+    private void initializeComponent(String labelText) {
         applyStyle();
         drawLabel(labelText);
 
@@ -105,13 +113,16 @@ public class LabeledEdge extends Group {
      * @param labelText text
      */
     private void drawLabel(String labelText) {
-        Binding xProperty = Bindings.createDoubleBinding(() ->
-                        (curve.getStartX() + curve.getEndX()) / 2,
-                curve.startXProperty(), curve.endXProperty());
+        Binding xProperty = Bindings.createDoubleBinding(() -> {
+            double centerX = (curve.getControlX1() + curve.getControlX2()) / 2;
+            double labelWidth = (label.getWidth() / 2);
+            return centerX - labelWidth;
+        }, curve.startXProperty(), curve.endXProperty());
 
-        Binding yProperty = Bindings.createDoubleBinding(() ->
-                        (curve.getStartY() + curve.getEndY()) / 2,
-                curve.startYProperty(), curve.endYProperty());
+        Binding yProperty = Bindings.createDoubleBinding(() -> {
+            double centerY = (curve.getControlY1() + curve.getControlY2()) / 2;
+            return centerY - LABEL_MARGIN;
+        }, curve.startYProperty(), curve.endYProperty());
 
         label.setText(labelText);
         //TODO: replace with fill color
@@ -122,8 +133,8 @@ public class LabeledEdge extends Group {
     }
 
     private void computeStartCenterPoint(Observable o) {
-        if (startNode.getBoundsInParent().getHeight() > 0 &&
-                startNode.getBoundsInParent().getWidth() > 0) {
+        if (startNode.getBoundsInParent().getHeight() > 0
+                && startNode.getBoundsInParent().getWidth() > 0) {
 
             Point2D center = computeCenter(startNode);
             startCenter.set(center);
@@ -132,8 +143,8 @@ public class LabeledEdge extends Group {
 
 
     private void computeEndCenterPoint(Observable o) {
-        if (endNode.getBoundsInParent().getHeight() > 0 &&
-                endNode.getBoundsInParent().getWidth() > 0) {
+        if (endNode.getBoundsInParent().getHeight() > 0
+                && endNode.getBoundsInParent().getWidth() > 0) {
 
             Point2D center = computeCenter(endNode);
             endCenter.set(center);
@@ -170,12 +181,24 @@ public class LabeledEdge extends Group {
             switch (directionType) {
                 case BIDIRECTIONAL:
                     startArrow.update();
+                    endArrow.update();
+                    break;
                 case UNIDIRECTIONAL:
                     endArrow.update();
+                    break;
+                default:
+                    logger.warn("Unsupported direction type: {}",
+                            directionType);
             }
         }
     }
 
+    /**
+     * Sets the control points of the curve
+     *
+     * @param start    curve start
+     * @param endPoint curve end
+     */
     protected void setControlPoints(Point2D start, Point2D endPoint) {
         // straight line
         Point2D mid = start.midpoint(endPoint);
@@ -211,5 +234,17 @@ public class LabeledEdge extends Group {
                 return findIntersectionPoint(targetBounds, inside, middle);
             }
         }
+    }
+
+    protected Node getStartNode() {
+        return startNode;
+    }
+
+    protected Node getEndNode() {
+        return endNode;
+    }
+
+    protected CubicCurve getCurve() {
+        return curve;
     }
 }

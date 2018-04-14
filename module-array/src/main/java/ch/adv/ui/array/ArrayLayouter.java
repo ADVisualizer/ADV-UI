@@ -98,13 +98,14 @@ public class ArrayLayouter implements Layouter {
 
             if (sourceNode != null && endNode != null) {
 
-                LabeledEdge edge = new CurvedLabeledEdge(r
-                        .getLabel(), sourceNode,
-                        endNode, r
-                        .getStyle(), CurvedLabeledEdge.CurvePositon.BOTTOM);
+                LabeledEdge edge = new CurvedLabeledEdge(r.getLabel(),
+                        sourceNode,
+                        endNode,
+                        r.getStyle());
 
                 scalePane.addChildren(edge);
             }
         });
     }
+
 }

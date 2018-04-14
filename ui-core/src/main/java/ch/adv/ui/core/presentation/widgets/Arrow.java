@@ -13,20 +13,20 @@ import java.util.Arrays;
  */
 public class Arrow extends Polygon {
 
-    private final static double[] SHAPE = new double[] {0, 0, 5, 15, -5, 15};
+    private static final double[] SHAPE = new double[] {0, 0, 5, 15, -5, 15};
 
     private Rotate rotation;
-    private float positionOnCurve;
+    private float pos;
     private CubicCurve curve;
 
 
     /**
      * @param curve              cubic curve
-     * @param relativePosOnCurve positionOnCurve between 0 (start) and 1 (end)
+     * @param relativePosOnCurve pos between 0 (start) and 1 (end)
      */
     public Arrow(CubicCurve curve, float relativePosOnCurve) {
         this.curve = curve;
-        this.positionOnCurve = relativePosOnCurve;
+        this.pos = relativePosOnCurve;
         this.rotation = new Rotate();
 
         rotation.setAxis(Rotate.Z_AXIS);
@@ -38,21 +38,24 @@ public class Arrow extends Polygon {
     }
 
 
+    /**
+     * Recomputes the angle and position of the arrow
+     */
     public void update() {
         setFill(curve.getStroke());
 
-        Point2D orientation = computePosition(curve, positionOnCurve);
+        Point2D orientation = computePosition();
 
         setTranslateX(orientation.getX());
         setTranslateY(orientation.getY());
 
-        Point2D tangent = computeTangent(curve, positionOnCurve).normalize();
+        Point2D tangent = computeTangent().normalize();
         double angle = Math.atan2(tangent.getY(), tangent.getX());
         angle = Math.toDegrees(angle);
 
         // arrow origin is top => apply offset
         double offset = -90;
-        if (positionOnCurve > 0.5) {
+        if (pos > 0.5) {
             offset = +90;
         }
 
@@ -66,20 +69,18 @@ public class Arrow extends Polygon {
      * 0 = start
      * 1 = end
      *
-     * @param curve the CubicCurve
-     * @param pos   relative position between 0 and 1
      * @return a Point2D
      */
-    private Point2D computePosition(CubicCurve curve, float pos) {
-        double x = Math.pow(1 - pos, 3) * curve.getStartX() +
-                3 * pos * Math.pow(1 - pos, 2) * curve.getControlX1() +
-                3 * (1 - pos) * Math.pow(pos, 2) * curve.getControlX2() +
-                Math.pow(pos, 3) * curve.getEndX();
+    private Point2D computePosition() {
+        double x = Math.pow(1 - pos, 3) * curve.getStartX()
+                + 3 * pos * Math.pow(1 - pos, 2) * curve.getControlX1()
+                + 3 * (1 - pos) * Math.pow(pos, 2) * curve.getControlX2()
+                + Math.pow(pos, 3) * curve.getEndX();
 
-        double y = Math.pow(1 - pos, 3) * curve.getStartY() +
-                3 * pos * Math.pow(1 - pos, 2) * curve.getControlY1() +
-                3 * (1 - pos) * Math.pow(pos, 2) * curve.getControlY2() +
-                Math.pow(pos, 3) * curve.getEndY();
+        double y = Math.pow(1 - pos, 3) * curve.getStartY()
+                + 3 * pos * Math.pow(1 - pos, 2) * curve.getControlY1()
+                + 3 * (1 - pos) * Math.pow(pos, 2) * curve.getControlY2()
+                + Math.pow(pos, 3) * curve.getEndY();
 
         return new Point2D(x, y);
     }
@@ -91,26 +92,29 @@ public class Arrow extends Polygon {
      * 0 = start
      * 1 = end
      *
-     * @param curve the CubicCurve
-     * @param pos   relative position between 0 and 1
      * @return a Point2D
      */
-    private Point2D computeTangent(CubicCurve curve, float pos) {
-        double x = -3 * Math.pow(1 - pos, 2) * curve.getStartX() +
-                3 * (Math.pow(1 - pos, 2) - 2 * pos * (1 - pos)) * curve
-                        .getControlX1() +
-                3 * ((1 - pos) * 2 * pos - pos * pos) * curve.getControlX2() +
-                3 * Math.pow(pos, 2) * curve.getEndX();
+    private Point2D computeTangent() {
+        double x = -3 * Math.pow(1 - pos, 2) * curve.getStartX()
+                + 3 * (Math.pow(1 - pos, 2) - 2 * pos * (1 - pos))
+                * curve.getControlX1()
+                + 3 * ((1 - pos) * 2 * pos - pos * pos) * curve.getControlX2()
+                + 3 * Math.pow(pos, 2) * curve.getEndX();
 
-        double y = -3 * Math.pow(1 - pos, 2) * curve.getStartY() +
-                3 * (Math.pow(1 - pos, 2) - 2 * pos * (1 - pos)) * curve
-                        .getControlY1() +
-                3 * ((1 - pos) * 2 * pos - pos * pos) * curve.getControlY2() +
-                3 * Math.pow(pos, 2) * curve.getEndY();
+        double y = -3 * Math.pow(1 - pos, 2) * curve.getStartY()
+                + 3 * (Math.pow(1 - pos, 2) - 2 * pos * (1 - pos))
+                * curve.getControlY1()
+                + 3 * ((1 - pos) * 2 * pos - pos * pos) * curve.getControlY2()
+                + 3 * Math.pow(pos, 2) * curve.getEndY();
 
         return new Point2D(x, y);
     }
 
+    /**
+     * Relationship type of the arrow
+     * <p>
+     * Can be unidirectionl, bidirectional or no arrow.
+     */
     public enum DirectionType {
         UNIDIRECTIONAL, BIDIRECTIONAL, NONE;
     }

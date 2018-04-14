@@ -5,7 +5,11 @@ import ch.adv.ui.core.presentation.widgets.Arrow;
 import ch.adv.ui.core.presentation.widgets.LabeledEdge;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.shape.CubicCurve;
 
+/**
+ * Curved Labeled Edge
+ */
 public class CurvedLabeledEdge extends LabeledEdge {
 
     private CurvePositon curvePositon;
@@ -31,8 +35,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
     @Override
     protected void setControlPoints(Point2D startPoint, Point2D endPoint) {
 
-        double startHeight = startNode.getBoundsInParent().getHeight();
-        double endHeight = endNode.getBoundsInParent().getHeight();
+        double startHeight = getStartNode().getBoundsInParent().getHeight();
+        double endHeight = getEndNode().getBoundsInParent().getHeight();
         double avgHeight = (startHeight + endHeight) / 2;
 
         Point2D mid = startPoint.midpoint(endPoint);
@@ -47,6 +51,7 @@ public class CurvedLabeledEdge extends LabeledEdge {
             default:
         }
 
+        CubicCurve curve = getCurve();
         curve.setControlX1(mid.getX());
         curve.setControlY1(y);
         curve.setControlX2(mid.getX());
@@ -70,6 +75,11 @@ public class CurvedLabeledEdge extends LabeledEdge {
         }
     }
 
+    /**
+     * Represents the position of the curve
+     * <p>
+     * Can be at the bottom or top of the element
+     */
     public enum CurvePositon {
         TOP, BOTTOM;
     }
