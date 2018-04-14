@@ -1,6 +1,7 @@
 package ch.adv.ui.core.presentation.widgets;
 
 import ch.adv.ui.core.domain.styles.ADVStyle;
+import ch.adv.ui.core.presentation.util.StyleConverter;
 import javafx.beans.Observable;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
@@ -13,8 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Generic component for an labeled edge with optional arrows.
@@ -24,11 +23,15 @@ import org.slf4j.LoggerFactory;
  * @author mwieland
  */
 public class LabeledEdge extends Group {
-    private static final Logger logger = LoggerFactory.getLogger(
-            LabeledEdge.class);
+
+    private final boolean directed;
+
     private final ADVStyle style;
     private final Node startNode;
     private final Node endNode;
+
+    private final Arrow startArrow;
+    private final Arrow endArrow;
 
     private final CubicCurve curve = new CubicCurve();
     private final Label label = new Label();
@@ -45,6 +48,10 @@ public class LabeledEdge extends Group {
         this.style = style;
         this.startNode = startNode;
         this.endNode = endNode;
+        this.directed = directed;
+
+        this.startArrow = new Arrow(curve, 0.0f);
+        this.endArrow = new Arrow(curve, 1.0f);
 
         // bind listener
         startCenter.addListener(this::updateCurvePoints);
@@ -55,24 +62,24 @@ public class LabeledEdge extends Group {
         endNode.boundsInParentProperty()
                 .addListener(this::computeEndCenterPoint);
 
-        initializeComponent(labelText, directed);
+        initializeComponent(labelText);
     }
 
-    public void initializeComponent(String labelText, boolean directed) {
+    public void initializeComponent(String labelText) {
         applyStyle();
         drawLabel(labelText);
-        if (directed) {
-            drawArrows();
-        }
 
         getChildren().addAll(curve, label);
+
+        if (directed) {
+            getChildren().addAll(startArrow, endArrow);
+        }
     }
 
 
     private void applyStyle() {
         curve.setStrokeWidth(style.getStrokeThickness());
-        // curve.setStroke(StyleConverter.getColor(style.getStrokeColor()));
-        curve.setStroke(Color.RED); //TODO: change back
+        curve.setStroke(StyleConverter.getColor(style.getStrokeColor()));
         curve.setFill(Color.TRANSPARENT);
         curve.setStrokeType(StrokeType.CENTERED);
     }
@@ -92,6 +99,8 @@ public class LabeledEdge extends Group {
                 curve.startYProperty(), curve.endYProperty());
 
         label.setText(labelText);
+        //TODO: replace with fill color
+        label.setTextFill(Color.BLACK);
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);
     }
@@ -101,9 +110,6 @@ public class LabeledEdge extends Group {
                 startNode.getBoundsInParent().getWidth() > 0) {
 
             Point2D center = computeCenter(startNode);
-            logger.debug("----computeStartCenter----");
-            logger.debug("startNode: " + endNode.getBoundsInParent());
-            logger.debug("startCenter: " + center);
             startCenter.set(center);
         }
     }
@@ -114,9 +120,6 @@ public class LabeledEdge extends Group {
                 endNode.getBoundsInParent().getWidth() > 0) {
 
             Point2D center = computeCenter(endNode);
-            logger.debug("----computeEndCenter----");
-            logger.debug("endNode: " + endNode.getBoundsInParent());
-            logger.debug("endCenter: " + center);
             endCenter.set(center);
         }
     }
@@ -131,39 +134,28 @@ public class LabeledEdge extends Group {
 
     private void updateCurvePoints(Observable o) {
         if (startCenter.get() != null && endCenter.get() != null) {
-            if (startNode.getBoundsInParent().getMinY() >= 0 && endNode
-                    .getBoundsInParent().getMinY() >= 0) {
-                logger.debug("----updateCurve----");
-                logger.debug("startNode vor: " + startNode.getBoundsInParent());
-                logger.debug("endNode vor: " + endNode.getBoundsInParent());
-                Point2D startIntersection = findIntersectionPoint(startNode,
-                        startCenter.get(),
-                        new Point2D(startCenter.get().getX(), startCenter.get()
-                                .getY() + startNode.getBoundsInParent()
-                                .getHeight()));
 
-                Point2D endIntersection = findIntersectionPoint(endNode,
-                        endCenter.get(),
-                        new Point2D(endCenter.get().getX(), endCenter.get()
-                                .getY() + endNode.getBoundsInParent()
-                                .getHeight()));
-                logger.debug("startNode: " + startNode.getBoundsInParent());
-                logger.debug("endNode: " + endNode.getBoundsInParent());
-                logger.debug("startIntersection: " + startIntersection);
-                logger.debug("endIntersection: " + endIntersection);
+            Point2D startIntersection = findIntersectionPoint(startNode,
+                    startCenter.get(),
+                    endCenter.get());
 
-                Point2D mid = startIntersection.midpoint(endIntersection);
+            Point2D endIntersection = findIntersectionPoint(endNode,
+                    endCenter.get(),
+                    startCenter.get());
 
-                curve.setStartX(startIntersection.getX());
-                curve.setStartY(startIntersection.getY());
-                curve.setEndX(endIntersection.getX());
-                curve.setEndY(endIntersection.getY());
-                curve.setControlY1(mid.getY() + 2 * startNode.getLayoutBounds()
-                        .getHeight());
-                curve.setControlX2(mid.getX());
-                curve.setControlY2(mid.getY() + 2 * startNode.getLayoutBounds()
-                        .getHeight());
+            Point2D mid = startIntersection.midpoint(endIntersection);
 
+            curve.setStartX(startIntersection.getX());
+            curve.setStartY(startIntersection.getY());
+            curve.setEndX(endIntersection.getX());
+            curve.setEndY(endIntersection.getY());
+            curve.setControlX1(mid.getX());
+            curve.setControlY1(mid.getY());
+            curve.setControlX2(mid.getX());
+            curve.setControlY2(mid.getY());
+
+            if (directed) {
+                drawArrows();
             }
         }
     }
@@ -179,7 +171,7 @@ public class LabeledEdge extends Group {
     private Point2D findIntersectionPoint(Node targetBounds,
                                           Point2D inside,
                                           Point2D outside) {
-        logger.debug("now");
+
         Point2D middle = outside.midpoint(inside);
 
         double deltaX = outside.getX() - inside.getX();
@@ -188,7 +180,7 @@ public class LabeledEdge extends Group {
         if (Math.hypot(deltaX, deltaY) < 1.) {
             return middle;
         } else {
-            if (targetBounds.contains(targetBounds.parentToLocal(middle))){
+            if (targetBounds.contains(targetBounds.parentToLocal(middle))) {
                 return findIntersectionPoint(targetBounds, middle, outside);
             } else {
                 return findIntersectionPoint(targetBounds, inside, middle);
@@ -197,6 +189,7 @@ public class LabeledEdge extends Group {
     }
 
     private void drawArrows() {
-        // TODO: draw arrow
+        startArrow.update();
+        endArrow.update();
     }
 }
