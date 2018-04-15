@@ -41,7 +41,7 @@ public class ArrayStringifyerTest {
 
         String[] lines = actual.split(System.getProperty("line.separator"));
         assertEquals("  \"snapshots\": [", lines[1]);
-        assertEquals(62, lines.length);
+        assertEquals(66, lines.length);
     }
 
 }
