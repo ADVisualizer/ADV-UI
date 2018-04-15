@@ -5,7 +5,6 @@ import ch.adv.ui.core.logic.ADVEvent;
 import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.RootViewModel;
-import ch.adv.ui.core.presentation.SessionView;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -20,7 +19,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * Holds state for the {@link SessionView}.
+ * Holds state for the {@link ch.adv.ui.core.presentation.SessionView}.
  */
 public class StateViewModel {
 

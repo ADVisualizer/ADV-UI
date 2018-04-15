@@ -24,7 +24,7 @@ public class StepButtonState {
      * @param forward  stepbutton
      * @param last     stepbutton
      */
-    void disableStepButtons(boolean first, boolean backward, boolean
+    protected void disableStepButtons(boolean first, boolean backward, boolean
             forward, boolean last) {
         stepFirstBtnDisableProperty.set(first);
         stepBackwardBtnDisableProperty.set(backward);

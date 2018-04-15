@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import java.util.Timer;
 
 /**
- * Handles replay logic for the {@link SessionView}.
+ * Handles replay logic for the {@link ch.adv.ui.core.presentation.SessionView}.
  */
 public class ReplayViewModel {
     private static final Logger logger = LoggerFactory.getLogger(

@@ -4,12 +4,11 @@ import ch.adv.ui.core.logic.ADVEvent;
 import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.Navigate;
-import ch.adv.ui.core.presentation.SessionView;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 
 /**
- * Handles stepping logic for the {@link SessionView}.
+ * Handles stepping logic for the {@link ch.adv.ui.core.presentation.SessionView}.
  */
 public class SteppingViewModel {
     private final EventManager eventManager;
