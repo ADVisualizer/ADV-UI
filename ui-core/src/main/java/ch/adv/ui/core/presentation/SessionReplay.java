@@ -29,6 +29,10 @@ public class SessionReplay extends TimerTask {
     @Inject
     public SessionReplay(@Assisted SessionViewModel sessionViewModel) {
         this.sessionViewModel = sessionViewModel;
+        if (sessionViewModel.getCurrentSnapshotIndex() == sessionViewModel
+                .getMaxSnapshotIndex()) {
+            sessionViewModel.navigateSnapshot(Navigate.FIRST);
+        }
     }
 
     /**

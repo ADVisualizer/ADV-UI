@@ -288,10 +288,6 @@ public class SessionViewModel {
         replayingProperty.set(true);
 
         if (currentReplayThread == null || currentReplayThread.isCanceled()) {
-            if (currentSnapshotIndex == maxSnapshotIndex) {
-                navigateSnapshot(Navigate.FIRST);
-            }
-
             this.currentReplayThread = sessionReplayFactory.create(this);
             Timer timer = new Timer();
             long timeout = replayController.getReplaySpeed() * HALF_SECOND_MS;
