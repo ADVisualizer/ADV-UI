@@ -34,4 +34,20 @@ public class ADVValueStyle implements ADVStyle {
     public int getStrokeThickness() {
         return strokeThickness;
     }
+
+    public void setFillColor(int fillColor) {
+        this.fillColor = fillColor;
+    }
+
+    public void setStrokeColor(int strokeColor) {
+        this.strokeColor = strokeColor;
+    }
+
+    public void setStrokeStyle(ADVStrokeStyle style) {
+        this.strokeStyle = style.getStyle();
+    }
+
+    public void setStrokeThickness(int strokeThickness) {
+        this.strokeThickness = strokeThickness;
+    }
 }
