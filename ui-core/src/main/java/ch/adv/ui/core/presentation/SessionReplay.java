@@ -1,5 +1,7 @@
 package ch.adv.ui.core.presentation;
 
+import ch.adv.ui.core.presentation.sessionviewmodel.StateViewModel;
+import ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModel;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import javafx.application.Platform;
@@ -18,32 +20,34 @@ public class SessionReplay extends TimerTask {
 
     private static final Logger logger = LoggerFactory
             .getLogger(SessionReplay.class);
-    private final SessionViewModel sessionViewModel;
+    private final StateViewModel stateViewModel;
+    private final SteppingViewModel steppingViewModel;
     private boolean isCanceled;
 
-    /**
-     * GraphSessionReplay.
-     *
-     * @param sessionViewModel sessionViewModel
-     */
+
+
     @Inject
-    public SessionReplay(@Assisted SessionViewModel sessionViewModel) {
-        this.sessionViewModel = sessionViewModel;
-        if (sessionViewModel.getCurrentSnapshotIndex() == sessionViewModel
+    public SessionReplay(@Assisted
+            StateViewModel stateViewModel, @Assisted
+                                 SteppingViewModel steppingViewModel) {
+        this.stateViewModel = stateViewModel;
+        this.steppingViewModel = steppingViewModel;
+        if (stateViewModel.getCurrentSnapshotIndex() == stateViewModel
                 .getMaxSnapshotIndex()) {
-            sessionViewModel.navigateSnapshot(Navigate.FIRST);
+            steppingViewModel.navigateSnapshot(Navigate.FIRST);
         }
     }
+
 
     /**
      * Executes the timer task.
      */
     public void run() {
         logger.debug("Session replay tick");
-        if (sessionViewModel.getCurrentSnapshotIndex() < sessionViewModel
+        if (stateViewModel.getCurrentSnapshotIndex() < stateViewModel
                 .getMaxSnapshotIndex()) {
             Platform.runLater(
-                    () -> sessionViewModel.navigateSnapshot(Navigate.FORWARD)
+                    () -> steppingViewModel.navigateSnapshot(Navigate.FORWARD)
             );
         } else {
             logger.info("Replay finished");
@@ -59,7 +63,7 @@ public class SessionReplay extends TimerTask {
      */
     public boolean cancelReplay() {
         Platform.runLater(
-                () -> sessionViewModel.isReplayingProperty().set(false)
+                () -> stateViewModel.getReplayingProperty().set(false)
         );
         return super.cancel();
     }
