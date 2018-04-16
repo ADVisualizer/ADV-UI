@@ -1,6 +1,10 @@
 package ch.adv.ui.core.presentation.sessionviewmodel;
 
-import ch.adv.ui.core.presentation.*;
+import ch.adv.ui.core.presentation.Navigate;
+import ch.adv.ui.core.presentation.ReplayController;
+import ch.adv.ui.core.presentation.SessionReplay;
+import ch.adv.ui.core.presentation.SessionReplayFactory;
+import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,20 +25,14 @@ public class ReplayViewModel {
     private SessionReplay currentReplayThread;
 
     @Inject
-    public ReplayViewModel(
-            SessionReplayFactory sessionReplayFactory,
-            ReplayController replayController) {
-        logger.debug("init replayViewModel");
+    public ReplayViewModel(SessionReplayFactory sessionReplayFactory,
+                           ReplayController replayController,
+                           @Assisted StateViewModel stateViewModel,
+                           @Assisted SteppingViewModel steppingViewModel) {
+
         this.sessionReplayFactory = sessionReplayFactory;
         this.replayController = replayController;
-    }
-
-
-    public void setStateViewModel(StateViewModel stateViewModel) {
         this.stateViewModel = stateViewModel;
-    }
-
-    public void setSteppingViewModel(SteppingViewModel steppingViewModel) {
         this.steppingViewModel = steppingViewModel;
     }
 
@@ -42,10 +40,6 @@ public class ReplayViewModel {
      * Stop the current replay and stay at the current snapshot
      */
     public void pauseReplay() {
-        if (stateViewModel == null || steppingViewModel == null) {
-            throw new IllegalArgumentException("StateViewModel or "
-                    + "SteppingViewModel not set");
-        }
         stateViewModel.getReplayingProperty().set(false);
         if (this.currentReplayThread != null) {
             currentReplayThread.cancel();
@@ -57,10 +51,6 @@ public class ReplayViewModel {
      * Start replaying the snapshots of this session.
      */
     public void replay() {
-        if (stateViewModel == null || steppingViewModel == null) {
-            throw new IllegalArgumentException("StateViewModel or "
-                    + "SteppingViewModel not set");
-        }
         logger.info("Replaying current session...");
         stateViewModel.getReplayingProperty().set(true);
 
@@ -79,10 +69,6 @@ public class ReplayViewModel {
      * Cancel the running replay and step to the first snapshot.
      */
     public void cancelReplay() {
-        if (stateViewModel == null || steppingViewModel == null) {
-            throw new IllegalArgumentException("StateViewModel or "
-                    + "SteppingViewModel not set");
-        }
         pauseReplay();
         steppingViewModel.navigateSnapshot(Navigate.FIRST);
     }

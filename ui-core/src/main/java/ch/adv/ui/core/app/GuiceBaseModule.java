@@ -2,6 +2,8 @@ package ch.adv.ui.core.app;
 
 
 import ch.adv.ui.core.presentation.SessionReplayFactory;
+import ch.adv.ui.core.presentation.sessionviewmodel.ReplayViewModelFactory;
+import ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModelFactory;
 import ch.adv.ui.core.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -16,9 +18,11 @@ public class GuiceBaseModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        install(new FactoryModuleBuilder()
-                .build(ADVConnectionFactory.class));
+        install(new FactoryModuleBuilder().build(ADVConnectionFactory.class));
         install(new FactoryModuleBuilder().build(SessionReplayFactory.class));
+        install(new FactoryModuleBuilder().build(ReplayViewModelFactory.class));
+        install(new FactoryModuleBuilder().build(
+                SteppingViewModelFactory.class));
 
     }
 }

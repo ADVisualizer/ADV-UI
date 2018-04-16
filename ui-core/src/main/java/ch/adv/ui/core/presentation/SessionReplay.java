@@ -23,13 +23,11 @@ public class SessionReplay extends TimerTask {
     private final StateViewModel stateViewModel;
     private final SteppingViewModel steppingViewModel;
     private boolean isCanceled;
-
-
-
+    
     @Inject
-    public SessionReplay(@Assisted
-            StateViewModel stateViewModel, @Assisted
-                                 SteppingViewModel steppingViewModel) {
+    public SessionReplay(@Assisted StateViewModel stateViewModel,
+                         @Assisted SteppingViewModel steppingViewModel) {
+
         this.stateViewModel = stateViewModel;
         this.steppingViewModel = steppingViewModel;
         if (stateViewModel.getCurrentSnapshotIndex() == stateViewModel

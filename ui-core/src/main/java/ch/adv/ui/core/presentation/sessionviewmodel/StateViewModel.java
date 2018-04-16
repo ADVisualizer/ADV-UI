@@ -31,7 +31,7 @@ public class StateViewModel {
     private final ObjectProperty<String> currentSnapshotDescriptionProperty =
             new SimpleObjectProperty<>();
     private final LayoutedSnapshotStore layoutedSnapshotStore;
-    private final BooleanProperty speedsliderDisableProperty = new
+    private final BooleanProperty speedSliderDisableProperty = new
             SimpleBooleanProperty();
     private final BooleanProperty replayingProperty = new
             SimpleBooleanProperty();
@@ -80,9 +80,9 @@ public class StateViewModel {
         replayingProperty.addListener((e, oldV, newV) -> {
             updateStepButtonDisabilities();
             if (newV) {
-                speedsliderDisableProperty.set(true);
+                speedSliderDisableProperty.set(true);
             } else {
-                speedsliderDisableProperty.set(false);
+                speedSliderDisableProperty.set(false);
             }
         });
 
@@ -173,8 +173,8 @@ public class StateViewModel {
         return replayingProperty;
     }
 
-    public BooleanProperty getSpeedsliderDisableProperty() {
-        return speedsliderDisableProperty;
+    public BooleanProperty getSpeedSliderDisableProperty() {
+        return speedSliderDisableProperty;
     }
 
     public FloatProperty getProgressProperty() {
@@ -187,10 +187,6 @@ public class StateViewModel {
 
     public StringProperty getMaxIndexStringProperty() {
         return maxIndexStringProperty;
-    }
-
-    public ObservableList<Pane> getAvailableSnapshotPanes() {
-        return availableSnapshotPanes;
     }
 
     public long getSessionId() {

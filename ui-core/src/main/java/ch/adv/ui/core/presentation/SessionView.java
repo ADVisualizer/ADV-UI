@@ -1,8 +1,6 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.presentation.sessionviewmodel.ReplayViewModel;
-import ch.adv.ui.core.presentation.sessionviewmodel.StateViewModel;
-import ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModel;
+import ch.adv.ui.core.presentation.sessionviewmodel.*;
 import ch.adv.ui.core.presentation.util.ReplaySliderStringConverter;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -62,19 +60,17 @@ public class SessionView {
     private ReplaySliderStringConverter replaySliderStringConverter;
 
     @Inject
-    public SessionView(SteppingViewModel steppingViewModel, ReplayViewModel
-            replayViewModel, StateViewModel stateViewModel,
-                       FontAwesomeIconView
-                               fontAwesomePauseView, final FontAwesomeIconView
-                               fontAwesomePlayView) {
+    public SessionView(SteppingViewModelFactory steppingViewModelFactory,
+                       ReplayViewModelFactory replayViewModelFactory,
+                       StateViewModel stateViewModel,
+                       FontAwesomeIconView fontAwesomePauseView,
+                       FontAwesomeIconView fontAwesomePlayView) {
 
-        this.steppingViewModel = steppingViewModel;
-        this.replayViewModel = replayViewModel;
         this.stateViewModel = stateViewModel;
-
-        steppingViewModel.setStateViewModel(stateViewModel);
-        replayViewModel.setStateViewModel(stateViewModel);
-        replayViewModel.setSteppingViewModel(steppingViewModel);
+        this.steppingViewModel = steppingViewModelFactory.create(
+                stateViewModel);
+        this.replayViewModel = replayViewModelFactory.create(
+                stateViewModel, steppingViewModel);
 
         this.pauseIcon = fontAwesomePauseView;
         pauseIcon.setIcon(FontAwesomeIcon.PAUSE);
@@ -97,7 +93,7 @@ public class SessionView {
         setTooltips();
 
         replaySpeedSlider.disableProperty().bind(stateViewModel
-                .getSpeedsliderDisableProperty());
+                .getSpeedSliderDisableProperty());
 
         replayController.getReplaySpeedProperty()
                 .bindBidirectional(replaySpeedSlider.valueProperty());
@@ -153,11 +149,13 @@ public class SessionView {
     }
 
     private void bindReplayIcons() {
-        this.cancelReplayButton.disableProperty().bind(stateViewModel
-                .getReplayingProperty().not());
-        stateViewModel.getReplayingProperty()
-                .addListener((ObservableValue<? extends Boolean> observable,
-                              Boolean oldValue, Boolean newValue) -> {
+        this.cancelReplayButton.disableProperty().bind(
+                stateViewModel.getReplayingProperty().not());
+
+        stateViewModel.getReplayingProperty().addListener(
+                (ObservableValue<? extends Boolean> observable,
+                 Boolean oldValue, Boolean newValue) -> {
+
                     if (newValue) {
                         replayButton.setGraphic(pauseIcon);
                         replayButton.setTooltip(I18n
@@ -182,8 +180,7 @@ public class SessionView {
     }
 
     private void setCurrentSnapshotAsContent() {
-        Pane currentSnapshot = stateViewModel
-                .getCurrentSnapshotPaneProperty()
+        Pane currentSnapshot = stateViewModel.getCurrentSnapshotPaneProperty()
                 .get();
         this.contentPane.getChildren().clear();
         this.contentPane.getChildren().add(currentSnapshot);

@@ -6,9 +6,11 @@ import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.Navigate;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
+import com.google.inject.assistedinject.Assisted;
 
 /**
- * Handles stepping logic for the {@link ch.adv.ui.core.presentation.SessionView}.
+ * Handles stepping logic for the
+ * {@link ch.adv.ui.core.presentation.SessionView}.
  */
 public class SteppingViewModel {
     private final EventManager eventManager;
@@ -16,16 +18,15 @@ public class SteppingViewModel {
     private StateViewModel stateViewModel;
 
     @Inject
-    public SteppingViewModel(LayoutedSnapshotStore
-                                     layoutedSnapshotStore, EventManager
-            eventManager) {
+    public SteppingViewModel(LayoutedSnapshotStore layoutedSnapshotStore,
+                             EventManager eventManager,
+                             @Assisted StateViewModel stateViewModel) {
+
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.eventManager = eventManager;
-    }
-
-    public void setStateViewModel(StateViewModel stateViewModel) {
         this.stateViewModel = stateViewModel;
     }
+
 
     /**
      * Navigate through a session by stepping forward, backward or to the
@@ -34,9 +35,6 @@ public class SteppingViewModel {
      * @param navigate direction to navigate
      */
     public void navigateSnapshot(Navigate navigate) {
-        if (stateViewModel == null) {
-            throw new IllegalArgumentException("StateViewModel not set");
-        }
         int oldIndex = stateViewModel.getCurrentSnapshotIndex();
         int newIndex;
 
