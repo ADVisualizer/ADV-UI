@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Holds all layouted snapshots on a Pane mapped to their sessionId. Fires
  * change event, if new snapshot arrives.
+ *
  * @author mtrentini
  */
 @Singleton
@@ -43,13 +44,14 @@ public class LayoutedSnapshotStore {
      */
     public void addLayoutedSnapshot(long sessionId, LayoutedSnapshot
             layoutedSnapshot) {
-        List<LayoutedSnapshot> snapshotList = snapshotMap.get(sessionId);
-        if (snapshotList == null) {
-            snapshotList = new ArrayList<>();
-            snapshotMap.put(sessionId, snapshotList);
+        List<LayoutedSnapshot> layoutedSnapshotList =
+                snapshotMap.get(sessionId);
+        if (layoutedSnapshotList == null) {
+            layoutedSnapshotList = new ArrayList<>();
+            snapshotMap.put(sessionId, layoutedSnapshotList);
         }
-        if (!snapshotList.contains(layoutedSnapshot)) {
-            snapshotList.add(layoutedSnapshot);
+        if (!layoutedSnapshotList.contains(layoutedSnapshot)) {
+            layoutedSnapshotList.add(layoutedSnapshot);
         }
         logger.debug("Fire change event");
         eventManager.fire(ADVEvent.SNAPSHOT_ADDED, null, layoutedSnapshot,
