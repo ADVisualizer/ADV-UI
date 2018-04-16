@@ -30,9 +30,11 @@ public class LabeledNode extends ADVNode {
             SimpleObjectProperty<>();
     private final ObjectProperty<Border> borderProperty = new
             SimpleObjectProperty<>();
+    private final boolean isRoundedDown;
 
     private Paint backgroundColor = Color.BLACK;
-    private boolean isRoundedDown;
+    private ConnectorType connectorTypeOutgoing = ConnectorType.DIRECT;
+    private ConnectorType connectorTypeIncoming = ConnectorType.DIRECT;
 
     public LabeledNode(String labelText) {
         this(labelText, false);
@@ -187,11 +189,19 @@ public class LabeledNode extends ADVNode {
 
     @Override
     public ConnectorType getConnectorTypeOutgoing() {
-        return ConnectorType.BOTTOM;
+        return connectorTypeOutgoing;
+    }
+
+    public void setConnectorTypeOutgoing(ConnectorType type) {
+        this.connectorTypeOutgoing = type;
     }
 
     @Override
-    public ConnectorType getConnectorTypeIngoing() {
-        return ConnectorType.BOTTOM;
+    public ConnectorType getConnectorTypeIncoming() {
+        return connectorTypeIncoming;
+    }
+
+    public void setConnectorTypeIncoming(ConnectorType type) {
+        this.connectorTypeIncoming = type;
     }
 }

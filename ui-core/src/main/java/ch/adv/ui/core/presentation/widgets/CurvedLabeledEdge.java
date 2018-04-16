@@ -3,11 +3,16 @@ package ch.adv.ui.core.presentation.widgets;
 import ch.adv.ui.core.domain.styles.ADVStyle;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.CubicCurve;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Curved Labeled Edge
  */
 public class CurvedLabeledEdge extends LabeledEdge {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            CurvedLabeledEdge.class);
 
     public CurvedLabeledEdge(String labelText,
                              ADVNode startNode,
@@ -35,20 +40,51 @@ public class CurvedLabeledEdge extends LabeledEdge {
 
         Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
         double y = mid.getY();
+        double x = mid.getX();
 
-        switch (getStartNode().getConnectorTypeIngoing()) {
-            case TOP:
-                y -= avgHeight;
-                break;
-            case BOTTOM:
-                y += avgHeight;
-                break;
-            default:
+        if ((getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.BOTTOM)
+                || getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.LEFT))
+                && (getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.LEFT)
+                || getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.BOTTOM))) {
+            x -= avgHeight;
+            y += avgHeight;
+        } else if ((getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.TOP)
+                || getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.RIGHT))
+                && (getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.RIGHT)
+                || getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.TOP))) {
+            x += avgHeight;
+            y -= avgHeight;
+        } else if ((getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.TOP)
+                || getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.TOP))
+                && (getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.TOP)
+                || getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.TOP))) {
+            y -= avgHeight;
+        } else if ((getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.BOTTOM)
+                || getStartNode().getConnectorTypeOutgoing()
+                .equals(ConnectorType.BOTTOM))
+                && (getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.BOTTOM)
+                || getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.BOTTOM))) {
+            y += avgHeight;
         }
 
-        curve.setControlX1(mid.getX());
+        curve.setControlX1(x);
         curve.setControlY1(y);
-        curve.setControlX2(mid.getX());
+        curve.setControlX2(x);
         curve.setControlY2(y);
     }
 

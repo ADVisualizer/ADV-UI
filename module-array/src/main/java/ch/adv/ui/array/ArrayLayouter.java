@@ -61,6 +61,8 @@ public class ArrayLayouter implements Layouter {
             node.setBackgroundColor(StyleConverter
                     .getColor(style.getFillColor()));
             node.setFontColor(Color.WHITE);
+            node.setConnectorTypeOutgoing(ConnectorType.BOTTOM);
+            node.setConnectorTypeIncoming(ConnectorType.LEFT);
 
             node.setBorder(style.getStrokeThickness(),
                     StyleConverter.getColor(style.getStrokeColor()),

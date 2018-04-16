@@ -128,7 +128,7 @@ public class LabeledEdge extends Group {
                     startNode.getConnectorTypeOutgoing());
 
             Point2D endConnectorPoint = getConnectorPoint(endNode,
-                    endNode.getConnectorTypeIngoing());
+                    endNode.getConnectorTypeIncoming());
 
             curve.setStartX(startConnectorPoint.getX());
             curve.setStartY(startConnectorPoint.getY());
@@ -232,19 +232,19 @@ public class LabeledEdge extends Group {
     /**
      * Sets the control points of the curve
      *
-     * @param curve                  curve
+     * @param respectiveCurve        curve
      * @param startIntersectionPoint calculated intersection point
      * @param endIntersectionPoint   calculated intersection point
      */
-    protected void setControlPoints(CubicCurve curve,
+    protected void setControlPoints(CubicCurve respectiveCurve,
                                     Point2D startIntersectionPoint,
                                     Point2D endIntersectionPoint) {
         // straight line
         Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
-        curve.setControlX1(mid.getX());
-        curve.setControlY1(mid.getY());
-        curve.setControlX2(mid.getX());
-        curve.setControlY2(mid.getY());
+        respectiveCurve.setControlX1(mid.getX());
+        respectiveCurve.setControlY1(mid.getY());
+        respectiveCurve.setControlX2(mid.getX());
+        respectiveCurve.setControlY2(mid.getY());
     }
 
     protected ADVNode getStartNode() {
