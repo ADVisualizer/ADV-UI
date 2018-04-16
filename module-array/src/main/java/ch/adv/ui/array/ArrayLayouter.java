@@ -6,6 +6,7 @@ import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import ch.adv.ui.core.presentation.util.StyleConverter;
 import ch.adv.ui.core.presentation.widgets.AutoScalePane;
+import ch.adv.ui.core.presentation.widgets.CurvedLabeledEdge;
 import ch.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;

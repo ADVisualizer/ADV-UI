@@ -1,8 +1,6 @@
-package ch.adv.ui.array;
+package ch.adv.ui.core.presentation.widgets;
 
 import ch.adv.ui.core.domain.styles.ADVStyle;
-import ch.adv.ui.core.presentation.widgets.Arrow;
-import ch.adv.ui.core.presentation.widgets.LabeledEdge;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.shape.CubicCurve;
@@ -33,13 +31,15 @@ public class CurvedLabeledEdge extends LabeledEdge {
     }
 
     @Override
-    protected void setControlPoints(Point2D startPoint, Point2D endPoint) {
+    protected void setControlPoints(CubicCurve curve,
+                                    Point2D startIntersectionPoint,
+                                    Point2D endIntersectionPoint) {
 
         double startHeight = getStartNode().getBoundsInParent().getHeight();
         double endHeight = getEndNode().getBoundsInParent().getHeight();
         double avgHeight = (startHeight + endHeight) / 2;
 
-        Point2D mid = startPoint.midpoint(endPoint);
+        Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
         double y = mid.getY();
         switch (curvePositon) {
             case TOP:
@@ -51,7 +51,6 @@ public class CurvedLabeledEdge extends LabeledEdge {
             default:
         }
 
-        CubicCurve curve = getCurve();
         curve.setControlX1(mid.getX());
         curve.setControlY1(y);
         curve.setControlX2(mid.getX());

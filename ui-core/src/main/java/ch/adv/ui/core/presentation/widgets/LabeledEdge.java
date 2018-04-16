@@ -176,7 +176,7 @@ public class LabeledEdge extends Group {
             curve.setEndX(endIntersection.getX());
             curve.setEndY(endIntersection.getY());
 
-            setControlPoints(startIntersection, endIntersection);
+            setControlPoints(curve, startIntersection, endIntersection);
 
             switch (directionType) {
                 case BIDIRECTIONAL:
@@ -193,15 +193,19 @@ public class LabeledEdge extends Group {
         }
     }
 
+
     /**
      * Sets the control points of the curve
      *
-     * @param start    curve start
-     * @param endPoint curve end
+     * @param curve                  curve
+     * @param startIntersectionPoint calculated intersection point
+     * @param endIntersectionPoint   calculated intersection point
      */
-    protected void setControlPoints(Point2D start, Point2D endPoint) {
+    protected void setControlPoints(CubicCurve curve,
+                                    Point2D startIntersectionPoint,
+                                    Point2D endIntersectionPoint) {
         // straight line
-        Point2D mid = start.midpoint(endPoint);
+        Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
         curve.setControlX1(mid.getX());
         curve.setControlY1(mid.getY());
         curve.setControlX2(mid.getX());
@@ -242,9 +246,5 @@ public class LabeledEdge extends Group {
 
     protected Node getEndNode() {
         return endNode;
-    }
-
-    protected CubicCurve getCurve() {
-        return curve;
     }
 }

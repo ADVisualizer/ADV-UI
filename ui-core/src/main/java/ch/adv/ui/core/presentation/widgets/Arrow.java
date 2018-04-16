@@ -19,7 +19,6 @@ public class Arrow extends Polygon {
     private float pos;
     private CubicCurve curve;
 
-
     /**
      * @param curve              cubic curve
      * @param relativePosOnCurve pos between 0 (start) and 1 (end)

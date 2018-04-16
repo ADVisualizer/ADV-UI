@@ -4,7 +4,9 @@ package ch.adv.ui.core.presentation.widgets;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -15,14 +17,17 @@ import javafx.scene.paint.Paint;
  *
  * @author mtrentini
  */
-public class LabeledNode extends StackPane {
-    private static final int PADDING = 5;
+public class LabeledNode extends ADVNode {
+
+    private static final int LABEL_PADDING = 5;
+
+    private final Label label = new Label();
+
     private final ObjectProperty<Background> backgroundProperty = new
             SimpleObjectProperty<>();
     private final ObjectProperty<Border> borderProperty = new
             SimpleObjectProperty<>();
-    private Region region = new Region();
-    private Label label = new Label();
+
     private Paint backgroundColor = Color.BLACK;
     private boolean isRoundedDown;
 
@@ -38,32 +43,36 @@ public class LabeledNode extends StackPane {
      */
     public LabeledNode(String labelText, boolean isRoundedDown) {
         this.isRoundedDown = isRoundedDown;
+
         setBindings();
-        label.setPadding(new Insets(PADDING));
+
+        label.setPadding(new Insets(LABEL_PADDING));
         label.setText(labelText);
-        getChildren().addAll(region, label);
+        getChildren().addAll(label);
     }
 
     private void setBindings() {
-        //set default
-        backgroundProperty
-                .setValue(new Background(new BackgroundFill(backgroundColor,
+        backgroundProperty.setValue(
+                new Background(new BackgroundFill(backgroundColor,
                         CornerRadii.EMPTY, Insets.EMPTY)));
-        borderProperty
-                .setValue(new Border(new BorderStroke(Color.BLACK,
-                        BorderStrokeStyle.NONE, cornerRadii(), BorderWidths
-                        .DEFAULT, Insets.EMPTY)));
 
-        this.widthProperty().addListener(this::changeBackground);
-        region.backgroundProperty().addListener(this::changeBackground);
-        region.borderProperty().addListener(this::changeBackground);
-        region.backgroundProperty().bind(backgroundProperty);
-        region.borderProperty().bind(borderProperty);
+        borderProperty.setValue(createBorder(BorderWidths.DEFAULT
+                .getTop(), Color.BLACK, BorderStrokeStyle.NONE));
+
+        borderProperty.setValue(new Border(
+                new BorderStroke(Color.BLACK, BorderStrokeStyle.NONE,
+                        cornerRadii(), BorderWidths.DEFAULT, Insets.EMPTY)));
+
+        backgroundProperty().bind(backgroundProperty);
+        borderProperty().bind(borderProperty);
+
+        boundsInParentProperty().addListener(this::changeBackground);
     }
 
     private CornerRadii cornerRadii() {
         if (isRoundedDown) {
-            return new CornerRadii(this.widthProperty().get() / 2);
+            double radius = getBoundsInParent().getWidth() / 2;
+            return new CornerRadii(radius);
         } else {
             return CornerRadii.EMPTY;
         }
@@ -75,12 +84,11 @@ public class LabeledNode extends StackPane {
         BackgroundFill fill = new BackgroundFill(backgroundColor,
                 cornerRadii(), Insets.EMPTY);
         backgroundProperty.setValue(new Background(fill));
-        BorderStroke borderStroke = borderProperty.get()
-                .getStrokes().get(0);
+        BorderStroke borderStroke = borderProperty.get().getStrokes().get(0);
         Paint color = borderStroke.getTopStroke();
-        Border border = new Border(new BorderStroke(color,
-                borderStroke.getTopStyle(), cornerRadii(), borderStroke
-                .getWidths(), Insets.EMPTY));
+        double width = borderStroke.getWidths().getTop();
+        BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
+        Border border = createBorder(width, color, strokeStyle);
         borderProperty.setValue(border);
     }
 
@@ -127,11 +135,40 @@ public class LabeledNode extends StackPane {
      * @param color       of the border
      * @param strokeStyle of the border
      */
-    public void setBorder(double width, Paint color, BorderStrokeStyle
-            strokeStyle) {
-        borderProperty
-                .setValue(new Border(new BorderStroke(color, strokeStyle,
-                        CornerRadii.EMPTY, new BorderWidths(width),
-                        new Insets(-1))));
+    public void setBorder(double width, Paint color,
+                          BorderStrokeStyle strokeStyle) {
+        borderProperty.setValue(createBorder(width, color, strokeStyle));
+    }
+
+    private Border createBorder(double width, Paint color,
+                                BorderStrokeStyle strokeStyle) {
+        return new Border(new BorderStroke(color, strokeStyle, cornerRadii(),
+                new BorderWidths(width), Insets.EMPTY));
+    }
+
+    @Override
+    protected void layoutChildren() {
+        final double nodeWidth = getWidth();
+        final double nodeHeight = getHeight();
+        final double insetTop = getInsets().getTop();
+        final double insetRight = getInsets().getRight();
+        final double insetLeft = getInsets().getLeft();
+        final double insertBottom = getInsets().getBottom();
+
+        final double contentWidth = (nodeWidth - insetLeft - insetRight);
+        final double contentHeight = (nodeHeight - insetTop - insertBottom);
+
+        layoutInArea(label, insetLeft, insetTop, contentWidth, contentHeight,
+                getBaselineOffset(), HPos.CENTER, VPos.CENTER);
+    }
+
+    @Override
+    public ConnectorPoint getConnectorPointOutgoing() {
+        return null;
+    }
+
+    @Override
+    public ConnectorPoint getConnectorPointIngoing() {
+        return null;
     }
 }
