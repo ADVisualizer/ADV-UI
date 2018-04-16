@@ -9,7 +9,9 @@ import java.util.Arrays;
 
 
 /**
- * Represents an ArrowHead at a arbitrary position on the curve
+ * Represents an arrow head at a arbitrary position on the curve
+ * <p>
+ * In most cases, the relativePositionOnCurve the curve will be 0 or 1.
  */
 public class Arrow extends Polygon {
 

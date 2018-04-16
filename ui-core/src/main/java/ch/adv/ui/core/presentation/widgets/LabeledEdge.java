@@ -123,12 +123,12 @@ public class LabeledEdge extends Group {
     private void drawCurve(Observable o) {
         if (startNode.getCenter() != null && endNode.getCenter() != null) {
 
+            // start and end connector point
             Point2D startConnectorPoint = getConnectorPoint(startNode,
                     startNode.getConnectorTypeOutgoing());
 
-            Point2D endConnectorPoint = getConnectorPoint(startNode,
+            Point2D endConnectorPoint = getConnectorPoint(endNode,
                     endNode.getConnectorTypeIngoing());
-
 
             curve.setStartX(startConnectorPoint.getX());
             curve.setStartY(startConnectorPoint.getY());

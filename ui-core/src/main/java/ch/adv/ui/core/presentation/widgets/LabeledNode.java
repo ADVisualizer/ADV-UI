@@ -166,21 +166,13 @@ public class LabeledNode extends ADVNode {
                 getBaselineOffset(), HPos.CENTER, VPos.CENTER);
     }
 
-    private void computeStartCenterPoint(Observable o) {
-        if (getBoundsInParent().getHeight() > 0
-                && getBoundsInParent().getWidth() > 0) {
-
-            Point2D center = computeCenter();
-            centerProperty().set(center);
-        }
-    }
-
-    private Point2D computeCenter() {
+    private void computeCenter() {
         double centerX = getBoundsInParent().getMinX()
                 + getBoundsInParent().getWidth() / 2;
         double centerY = getBoundsInParent().getMinY()
                 + getBoundsInParent().getHeight() / 2;
-        return new Point2D(centerX, centerY);
+
+        centerProperty.set(new Point2D(centerX, centerY));
     }
 
     @Override
@@ -195,11 +187,11 @@ public class LabeledNode extends ADVNode {
 
     @Override
     public ConnectorType getConnectorTypeOutgoing() {
-        return null;
+        return ConnectorType.BOTTOM;
     }
 
     @Override
     public ConnectorType getConnectorTypeIngoing() {
-        return null;
+        return ConnectorType.BOTTOM;
     }
 }

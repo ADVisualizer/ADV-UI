@@ -6,6 +6,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.layout.Region;
 
 
+/**
+ * Base class for all ADV widget nodes
+ */
 public abstract class ADVNode extends Region {
 
     abstract ConnectorType getConnectorTypeOutgoing();
