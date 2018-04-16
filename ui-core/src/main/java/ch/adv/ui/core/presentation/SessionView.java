@@ -1,5 +1,6 @@
 package ch.adv.ui.core.presentation;
 
+import ch.adv.ui.core.presentation.sessionviewmodel.*;
 import ch.adv.ui.core.presentation.util.ReplaySliderStringConverter;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -15,16 +16,18 @@ import javax.inject.Inject;
 
 /**
  * The JavaFX Controller class for session-view.fxml. Initializes the view
- * and holds bindings to the {@link SessionViewModel}.
+ * and holds bindings to the {@link StateViewModel}.
  */
 public class SessionView {
 
     private static final double NO_MARGIN_ANCHOR = 0.0;
     private static final Logger logger = LoggerFactory.getLogger(SessionView
             .class);
-    private final SessionViewModel sessionViewModel;
     private final FontAwesomeIconView pauseIcon;
     private final FontAwesomeIconView playIcon;
+    private final SteppingViewModel steppingViewModel;
+    private final ReplayViewModel replayViewModel;
+    private final StateViewModel stateViewModel;
     @FXML
     private Button replayButton;
     @FXML
@@ -57,11 +60,17 @@ public class SessionView {
     private ReplaySliderStringConverter replaySliderStringConverter;
 
     @Inject
-    public SessionView(final SessionViewModel sessionViewModel,
-                       FontAwesomeIconView
-                               fontAwesomePauseView, final FontAwesomeIconView
-                               fontAwesomePlayView) {
-        this.sessionViewModel = sessionViewModel;
+    public SessionView(SteppingViewModelFactory steppingViewModelFactory,
+                       ReplayViewModelFactory replayViewModelFactory,
+                       StateViewModel stateViewModel,
+                       FontAwesomeIconView fontAwesomePauseView,
+                       FontAwesomeIconView fontAwesomePlayView) {
+
+        this.stateViewModel = stateViewModel;
+        this.steppingViewModel = steppingViewModelFactory.create(
+                stateViewModel);
+        this.replayViewModel = replayViewModelFactory.create(
+                stateViewModel, steppingViewModel);
 
         this.pauseIcon = fontAwesomePauseView;
         pauseIcon.setIcon(FontAwesomeIcon.PAUSE);
@@ -83,8 +92,8 @@ public class SessionView {
         bindI18nStrings();
         setTooltips();
 
-        replaySpeedSlider.disableProperty().bind(sessionViewModel
-                .getSpeedsliderDisableProperty());
+        replaySpeedSlider.disableProperty().bind(stateViewModel
+                .getSpeedSliderDisableProperty());
 
         replayController.getReplaySpeedProperty()
                 .bindBidirectional(replaySpeedSlider.valueProperty());
@@ -93,20 +102,20 @@ public class SessionView {
         I18n.localeProperty().addListener((e, o, n) -> replaySpeedSlider
                 .setLabelFormatter(new ReplaySliderStringConverter()));
 
-        stepProgressBar.progressProperty().bind(sessionViewModel
+        stepProgressBar.progressProperty().bind(stateViewModel
                 .getProgressProperty());
 
-        currentIndex.textProperty().bind(sessionViewModel
+        currentIndex.textProperty().bind(stateViewModel
                 .getCurrentIndexStringProperty());
-        maxIndex.textProperty().bind(sessionViewModel
+        maxIndex.textProperty().bind(stateViewModel
                 .getMaxIndexStringProperty());
 
         setCurrentSnapshotAsContent();
-        sessionViewModel.getCurrentSnapshotPaneProperty().addListener(
+        stateViewModel.getCurrentSnapshotPaneProperty().addListener(
                 (event, oldV, newV) -> setCurrentSnapshotAsContent());
 
         this.snapshotDescription.textProperty()
-                .bindBidirectional(sessionViewModel
+                .bindBidirectional(stateViewModel
                         .getCurrentSnapshotDescriptionProperty());
     }
 
@@ -140,11 +149,13 @@ public class SessionView {
     }
 
     private void bindReplayIcons() {
-        this.cancelReplayButton.disableProperty().bind(sessionViewModel
-                .isReplayingProperty().not());
-        sessionViewModel.isReplayingProperty()
-                .addListener((ObservableValue<? extends Boolean> observable,
-                              Boolean oldValue, Boolean newValue) -> {
+        this.cancelReplayButton.disableProperty().bind(
+                stateViewModel.getReplayingProperty().not());
+
+        stateViewModel.getReplayingProperty().addListener(
+                (ObservableValue<? extends Boolean> observable,
+                 Boolean oldValue, Boolean newValue) -> {
+
                     if (newValue) {
                         replayButton.setGraphic(pauseIcon);
                         replayButton.setTooltip(I18n
@@ -158,19 +169,18 @@ public class SessionView {
     }
 
     private void bindButtonDisableProperties() {
-        stepFirstButton.disableProperty().bind(sessionViewModel
-                .getStepFirstBtnDisableProperty());
-        stepBackwardButton.disableProperty().bind(sessionViewModel
-                .getStepBackwardBtnDisableProperty());
-        stepForwardButton.disableProperty().bind(sessionViewModel
-                .getStepForwardBtnDisableProperty());
-        stepLastButton.disableProperty().bind(sessionViewModel
-                .getStepLastBtnDisableProperty());
+        stepFirstButton.disableProperty().bind(stateViewModel
+                .getStepButtonState().getStepFirstBtnDisableProperty());
+        stepBackwardButton.disableProperty().bind(stateViewModel
+                .getStepButtonState().getStepBackwardBtnDisableProperty());
+        stepForwardButton.disableProperty().bind(stateViewModel
+                .getStepButtonState().getStepForwardBtnDisableProperty());
+        stepLastButton.disableProperty().bind(stateViewModel
+                .getStepButtonState().getStepLastBtnDisableProperty());
     }
 
     private void setCurrentSnapshotAsContent() {
-        Pane currentSnapshot = sessionViewModel
-                .getCurrentSnapshotPaneProperty()
+        Pane currentSnapshot = stateViewModel.getCurrentSnapshotPaneProperty()
                 .get();
         this.contentPane.getChildren().clear();
         this.contentPane.getChildren().add(currentSnapshot);
@@ -185,31 +195,31 @@ public class SessionView {
     }
 
     private void handleReplayButtonClicked() {
-        if (sessionViewModel.isReplayingProperty().get()) {
-            sessionViewModel.pauseReplay();
+        if (stateViewModel.getReplayingProperty().get()) {
+            replayViewModel.pauseReplay();
         } else {
-            sessionViewModel.replay();
+            replayViewModel.replay();
         }
     }
 
     private void handleCancelReplayButtonClicked() {
-        sessionViewModel.cancelReplay();
+        replayViewModel.cancelReplay();
     }
 
     private void handleStepFirstButtonClicked() {
-        sessionViewModel.navigateSnapshot(Navigate.FIRST);
+        steppingViewModel.navigateSnapshot(Navigate.FIRST);
     }
 
     private void handleStepBackwardButtonClicked() {
-        sessionViewModel.navigateSnapshot(Navigate.BACKWARD);
+        steppingViewModel.navigateSnapshot(Navigate.BACKWARD);
     }
 
     private void handleStepForwardButtonClicked() {
-        sessionViewModel.navigateSnapshot(Navigate.FORWARD);
+        steppingViewModel.navigateSnapshot(Navigate.FORWARD);
     }
 
     private void handleStepLastButtonClicked() {
-        sessionViewModel.navigateSnapshot(Navigate.LAST);
+        steppingViewModel.navigateSnapshot(Navigate.LAST);
     }
 
 }
