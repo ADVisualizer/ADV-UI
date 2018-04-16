@@ -2,7 +2,6 @@ package ch.adv.ui.core.presentation.widgets;
 
 import ch.adv.ui.core.domain.styles.ADVStyle;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.shape.CubicCurve;
 
 /**
@@ -10,24 +9,19 @@ import javafx.scene.shape.CubicCurve;
  */
 public class CurvedLabeledEdge extends LabeledEdge {
 
-    private CurvePositon curvePositon;
-
-    public CurvedLabeledEdge(String labelText, Node startNode, Node endNode,
+    public CurvedLabeledEdge(String labelText,
+                             ADVNode startNode,
+                             ADVNode endNode,
                              ADVStyle style) {
-        this(labelText, startNode, endNode, style, CurvePositon.TOP);
-    }
 
-    public CurvedLabeledEdge(String labelText, Node startNode, Node endNode,
-                             ADVStyle style, CurvePositon curvePositon) {
         super(labelText, startNode, endNode, style);
-        this.curvePositon = curvePositon;
     }
 
-    public CurvedLabeledEdge(String labelText, Node startNode, Node endNode,
-                             ADVStyle style, Arrow.DirectionType directionType,
-                             CurvePositon curvePositon) {
+    public CurvedLabeledEdge(String labelText, ADVNode startNode,
+                             ADVNode endNode, ADVStyle style,
+                             Arrow.DirectionType directionType) {
+
         super(labelText, startNode, endNode, style, directionType);
-        this.curvePositon = curvePositon;
     }
 
     @Override
@@ -41,7 +35,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
 
         Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
         double y = mid.getY();
-        switch (curvePositon) {
+
+        switch (getStartNode().getConnectorTypeIngoing()) {
             case TOP:
                 y -= avgHeight;
                 break;
@@ -57,29 +52,4 @@ public class CurvedLabeledEdge extends LabeledEdge {
         curve.setControlY2(y);
     }
 
-    @Override
-    protected Point2D findIntersectionPoint(Node targetBounds,
-                                            Point2D inside,
-                                            Point2D outside) {
-        double y = inside.getY();
-        switch (curvePositon) {
-            case TOP:
-                y -= targetBounds.getBoundsInParent().getHeight() / 2;
-                return new Point2D(inside.getX(), y);
-            case BOTTOM:
-                y += targetBounds.getBoundsInParent().getHeight() / 2;
-                return new Point2D(inside.getX(), y);
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * Represents the position of the curve
-     * <p>
-     * Can be at the bottom or top of the element
-     */
-    public enum CurvePositon {
-        TOP, BOTTOM;
-    }
 }

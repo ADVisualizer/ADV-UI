@@ -5,12 +5,8 @@ import ch.adv.ui.core.domain.styles.ADVStyle;
 import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import ch.adv.ui.core.presentation.util.StyleConverter;
-import ch.adv.ui.core.presentation.widgets.AutoScalePane;
-import ch.adv.ui.core.presentation.widgets.CurvedLabeledEdge;
-import ch.adv.ui.core.presentation.widgets.LabeledEdge;
-import ch.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.adv.ui.core.presentation.widgets.*;
 import com.google.inject.Singleton;
-import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
@@ -33,7 +29,7 @@ public class ArrayLayouter implements Layouter {
     public LayoutedSnapshot layout(Snapshot snapshot) {
         AutoScalePane scalePane = new AutoScalePane();
 
-        Map<Long, Node> nodeMap = drawElements(snapshot, scalePane);
+        Map<Long, ADVNode> nodeMap = drawElements(snapshot, scalePane);
         drawRelations(snapshot, scalePane, nodeMap);
 
         return createLayoutedSnapshot(snapshot, scalePane);
@@ -50,10 +46,10 @@ public class ArrayLayouter implements Layouter {
         return layoutedSnapshot;
     }
 
-    private Map<Long, Node> drawElements(Snapshot snapshot, AutoScalePane
-            scalePane) {
-        Map<Long, Node> nodeMap = new HashMap<>();
+    private Map<Long, ADVNode> drawElements(Snapshot snapshot,
+                                            AutoScalePane scalePane) {
 
+        Map<Long, ADVNode> nodeMap = new HashMap<>();
         HBox container = new HBox();
         snapshot.getElements().forEach(e -> {
             ArrayElement arrElement = (ArrayElement) e;
@@ -91,11 +87,11 @@ public class ArrayLayouter implements Layouter {
     }
 
     private void drawRelations(Snapshot snapshot, AutoScalePane scalePane,
-                               Map<Long, Node> nodeMap) {
+                               Map<Long, ADVNode> nodeMap) {
         snapshot.getRelations().forEach(r -> {
 
-            Node sourceNode = nodeMap.get(r.getSourceElementId());
-            Node endNode = nodeMap.get(r.getTargetElementId());
+            ADVNode sourceNode = nodeMap.get(r.getSourceElementId());
+            ADVNode endNode = nodeMap.get(r.getTargetElementId());
 
             if (sourceNode != null && endNode != null) {
 

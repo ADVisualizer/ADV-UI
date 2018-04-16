@@ -1,12 +1,19 @@
 package ch.adv.ui.core.presentation.widgets;
 
 
+import javafx.beans.property.ObjectProperty;
+import javafx.geometry.Point2D;
 import javafx.scene.layout.Region;
+
 
 public abstract class ADVNode extends Region {
 
-    abstract ConnectorPoint getConnectorPointOutgoing();
+    abstract ConnectorType getConnectorTypeOutgoing();
 
-    abstract ConnectorPoint getConnectorPointIngoing();
+    abstract ConnectorType getConnectorTypeIngoing();
+
+    abstract Point2D getCenter();
+
+    abstract ObjectProperty<Point2D> centerProperty();
 
 }

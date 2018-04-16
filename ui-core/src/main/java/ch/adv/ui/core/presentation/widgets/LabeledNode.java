@@ -1,11 +1,12 @@
 package ch.adv.ui.core.presentation.widgets;
 
 
+import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -23,6 +24,8 @@ public class LabeledNode extends ADVNode {
 
     private final Label label = new Label();
 
+    private final ObjectProperty<Point2D> centerProperty = new
+            SimpleObjectProperty<>();
     private final ObjectProperty<Background> backgroundProperty = new
             SimpleObjectProperty<>();
     private final ObjectProperty<Border> borderProperty = new
@@ -66,7 +69,7 @@ public class LabeledNode extends ADVNode {
         backgroundProperty().bind(backgroundProperty);
         borderProperty().bind(borderProperty);
 
-        boundsInParentProperty().addListener(this::changeBackground);
+        boundsInParentProperty().addListener(this::handleBoundsChanged);
     }
 
     private CornerRadii cornerRadii() {
@@ -78,9 +81,8 @@ public class LabeledNode extends ADVNode {
         }
     }
 
-    private void changeBackground(ObservableValue<? extends Object> observable,
-                                  Object oldValue,
-                                  Object newValue) {
+    private void handleBoundsChanged(Observable o) {
+
         BackgroundFill fill = new BackgroundFill(backgroundColor,
                 cornerRadii(), Insets.EMPTY);
         backgroundProperty.setValue(new Background(fill));
@@ -90,6 +92,8 @@ public class LabeledNode extends ADVNode {
         BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
         Border border = createBorder(width, color, strokeStyle);
         borderProperty.setValue(border);
+
+        computeCenter();
     }
 
     /**
@@ -162,13 +166,40 @@ public class LabeledNode extends ADVNode {
                 getBaselineOffset(), HPos.CENTER, VPos.CENTER);
     }
 
+    private void computeStartCenterPoint(Observable o) {
+        if (getBoundsInParent().getHeight() > 0
+                && getBoundsInParent().getWidth() > 0) {
+
+            Point2D center = computeCenter();
+            centerProperty().set(center);
+        }
+    }
+
+    private Point2D computeCenter() {
+        double centerX = getBoundsInParent().getMinX()
+                + getBoundsInParent().getWidth() / 2;
+        double centerY = getBoundsInParent().getMinY()
+                + getBoundsInParent().getHeight() / 2;
+        return new Point2D(centerX, centerY);
+    }
+
     @Override
-    public ConnectorPoint getConnectorPointOutgoing() {
+    Point2D getCenter() {
+        return centerProperty.get();
+    }
+
+    @Override
+    ObjectProperty<Point2D> centerProperty() {
+        return centerProperty;
+    }
+
+    @Override
+    public ConnectorType getConnectorTypeOutgoing() {
         return null;
     }
 
     @Override
-    public ConnectorPoint getConnectorPointIngoing() {
+    public ConnectorType getConnectorTypeIngoing() {
         return null;
     }
 }
