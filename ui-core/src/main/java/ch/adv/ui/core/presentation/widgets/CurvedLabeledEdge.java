@@ -24,7 +24,7 @@ public class CurvedLabeledEdge extends LabeledEdge {
 
     public CurvedLabeledEdge(String labelText, ADVNode startNode,
                              ADVNode endNode, ADVStyle style,
-                             Arrow.DirectionType directionType) {
+                             LabeledEdge.DirectionType directionType) {
 
         super(labelText, startNode, endNode, style, directionType);
     }
@@ -33,7 +33,7 @@ public class CurvedLabeledEdge extends LabeledEdge {
     protected void setControlPoints(CubicCurve curve,
                                     Point2D startIntersectionPoint,
                                     Point2D endIntersectionPoint) {
-
+        logger.info("Calculating the curvature of the edge...");
         double startHeight = getStartNode().getBoundsInParent().getHeight();
         double endHeight = getEndNode().getBoundsInParent().getHeight();
         double avgHeight = (startHeight + endHeight) / 2;
@@ -62,23 +62,15 @@ public class CurvedLabeledEdge extends LabeledEdge {
                 .equals(ConnectorType.TOP))) {
             x += avgHeight;
             y -= avgHeight;
-        } else if ((getStartNode().getConnectorTypeOutgoing()
+        } else if (getStartNode().getConnectorTypeOutgoing()
                 .equals(ConnectorType.TOP)
-                || getStartNode().getConnectorTypeOutgoing()
-                .equals(ConnectorType.TOP))
-                && (getEndNode().getConnectorTypeIncoming()
-                .equals(ConnectorType.TOP)
-                || getEndNode().getConnectorTypeIncoming()
-                .equals(ConnectorType.TOP))) {
+                && getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.TOP)) {
             y -= avgHeight;
-        } else if ((getStartNode().getConnectorTypeOutgoing()
+        } else if (getStartNode().getConnectorTypeOutgoing()
                 .equals(ConnectorType.BOTTOM)
-                || getStartNode().getConnectorTypeOutgoing()
-                .equals(ConnectorType.BOTTOM))
-                && (getEndNode().getConnectorTypeIncoming()
-                .equals(ConnectorType.BOTTOM)
-                || getEndNode().getConnectorTypeIncoming()
-                .equals(ConnectorType.BOTTOM))) {
+                && getEndNode().getConnectorTypeIncoming()
+                .equals(ConnectorType.BOTTOM)) {
             y += avgHeight;
         }
 

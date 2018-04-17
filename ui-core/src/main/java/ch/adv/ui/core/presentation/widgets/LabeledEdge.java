@@ -37,19 +37,19 @@ public class LabeledEdge extends Group {
     private final Label label = new Label();
     private final ADVStyle style;
 
-    private final Arrow.DirectionType directionType;
-    private final Arrow startArrow;
-    private final Arrow endArrow;
+    private final DirectionType directionType;
+    private final ArrowHead startArrowHead;
+    private final ArrowHead endArrowHead;
 
 
     public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,
                        ADVStyle style) {
         this(labelText, startNode, endNode, style,
-                Arrow.DirectionType.UNIDIRECTIONAL);
+                DirectionType.NONE);
     }
 
     public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,
-                       ADVStyle style, Arrow.DirectionType directionType) {
+                       ADVStyle style, DirectionType directionType) {
 
         this.style = style;
         this.startNode = startNode;
@@ -59,18 +59,18 @@ public class LabeledEdge extends Group {
         // draw arrow
         switch (directionType) {
             case BIDIRECTIONAL:
-                this.startArrow = new Arrow(curve, 0.0f);
-                this.endArrow = new Arrow(curve, 1.0f);
-                getChildren().addAll(startArrow, endArrow);
+                this.startArrowHead = new ArrowHead(curve, 0.0f);
+                this.endArrowHead = new ArrowHead(curve, 1.0f);
+                getChildren().addAll(startArrowHead, endArrowHead);
                 break;
             case UNIDIRECTIONAL:
-                this.startArrow = null;
-                this.endArrow = new Arrow(curve, 1.0f);
-                getChildren().add(endArrow);
+                this.startArrowHead = null;
+                this.endArrowHead = new ArrowHead(curve, 1.0f);
+                getChildren().add(endArrowHead);
                 break;
             default:
-                this.startArrow = null;
-                this.endArrow = null;
+                this.startArrowHead = null;
+                this.endArrowHead = null;
         }
 
         // bind listener
@@ -145,11 +145,11 @@ public class LabeledEdge extends Group {
             // arrow
             switch (directionType) {
                 case BIDIRECTIONAL:
-                    startArrow.update();
-                    endArrow.update();
+                    startArrowHead.update();
+                    endArrowHead.update();
                     break;
                 case UNIDIRECTIONAL:
-                    endArrow.update();
+                    endArrowHead.update();
                     break;
                 case NONE:
                     break;
@@ -257,5 +257,14 @@ public class LabeledEdge extends Group {
 
     protected ADVNode getEndNode() {
         return endNode;
+    }
+
+    /**
+     * Relationship type of the arrow
+     * <p>
+     * Can be unidirectionl, bidirectional or no arrow.
+     */
+    public enum DirectionType {
+        UNIDIRECTIONAL, BIDIRECTIONAL, NONE;
     }
 }

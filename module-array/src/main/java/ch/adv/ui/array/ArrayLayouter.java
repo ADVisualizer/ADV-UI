@@ -12,6 +12,8 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +25,8 @@ import java.util.Map;
 public class ArrayLayouter implements Layouter {
 
     private static final int SPACING = 30;
-
+    private static final Logger logger = LoggerFactory.getLogger(
+            ArrayLayouter.class);
 
     private ArrayObjectLayouter arrayObjectLayouter;
 
@@ -60,7 +63,7 @@ public class ArrayLayouter implements Layouter {
 
     private Map<Long, ADVNode> drawElements(Snapshot snapshot, AutoScalePane
             scalePane) {
-
+        logger.info("Drawing array elements...");
         Map<Long, ADVNode> availableNodesMap = new HashMap<>();
 
         VBox boxContainer = new VBox();
@@ -73,23 +76,15 @@ public class ArrayLayouter implements Layouter {
         snapshot.getElements().forEach(e -> {
             ArrayElement arrayElement = (ArrayElement) e;
             ADVStyle style = arrayElement.getStyle();
-
+            LabeledNode valueNode = createLabeledNode(arrayElement, style);
             if (arrayElement.isShowObjectReference()) {
                 valueContainer.setSpacing(SPACING);
-
-                arrayObjectLayouter.layoutObjectReference(arrayElement,
-                        scalePane, valueContainer, referenceContainer);
+                logger.info("Delegating array layouting to show object "
+                        + "references.");
+                arrayObjectLayouter.layoutObjectReference(valueNode,
+                        arrayElement, scalePane, valueContainer,
+                        referenceContainer);
             } else {
-
-                LabeledNode valueNode = new LabeledNode(arrayElement
-                        .getContent());
-                valueNode.setBackgroundColor(StyleConverter.getColor(
-                        style.getFillColor()));
-                valueNode.setFontColor(Color.WHITE);
-                valueNode.setBorder(style.getStrokeThickness(),
-                        StyleConverter.getColor(style.getStrokeColor()),
-                        StyleConverter.getStrokeStyle(style.getStrokeStyle()));
-
                 if (arrayElement.getFixedPosX() > 0
                         && arrayElement.getFixedPosY() > 0) {
 
@@ -113,9 +108,23 @@ public class ArrayLayouter implements Layouter {
         return availableNodesMap;
     }
 
+    private LabeledNode createLabeledNode(ArrayElement arrayElement, ADVStyle
+            style) {
+        LabeledNode valueNode = new LabeledNode(arrayElement
+                .getContent());
+        valueNode.setBackgroundColor(StyleConverter.getColor(
+                style.getFillColor()));
+        valueNode.setFontColor(Color.WHITE);
+        valueNode.setBorder(style.getStrokeThickness(),
+                StyleConverter.getColor(style.getStrokeColor()),
+                StyleConverter.getStrokeStyle(style.getStrokeStyle()));
+        return valueNode;
+    }
+
+    //TODO: Do we event need this?
     private void drawRelations(Snapshot snapshot, AutoScalePane scalePane,
                                Map<Long, ADVNode> nodeMap) {
-
+        logger.info("Drawing array relations...");
         snapshot.getRelations().forEach(r -> {
 
             ADVNode sourceNode = nodeMap.get(r.getSourceElementId());
@@ -126,7 +135,7 @@ public class ArrayLayouter implements Layouter {
                 LabeledEdge edge = new CurvedLabeledEdge(r.getLabel(),
                         sourceNode,
                         endNode,
-                        r.getStyle());
+                        r.getStyle(), LabeledEdge.DirectionType.UNIDIRECTIONAL);
 
                 scalePane.addChildren(edge);
             }

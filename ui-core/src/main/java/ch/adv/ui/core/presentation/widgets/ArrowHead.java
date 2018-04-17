@@ -9,12 +9,16 @@ import java.util.Arrays;
 
 
 /**
- * Represents an arrow head at a arbitrary position on the curve
+ * Represents an arrow head at an arbitrary position on the curve
  * <p>
- * In most cases, the relativePositionOnCurve the curve will be 0 or 1.
+ * The relativePosOnCurve is interpreted as the percentage of the length of
+ * the curve, where the arrowhead should be drawn. I.e. 0.33 will draw an
+ * arrow head at 1/3rd of the way.
+ * <p>
+ * In most cases, the relativePosOnCurve, which will be 0 or 1.
  */
-public class Arrow extends Polygon {
-
+public class ArrowHead extends Polygon {
+    // Defines the shape of the arrow head
     private static final double[] SHAPE = new double[] {0, 0, 5, 15, -5, 15};
 
     private Rotate rotation;
@@ -23,9 +27,14 @@ public class Arrow extends Polygon {
 
     /**
      * @param curve              cubic curve
-     * @param relativePosOnCurve pos between 0 (start) and 1 (end)
+     * @param relativePosOnCurve position of the arrowhead on the curve
+     *                           between 0 (start) and 1 (end)
      */
-    public Arrow(CubicCurve curve, float relativePosOnCurve) {
+    public ArrowHead(CubicCurve curve, float relativePosOnCurve) {
+        if (relativePosOnCurve < 0 || relativePosOnCurve > 1){
+            throw new IllegalArgumentException("relativePosOnCurve must be "
+                    + "between 0 and 1.");
+        }
         this.curve = curve;
         this.pos = relativePosOnCurve;
         this.rotation = new Rotate();
@@ -111,13 +120,6 @@ public class Arrow extends Polygon {
         return new Point2D(x, y);
     }
 
-    /**
-     * Relationship type of the arrow
-     * <p>
-     * Can be unidirectionl, bidirectional or no arrow.
-     */
-    public enum DirectionType {
-        UNIDIRECTIONAL, BIDIRECTIONAL, NONE;
-    }
+
 }
 

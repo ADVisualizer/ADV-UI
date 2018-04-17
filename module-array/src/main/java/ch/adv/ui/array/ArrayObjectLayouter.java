@@ -22,36 +22,27 @@ public class ArrayObjectLayouter {
      * @param valueContainer     pane for value
      * @param referenceContainer pane for reference
      */
-    public void layoutObjectReference(ArrayElement arrayElement,
+    public void layoutObjectReference(LabeledNode node, ArrayElement
+            arrayElement,
                                       AutoScalePane scalePane,
                                       HBox valueContainer,
                                       HBox referenceContainer) {
 
-        ADVStyle style = arrayElement.getStyle();
 
         LabeledNode referenceNode;
-        LabeledNode valueNode;
+        LabeledNode valueNode = node;
 
-        // create nods
+        // create nodes
         if (arrayElement.getContent() != null) {
             referenceNode = new LabeledNode("*");
-            valueNode = new LabeledNode(arrayElement.getContent());
-
-            // value styles
-            valueNode.setFontColor(Color.WHITE);
-            valueNode.setBackgroundColor(StyleConverter.getColor(
-                    style.getFillColor()));
-            valueNode.setBorder(style.getStrokeThickness(),
-                    StyleConverter.getColor(style.getStrokeColor()),
-                    StyleConverter
-                            .getStrokeStyle(style.getStrokeStyle()));
 
             // relation
             referenceNode.setConnectorTypeOutgoing(ConnectorType.BOTTOM);
             valueNode.setConnectorTypeIncoming(ConnectorType.TOP);
 
             LabeledEdge relation = new CurvedLabeledEdge("",
-                    referenceNode, valueNode, new ADVDefaultLineStyle());
+                    referenceNode, valueNode, new ADVDefaultLineStyle(),
+                    LabeledEdge.DirectionType.UNIDIRECTIONAL);
             scalePane.addChildren(relation);
 
             valueContainer.getChildren().add(valueNode);
@@ -60,6 +51,7 @@ public class ArrayObjectLayouter {
         }
 
         // reference styles
+        ADVStyle style = arrayElement.getStyle();
         referenceNode.setConnectorTypeOutgoing(ConnectorType.BOTTOM);
         referenceNode.setFontColor(Color.WHITE);
         referenceNode.setBackgroundColor(StyleConverter.getColor(
