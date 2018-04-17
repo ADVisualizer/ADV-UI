@@ -35,14 +35,8 @@ public class RootView {
             .class);
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
-    @FXML
-    private Menu menuADV;
-    @FXML
-    private Menu menuHelp;
-    @FXML
-    private MenuItem menuItemClose;
-    @FXML
-    private MenuItem menuItemHelp;
+
+
     @FXML
     private Button loadSessionButton;
     @FXML
@@ -79,7 +73,6 @@ public class RootView {
     @FXML
     public void initialize() {
         bindI18nStrings();
-        menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
         loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
         clearAllSessionsButton.setOnAction(event ->
                 handleClearAllSessionsClicked());
@@ -93,14 +86,6 @@ public class RootView {
     }
 
     private void bindI18nStrings() {
-        menuItemClose.textProperty()
-                .bind(I18n.createStringBinding("menu.item.close"));
-        menuItemHelp.textProperty()
-                .bind(I18n.createStringBinding("menu.item.help"));
-        menuADV.textProperty()
-                .bind(I18n.createStringBinding("menu.adv"));
-        menuHelp.textProperty()
-                .bind(I18n.createStringBinding("menu.help"));
         sessionListViewTitle.textProperty()
                 .bind(I18n.createStringBinding("title.session_list"));
         english.textProperty().bind(I18n.createStringBinding(

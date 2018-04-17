@@ -8,73 +8,41 @@
             xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ch.adv.ui.core.presentation.RootView">
 
-    <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-            <Menu fx:id="menuADV" mnemonicParsing="false">
-                <items>
-                    <MenuItem fx:id="menuItemClose" mnemonicParsing="false" accelerator="Shortcut+Q">
-                        <graphic>
-                            <FontAwesomeIconView glyphName="SIGN_OUT"/>
-                        </graphic>
-                    </MenuItem>
-                </items>
-            </Menu>
-            <Menu fx:id="menuHelp" mnemonicParsing="false" >
-                <items>
-                    <MenuItem fx:id="menuItemHelp" mnemonicParsing="false" accelerator="Shortcut+H">
-                        <graphic>
-                            <FontAwesomeIconView glyphName="INFO"/>
-                        </graphic>
-                    </MenuItem>
-                </items>
-            </Menu>
-        </menus>
-    </MenuBar>
 
     <ToolBar prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-             AnchorPane.topAnchor="28.0">
-        <items>
-            <Button fx:id="loadSessionButton" mnemonicParsing="false">
-                <graphic>
-                    <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
-                </graphic>
-            </Button>
-            <Button fx:id="clearAllSessionsButton" mnemonicParsing="false">
-                <graphic>
-                    <FontAwesomeIconView glyphName="ERASER"/>
-                </graphic>
-            </Button>
+             AnchorPane.topAnchor="0.0">
+        <Button fx:id="loadSessionButton" mnemonicParsing="false">
+            <graphic>
+                <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
+            </graphic>
+        </Button>
+        <Button fx:id="clearAllSessionsButton" mnemonicParsing="false">
+            <graphic>
+                <FontAwesomeIconView glyphName="ERASER"/>
+            </graphic>
+        </Button>
 
-            <Pane HBox.hgrow="ALWAYS" />
+        <Pane HBox.hgrow="ALWAYS"/>
 
-            <SegmentedButton fx:id="changeLanguageButton">
-                <buttons>
-                    <ToggleButton fx:id="english" selected="true"/>
-                    <ToggleButton fx:id="german"/>
-                </buttons>
-            </SegmentedButton>
-        </items>
+        <SegmentedButton fx:id="changeLanguageButton">
+            <buttons>
+                <ToggleButton fx:id="english" selected="true"/>
+                <ToggleButton fx:id="german"/>
+            </buttons>
+        </SegmentedButton>
     </ToolBar>
 
     <SplitPane dividerPositions="0.28" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="73.0">
-        <items>
-            <AnchorPane>
-                <children>
-                    <TitledPane animated="false" fx:id="sessionListViewTitle" AnchorPane.bottomAnchor="0.0"
-                                AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <content>
-                            <ListView fx:id="sessionListView"/>
-                        </content>
-                    </TitledPane>
-                </children>
-            </AnchorPane>
-            <AnchorPane>
-                <children>
-                    <TabPane fx:id="sessionTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-                             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-                </children>
-            </AnchorPane>
-        </items>
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+        <AnchorPane>
+            <TitledPane animated="false" fx:id="sessionListViewTitle" AnchorPane.bottomAnchor="0.0"
+                        AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <ListView fx:id="sessionListView"/>
+            </TitledPane>
+        </AnchorPane>
+        <AnchorPane>
+            <TabPane fx:id="sessionTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
+                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+        </AnchorPane>
     </SplitPane>
 </AnchorPane>
