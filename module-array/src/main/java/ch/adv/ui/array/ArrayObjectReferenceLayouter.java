@@ -31,6 +31,12 @@ public class ArrayObjectReferenceLayouter {
         this.layouterUtil = layouterUtil;
     }
 
+    /**
+     * Layout array object reference
+     *
+     * @param snapshot snapshot to layout
+     * @return layouted pane
+     */
     public Pane layout(Snapshot snapshot) {
         initializeContainer();
         drawElements(snapshot);

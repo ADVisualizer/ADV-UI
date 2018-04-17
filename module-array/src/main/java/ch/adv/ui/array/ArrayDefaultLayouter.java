@@ -10,6 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+/**
+ * Default array layouter
+ */
 @Singleton
 public class ArrayDefaultLayouter {
 
@@ -23,6 +26,11 @@ public class ArrayDefaultLayouter {
         this.layouterUtil = layouterUtil;
     }
 
+    /**
+     * Layouts a default array
+     * @param snapshot snapshot to layout
+     * @return layouted pane
+     */
     public Pane layout(Snapshot snapshot) {
         initializeContainer();
         drawElements(snapshot);

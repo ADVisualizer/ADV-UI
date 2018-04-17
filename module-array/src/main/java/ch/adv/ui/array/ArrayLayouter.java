@@ -17,7 +17,7 @@ import java.util.List;
 @Singleton
 public class ArrayLayouter implements Layouter {
 
-    public static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";
+    private static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";
     private static final Logger logger = LoggerFactory.getLogger(
             ArrayLayouter.class);
 
@@ -40,8 +40,11 @@ public class ArrayLayouter implements Layouter {
     @Override
     public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
 
-        boolean showObjectRelations = flags.stream().anyMatch(
-                f -> f.equals(SHOW_OBJECT_RELATIONS));
+        boolean showObjectRelations = false;
+        if (flags != null) {
+            showObjectRelations = flags.stream().anyMatch(
+                    f -> f.equals(SHOW_OBJECT_RELATIONS));
+        }
 
         Pane pane;
         if (showObjectRelations) {
