@@ -41,6 +41,8 @@ public class SessionView {
     @FXML
     private Button stepLastButton;
     @FXML
+    private Label replaySpeedSliderLabel;
+    @FXML
     private Slider replaySpeedSlider;
     @FXML
     private ProgressBar stepProgressBar;
@@ -51,9 +53,10 @@ public class SessionView {
     @FXML
     private AnchorPane contentPane;
     @FXML
-    private TextArea snapshotDescription;
+    private Label descriptionLabel;
     @FXML
-    private Label replaySpeedSliderLabel;
+    private TextArea snapshotDescription;
+
     @Inject
     private ReplayController replayController;
     @Inject
@@ -137,6 +140,9 @@ public class SessionView {
     private void bindI18nStrings() {
         replaySpeedSliderLabel.textProperty()
                 .bind(I18n.createStringBinding("title.speed"));
+        descriptionLabel.textProperty()
+                .bind(I18n.createStringBinding("title.description"));
+        snapshotDescription.promptTextProperty().bind(I18n.createStringBinding("placeholder.description"));
     }
 
     private void setButtonActions() {
