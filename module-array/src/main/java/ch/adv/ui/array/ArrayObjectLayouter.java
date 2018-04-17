@@ -14,6 +14,14 @@ import javafx.scene.paint.Color;
 @Singleton
 public class ArrayObjectLayouter {
 
+    /**
+     * Layout array elements with visible object reference
+     *
+     * @param arrayElement       element to layout
+     * @param scalePane          parent pane
+     * @param valueContainer     pane for value
+     * @param referenceContainer pane for reference
+     */
     public void layoutObjectReference(ArrayElement arrayElement,
                                       AutoScalePane scalePane,
                                       HBox valueContainer,

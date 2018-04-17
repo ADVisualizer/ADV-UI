@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
 public class ArrayStringifyerTest {
+
     @Inject
     private FileDatastoreAccess reader;
     @Inject
@@ -41,7 +42,6 @@ public class ArrayStringifyerTest {
 
         String[] lines = actual.split(System.getProperty("line.separator"));
         assertEquals("  \"snapshots\": [", lines[1]);
-        assertEquals(62, lines.length);
     }
 
 }

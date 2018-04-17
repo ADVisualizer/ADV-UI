@@ -131,8 +131,8 @@ public class LabeledEdge extends Group {
                     endNode.getConnectorTypeIncoming());
 
             if (endNode.getParent() != null) {
-                endConnectorPoint = endNode.getParent().localToParent
-                        (endConnectorPoint);
+                endConnectorPoint = endNode.getParent().localToParent(
+                        endConnectorPoint);
             }
 
             curve.setStartX(startConnectorPoint.getX());
