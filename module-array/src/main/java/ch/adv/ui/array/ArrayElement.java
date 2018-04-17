@@ -7,17 +7,14 @@ import ch.adv.ui.core.domain.styles.presets.ADVDefaultStyle;
 /**
  * Represents one Item in a Array
  */
-public class ArrayElement implements ADVElement {
+public class ArrayElement implements ADVElement<String> {
 
     private long id;
-    private ADVStyle style;
     private int fixedPosX;
     private int fixedPosY;
     private String content;
-
-    public ArrayElement() {
-        this.style = new ADVDefaultStyle();
-    }
+    private ADVStyle style = new ADVDefaultStyle();
+    private boolean showObjectReference;
 
     @Override
     public long getElementId() {
@@ -62,5 +59,13 @@ public class ArrayElement implements ADVElement {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isShowObjectReference() {
+        return showObjectReference;
+    }
+
+    public void setShowObjectReference(boolean showObjectReference) {
+        this.showObjectReference = showObjectReference;
     }
 }

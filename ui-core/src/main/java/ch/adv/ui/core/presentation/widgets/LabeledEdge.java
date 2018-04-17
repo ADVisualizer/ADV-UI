@@ -130,6 +130,11 @@ public class LabeledEdge extends Group {
             Point2D endConnectorPoint = getConnectorPoint(endNode,
                     endNode.getConnectorTypeIncoming());
 
+            if (endNode.getParent() != null) {
+                endConnectorPoint = endNode.getParent().localToParent
+                        (endConnectorPoint);
+            }
+
             curve.setStartX(startConnectorPoint.getX());
             curve.setStartY(startConnectorPoint.getY());
             curve.setEndX(endConnectorPoint.getX());
@@ -154,7 +159,6 @@ public class LabeledEdge extends Group {
             }
         }
     }
-
 
     private Point2D getConnectorPoint(ADVNode node,
                                       ConnectorType connectorType) {

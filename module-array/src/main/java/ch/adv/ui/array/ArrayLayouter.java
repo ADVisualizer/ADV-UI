@@ -6,8 +6,11 @@ import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import ch.adv.ui.core.presentation.util.StyleConverter;
 import ch.adv.ui.core.presentation.widgets.*;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import java.util.HashMap;
@@ -18,6 +21,16 @@ import java.util.Map;
  */
 @Singleton
 public class ArrayLayouter implements Layouter {
+
+    private static final int SPACING = 30;
+
+
+    private ArrayObjectLayouter arrayObjectLayouter;
+
+    @Inject
+    public ArrayLayouter(ArrayObjectLayouter objectLayouter) {
+        this.arrayObjectLayouter = objectLayouter;
+    }
 
     /**
      * Layouts an Array snapshot if it is not already layouted
@@ -37,59 +50,72 @@ public class ArrayLayouter implements Layouter {
 
     private LayoutedSnapshot createLayoutedSnapshot(Snapshot snapshot,
                                                     AutoScalePane scalePane) {
-
         LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot();
-        layoutedSnapshot
-                .setSnapshotDescription(snapshot.getSnapshotDescription());
+        layoutedSnapshot.setSnapshotDescription(
+                snapshot.getSnapshotDescription());
         layoutedSnapshot.setSnapshotId(snapshot.getSnapshotId());
         layoutedSnapshot.setPane(scalePane);
         return layoutedSnapshot;
     }
 
-    private Map<Long, ADVNode> drawElements(Snapshot snapshot,
-                                            AutoScalePane scalePane) {
+    private Map<Long, ADVNode> drawElements(Snapshot snapshot, AutoScalePane
+            scalePane) {
 
-        Map<Long, ADVNode> nodeMap = new HashMap<>();
-        HBox container = new HBox();
+        Map<Long, ADVNode> availableNodesMap = new HashMap<>();
+
+        VBox boxContainer = new VBox();
+        HBox valueContainer = new HBox();
+        HBox referenceContainer = new HBox();
+        referenceContainer.setAlignment(Pos.CENTER);
+        valueContainer.setAlignment(Pos.CENTER);
+        boxContainer.setSpacing(SPACING);
+
         snapshot.getElements().forEach(e -> {
-            ArrayElement arrElement = (ArrayElement) e;
+            ArrayElement arrayElement = (ArrayElement) e;
+            ADVStyle style = arrayElement.getStyle();
 
-            LabeledNode node = new LabeledNode(arrElement
-                    .getContent());
-            ADVStyle style = arrElement.getStyle();
+            if (arrayElement.isShowObjectReference()) {
+                valueContainer.setSpacing(SPACING);
 
-            node.setBackgroundColor(StyleConverter
-                    .getColor(style.getFillColor()));
-            node.setFontColor(Color.WHITE);
-            node.setConnectorTypeOutgoing(ConnectorType.BOTTOM);
-            node.setConnectorTypeIncoming(ConnectorType.LEFT);
-
-            node.setBorder(style.getStrokeThickness(),
-                    StyleConverter.getColor(style.getStrokeColor()),
-                    StyleConverter.getStrokeStyle(style.getStrokeStyle()));
-
-            if (arrElement.getFixedPosX() > 0
-                    && arrElement.getFixedPosY() > 0) {
-
-                node.setY(arrElement.getFixedPosY());
-                node.setX(arrElement.getFixedPosX());
-
-                // add fixed positioned elements directly on the scale pane
-                // because the hbox would ignore the fixed position.
-                scalePane.addChildren(node);
+                arrayObjectLayouter.layoutObjectReference(arrayElement,
+                        scalePane, valueContainer, referenceContainer);
             } else {
-                container.getChildren().add(node);
-            }
 
-            nodeMap.put(arrElement.getElementId(), node);
+                LabeledNode valueNode = new LabeledNode(arrayElement
+                        .getContent());
+                valueNode.setBackgroundColor(StyleConverter.getColor(
+                        style.getFillColor()));
+                valueNode.setFontColor(Color.WHITE);
+                valueNode.setBorder(style.getStrokeThickness(),
+                        StyleConverter.getColor(style.getStrokeColor()),
+                        StyleConverter.getStrokeStyle(style.getStrokeStyle()));
+
+                if (arrayElement.getFixedPosX() > 0
+                        && arrayElement.getFixedPosY() > 0) {
+
+                    valueNode.setY(arrayElement.getFixedPosY());
+                    valueNode.setX(arrayElement.getFixedPosX());
+
+                    // add fixed positioned elements directly on the scale pane
+                    // because the hbox would ignore the fixed position.
+                    scalePane.addChildren(valueNode);
+                } else {
+                    valueContainer.getChildren().add(valueNode);
+                }
+                availableNodesMap.put(arrayElement.getElementId(), valueNode);
+            }
         });
 
-        scalePane.addChildren(container);
-        return nodeMap;
+        // add wrapper container to master pane
+        boxContainer.getChildren().addAll(referenceContainer, valueContainer);
+        scalePane.addChildren(boxContainer);
+
+        return availableNodesMap;
     }
 
     private void drawRelations(Snapshot snapshot, AutoScalePane scalePane,
                                Map<Long, ADVNode> nodeMap) {
+
         snapshot.getRelations().forEach(r -> {
 
             ADVNode sourceNode = nodeMap.get(r.getSourceElementId());

@@ -178,12 +178,12 @@ public class LabeledNode extends ADVNode {
     }
 
     @Override
-    Point2D getCenter() {
+    public Point2D getCenter() {
         return centerProperty.get();
     }
 
     @Override
-    ObjectProperty<Point2D> centerProperty() {
+    public ObjectProperty<Point2D> centerProperty() {
         return centerProperty;
     }
 
