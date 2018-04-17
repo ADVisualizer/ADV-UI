@@ -1,10 +1,13 @@
 package ch.adv.ui.core.presentation.widgets;
 
 
+import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -12,16 +15,25 @@ import javafx.scene.paint.Paint;
 
 /**
  * Widget component for a labeled node with optional rounded corners
+ *
+ * @author mtrentini
  */
-public class LabeledNode extends StackPane {
-    private static final int PADDING = 5;
+public class LabeledNode extends ADVNode {
+
+    private static final int LABEL_PADDING = 5;
+
+    private final Label label = new Label();
+
+    private final ObjectProperty<Point2D> centerProperty = new
+            SimpleObjectProperty<>();
     private final ObjectProperty<Background> backgroundProperty = new
             SimpleObjectProperty<>();
     private final ObjectProperty<Border> borderProperty = new
             SimpleObjectProperty<>();
-    private Label label = new Label();
+    private final boolean isRoundedDown;
     private Paint backgroundColor = Color.BLACK;
-    private boolean isRoundedDown;
+    private ConnectorType connectorTypeOutgoing = ConnectorType.DIRECT;
+    private ConnectorType connectorTypeIncoming = ConnectorType.DIRECT;
 
     public LabeledNode(String labelText) {
         this(labelText, false);
@@ -35,48 +47,54 @@ public class LabeledNode extends StackPane {
      */
     public LabeledNode(String labelText, boolean isRoundedDown) {
         this.isRoundedDown = isRoundedDown;
+
         setBindings();
-        label.setPadding(new Insets(PADDING));
+
+        label.setPadding(new Insets(LABEL_PADDING));
         label.setText(labelText);
         getChildren().addAll(label);
     }
 
     private void setBindings() {
-        //set default
-        backgroundProperty
-                .setValue(new Background(new BackgroundFill(backgroundColor,
+        backgroundProperty.setValue(
+                new Background(new BackgroundFill(backgroundColor,
                         CornerRadii.EMPTY, Insets.EMPTY)));
-        borderProperty
-                .setValue(createBorder(BorderWidths.DEFAULT
-                        .getTop(), Color.BLACK, BorderStrokeStyle.NONE));
 
-        this.widthProperty().addListener(this::changeBackground);
+        borderProperty.setValue(createBorder(BorderWidths.DEFAULT
+                .getTop(), Color.BLACK, BorderStrokeStyle.NONE));
+
+        borderProperty.setValue(new Border(
+                new BorderStroke(Color.BLACK, BorderStrokeStyle.NONE,
+                        cornerRadii(), BorderWidths.DEFAULT, Insets.EMPTY)));
 
         backgroundProperty().bind(backgroundProperty);
         borderProperty().bind(borderProperty);
+
+        boundsInParentProperty().addListener(this::handleBoundsChanged);
     }
 
     private CornerRadii cornerRadii() {
         if (isRoundedDown) {
-            return new CornerRadii(this.widthProperty().get() / 2);
+            double radius = getBoundsInParent().getWidth() / 2;
+            return new CornerRadii(radius);
         } else {
             return CornerRadii.EMPTY;
         }
     }
 
-    private void changeBackground(ObservableValue<? extends Object> observable,
-                                  Object oldValue,
-                                  Object newValue) {
+    private void handleBoundsChanged(Observable o) {
+
         BackgroundFill fill = new BackgroundFill(backgroundColor,
                 cornerRadii(), Insets.EMPTY);
         backgroundProperty.setValue(new Background(fill));
-        BorderStroke borderStroke = borderProperty.get()
-                .getStrokes().get(0);
+        BorderStroke borderStroke = borderProperty.get().getStrokes().get(0);
         Paint color = borderStroke.getTopStroke();
         double width = borderStroke.getWidths().getTop();
         BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
         Border border = createBorder(width, color, strokeStyle);
         borderProperty.setValue(border);
+
+        computeCenter();
     }
 
     /**
@@ -122,17 +140,67 @@ public class LabeledNode extends StackPane {
      * @param color       of the border
      * @param strokeStyle of the border
      */
-    public void setBorder(double width, Paint color, BorderStrokeStyle
-            strokeStyle) {
-        borderProperty
-                .setValue(createBorder(width, color, strokeStyle));
+    public void setBorder(double width, Paint color,
+                          BorderStrokeStyle strokeStyle) {
+        borderProperty.setValue(createBorder(width, color, strokeStyle));
     }
 
-    private Border createBorder(double width, Paint color, BorderStrokeStyle
-            strokeStyle) {
-        return new Border(new BorderStroke(color, strokeStyle,
-                cornerRadii(), new BorderWidths(width),
-                Insets.EMPTY));
+    private Border createBorder(double width, Paint color,
+                                BorderStrokeStyle strokeStyle) {
+        return new Border(new BorderStroke(color, strokeStyle, cornerRadii(),
+                new BorderWidths(width), Insets.EMPTY));
+    }
 
+    @Override
+    protected void layoutChildren() {
+        final double nodeWidth = getWidth();
+        final double nodeHeight = getHeight();
+        final double insetTop = getInsets().getTop();
+        final double insetRight = getInsets().getRight();
+        final double insetLeft = getInsets().getLeft();
+        final double insertBottom = getInsets().getBottom();
+
+        final double contentWidth = (nodeWidth - insetLeft - insetRight);
+        final double contentHeight = (nodeHeight - insetTop - insertBottom);
+
+        layoutInArea(label, insetLeft, insetTop, contentWidth, contentHeight,
+                getBaselineOffset(), HPos.CENTER, VPos.CENTER);
+    }
+
+    private void computeCenter() {
+        double centerX = getBoundsInParent().getMinX()
+                + getBoundsInParent().getWidth() / 2;
+        double centerY = getBoundsInParent().getMinY()
+                + getBoundsInParent().getHeight() / 2;
+
+        centerProperty.set(new Point2D(centerX, centerY));
+    }
+
+    @Override
+    public Point2D getCenter() {
+        return centerProperty.get();
+    }
+
+    @Override
+    public ObjectProperty<Point2D> centerProperty() {
+        return centerProperty;
+    }
+
+    @Override
+    public ConnectorType getConnectorTypeOutgoing() {
+        return connectorTypeOutgoing;
+    }
+
+    public void setConnectorTypeOutgoing(ConnectorType type) {
+        this.connectorTypeOutgoing = type;
+    }
+
+    @Override
+    public ConnectorType getConnectorTypeIncoming() {
+        return connectorTypeIncoming;
+    }
+
+    public void setConnectorTypeIncoming(ConnectorType type) {
+        this.connectorTypeIncoming = type;
     }
 }

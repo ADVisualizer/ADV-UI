@@ -51,11 +51,13 @@ public class LayoutedSnapshot {
             return false;
         }
         LayoutedSnapshot that = (LayoutedSnapshot) o;
-        return Objects.equals(snapshotDescription, that.snapshotDescription);
+        return snapshotId == that.snapshotId
+                && Objects
+                .equals(snapshotDescription, that.snapshotDescription);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(snapshotDescription);
+        return Objects.hash(snapshotId, snapshotDescription);
     }
 }

@@ -2,6 +2,7 @@ package ch.adv.ui.array;
 
 import ch.adv.ui.core.domain.ADVRelation;
 import ch.adv.ui.core.domain.styles.ADVStyle;
+import ch.adv.ui.core.domain.styles.presets.ADVDefaultLineStyle;
 
 /**
  * Relation between two {@link ArrayElement}s
@@ -12,6 +13,10 @@ public class ArrayRelation implements ADVRelation {
     private long targetElementId;
     private String label;
     private ADVStyle style;
+
+    public ArrayRelation() {
+        this.style = new ADVDefaultLineStyle();
+    }
 
     @Override
     public long getSourceElementId() {

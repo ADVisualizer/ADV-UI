@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 /**
  * Creates JavaFX BorderStrokeStyle Enums from Strings.
+ *
+ * @author mtrentini
  */
 public class StyleConverter {
     private static final HashMap<String, BorderStrokeStyle> MAP = new
