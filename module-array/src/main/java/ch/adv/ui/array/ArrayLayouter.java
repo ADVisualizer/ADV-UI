@@ -112,11 +112,11 @@ public class ArrayLayouter implements Layouter {
             style) {
         LabeledNode valueNode = new LabeledNode(arrayElement
                 .getContent());
-        valueNode.setBackgroundColor(StyleConverter.getColor(
+        valueNode.setBackgroundColor(StyleConverter.getColorFromHexValue(
                 style.getFillColor()));
         valueNode.setFontColor(Color.WHITE);
         valueNode.setBorder(style.getStrokeThickness(),
-                StyleConverter.getColor(style.getStrokeColor()),
+                StyleConverter.getColorFromHexValue(style.getStrokeColor()),
                 StyleConverter.getStrokeStyle(style.getStrokeStyle()));
         return valueNode;
     }

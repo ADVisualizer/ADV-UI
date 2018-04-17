@@ -33,7 +33,7 @@ public class StyleConverter {
      * @param colorValue to be converted
      * @return JavaFX Color of the input value
      */
-    public static Color getColor(int colorValue) {
+    public static Color getColorFromHexValue(int colorValue) {
         String hex = Integer.toHexString(colorValue);
         int hexColorLength = 6;
         int difference = hexColorLength - hex.length();
@@ -45,5 +45,39 @@ public class StyleConverter {
             hex = addedZeros + hex;
         }
         return Color.web(hex);
+    }
+
+    /**
+     * Return either black or white depending on the brightness of the input
+     * color.
+     *
+     * @param color
+     *          reference color
+     * @return either black or white depending on the brightness of the input
+     *         color
+     */
+    public static Color getContrastColor(Color color) {
+        double brightness = color.getBrightness();
+        if (brightness >= 0.95) {
+            return Color.BLACK;
+        } else {
+            return Color.WHITE;
+        }
+    }
+
+    /**
+     * Return right CSS class depending on the brightness of the input color.
+     *
+     * @param color
+     *          reference color
+     * @return color class
+     */
+    public static String getContrastColorClass(Color color) {
+        double brightness = color.getBrightness();
+        if (brightness >= 0.95) {
+            return "text-fill-black";
+        } else {
+            return "text-fill-white";
+        }
     }
 }

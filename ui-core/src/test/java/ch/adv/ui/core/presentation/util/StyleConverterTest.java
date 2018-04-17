@@ -25,12 +25,12 @@ public class StyleConverterTest {
 
     @Test
     public void getValidColorTest() {
-        Paint color = StyleConverter.getColor(0);
+        Paint color = StyleConverter.getColorFromHexValue(0);
         assertEquals(Color.BLACK, color);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void getInvalidColorTest() {
-        StyleConverter.getColor(0xffffff1);
+        StyleConverter.getColorFromHexValue(0xffffff1);
     }
 }

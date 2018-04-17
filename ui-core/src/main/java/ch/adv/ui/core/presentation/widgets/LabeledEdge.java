@@ -90,7 +90,7 @@ public class LabeledEdge extends Group {
 
     private void applyStyle() {
         curve.setStrokeWidth(style.getStrokeThickness());
-        curve.setStroke(StyleConverter.getColor(style.getStrokeColor()));
+        curve.setStroke(StyleConverter.getColorFromHexValue(style.getStrokeColor()));
         curve.setFill(Color.TRANSPARENT);
         curve.setStrokeType(StrokeType.CENTERED);
     }

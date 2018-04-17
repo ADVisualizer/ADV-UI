@@ -54,10 +54,10 @@ public class ArrayObjectLayouter {
         ADVStyle style = arrayElement.getStyle();
         referenceNode.setConnectorTypeOutgoing(ConnectorType.BOTTOM);
         referenceNode.setFontColor(Color.WHITE);
-        referenceNode.setBackgroundColor(StyleConverter.getColor(
+        referenceNode.setBackgroundColor(StyleConverter.getColorFromHexValue(
                 style.getFillColor()));
         referenceNode.setBorder(style.getStrokeThickness(),
-                StyleConverter.getColor(style.getStrokeColor()),
+                StyleConverter.getColorFromHexValue(style.getStrokeColor()),
                 StyleConverter.getStrokeStyle(style.getStrokeStyle()));
 
         referenceContainer.getChildren().addAll(referenceNode);
