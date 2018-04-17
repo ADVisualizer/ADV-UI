@@ -4,11 +4,15 @@ import ch.adv.ui.core.domain.Session;
 
 /**
  * Session parser
+ * <p>
+ * Abstraction Interface of the strategy pattern. Every Module supplies a
+ * concrete strategy to be used.
  */
 public interface Parser {
 
     /**
      * Parses the given json into a {@link Session}
+     *
      * @param json json to parse
      * @return parsed {@link Session}
      */

@@ -6,6 +6,9 @@ import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 /**
  * Builds JavaFX Elements from business objects contained in a snapshot.
  * Places and orients these elements on a JavaFX Pane.
+ * <p>
+ * Abstraction Interface of the strategy pattern. Every Module supplies a
+ * concrete strategy to be used.
  */
 public interface Layouter {
 

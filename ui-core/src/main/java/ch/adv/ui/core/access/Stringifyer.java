@@ -5,6 +5,9 @@ import ch.adv.ui.core.domain.Session;
 
 /**
  * JSON Serializer
+ * <p>
+ * Abstraction Interface of the strategy pattern. Every Module supplies a
+ * concrete strategy to be used.
  */
 public interface Stringifyer {
 
