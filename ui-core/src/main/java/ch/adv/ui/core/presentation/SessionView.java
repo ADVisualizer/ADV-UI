@@ -80,7 +80,6 @@ public class SessionView {
 
         this.playIcon = fontAwesomePlayView;
         playIcon.setIcon(FontAwesomeIcon.PLAY);
-
     }
 
     /**
@@ -100,6 +99,9 @@ public class SessionView {
 
         replayController.getReplaySpeedProperty()
                 .bindBidirectional(replaySpeedSlider.valueProperty());
+        // set speed default
+        replaySpeedSlider.setValue(2);
+
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
         //TODO: manage to change strings when changing language
         I18n.localeProperty().addListener((e, o, n) -> replaySpeedSlider
