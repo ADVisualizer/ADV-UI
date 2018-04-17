@@ -35,7 +35,7 @@
     <SplitPane dividerPositions="0.28" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
         <AnchorPane>
-            <TitledPane animated="false" fx:id="sessionListViewTitle" AnchorPane.bottomAnchor="0.0"
+            <TitledPane animated="false" fx:id="sessionListViewTitle" collapsible="false" AnchorPane.bottomAnchor="0.0"
                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <ListView fx:id="sessionListView"/>
             </TitledPane>
