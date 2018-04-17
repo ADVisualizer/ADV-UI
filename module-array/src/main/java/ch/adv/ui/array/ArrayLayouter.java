@@ -85,6 +85,9 @@ public class ArrayLayouter implements Layouter {
                         arrayElement, scalePane, valueContainer,
                         referenceContainer);
             } else {
+                valueNode.setConnectorTypeOutgoing(ConnectorType.TOP);
+                valueNode.setConnectorTypeIncoming(ConnectorType.TOP);
+
                 if (arrayElement.getFixedPosX() > 0
                         && arrayElement.getFixedPosY() > 0) {
 

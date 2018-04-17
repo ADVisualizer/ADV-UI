@@ -22,8 +22,8 @@ public class ArrayObjectLayouter {
      * @param valueContainer     pane for value
      * @param referenceContainer pane for reference
      */
-    public void layoutObjectReference(LabeledNode node, ArrayElement
-            arrayElement,
+    public void layoutObjectReference(LabeledNode node,
+                                      ArrayElement arrayElement,
                                       AutoScalePane scalePane,
                                       HBox valueContainer,
                                       HBox referenceContainer) {

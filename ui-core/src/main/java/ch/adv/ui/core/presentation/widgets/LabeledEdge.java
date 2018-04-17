@@ -87,7 +87,6 @@ public class LabeledEdge extends Group {
         getChildren().addAll(curve, label);
     }
 
-
     private void applyStyle() {
         curve.setStrokeWidth(style.getStrokeThickness());
         curve.setStroke(StyleConverter.getColor(style.getStrokeColor()));
@@ -130,9 +129,11 @@ public class LabeledEdge extends Group {
             Point2D endConnectorPoint = getConnectorPoint(endNode,
                     endNode.getConnectorTypeIncoming());
 
-            if (endNode.getParent() != null) {
-                endConnectorPoint = endNode.getParent().localToParent(
-                        endConnectorPoint);
+            // transform to uniform coordinate system
+            Node parent = findFirstCommonAncestor(startNode, endNode);
+            if (parent != null) {
+                startConnectorPoint = parent.localToParent(startConnectorPoint);
+                endConnectorPoint = parent.localToParent(endConnectorPoint);
             }
 
             curve.setStartX(startConnectorPoint.getX());
@@ -158,6 +159,25 @@ public class LabeledEdge extends Group {
                             directionType);
             }
         }
+    }
+
+    private Node findFirstCommonAncestor(Node node1, Node node2) {
+        if (node1 == null || node2 == null) {
+            return null;
+        }
+        if (isDescendant(node1, node2)) {
+            return node2;
+        }
+        return findFirstCommonAncestor(node1, node2.getParent());
+    }
+
+    private boolean isDescendant(Node candidate, Node node) {
+        if (candidate == null) {
+            return false;
+        } else if (candidate == node) {
+            return true;
+        }
+        return isDescendant(candidate.getParent(), node);
     }
 
     private Point2D getConnectorPoint(ADVNode node,
