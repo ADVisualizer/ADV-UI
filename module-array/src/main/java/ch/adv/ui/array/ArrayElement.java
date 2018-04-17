@@ -14,7 +14,6 @@ public class ArrayElement implements ADVElement<String> {
     private int fixedPosY;
     private String content;
     private ADVStyle style = new ADVDefaultStyle();
-    private boolean showObjectReference;
 
     @Override
     public long getElementId() {
@@ -61,11 +60,4 @@ public class ArrayElement implements ADVElement<String> {
         this.id = id;
     }
 
-    public boolean isShowObjectReference() {
-        return showObjectReference;
-    }
-
-    public void setShowObjectReference(boolean showObjectReference) {
-        this.showObjectReference = showObjectReference;
-    }
 }

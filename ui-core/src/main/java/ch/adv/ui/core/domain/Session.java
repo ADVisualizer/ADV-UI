@@ -2,7 +2,10 @@ package ch.adv.ui.core.domain;
 
 import ch.adv.ui.core.app.ADVModule;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.TimeZone;
 
 /**
  * Represents the session which holds multiple snapshots
@@ -10,6 +13,7 @@ import java.util.*;
 public class Session {
 
     private final List<Snapshot> snapshots = new ArrayList<>();
+    private final List<String> flags = new ArrayList<>();
     private long sessionId;
     private String sessionName;
     private String moduleName;
@@ -55,6 +59,10 @@ public class Session {
 
     public List<Snapshot> getSnapshots() {
         return snapshots;
+    }
+
+    public List<String> getFlags() {
+        return flags;
     }
 
     /**

@@ -3,6 +3,8 @@ package ch.adv.ui.core.presentation;
 import ch.adv.ui.core.domain.Snapshot;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 
+import java.util.List;
+
 /**
  * Builds JavaFX Elements from business objects contained in a snapshot.
  * Places and orients these elements on a JavaFX Pane.
@@ -17,7 +19,8 @@ public interface Layouter {
      * on a pane, which will be displayed in the session view.
      *
      * @param snapshot to be layouted
+     * @param flags    optional flags on session level
      * @return a wrapper containing a layouted JavaFX Pane and the snapshot
      */
-    LayoutedSnapshot layout(Snapshot snapshot);
+    LayoutedSnapshot layout(Snapshot snapshot, List<String> flags);
 }

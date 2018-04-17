@@ -65,7 +65,8 @@ public class ADVFlowControl {
         newSnapshots.forEach(snapshot -> {
 
             // layout
-            LayoutedSnapshot layoutedSnapshot = layouter.layout(snapshot);
+            LayoutedSnapshot layoutedSnapshot = layouter.layout(snapshot,
+                    session.getFlags());
 
             // store layouted snapshot
             layoutedSnapshotStore
