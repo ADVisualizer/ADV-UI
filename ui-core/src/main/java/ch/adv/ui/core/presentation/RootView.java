@@ -4,13 +4,14 @@ import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.util.ResourceLocator;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import org.controlsfx.control.SegmentedButton;
@@ -32,8 +33,7 @@ public class RootView {
     private static final int ICON_SIZE = 16;
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
-    private final ObjectProperty<Session> activeSession = new
-            SimpleObjectProperty<>();
+
     @FXML
     private Button loadSessionButton;
     @FXML
@@ -123,11 +123,8 @@ public class RootView {
                     }
                 });
                 change.getRemoved().forEach(session -> {
-                    Optional<Tab> existingTab = getExistingTab(session);
-                    if (existingTab.isPresent()) {
-                        sessionTabPane.getTabs()
-                                .remove(existingTab.get());
-                    }
+                    getExistingTab(session)
+                            .ifPresent(t -> sessionTabPane.getTabs().remove(t));
                 });
             }
         };
@@ -201,6 +198,18 @@ public class RootView {
         saveActiveSessionButton.setGraphic(saveIcon);
         saveActiveSessionButton.textProperty().bind(I18n
                 .createStringBinding("button.session-bar.save_session"));
+
+
+        saveActiveSessionButton.sceneProperty().addListener((e, o, n) -> {
+            if (n != null) {
+                logger.debug("Setting key shortcut to save a session.");
+                saveActiveSessionButton.getScene().getAccelerators().put(
+                        new KeyCodeCombination(KeyCode.S, KeyCombination
+                                .SHORTCUT_DOWN),
+                        () -> saveActiveSessionButton.fire()
+                );
+            }
+        });
 
         FontAwesomeIconView closeIcon = new FontAwesomeIconView();
         closeIcon.setIcon(FontAwesomeIcon.TIMES);
