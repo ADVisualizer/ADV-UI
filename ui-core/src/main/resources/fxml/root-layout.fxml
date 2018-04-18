@@ -11,14 +11,24 @@
 
     <ToolBar prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
              AnchorPane.topAnchor="0.0">
-        <Button fx:id="loadSessionButton" mnemonicParsing="false">
+        <Button fx:id="loadSessionButton" mnemonicParsing="false" onAction="#handleLoadSessionClicked">
             <graphic>
                 <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
             </graphic>
         </Button>
-        <Button fx:id="clearAllSessionsButton" mnemonicParsing="false">
+        <Button fx:id="clearAllSessionsButton" mnemonicParsing="false" onAction="#handleClearAllSessionsClicked">
             <graphic>
                 <FontAwesomeIconView glyphName="ERASER"/>
+            </graphic>
+        </Button>
+        <Button fx:id="saveActiveSessionButton" mnemonicParsing="false" onAction="#handleSaveSessionClicked">
+            <graphic>
+                <FontAwesomeIconView glyphName="FLOPPY_ALT"/>
+            </graphic>
+        </Button>
+        <Button fx:id="removeActiveSessionButton" mnemonicParsing="false" onAction="#handleRemoveSessionClicked">
+            <graphic>
+                <FontAwesomeIconView glyphName="WINDOW-CLOSE"/>
             </graphic>
         </Button>
 

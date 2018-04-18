@@ -68,7 +68,7 @@ public class SessionView {
                        StateViewModel stateViewModel,
                        FontAwesomeIconView fontAwesomePauseView,
                        FontAwesomeIconView fontAwesomePlayView) {
-
+        logger.debug("Construct SessionView");
         this.stateViewModel = stateViewModel;
         this.steppingViewModel = steppingViewModelFactory.create(
                 stateViewModel);
