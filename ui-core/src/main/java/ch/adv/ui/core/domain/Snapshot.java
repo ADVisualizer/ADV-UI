@@ -14,18 +14,12 @@ public class Snapshot {
 
     private static final transient AtomicLong SNAPSHOT_COUNTER = new
             AtomicLong(0);
-
-    private final long snapshotId;
+    private final long snapshotId = SNAPSHOT_COUNTER.incrementAndGet();
 
     private String snapshotDescription;
-    private List<ADVElement> elements;
-    private List<ADVRelation> relations;
+    private List<ADVElement> elements = new ArrayList<>();
+    private List<ADVRelation> relations = new ArrayList<>();
 
-    public Snapshot() {
-        snapshotId = SNAPSHOT_COUNTER.incrementAndGet();
-        elements = new ArrayList<>();
-        relations = new ArrayList<>();
-    }
 
     public long getSnapshotId() {
         return snapshotId;

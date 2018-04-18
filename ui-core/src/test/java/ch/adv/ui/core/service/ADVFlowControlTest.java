@@ -28,6 +28,7 @@ import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 
 @RunWith(JukitoRunner.class)
 public class ADVFlowControlTest {
@@ -76,7 +77,8 @@ public class ADVFlowControlTest {
         Mockito.doReturn(testLayouter).when(testModule).getLayouter();
 
         Mockito.doReturn(testSession).when(testParser).parse(any());
-        Mockito.doReturn(testLayoutedSnapshot).when(testLayouter).layout(any());
+        Mockito.doReturn(testLayoutedSnapshot).when(testLayouter).layout(any
+                (), anyList());
     }
 
     @Test
@@ -100,6 +102,7 @@ public class ADVFlowControlTest {
         flowControl.process(testJSON);
         flowControl.process(testJSON);
         assertEquals(1, testSessionStore.getSessions().size());
-        assertEquals(1, testLayoutedSnapshotStore.getLayoutedSnapshots(testSession.getSessionId()).size());
+        assertEquals(1, testLayoutedSnapshotStore
+                .getLayoutedSnapshots(testSession.getSessionId()).size());
     }
 }

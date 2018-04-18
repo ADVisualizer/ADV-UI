@@ -1,22 +1,15 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.core.domain.Snapshot;
-import ch.adv.ui.core.domain.styles.ADVStyle;
 import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
-import ch.adv.ui.core.presentation.util.StyleConverter;
-import ch.adv.ui.core.presentation.widgets.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import javafx.geometry.Pos;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
  * Positions the ArrayElements on the Pane
@@ -24,15 +17,18 @@ import java.util.Map;
 @Singleton
 public class ArrayLayouter implements Layouter {
 
-    private static final int SPACING = 30;
+    private static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";
     private static final Logger logger = LoggerFactory.getLogger(
             ArrayLayouter.class);
 
-    private ArrayObjectLayouter arrayObjectLayouter;
+    private final ArrayObjectReferenceLayouter arrayObjectReferenceLayouter;
+    private final ArrayDefaultLayouter arrayDefaultLayouter;
 
     @Inject
-    public ArrayLayouter(ArrayObjectLayouter objectLayouter) {
-        this.arrayObjectLayouter = objectLayouter;
+    public ArrayLayouter(ArrayObjectReferenceLayouter objectLayouter,
+                         ArrayDefaultLayouter arrayDefaultLayouter) {
+        this.arrayObjectReferenceLayouter = objectLayouter;
+        this.arrayDefaultLayouter = arrayDefaultLayouter;
     }
 
     /**
@@ -42,17 +38,28 @@ public class ArrayLayouter implements Layouter {
      * @return layouted snapshot
      */
     @Override
-    public LayoutedSnapshot layout(Snapshot snapshot) {
-        AutoScalePane scalePane = new AutoScalePane();
+    public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
 
-        Map<Long, ADVNode> nodeMap = drawElements(snapshot, scalePane);
-        drawRelations(snapshot, scalePane, nodeMap);
+        boolean showObjectRelations = false;
+        if (flags != null) {
+            showObjectRelations = flags.stream().anyMatch(
+                    f -> f.equals(SHOW_OBJECT_RELATIONS));
+        }
 
-        return createLayoutedSnapshot(snapshot, scalePane);
+        Pane pane;
+        if (showObjectRelations) {
+            logger.info("Use Object Reference Array Layouter");
+            pane = arrayObjectReferenceLayouter.layout(snapshot);
+        } else {
+            logger.info("Use Default Array Layouter");
+            pane = arrayDefaultLayouter.layout(snapshot);
+        }
+
+        return createLayoutedSnapshot(snapshot, pane);
     }
 
     private LayoutedSnapshot createLayoutedSnapshot(Snapshot snapshot,
-                                                    AutoScalePane scalePane) {
+                                                    Pane scalePane) {
         LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot();
         layoutedSnapshot.setSnapshotDescription(
                 snapshot.getSnapshotDescription());
@@ -60,86 +67,4 @@ public class ArrayLayouter implements Layouter {
         layoutedSnapshot.setPane(scalePane);
         return layoutedSnapshot;
     }
-
-    private Map<Long, ADVNode> drawElements(Snapshot snapshot, AutoScalePane
-            scalePane) {
-        logger.info("Drawing array elements...");
-        Map<Long, ADVNode> availableNodesMap = new HashMap<>();
-
-        VBox boxContainer = new VBox();
-        HBox valueContainer = new HBox();
-        HBox referenceContainer = new HBox();
-        referenceContainer.setAlignment(Pos.CENTER);
-        valueContainer.setAlignment(Pos.CENTER);
-        boxContainer.setSpacing(SPACING);
-
-        snapshot.getElements().forEach(e -> {
-            ArrayElement arrayElement = (ArrayElement) e;
-            ADVStyle style = arrayElement.getStyle();
-            LabeledNode valueNode = createLabeledNode(arrayElement, style);
-            if (arrayElement.isShowObjectReference()) {
-                valueContainer.setSpacing(SPACING);
-                logger.info("Delegating array layouting to show object "
-                        + "references.");
-                arrayObjectLayouter.layoutObjectReference(valueNode,
-                        arrayElement, scalePane, valueContainer,
-                        referenceContainer);
-            } else {
-                if (arrayElement.getFixedPosX() > 0
-                        && arrayElement.getFixedPosY() > 0) {
-
-                    valueNode.setY(arrayElement.getFixedPosY());
-                    valueNode.setX(arrayElement.getFixedPosX());
-
-                    // add fixed positioned elements directly on the scale pane
-                    // because the hbox would ignore the fixed position.
-                    scalePane.addChildren(valueNode);
-                } else {
-                    valueContainer.getChildren().add(valueNode);
-                }
-                availableNodesMap.put(arrayElement.getElementId(), valueNode);
-            }
-        });
-
-        // add wrapper container to master pane
-        boxContainer.getChildren().addAll(referenceContainer, valueContainer);
-        scalePane.addChildren(boxContainer);
-
-        return availableNodesMap;
-    }
-
-    private LabeledNode createLabeledNode(ArrayElement arrayElement, ADVStyle
-            style) {
-        LabeledNode valueNode = new LabeledNode(arrayElement
-                .getContent());
-        valueNode.setBackgroundColor(StyleConverter.getColorFromHexValue(
-                style.getFillColor()));
-        valueNode.setFontColor(Color.WHITE);
-        valueNode.setBorder(style.getStrokeThickness(),
-                StyleConverter.getColorFromHexValue(style.getStrokeColor()),
-                StyleConverter.getStrokeStyle(style.getStrokeStyle()));
-        return valueNode;
-    }
-
-    //TODO: Do we event need this?
-    private void drawRelations(Snapshot snapshot, AutoScalePane scalePane,
-                               Map<Long, ADVNode> nodeMap) {
-        logger.info("Drawing array relations...");
-        snapshot.getRelations().forEach(r -> {
-
-            ADVNode sourceNode = nodeMap.get(r.getSourceElementId());
-            ADVNode endNode = nodeMap.get(r.getTargetElementId());
-
-            if (sourceNode != null && endNode != null) {
-
-                LabeledEdge edge = new CurvedLabeledEdge(r.getLabel(),
-                        sourceNode,
-                        endNode,
-                        r.getStyle(), LabeledEdge.DirectionType.UNIDIRECTIONAL);
-
-                scalePane.addChildren(edge);
-            }
-        });
-    }
-
 }

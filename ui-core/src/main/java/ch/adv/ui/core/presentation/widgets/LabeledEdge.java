@@ -87,7 +87,6 @@ public class LabeledEdge extends Group {
         getChildren().addAll(curve, label);
     }
 
-
     private void applyStyle() {
         curve.setStrokeWidth(style.getStrokeThickness());
         curve.setStroke(StyleConverter.getColorFromHexValue(style.getStrokeColor()));
@@ -130,10 +129,9 @@ public class LabeledEdge extends Group {
             Point2D endConnectorPoint = getConnectorPoint(endNode,
                     endNode.getConnectorTypeIncoming());
 
-            if (endNode.getParent() != null) {
-                endConnectorPoint = endNode.getParent().localToParent(
-                        endConnectorPoint);
-            }
+            // transform parent coordinate space
+            endConnectorPoint = endNode.getParent().localToParent(
+                    endConnectorPoint);
 
             curve.setStartX(startConnectorPoint.getX());
             curve.setStartY(startConnectorPoint.getY());
