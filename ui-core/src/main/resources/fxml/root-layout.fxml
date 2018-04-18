@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.SegmentedButton?>
@@ -8,12 +9,32 @@
             fx:controller="ch.adv.ui.core.presentation.RootView">
 
 
-    <ToolBar prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+    <ToolBar prefHeight="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
              AnchorPane.topAnchor="0.0">
-        <Button fx:id="loadSessionButton" mnemonicParsing="false" onAction="#handleLoadSessionClicked"/>
-        <Button fx:id="saveActiveSessionButton" mnemonicParsing="false" onAction="#handleSaveSessionClicked"/>
-        <Button fx:id="closeActiveSessionButton" mnemonicParsing="false" onAction="#handleRemoveSessionClicked"/>
-        <Button fx:id="closeAllSessionsButton" mnemonicParsing="false" onAction="#handleClearAllSessionsClicked"/>
+        <Button fx:id="loadSessionButton" mnemonicParsing="false" onAction="#handleLoadSessionClicked"
+                contentDisplay="TOP">
+            <graphic>
+                <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
+            </graphic>
+        </Button>
+        <Button fx:id="saveActiveSessionButton" mnemonicParsing="false" onAction="#handleSaveSessionClicked"
+                contentDisplay="TOP">
+            <graphic>
+                <FontAwesomeIconView glyphName="FLOPPY_ALT"/>
+            </graphic>
+        </Button>
+        <Button fx:id="closeActiveSessionButton" mnemonicParsing="false" onAction="#handleRemoveSessionClicked"
+                contentDisplay="TOP">
+            <graphic>
+                <FontAwesomeIconView glyphName="TIMES"/>
+            </graphic>
+        </Button>
+        <Button fx:id="closeAllSessionsButton" mnemonicParsing="false" onAction="#handleClearAllSessionsClicked"
+                contentDisplay="TOP">
+            <graphic>
+                <FontAwesomeIconView glyphName="TIMES"/>
+            </graphic>
+        </Button>
 
         <Pane HBox.hgrow="ALWAYS"/>
 
@@ -26,7 +47,7 @@
     </ToolBar>
 
     <SplitPane dividerPositions="0.28" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
         <AnchorPane>
             <TitledPane animated="false" fx:id="sessionListViewTitle" collapsible="false" AnchorPane.bottomAnchor="0.0"
                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

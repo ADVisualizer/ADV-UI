@@ -2,8 +2,6 @@ package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.util.ResourceLocator;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -132,9 +130,13 @@ public class RootView {
 
     private void updateSelected(SelectionModel source, SelectionModel target) {
         int selectedIndex = source.getSelectedIndex();
-        target.select(selectedIndex);
-        Session selectedSession = sessionListView.getItems().get(selectedIndex);
-        rootViewModel.getCurrentSessionProperty().setValue(selectedSession);
+        if (selectedIndex >= 0) {
+            target.select(selectedIndex);
+            Session selectedSession = sessionListView.getItems()
+                    .get(selectedIndex);
+            rootViewModel.getCurrentSessionProperty().setValue(selectedSession);
+        }
+
     }
 
     private void bindI18nStrings() {
@@ -185,17 +187,9 @@ public class RootView {
     }
 
     private void initButtons() {
-        FontAwesomeIconView loadIcon = new FontAwesomeIconView();
-        loadIcon.setIcon(FontAwesomeIcon.FOLDER_OPEN);
-        loadIcon.setGlyphSize(ICON_SIZE);
-        loadSessionButton.setGraphic(loadIcon);
         loadSessionButton.textProperty().bind(I18n
                 .createStringBinding("button.session-bar.load_session"));
 
-        FontAwesomeIconView saveIcon = new FontAwesomeIconView();
-        saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
-        saveIcon.setGlyphSize(ICON_SIZE);
-        saveActiveSessionButton.setGraphic(saveIcon);
         saveActiveSessionButton.textProperty().bind(I18n
                 .createStringBinding("button.session-bar.save_session"));
 
@@ -211,17 +205,9 @@ public class RootView {
             }
         });
 
-        FontAwesomeIconView closeIcon = new FontAwesomeIconView();
-        closeIcon.setIcon(FontAwesomeIcon.TIMES);
-        closeIcon.setGlyphSize(ICON_SIZE);
-        closeActiveSessionButton.setGraphic(closeIcon);
         closeActiveSessionButton.textProperty().bind(I18n
                 .createStringBinding("button.session-bar.close_active"));
 
-        FontAwesomeIconView closeAllIcon = new FontAwesomeIconView();
-        closeAllIcon.setIcon(FontAwesomeIcon.TIMES);
-        closeAllIcon.setGlyphSize(ICON_SIZE);
-        closeAllSessionsButton.setGraphic(closeAllIcon);
         closeAllSessionsButton.textProperty().bind(I18n
                 .createStringBinding("button.session-bar.close_all"));
 
