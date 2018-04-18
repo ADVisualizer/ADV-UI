@@ -1,5 +1,6 @@
 package ch.adv.ui.core.logic;
 
+import ch.adv.ui.core.app.ADVEvent;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,5 +108,4 @@ public class EventManager {
         eventStore.firePropertyChange(handle, oldVal, newVal);
         logger.debug("Fired event {}", handle);
     }
-
 }

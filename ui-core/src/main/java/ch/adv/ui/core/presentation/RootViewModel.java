@@ -2,16 +2,13 @@ package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.access.FileDatastoreAccess;
+import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.domain.Session;
-import ch.adv.ui.core.logic.ADVEvent;
 import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.logic.SessionStore;
 import ch.adv.ui.core.service.ADVFlowControl;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.slf4j.Logger;
@@ -22,7 +19,10 @@ import javax.inject.Singleton;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Handles presentation logic for the {@link RootView}. Delegates tasks to
@@ -31,15 +31,18 @@ import java.util.List;
 @Singleton
 public class RootViewModel {
 
+    public static final int NOTIFICATION_FADE_DELAY = 3_000;
     private static final Logger logger = LoggerFactory.getLogger(
             RootViewModel.class);
-
     private final ObservableList<Session> availableSessions = FXCollections
             .observableArrayList();
     private final ObjectProperty<Session> currentSessionProperty = new
             SimpleObjectProperty<>();
     private final BooleanProperty noSessionsProperty = new
             SimpleBooleanProperty(true);
+    private final StringProperty notificationMessageProperty = new
+            SimpleStringProperty("");
+
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final ADVFlowControl flowControl;
@@ -59,6 +62,11 @@ public class RootViewModel {
         eventManager.subscribe(new SessionStoreListener(), List.of(ADVEvent
                 .SESSION_ADDED, ADVEvent.SESSION_REMOVED)
         );
+
+        eventManager.subscribe((e) -> {
+            String i18nKey = (String) e.getNewValue();
+            showNotification(i18nKey);
+        }, ADVEvent.NOTIFICATION);
     }
 
     public ObservableList<Session> getAvailableSessions() {
@@ -74,6 +82,10 @@ public class RootViewModel {
         return noSessionsProperty;
     }
 
+    public StringProperty getNotificationMessageProperty() {
+        return notificationMessageProperty;
+    }
+
     /**
      * Delegates removing current session to the business logic
      */
@@ -87,8 +99,13 @@ public class RootViewModel {
     }
 
     private void removeSession(Session session) {
-        sessionStore.deleteSession(session);
-        layoutedSnapshotStore.deleteSession(session.getSessionId());
+        try {
+            sessionStore.deleteSession(session);
+            layoutedSnapshotStore.deleteSession(session.getSessionId());
+            showNotification(I18n.NOTIFICATION_SESSION_CLOSE_SUCCESSFUL);
+        } catch (Exception e) {
+            showNotification(I18n.NOTIFICATION_SESSION_CLOSE_UNSUCCESSFUL);
+        }
     }
 
     /**
@@ -104,18 +121,25 @@ public class RootViewModel {
      * @param file to be saved to
      */
     public void saveSession(final File file) {
-        Session session = currentSessionProperty.get();
-        if (session != null) {
-            layoutedSnapshotStore.getLayoutedSnapshots(session.getSessionId())
-                    .forEach(element -> {
-                        String description = element.getSnapshotDescription();
-                        long id = element.getSnapshotId();
-                        session.getSnapshotById(id)
-                                .setSnapshotDescription(description);
-                    });
-            String json = session.getModule().getStringifyer()
-                    .stringify(session);
-            fileAccess.write(file, json);
+        try {
+            Session session = currentSessionProperty.get();
+            if (session != null) {
+                layoutedSnapshotStore
+                        .getLayoutedSnapshots(session.getSessionId())
+                        .forEach(element -> {
+                            String description = element
+                                    .getSnapshotDescription();
+                            long id = element.getSnapshotId();
+                            session.getSnapshotById(id)
+                                    .setSnapshotDescription(description);
+                        });
+                String json = session.getModule()
+                        .getStringifyer().stringify(session);
+                fileAccess.write(file, json);
+            }
+            showNotification(I18n.NOTIFICATION_SESSION_SAVE_SUCCESSFUL);
+        } catch (IOException e) {
+            showNotification(I18n.NOTIFICATION_SESSION_SAVE_UNSUCCESSFUL);
         }
     }
 
@@ -125,10 +149,28 @@ public class RootViewModel {
      * @param file file to open
      */
     public void loadSession(File file) {
-        String json = fileAccess.read(file);
-        flowControl.process(json);
+        try {
+            String json = fileAccess.read(file);
+            flowControl.process(json);
+        } catch (IOException e) {
+            showNotification(I18n.NOTIFICATION_SESSION_LOAD_UNSUCCESSFUL);
+        }
     }
 
+    private void showNotification(String i18nKey) {
+        notificationMessageProperty.set(I18n.get(i18nKey));
+        startNotificationResetTimer();
+    }
+
+    private void startNotificationResetTimer() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> notificationMessageProperty.set(""));
+            }
+        };
+        new Timer().schedule(task, NOTIFICATION_FADE_DELAY);
+    }
 
     /**
      * Update ui if session store has changed.
@@ -137,8 +179,9 @@ public class RootViewModel {
 
         @Override
         public void propertyChange(final PropertyChangeEvent event) {
-            if (event.getPropertyName().equals(ADVEvent
-                    .SESSION_ADDED.toString())) {
+            if (event.getPropertyName().equals(
+                    ADVEvent.SESSION_ADDED.toString())) {
+
                 logger.debug("SessionStore has updated: Session was added. "
                         + "Update ListView");
                 Platform.runLater(() -> {

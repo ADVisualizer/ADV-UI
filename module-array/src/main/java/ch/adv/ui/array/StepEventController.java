@@ -1,6 +1,6 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.logic.ADVEvent;
+import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.logic.EventManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

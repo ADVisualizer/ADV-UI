@@ -1,5 +1,6 @@
-package ch.adv.ui.core.logic;
+package ch.adv.ui.core.app;
 
+import ch.adv.ui.core.logic.EventManager;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Test;

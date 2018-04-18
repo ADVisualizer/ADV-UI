@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class ArrayParserTest {
     private String testJson;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         URL url = ArrayParserTest.class.getClassLoader()
                 .getResource("session1.json");
 

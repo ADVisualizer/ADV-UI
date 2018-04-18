@@ -4,6 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.SegmentedButton?>
+<?import org.controlsfx.control.StatusBar?>
+
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/root-layout.css"
             xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ch.adv.ui.core.presentation.RootView">
@@ -46,7 +48,7 @@
         </SegmentedButton>
     </ToolBar>
 
-    <SplitPane dividerPositions="0.28" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+    <SplitPane dividerPositions="0.28" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0"
                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
         <AnchorPane>
             <TitledPane animated="false" fx:id="sessionListViewTitle" collapsible="false" AnchorPane.bottomAnchor="0.0"
@@ -59,4 +61,9 @@
                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
         </AnchorPane>
     </SplitPane>
+
+    <StatusBar prefHeight="30" fx:id="notificationBar" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
 </AnchorPane>
+
+

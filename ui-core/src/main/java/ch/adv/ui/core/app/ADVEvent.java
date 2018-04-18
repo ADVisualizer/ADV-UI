@@ -1,4 +1,4 @@
-package ch.adv.ui.core.logic;
+package ch.adv.ui.core.app;
 
 /**
  * An ADVEvent within the framework.
@@ -13,5 +13,6 @@ public enum ADVEvent {
     SNAPSHOT_ADDED,
     SESSION_ADDED,
     SESSION_REMOVED,
-    CURRENT_SESSION_CHANGED;
+    CURRENT_SESSION_CHANGED,
+    NOTIFICATION;
 }

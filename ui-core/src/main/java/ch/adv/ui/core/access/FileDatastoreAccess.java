@@ -1,5 +1,7 @@
 package ch.adv.ui.core.access;
 
+import ch.adv.ui.core.logic.EventManager;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,14 @@ public class FileDatastoreAccess implements DatastoreAccess {
     private static final Logger logger = LoggerFactory.getLogger(
             FileDatastoreAccess.class);
 
+    private final EventManager eventManager;
+
+    @Inject
+    public FileDatastoreAccess(EventManager eventManager) {
+        this.eventManager = eventManager;
+    }
+
+
     /**
      * Reads the given file if it exists, using the jvm default charset.
      *
@@ -29,7 +39,7 @@ public class FileDatastoreAccess implements DatastoreAccess {
      * @return null or json payload
      */
     @Override
-    public String read(final File file) {
+    public String read(final File file) throws IOException {
         if (file.exists()) {
             Path path = Paths.get(file.getAbsolutePath());
             try (BufferedReader reader = Files.newBufferedReader(path,
@@ -41,13 +51,13 @@ public class FileDatastoreAccess implements DatastoreAccess {
                 }
                 return jsonPayload;
             } catch (IOException e) {
-                logger.info("Unable to read file {}", file.getAbsoluteFile(),
-                        e);
-                return null;
+                logger.info("Unable to read file {}",
+                        file.getAbsoluteFile(), e);
+                throw e;
             }
         } else {
-            logger.info("Unable to read file: File {} not found.", file
-                    .getAbsoluteFile());
+            logger.info("Unable to read file: File {} not found.",
+                    file.getAbsoluteFile());
             return null;
         }
     }
@@ -61,16 +71,15 @@ public class FileDatastoreAccess implements DatastoreAccess {
      * @return whether operation was successful or not
      */
     @Override
-    public boolean write(final File file, String jsonPayload) {
+    public void write(final File file, String jsonPayload) throws IOException {
         Path path = Paths.get(file.getAbsolutePath());
 
         try (BufferedWriter writer = Files.newBufferedWriter(path, Charset
                 .defaultCharset())) {
             writer.write(jsonPayload);
-            return true;
         } catch (IOException e) {
             logger.info("Unable to write file {}", file.getAbsoluteFile(), e);
-            return false;
+            throw e;
         }
     }
 }

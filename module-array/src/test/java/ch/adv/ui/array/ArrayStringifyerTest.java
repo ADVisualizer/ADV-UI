@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +27,7 @@ public class ArrayStringifyerTest {
     private Session testSession;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         URL url = ArrayStringifyerTest.class.getClassLoader()
                 .getResource("session1.json");
 
