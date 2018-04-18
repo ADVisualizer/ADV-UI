@@ -200,11 +200,6 @@ public class SessionView {
                         new KeyCodeCombination(KeyCode.ESCAPE),
                         () -> cancelReplayButton.fire()
                 );
-                accelerators.put(
-                        new KeyCodeCombination(KeyCode.LEFT),
-                        () -> stepBackwardButton.fire()
-                );
-
             }
         });
     }
