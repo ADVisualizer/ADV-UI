@@ -90,7 +90,8 @@ public class LabeledEdge extends Group {
 
     private void applyStyle() {
         curve.setStrokeWidth(style.getStrokeThickness());
-        curve.setStroke(StyleConverter.getColorFromHexValue(style.getStrokeColor()));
+        curve.setStroke(StyleConverter
+                .getColorFromHexValue(style.getStrokeColor()));
         curve.setFill(Color.TRANSPARENT);
         curve.setStrokeType(StrokeType.CENTERED);
     }
@@ -113,8 +114,8 @@ public class LabeledEdge extends Group {
         }, curve.startYProperty(), curve.endYProperty());
 
         label.setText(labelText);
-        //TODO: replace with fill color
-        label.setTextFill(Color.BLACK);
+        label.setTextFill(StyleConverter.getLabelColor(
+                StyleConverter.getColorFromHexValue(style.getFillColor())));
         label.setFont(new Font(LABEL_FONT_SIZE));
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);
