@@ -144,7 +144,8 @@ public class SessionView {
                 .bind(I18n.createStringBinding("title.speed"));
         descriptionLabel.textProperty()
                 .bind(I18n.createStringBinding("title.description"));
-        snapshotDescription.promptTextProperty().bind(I18n.createStringBinding("placeholder.description"));
+        snapshotDescription.promptTextProperty()
+                .bind(I18n.createStringBinding("placeholder.description"));
     }
 
     private void setButtonActions() {
