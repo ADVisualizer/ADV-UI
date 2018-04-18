@@ -54,6 +54,7 @@ public class ArrayObjectReferenceLayouter {
         referenceContainer = new HBox();
         referenceContainer.setAlignment(Pos.CENTER);
         valueContainer.setAlignment(Pos.CENTER);
+        valueContainer.setSpacing(SPACING);
         boxContainer.setSpacing(SPACING);
     }
 
