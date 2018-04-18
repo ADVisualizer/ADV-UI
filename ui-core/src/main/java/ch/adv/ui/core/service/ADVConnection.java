@@ -66,8 +66,7 @@ public class ADVConnection {
             }
 
             logger.debug("Acknowledge received json");
-            ADVResponse response = new ADVResponse(
-                    ProtocolCommand.ACKNOWLEDGE);
+            ADVResponse response = new ADVResponse(ProtocolCommand.ACKNOWLEDGE);
             writer.println(response.toJson());
 
             try {

@@ -21,8 +21,10 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Handles presentation logic for the {@link RootView}. Delegates tasks to
@@ -31,7 +33,7 @@ import java.util.TimerTask;
 @Singleton
 public class RootViewModel {
 
-    public static final int NOTIFICATION_FADE_DELAY = 3_000;
+    private static final int NOTIFICATION_FADE_DELAY = 3;
     private static final Logger logger = LoggerFactory.getLogger(
             RootViewModel.class);
     private final ObservableList<Session> availableSessions = FXCollections
@@ -47,6 +49,15 @@ public class RootViewModel {
     private final SessionStore sessionStore;
     private final ADVFlowControl flowControl;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
+    private final ScheduledExecutorService notificationResetTimer =
+            Executors.newScheduledThreadPool(4);
+
+    private final TimerTask resetTask = new TimerTask() {
+        @Override
+        public void run() {
+            Platform.runLater(() -> notificationMessageProperty.set(""));
+        }
+    };
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ADVFlowControl flowControl,
@@ -113,6 +124,7 @@ public class RootViewModel {
      */
     public void clearAllSessions() {
         availableSessions.forEach(session -> removeSession(session));
+        showNotification(I18n.NOTIFICATION_SESSION_CLOSE_ALL);
     }
 
     /**
@@ -158,18 +170,15 @@ public class RootViewModel {
     }
 
     private void showNotification(String i18nKey) {
-        notificationMessageProperty.set(I18n.get(i18nKey));
-        startNotificationResetTimer();
+        Platform.runLater(() -> {
+            notificationMessageProperty.set(I18n.get(i18nKey));
+            startNotificationResetTimer();
+        });
     }
 
     private void startNotificationResetTimer() {
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(() -> notificationMessageProperty.set(""));
-            }
-        };
-        new Timer().schedule(task, NOTIFICATION_FADE_DELAY);
+        notificationResetTimer
+                .schedule(resetTask, NOTIFICATION_FADE_DELAY, TimeUnit.SECONDS);
     }
 
     /**

@@ -165,8 +165,7 @@ public class RootView {
                     if (tabNumber == 0) {
                         sessionTabPane.getStyleClass().add("logo");
                     } else {
-                        sessionTabPane.getStyleClass()
-                                .remove("logo");
+                        sessionTabPane.getStyleClass().remove("logo");
                     }
                 });
     }

@@ -22,11 +22,6 @@
             <property name="excludeScope" value="private"/>
         </module>
 
-        <module name="JavadocVariable">
-            <property name="scope" value="public"/>
-            <property name="tokens" value="VARIABLE_DEF"/>
-        </module>
-
         <module name="ConstantName">
             <property name="format" value="^([A-Z][A-Z0-9]*(_[A-Z0-9]+)*|logger)$"/>
         </module>

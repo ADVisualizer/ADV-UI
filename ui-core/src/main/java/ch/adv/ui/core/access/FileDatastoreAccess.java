@@ -1,7 +1,5 @@
 package ch.adv.ui.core.access;
 
-import ch.adv.ui.core.logic.EventManager;
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,19 +22,12 @@ public class FileDatastoreAccess implements DatastoreAccess {
     private static final Logger logger = LoggerFactory.getLogger(
             FileDatastoreAccess.class);
 
-    private final EventManager eventManager;
-
-    @Inject
-    public FileDatastoreAccess(EventManager eventManager) {
-        this.eventManager = eventManager;
-    }
-
-
     /**
      * Reads the given file if it exists, using the jvm default charset.
      *
      * @param file file to read
      * @return null or json payload
+     * @throws IOException exception
      */
     @Override
     public String read(final File file) throws IOException {
@@ -68,7 +59,7 @@ public class FileDatastoreAccess implements DatastoreAccess {
      *
      * @param file        new or existing file
      * @param jsonPayload data
-     * @return whether operation was successful or not
+     * @throws IOException exception
      */
     @Override
     public void write(final File file, String jsonPayload) throws IOException {
