@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.SegmentedButton?>
@@ -11,26 +10,10 @@
 
     <ToolBar prefHeight="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
              AnchorPane.topAnchor="0.0">
-        <Button fx:id="loadSessionButton" mnemonicParsing="false" onAction="#handleLoadSessionClicked">
-            <graphic>
-                <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
-            </graphic>
-        </Button>
-        <Button fx:id="clearAllSessionsButton" mnemonicParsing="false" onAction="#handleClearAllSessionsClicked">
-            <graphic>
-                <FontAwesomeIconView glyphName="ERASER"/>
-            </graphic>
-        </Button>
-        <Button fx:id="saveActiveSessionButton" mnemonicParsing="false" onAction="#handleSaveSessionClicked">
-            <graphic>
-                <FontAwesomeIconView glyphName="FLOPPY_ALT"/>
-            </graphic>
-        </Button>
-        <Button fx:id="removeActiveSessionButton" mnemonicParsing="false" onAction="#handleRemoveSessionClicked">
-            <graphic>
-                <FontAwesomeIconView glyphName="WINDOW-CLOSE"/>
-            </graphic>
-        </Button>
+        <Button fx:id="loadSessionButton" mnemonicParsing="false" onAction="#handleLoadSessionClicked"/>
+        <Button fx:id="saveActiveSessionButton" mnemonicParsing="false" onAction="#handleSaveSessionClicked"/>
+        <Button fx:id="closeActiveSessionButton" mnemonicParsing="false" onAction="#handleRemoveSessionClicked"/>
+        <Button fx:id="closeAllSessionsButton" mnemonicParsing="false" onAction="#handleClearAllSessionsClicked"/>
 
         <Pane HBox.hgrow="ALWAYS"/>
 

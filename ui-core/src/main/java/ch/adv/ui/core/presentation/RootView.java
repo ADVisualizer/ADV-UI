@@ -2,6 +2,8 @@ package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.util.ResourceLocator;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
@@ -31,6 +33,7 @@ public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
+    private static final int ICON_SIZE = 16;
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
     private final ObjectProperty<Session> activeSession = new
@@ -38,11 +41,11 @@ public class RootView {
     @FXML
     private Button loadSessionButton;
     @FXML
-    private Button clearAllSessionsButton;
+    private Button closeAllSessionsButton;
     @FXML
     private Button saveActiveSessionButton;
     @FXML
-    private Button removeActiveSessionButton;
+    private Button closeActiveSessionButton;
     @FXML
     private ListView<Session> sessionListView;
     @FXML
@@ -94,7 +97,7 @@ public class RootView {
 
         handleLogoVisibility();
         bindButtonProperties();
-        initLanguageButtons();
+        initButtons();
         setToolTips();
     }
 
@@ -169,9 +172,9 @@ public class RootView {
     private void bindButtonProperties() {
         saveActiveSessionButton.disableProperty()
                 .bind(rootViewModel.getNoSessionsProperty());
-        removeActiveSessionButton.disableProperty()
+        closeActiveSessionButton.disableProperty()
                 .bind(rootViewModel.getNoSessionsProperty());
-        clearAllSessionsButton.disableProperty()
+        closeAllSessionsButton.disableProperty()
                 .bind(rootViewModel.getNoSessionsProperty());
     }
 
@@ -189,7 +192,35 @@ public class RootView {
                 .findFirst();
     }
 
-    private void initLanguageButtons() {
+    private void initButtons() {
+        FontAwesomeIconView loadIcon = new FontAwesomeIconView();
+        loadIcon.setIcon(FontAwesomeIcon.FOLDER_OPEN);
+        loadIcon.setGlyphSize(ICON_SIZE);
+        loadSessionButton.setGraphic(loadIcon);
+        loadSessionButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.load_session"));
+
+        FontAwesomeIconView saveIcon = new FontAwesomeIconView();
+        saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
+        saveIcon.setGlyphSize(ICON_SIZE);
+        saveActiveSessionButton.setGraphic(saveIcon);
+        saveActiveSessionButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.save_session"));
+
+        FontAwesomeIconView closeIcon = new FontAwesomeIconView();
+        closeIcon.setIcon(FontAwesomeIcon.TIMES);
+        closeIcon.setGlyphSize(ICON_SIZE);
+        closeActiveSessionButton.setGraphic(closeIcon);
+        closeActiveSessionButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.close_active"));
+
+        FontAwesomeIconView closeAllIcon = new FontAwesomeIconView();
+        closeAllIcon.setIcon(FontAwesomeIcon.TIMES);
+        closeAllIcon.setGlyphSize(ICON_SIZE);
+        closeAllSessionsButton.setGraphic(closeAllIcon);
+        closeAllSessionsButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.close_all"));
+
         changeLanguageButton.getToggleGroup().selectToggle(english);
         changeLanguageButton.getToggleGroup().selectedToggleProperty()
                 .addListener((e, oldV, newV) -> {
@@ -204,12 +235,12 @@ public class RootView {
     private void setToolTips() {
         loadSessionButton.setTooltip(I18n
                 .tooltipForKey("tooltip.session-bar.load_session"));
-        clearAllSessionsButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-bar.delete_sessions"));
+        closeAllSessionsButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.close_all"));
         saveActiveSessionButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-list.save_session"));
-        removeActiveSessionButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-list.remove_session"));
+                .tooltipForKey("tooltip.session-bar.save_session"));
+        closeActiveSessionButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.close_active"));
         english.setTooltip(I18n
                 .tooltipForKey("tooltip.session-bar.english"));
         german.setTooltip(I18n.tooltipForKey("tooltip.session-bar.german"));
