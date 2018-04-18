@@ -22,9 +22,7 @@ import javax.inject.Singleton;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Handles presentation logic for the {@link RootView}. Delegates tasks to
@@ -97,8 +95,7 @@ public class RootViewModel {
      * Delegates removing sessions to the business logic
      */
     public void clearAllSessions() {
-        Set<Session> set = new HashSet<>(availableSessions);
-        set.forEach(session -> removeSession(session));
+        availableSessions.forEach(session -> removeSession(session));
     }
 
     /**
@@ -150,7 +147,7 @@ public class RootViewModel {
                     Session newSession = (Session) event.getNewValue();
                     currentSessionProperty.setValue(newSession);
                     availableSessions.add(newSession);
-                    if (noSessionsProperty.get()){
+                    if (noSessionsProperty.get()) {
                         noSessionsProperty.set(false);
                     }
                 });

@@ -44,8 +44,7 @@ public class LabeledEdge extends Group {
 
     public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,
                        ADVStyle style) {
-        this(labelText, startNode, endNode, style,
-                DirectionType.NONE);
+        this(labelText, startNode, endNode, style, DirectionType.NONE);
     }
 
     public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,

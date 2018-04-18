@@ -4,7 +4,6 @@ import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.util.ResourceLocator;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableMap;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -29,7 +28,7 @@ public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
-    private static final int ICON_SIZE = 16;
+
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
 
@@ -260,8 +259,11 @@ public class RootView {
         rootViewModel.clearAllSessions();
     }
 
+    /**
+     * Event handler for load session action
+     */
     @FXML
-    private void handleLoadSessionClicked() {
+    protected void handleLoadSessionClicked() {
         Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Load Session File");
         File file = fileChooser.showOpenDialog(stage);
@@ -271,8 +273,11 @@ public class RootView {
         }
     }
 
+    /**
+     * Event handler for save session action
+     */
     @FXML
-    private void handleSaveSessionClicked(ActionEvent event) {
+    protected void handleSaveSessionClicked() {
         Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Save Session File");
         fileChooser.setInitialFileName(sessionListView.getSelectionModel()
@@ -294,8 +299,11 @@ public class RootView {
         }
     }
 
+    /**
+     * Event handler for remove session action
+     */
     @FXML
-    private void handleRemoveSessionClicked() {
+    protected void handleRemoveSessionClicked() {
         rootViewModel.removeCurrentSession();
     }
 }

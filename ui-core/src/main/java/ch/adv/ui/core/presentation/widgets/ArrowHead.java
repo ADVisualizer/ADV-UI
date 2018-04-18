@@ -31,7 +31,7 @@ public class ArrowHead extends Polygon {
      *                           between 0 (start) and 1 (end)
      */
     public ArrowHead(CubicCurve curve, float relativePosOnCurve) {
-        if (relativePosOnCurve < 0 || relativePosOnCurve > 1){
+        if (relativePosOnCurve < 0 || relativePosOnCurve > 1) {
             throw new IllegalArgumentException("relativePosOnCurve must be "
                     + "between 0 and 1.");
         }
