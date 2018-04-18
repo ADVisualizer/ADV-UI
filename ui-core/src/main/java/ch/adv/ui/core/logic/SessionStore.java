@@ -54,7 +54,7 @@ public class SessionStore {
             if (existing == null) {
                 sessions.put(id, newSession);
                 setCurrentSession(newSession.getSessionId());
-                eventManager.fire(ADVEvent.SESSION_ADDED, existing, newSession);
+                eventManager.fire(ADVEvent.SESSION_ADDED, null, newSession);
             } else {
                 mergeSession(existing, newSession);
                 setCurrentSession(existing.getSessionId());

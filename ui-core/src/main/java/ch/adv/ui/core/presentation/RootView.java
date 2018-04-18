@@ -9,12 +9,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import org.controlsfx.control.SegmentedButton;
@@ -79,7 +75,6 @@ public class RootView {
     public void initialize() {
         bindI18nStrings();
         sessionListView.setItems(rootViewModel.getAvailableSessions());
-        sessionListView.setCellFactory(lv -> new CustomListCell());
 
 
         rootViewModel.getAvailableSessions()
@@ -266,8 +261,8 @@ public class RootView {
     private void handleSaveSessionClicked(ActionEvent event) {
         Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Save Session File");
-        fileChooser.setInitialFileName(sessionTabPane.getSelectionModel()
-                .getSelectedItem().getText());
+        fileChooser.setInitialFileName(sessionListView.getSelectionModel()
+                .getSelectedItem().getSessionName());
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
@@ -288,50 +283,5 @@ public class RootView {
     @FXML
     private void handleRemoveSessionClicked() {
         rootViewModel.removeCurrentSession();
-    }
-
-    /**
-     * Represents a ListCell in the {@link ListView}.
-     * <p>
-     * It contains the label and a save and remove button.
-     */
-    private class CustomListCell extends ListCell<Session> {
-
-        private static final int ICON_SIZE = 16;
-        private static final int SPACING = 12;
-        private HBox hbox = new HBox();
-        private Label label = new Label("(empty)");
-        private Pane pane = new Pane();
-        private Label removeButton = new Label();
-        private Label saveButton = new Label();
-
-        CustomListCell() {
-            super();
-
-            hbox.getChildren()
-                    .addAll(label, pane, saveButton, removeButton);
-            hbox.setSpacing(SPACING);
-            hbox.setAlignment(Pos.CENTER);
-            HBox.setHgrow(pane, Priority.ALWAYS);
-        }
-
-
-        /**
-         * {@inheritDoc}
-         *
-         * @param session the new session to be displayed
-         */
-        @Override
-        protected void updateItem(Session session, boolean empty) {
-            super.updateItem(session, empty);
-            setText(null);  // No text in label of super class
-            if (empty || session == null) {
-                label.setText("null");
-                setGraphic(null);
-            } else {
-                label.setText(session.toString());
-                setGraphic(hbox);
-            }
-        }
     }
 }
