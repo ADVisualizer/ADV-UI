@@ -65,7 +65,7 @@ public class SessionView {
                        StateViewModel stateViewModel,
                        FontAwesomeIconView fontAwesomePauseView,
                        FontAwesomeIconView fontAwesomePlayView) {
-
+        logger.debug("Construct SessionView");
         this.stateViewModel = stateViewModel;
         this.steppingViewModel = steppingViewModelFactory.create(
                 stateViewModel);
@@ -86,6 +86,7 @@ public class SessionView {
      */
     @FXML
     public void initialize() {
+        logger.debug("Initialize SessionView");
         setButtonActions();
         bindButtonDisableProperties();
         bindReplayIcons();
@@ -155,7 +156,6 @@ public class SessionView {
         stateViewModel.getReplayingProperty().addListener(
                 (ObservableValue<? extends Boolean> observable,
                  Boolean oldValue, Boolean newValue) -> {
-
                     if (newValue) {
                         replayButton.setGraphic(pauseIcon);
                         replayButton.setTooltip(I18n

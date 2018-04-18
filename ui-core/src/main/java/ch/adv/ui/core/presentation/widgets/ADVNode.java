@@ -16,27 +16,27 @@ public abstract class ADVNode extends Region {
      *
      * @return outgoing connector type
      */
-    abstract ConnectorType getConnectorTypeOutgoing();
+    public abstract ConnectorType getConnectorTypeOutgoing();
 
     /**
      * Connector position for all incoming connectors
      *
      * @return incoming connector type
      */
-    abstract ConnectorType getConnectorTypeIncoming();
+    public abstract ConnectorType getConnectorTypeIncoming();
 
     /**
      * X/Y coordinate of the node center
      *
      * @return node center
      */
-    abstract Point2D getCenter();
+    public abstract Point2D getCenter();
 
     /**
      * Object property for the center point
      *
      * @return center property
      */
-    abstract ObjectProperty<Point2D> centerProperty();
+    public abstract ObjectProperty<Point2D> centerProperty();
 
 }
