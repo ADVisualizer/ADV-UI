@@ -224,8 +224,11 @@ public class SessionView {
         AnchorPane.setRightAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
     }
 
+    /**
+     * Event handler for the replay action
+     */
     @FXML
-    private void handleReplayButtonClicked() {
+    protected void handleReplayButtonClicked() {
         if (stateViewModel.getReplayingProperty().get()) {
             replayViewModel.pauseReplay();
         } else {
@@ -233,13 +236,21 @@ public class SessionView {
         }
     }
 
+    /**
+     * Event handler for the cancel replay action
+     */
     @FXML
-    private void handleCancelReplayButtonClicked() {
+    protected void handleCancelReplayButtonClicked() {
         replayViewModel.cancelReplay();
     }
 
+    /**
+     * Event handler for the step button clicked action
+     *
+     * @param e event
+     */
     @FXML
-    private void handleStepButtonClicked(Event e) {
+    protected void handleStepButtonClicked(Event e) {
         Button source = (Button) e.getSource();
         if (source.equals(stepFirstButton)) {
             steppingViewModel.navigateSnapshot(Navigate.FIRST);
