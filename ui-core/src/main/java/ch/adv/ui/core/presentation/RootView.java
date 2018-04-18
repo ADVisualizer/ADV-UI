@@ -3,6 +3,7 @@ package ch.adv.ui.core.presentation;
 import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.util.ResourceLocator;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -196,11 +197,29 @@ public class RootView {
 
         saveActiveSessionButton.sceneProperty().addListener((e, o, n) -> {
             if (n != null) {
-                logger.debug("Setting key shortcut to save a session.");
-                saveActiveSessionButton.getScene().getAccelerators().put(
+                logger.debug("Setting key shortcuts.");
+                ObservableMap<KeyCombination, Runnable> accelerator =
+                        saveActiveSessionButton
+                        .getScene().getAccelerators();
+                accelerator.put(
                         new KeyCodeCombination(KeyCode.S, KeyCombination
                                 .SHORTCUT_DOWN),
                         () -> saveActiveSessionButton.fire()
+                );
+                accelerator.put(
+                        new KeyCodeCombination(KeyCode.O, KeyCombination
+                                .SHORTCUT_DOWN),
+                        () -> loadSessionButton.fire()
+                );
+                accelerator.put(
+                        new KeyCodeCombination(KeyCode.W, KeyCombination
+                                .SHORTCUT_DOWN),
+                        () -> closeActiveSessionButton.fire()
+                );
+                accelerator.put(
+                        new KeyCodeCombination(KeyCode.W, KeyCombination
+                                .SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN),
+                        () -> closeAllSessionsButton.fire()
                 );
             }
         });
