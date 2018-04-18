@@ -19,9 +19,11 @@ public class ArrayLayouterUtil {
      * @param style style
      */
     public void setStyling(LabeledNode node, ADVStyle style) {
-        node.setFontColor(Color.WHITE);
-        node.setBackgroundColor(StyleConverter.getColorFromHexValue(
-                style.getFillColor()));
+        Color fillColor = StyleConverter
+                .getColorFromHexValue(style.getFillColor());
+
+        node.setBackgroundColor(fillColor);
+        node.setFontColor(StyleConverter.getLabelColor(fillColor));
         node.setBorder(style.getStrokeThickness(),
                 StyleConverter.getColorFromHexValue(style.getStrokeColor()),
                 StyleConverter.getStrokeStyle(style.getStrokeStyle()));
