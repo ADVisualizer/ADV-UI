@@ -2,19 +2,14 @@ package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.util.ResourceLocator;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.application.Platform;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import org.controlsfx.control.SegmentedButton;
@@ -33,20 +28,18 @@ public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
+
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
-    @FXML
-    private Menu menuADV;
-    @FXML
-    private Menu menuHelp;
-    @FXML
-    private MenuItem menuItemClose;
-    @FXML
-    private MenuItem menuItemHelp;
+
     @FXML
     private Button loadSessionButton;
     @FXML
-    private Button clearAllSessionsButton;
+    private Button closeAllSessionsButton;
+    @FXML
+    private Button saveActiveSessionButton;
+    @FXML
+    private Button closeActiveSessionButton;
     @FXML
     private ListView<Session> sessionListView;
     @FXML
@@ -73,34 +66,80 @@ public class RootView {
     }
 
     /**
-     * Will be called once on an controller when the contents of
+     * Will be called once on a controller when the contents of
      * its associated document have been completely loaded
      */
     @FXML
     public void initialize() {
         bindI18nStrings();
-        menuItemClose.setOnAction(e -> handleCloseMenuItemClicked());
-        loadSessionButton.setOnAction(e -> handleLoadSessionClicked());
-        clearAllSessionsButton.setOnAction(event ->
-                handleClearAllSessionsClicked());
         sessionListView.setItems(rootViewModel.getAvailableSessions());
-        sessionListView.setCellFactory(lv -> new CustomListCell());
+
+
+        rootViewModel.getAvailableSessions()
+                .addListener(handleAvailableSessionUpdate());
+
+        sessionListView.setOnMouseClicked(e -> {
+            updateSelected(sessionListView
+                    .getSelectionModel(), sessionTabPane.getSelectionModel());
+        });
+
+        sessionTabPane.setOnMouseClicked(e -> {
+            updateSelected(sessionTabPane.getSelectionModel(), sessionListView
+                    .getSelectionModel());
+        });
 
         handleLogoVisibility();
-        openNewTab();
-        initLanguageButtons();
+        bindButtonProperties();
+        initButtons();
         setToolTips();
     }
 
+    /**
+     * Reacts to changes in the underlying data structure. Adding a session
+     * results in creating a tab and selecting the new session. Removing a
+     * session results in closing the tab and selecting another existing
+     * session.
+     *
+     * @return a ListChangeListener
+     */
+    private ListChangeListener<Session> handleAvailableSessionUpdate() {
+        return change -> {
+            while (change.next()) {
+                change.getAddedSubList().forEach(session -> {
+                    Optional<Tab> existingTab = getExistingTab(session);
+                    if (!existingTab.isPresent()) {
+                        Node sessionView = resourceLocator
+                                .loadFXML(ResourceLocator
+                                        .Resource.SESSION_VIEW_FXML);
+                        Tab newTab = new Tab(session
+                                .toString(), sessionView);
+                        sessionTabPane.getTabs().add(newTab);
+                        sessionTabPane.getSelectionModel()
+                                .select(newTab);
+                        sessionListView.getSelectionModel()
+                                .select(session);
+                    }
+                });
+                change.getRemoved().forEach(session -> {
+                    getExistingTab(session)
+                            .ifPresent(t -> sessionTabPane.getTabs().remove(t));
+                });
+            }
+        };
+    }
+
+    private void updateSelected(SelectionModel source, SelectionModel target) {
+        int selectedIndex = source.getSelectedIndex();
+        if (selectedIndex >= 0) {
+            target.select(selectedIndex);
+            Session selectedSession = sessionListView.getItems()
+                    .get(selectedIndex);
+            rootViewModel.getCurrentSessionProperty().setValue(selectedSession);
+        }
+
+    }
+
     private void bindI18nStrings() {
-        menuItemClose.textProperty()
-                .bind(I18n.createStringBinding("menu.item.close"));
-        menuItemHelp.textProperty()
-                .bind(I18n.createStringBinding("menu.item.help"));
-        menuADV.textProperty()
-                .bind(I18n.createStringBinding("menu.adv"));
-        menuHelp.textProperty()
-                .bind(I18n.createStringBinding("menu.help"));
         sessionListViewTitle.textProperty()
                 .bind(I18n.createStringBinding("title.session_list"));
         english.textProperty().bind(I18n.createStringBinding(
@@ -109,58 +148,30 @@ public class RootView {
                 "session-bar.german"));
     }
 
-
-    private void handleCloseMenuItemClicked() {
-        Platform.exit();
-        System.exit(0);
-    }
-
     private void handleLogoVisibility() {
         sessionTabPane.getStyleClass().add("logo");
-        sessionTabPane.getTabs().addListener((ListChangeListener<? super Tab>)
-                c -> {
-                    int tabNumber = sessionTabPane.getTabs().size();
-                    if (tabNumber == 0) {
-                        sessionTabPane.getStyleClass().add("logo");
-                    } else {
-                        sessionTabPane.getStyleClass().remove("logo");
-                    }
-                });
+        sessionTabPane.getTabs()
+                .addListener((ListChangeListener<? super Tab>)
+                        c -> {
+                            int tabNumber = sessionTabPane.getTabs().size();
+                            if (tabNumber == 0) {
+                                sessionTabPane.getStyleClass().add("logo");
+                            } else {
+                                sessionTabPane.getStyleClass()
+                                        .remove("logo");
+                            }
+                        });
     }
 
-    private void openNewTab() {
-        rootViewModel.getCurrentSessionProperty().addListener(
-                this::openTabAction);
-        sessionListView.setOnMouseClicked(e -> {
-            int selectedItem = sessionListView.getSelectionModel()
-                    .getSelectedIndex();
-            if (sessionListView.getFocusModel().isFocused(selectedItem)) {
-                sessionListView.getSelectionModel().select(-1);
-                sessionListView.getSelectionModel().select(selectedItem);
-            }
-        });
-        sessionListView.getSelectionModel().selectedItemProperty().addListener(
-                this::openTabAction);
+    private void bindButtonProperties() {
+        saveActiveSessionButton.disableProperty()
+                .bind(rootViewModel.getNoSessionsProperty());
+        closeActiveSessionButton.disableProperty()
+                .bind(rootViewModel.getNoSessionsProperty());
+        closeAllSessionsButton.disableProperty()
+                .bind(rootViewModel.getNoSessionsProperty());
     }
 
-    private void openTabAction(ObservableValue<? extends Session>
-                                       observableValue, Session oldSession,
-                               Session session) {
-        if (session != null) {
-
-            Optional<Tab> existingTab = getExistingTab(session);
-
-            if (!existingTab.isPresent()) {
-                Node sessionView = resourceLocator.loadFXML(ResourceLocator
-                        .Resource.SESSION_VIEW_FXML);
-                Tab newTab = new Tab(session.toString(), sessionView);
-                sessionTabPane.getTabs().add(newTab);
-                sessionTabPane.getSelectionModel().select(newTab);
-            } else {
-                sessionTabPane.getSelectionModel().select(existingTab.get());
-            }
-        }
-    }
 
     /**
      * Checks if a Tab is already existing for the given session
@@ -175,7 +186,49 @@ public class RootView {
                 .findFirst();
     }
 
-    private void initLanguageButtons() {
+    private void initButtons() {
+        loadSessionButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.load_session"));
+
+        saveActiveSessionButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.save_session"));
+
+
+        saveActiveSessionButton.sceneProperty().addListener((e, o, n) -> {
+            if (n != null) {
+                logger.debug("Setting key shortcuts.");
+                ObservableMap<KeyCombination, Runnable> accelerators =
+                        saveActiveSessionButton
+                        .getScene().getAccelerators();
+                accelerators.put(
+                        new KeyCodeCombination(KeyCode.S, KeyCombination
+                                .SHORTCUT_DOWN),
+                        () -> saveActiveSessionButton.fire()
+                );
+                accelerators.put(
+                        new KeyCodeCombination(KeyCode.O, KeyCombination
+                                .SHORTCUT_DOWN),
+                        () -> loadSessionButton.fire()
+                );
+                accelerators.put(
+                        new KeyCodeCombination(KeyCode.W, KeyCombination
+                                .SHORTCUT_DOWN),
+                        () -> closeActiveSessionButton.fire()
+                );
+                accelerators.put(
+                        new KeyCodeCombination(KeyCode.W, KeyCombination
+                                .SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN),
+                        () -> closeAllSessionsButton.fire()
+                );
+            }
+        });
+
+        closeActiveSessionButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.close_active"));
+
+        closeAllSessionsButton.textProperty().bind(I18n
+                .createStringBinding("button.session-bar.close_all"));
+
         changeLanguageButton.getToggleGroup().selectToggle(english);
         changeLanguageButton.getToggleGroup().selectedToggleProperty()
                 .addListener((e, oldV, newV) -> {
@@ -190,39 +243,27 @@ public class RootView {
     private void setToolTips() {
         loadSessionButton.setTooltip(I18n
                 .tooltipForKey("tooltip.session-bar.load_session"));
-        clearAllSessionsButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-bar.delete_sessions"));
-        english.setTooltip(I18n.tooltipForKey("tooltip.session-bar.english"));
+        closeAllSessionsButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.close_all"));
+        saveActiveSessionButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.save_session"));
+        closeActiveSessionButton.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.close_active"));
+        english.setTooltip(I18n
+                .tooltipForKey("tooltip.session-bar.english"));
         german.setTooltip(I18n.tooltipForKey("tooltip.session-bar.german"));
     }
 
-    private void handleRemoveSessionClicked(final Session session, final
-    MouseEvent event) {
-        logger.info("Removing session {} ({})", session.getSessionName(),
-                session.getSessionId());
-
-        Optional<Tab> existingTab = getExistingTab(session);
-
-        if (existingTab.isPresent()) {
-            sessionTabPane.getTabs().remove(existingTab.get());
-        }
-
-        rootViewModel.removeSession(session);
-
-        if (event != null) {
-            event.consume();
-        }
-    }
-
-
+    @FXML
     private void handleClearAllSessionsClicked() {
-        sessionListView.getItems().forEach(session -> {
-            handleRemoveSessionClicked(session, null);
-        });
+        rootViewModel.clearAllSessions();
     }
 
-
-    private void handleLoadSessionClicked() {
+    /**
+     * Event handler for load session action
+     */
+    @FXML
+    protected void handleLoadSessionClicked() {
         Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Load Session File");
         File file = fileChooser.showOpenDialog(stage);
@@ -232,9 +273,15 @@ public class RootView {
         }
     }
 
-    private void handleSaveSessionClicked(final Session session) {
+    /**
+     * Event handler for save session action
+     */
+    @FXML
+    protected void handleSaveSessionClicked() {
         Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Save Session File");
+        fileChooser.setInitialFileName(sessionListView.getSelectionModel()
+                .getSelectedItem().getSessionName());
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
@@ -248,72 +295,15 @@ public class RootView {
                 }
             }
 
-            rootViewModel.saveSession(file, session);
+            rootViewModel.saveSession(file);
         }
     }
 
     /**
-     * Represents a ListCell in the {@link ListView}.
-     * <p>
-     * It contains the label and a save and remove button.
+     * Event handler for remove session action
      */
-    private class CustomListCell extends ListCell<Session> {
-
-        private static final int ICON_SIZE = 16;
-        private static final int SPACING = 12;
-        private final FontAwesomeIconView saveIcon;
-        private final FontAwesomeIconView removeIcon;
-        private HBox hbox = new HBox();
-        private Label label = new Label("(empty)");
-        private Pane pane = new Pane();
-        private Label removeButton = new Label();
-        private Label saveButton = new Label();
-
-        CustomListCell() {
-            super();
-
-            this.removeIcon = new FontAwesomeIconView();
-            removeIcon.setIcon(FontAwesomeIcon.TRASH_ALT);
-            removeIcon.setGlyphSize(ICON_SIZE);
-            removeButton.setGraphic(removeIcon);
-            removeButton.setTooltip(I18n
-                    .tooltipForKey("tooltip.session-list.remove_session"));
-            removeButton.setOnMouseClicked(event -> handleRemoveSessionClicked(
-                    getItem(), event));
-
-            this.saveIcon = new FontAwesomeIconView();
-            saveIcon.setIcon(FontAwesomeIcon.FLOPPY_ALT);
-            saveIcon.setGlyphSize(ICON_SIZE);
-            saveButton.setGraphic(saveIcon);
-            saveButton.setTooltip(I18n
-                    .tooltipForKey("tooltip.session-list.save_session"));
-            saveButton.setOnMouseClicked(e -> handleSaveSessionClicked(
-                    getItem()));
-
-            hbox.getChildren().addAll(label, pane, saveButton, removeButton);
-            hbox.setSpacing(SPACING);
-            hbox.setAlignment(Pos.CENTER);
-            HBox.setHgrow(pane, Priority.ALWAYS);
-        }
-
-
-        /**
-         * {@inheritDoc}
-         *
-         * @param session the new session to be displayed
-         */
-        @Override
-        protected void updateItem(Session session, boolean empty) {
-            super.updateItem(session, empty);
-            setText(null);  // No text in label of super class
-            if (empty || session == null) {
-                label.setText("null");
-                setGraphic(null);
-            } else {
-                label.setText(session.toString());
-                setGraphic(hbox);
-            }
-        }
+    @FXML
+    protected void handleRemoveSessionClicked() {
+        rootViewModel.removeCurrentSession();
     }
-
 }

@@ -44,8 +44,7 @@ public class LabeledEdge extends Group {
 
     public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,
                        ADVStyle style) {
-        this(labelText, startNode, endNode, style,
-                DirectionType.NONE);
+        this(labelText, startNode, endNode, style, DirectionType.NONE);
     }
 
     public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,
@@ -113,8 +112,8 @@ public class LabeledEdge extends Group {
         }, curve.startYProperty(), curve.endYProperty());
 
         label.setText(labelText);
-        //TODO: replace with fill color
-        label.setTextFill(Color.BLACK);
+        label.setTextFill(StyleConverter.getLabelColor(
+                StyleConverter.getColorFromHexValue(style.getFillColor())));
         label.setFont(new Font(LABEL_FONT_SIZE));
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);

@@ -52,7 +52,7 @@ public class StateViewModel {
     public StateViewModel(RootViewModel rootViewModel, LayoutedSnapshotStore
             layoutedSnapshotStore, EventManager eventManager, StepButtonState
                                   stepButtonState) {
-        logger.debug("init stateViewModel");
+        logger.debug("Construct StateViewModel");
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.stepButtonState = stepButtonState;
         this.session = rootViewModel.getCurrentSessionProperty().get();

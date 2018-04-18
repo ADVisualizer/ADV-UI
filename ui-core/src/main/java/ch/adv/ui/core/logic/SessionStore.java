@@ -54,12 +54,11 @@ public class SessionStore {
             if (existing == null) {
                 sessions.put(id, newSession);
                 setCurrentSession(newSession.getSessionId());
+                eventManager.fire(ADVEvent.SESSION_ADDED, null, newSession);
             } else {
                 mergeSession(existing, newSession);
                 setCurrentSession(existing.getSessionId());
             }
-
-            eventManager.fire(ADVEvent.SESSION_ADDED, existing, newSession);
         }
     }
 
@@ -127,7 +126,7 @@ public class SessionStore {
             Session existing = sessions.get(id);
 
             if (existing != null) {
-                sessions.remove(session.getSessionId());
+                sessions.remove(id);
                 currentSession = null;
                 logger.info("Session {} deleted from SessionStore", id);
             }

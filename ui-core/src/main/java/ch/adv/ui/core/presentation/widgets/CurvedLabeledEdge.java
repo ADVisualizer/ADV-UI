@@ -3,16 +3,11 @@ package ch.adv.ui.core.presentation.widgets;
 import ch.adv.ui.core.domain.styles.ADVStyle;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.CubicCurve;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Curved Labeled Edge
  */
 public class CurvedLabeledEdge extends LabeledEdge {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            CurvedLabeledEdge.class);
 
     public CurvedLabeledEdge(String labelText,
                              ADVNode startNode,
@@ -33,7 +28,6 @@ public class CurvedLabeledEdge extends LabeledEdge {
     protected void setControlPoints(CubicCurve curve,
                                     Point2D startIntersectionPoint,
                                     Point2D endIntersectionPoint) {
-        logger.info("Calculating the curvature of the edge...");
         double startHeight = getStartNode().getBoundsInParent().getHeight();
         double endHeight = getEndNode().getBoundsInParent().getHeight();
         double avgHeight = (startHeight + endHeight) / 2;

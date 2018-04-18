@@ -83,7 +83,7 @@ public class Session {
         String time = String.format("%tT", sessionId - TimeZone.getDefault()
                 .getRawOffset() + TimeZone.getDefault().getDSTSavings());
 
-        return sessionName + " - " + time;
+        return time + " - " + sessionName;
     }
 
     @Override

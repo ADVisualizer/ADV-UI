@@ -56,7 +56,7 @@ public class StyleConverter {
      * @return either black or white depending on the brightness of the input
      *         color
      */
-    public static Color getContrastColor(Color color) {
+    public static Color getLabelColor(Color color) {
         double brightness = color.getBrightness();
         if (brightness >= 0.95) {
             return Color.BLACK;
@@ -65,19 +65,4 @@ public class StyleConverter {
         }
     }
 
-    /**
-     * Return right CSS class depending on the brightness of the input color.
-     *
-     * @param color
-     *          reference color
-     * @return color class
-     */
-    public static String getContrastColorClass(Color color) {
-        double brightness = color.getBrightness();
-        if (brightness >= 0.95) {
-            return "text-fill-black";
-        } else {
-            return "text-fill-white";
-        }
-    }
 }

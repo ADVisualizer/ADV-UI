@@ -5,8 +5,13 @@ import ch.adv.ui.core.presentation.util.ReplaySliderStringConverter;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableMap;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -41,6 +46,8 @@ public class SessionView {
     @FXML
     private Button stepLastButton;
     @FXML
+    private Label replaySpeedSliderLabel;
+    @FXML
     private Slider replaySpeedSlider;
     @FXML
     private ProgressBar stepProgressBar;
@@ -51,9 +58,10 @@ public class SessionView {
     @FXML
     private AnchorPane contentPane;
     @FXML
-    private TextArea snapshotDescription;
+    private Label descriptionLabel;
     @FXML
-    private Label replaySpeedSliderLabel;
+    private TextArea snapshotDescription;
+
     @Inject
     private ReplayController replayController;
     @Inject
@@ -77,7 +85,6 @@ public class SessionView {
 
         this.playIcon = fontAwesomePlayView;
         playIcon.setIcon(FontAwesomeIcon.PLAY);
-
     }
 
     /**
@@ -87,17 +94,20 @@ public class SessionView {
     @FXML
     public void initialize() {
         logger.debug("Initialize SessionView");
-        setButtonActions();
         bindButtonDisableProperties();
         bindReplayIcons();
         bindI18nStrings();
         setTooltips();
+        setShortcuts();
 
         replaySpeedSlider.disableProperty().bind(stateViewModel
                 .getSpeedSliderDisableProperty());
 
         replayController.getReplaySpeedProperty()
                 .bindBidirectional(replaySpeedSlider.valueProperty());
+        // set speed default
+        replaySpeedSlider.setValue(2);
+
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
         //TODO: manage to change strings when changing language
         I18n.localeProperty().addListener((e, o, n) -> replaySpeedSlider
@@ -120,6 +130,7 @@ public class SessionView {
                         .getCurrentSnapshotDescriptionProperty());
     }
 
+
     private void setTooltips() {
         stepFirstButton.setTooltip(I18n
                 .tooltipForKey("tooltip.snapshot-bar.step_first"));
@@ -138,15 +149,10 @@ public class SessionView {
     private void bindI18nStrings() {
         replaySpeedSliderLabel.textProperty()
                 .bind(I18n.createStringBinding("title.speed"));
-    }
-
-    private void setButtonActions() {
-        replayButton.setOnAction(e -> handleReplayButtonClicked());
-        cancelReplayButton.setOnAction(e -> handleCancelReplayButtonClicked());
-        stepFirstButton.setOnAction(e -> handleStepFirstButtonClicked());
-        stepBackwardButton.setOnAction(e -> handleStepBackwardButtonClicked());
-        stepForwardButton.setOnAction(e -> handleStepForwardButtonClicked());
-        stepLastButton.setOnAction(e -> handleStepLastButtonClicked());
+        descriptionLabel.textProperty()
+                .bind(I18n.createStringBinding("title.description"));
+        snapshotDescription.promptTextProperty()
+                .bind(I18n.createStringBinding("placeholder.description"));
     }
 
     private void bindReplayIcons() {
@@ -179,6 +185,30 @@ public class SessionView {
                 .getStepButtonState().getStepLastBtnDisableProperty());
     }
 
+    private void setShortcuts() {
+        replayButton.sceneProperty().addListener((e, o, n) -> {
+            if (n != null) {
+                logger.debug("Setting key shortcuts.");
+                ObservableMap<KeyCombination, Runnable> accelerators =
+                        replayButton.getScene().getAccelerators();
+                accelerators.put(
+                        new KeyCodeCombination(KeyCode.R, KeyCombination
+                                .SHORTCUT_DOWN),
+                        () -> replayButton.fire()
+                );
+                accelerators.put(
+                        new KeyCodeCombination(KeyCode.ESCAPE),
+                        () -> cancelReplayButton.fire()
+                );
+                accelerators.put(
+                        new KeyCodeCombination(KeyCode.LEFT),
+                        () -> stepBackwardButton.fire()
+                );
+
+            }
+        });
+    }
+
     private void setCurrentSnapshotAsContent() {
         Pane currentSnapshot = stateViewModel.getCurrentSnapshotPaneProperty()
                 .get();
@@ -194,7 +224,11 @@ public class SessionView {
         AnchorPane.setRightAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
     }
 
-    private void handleReplayButtonClicked() {
+    /**
+     * Event handler for the replay action
+     */
+    @FXML
+    protected void handleReplayButtonClicked() {
         if (stateViewModel.getReplayingProperty().get()) {
             replayViewModel.pauseReplay();
         } else {
@@ -202,24 +236,30 @@ public class SessionView {
         }
     }
 
-    private void handleCancelReplayButtonClicked() {
+    /**
+     * Event handler for the cancel replay action
+     */
+    @FXML
+    protected void handleCancelReplayButtonClicked() {
         replayViewModel.cancelReplay();
     }
 
-    private void handleStepFirstButtonClicked() {
-        steppingViewModel.navigateSnapshot(Navigate.FIRST);
+    /**
+     * Event handler for the step button clicked action
+     *
+     * @param e event
+     */
+    @FXML
+    protected void handleStepButtonClicked(Event e) {
+        Button source = (Button) e.getSource();
+        if (source.equals(stepFirstButton)) {
+            steppingViewModel.navigateSnapshot(Navigate.FIRST);
+        } else if (source.equals(stepBackwardButton)) {
+            steppingViewModel.navigateSnapshot(Navigate.BACKWARD);
+        } else if (source.equals(stepForwardButton)) {
+            steppingViewModel.navigateSnapshot(Navigate.FORWARD);
+        } else {
+            steppingViewModel.navigateSnapshot(Navigate.LAST);
+        }
     }
-
-    private void handleStepBackwardButtonClicked() {
-        steppingViewModel.navigateSnapshot(Navigate.BACKWARD);
-    }
-
-    private void handleStepForwardButtonClicked() {
-        steppingViewModel.navigateSnapshot(Navigate.FORWARD);
-    }
-
-    private void handleStepLastButtonClicked() {
-        steppingViewModel.navigateSnapshot(Navigate.LAST);
-    }
-
 }
