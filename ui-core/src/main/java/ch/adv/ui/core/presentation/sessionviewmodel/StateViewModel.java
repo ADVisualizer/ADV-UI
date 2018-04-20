@@ -1,7 +1,7 @@
 package ch.adv.ui.core.presentation.sessionviewmodel;
 
 import ch.adv.ui.core.domain.Session;
-import ch.adv.ui.core.logic.ADVEvent;
+import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.RootViewModel;
@@ -87,12 +87,14 @@ public class StateViewModel {
         });
 
         currentSnapshotDescriptionProperty.addListener((e, oldV, newV) -> {
-            LayoutedSnapshot s = layoutedSnapshotStore
-                    .getLayoutedSnapshots(session.getSessionId())
-                    .get(currentSnapshotIndex);
-            String domainDescription = s.getSnapshotDescription();
-            if (!newV.equals(domainDescription)) {
-                s.setSnapshotDescription(newV);
+            if (newV != null) {
+                LayoutedSnapshot s = layoutedSnapshotStore
+                        .getLayoutedSnapshots(session.getSessionId())
+                        .get(currentSnapshotIndex);
+                String domainDescription = s.getSnapshotDescription();
+                if (!newV.equals(domainDescription)) {
+                    s.setSnapshotDescription(newV);
+                }
             }
         });
 

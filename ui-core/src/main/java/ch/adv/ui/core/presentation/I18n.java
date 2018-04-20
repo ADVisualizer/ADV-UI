@@ -25,6 +25,28 @@ import java.util.concurrent.Callable;
  * @author P.J. Meisch (pj.meisch@sothawo.com).
  */
 public final class I18n {
+
+
+
+    public static final String NOTIFICATION_SESSION_LOAD_EXISTING =
+            "notification.session.load.existing";
+    public static final String NOTIFICATION_SESSION_LOAD_SUCCESSFUL =
+            "notification.session.load.successful";
+    public static final String NOTIFICATION_SESSION_LOAD_UNSUCCESSFUL =
+            "notification.session.load.unsuccessful";
+    public static final String NOTIFICATION_SESSION_SAVE_SUCCESSFUL =
+            "notification.session.save.successful";
+    public static final String NOTIFICATION_SESSION_SAVE_UNSUCCESSFUL =
+            "notification.session.save.unsuccessful";
+    public static final String NOTIFICATION_SESSION_CLOSE_UNSUCCESSFUL =
+            "notification.session.close.unsuccessful";
+    public static final String NOTIFICATION_SESSION_CLOSE_SUCCESSFUL =
+            "notification.session.close.successful";
+    public static final String NOTIFICATION_SESSION_CLOSE_ALL =
+            "notification.session.close.all";
+
+
+
     /**
      * the current selected Locale.
      */

@@ -27,9 +27,10 @@ public class FileDatastoreAccess implements DatastoreAccess {
      *
      * @param file file to read
      * @return null or json payload
+     * @throws IOException exception
      */
     @Override
-    public String read(final File file) {
+    public String read(final File file) throws IOException {
         if (file.exists()) {
             Path path = Paths.get(file.getAbsolutePath());
             try (BufferedReader reader = Files.newBufferedReader(path,
@@ -41,13 +42,13 @@ public class FileDatastoreAccess implements DatastoreAccess {
                 }
                 return jsonPayload;
             } catch (IOException e) {
-                logger.info("Unable to read file {}", file.getAbsoluteFile(),
-                        e);
-                return null;
+                logger.info("Unable to read file {}",
+                        file.getAbsoluteFile(), e);
+                throw e;
             }
         } else {
-            logger.info("Unable to read file: File {} not found.", file
-                    .getAbsoluteFile());
+            logger.info("Unable to read file: File {} not found.",
+                    file.getAbsoluteFile());
             return null;
         }
     }
@@ -58,19 +59,18 @@ public class FileDatastoreAccess implements DatastoreAccess {
      *
      * @param file        new or existing file
      * @param jsonPayload data
-     * @return whether operation was successful or not
+     * @throws IOException exception
      */
     @Override
-    public boolean write(final File file, String jsonPayload) {
+    public void write(final File file, String jsonPayload) throws IOException {
         Path path = Paths.get(file.getAbsolutePath());
 
         try (BufferedWriter writer = Files.newBufferedWriter(path, Charset
                 .defaultCharset())) {
             writer.write(jsonPayload);
-            return true;
         } catch (IOException e) {
             logger.info("Unable to write file {}", file.getAbsoluteFile(), e);
-            return false;
+            throw e;
         }
     }
 }

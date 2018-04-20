@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 import org.controlsfx.control.SegmentedButton;
+import org.controlsfx.control.StatusBar;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +29,6 @@ public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
-
     private final RootViewModel rootViewModel;
     private final FileChooser fileChooser = new FileChooser();
 
@@ -52,6 +52,8 @@ public class RootView {
     private ToggleButton english;
     @FXML
     private ToggleButton german;
+    @FXML
+    private StatusBar notificationBar;
     @Inject
     private ResourceLocator resourceLocator;
 
@@ -59,6 +61,7 @@ public class RootView {
     @Inject
     public RootView(RootViewModel viewModel) {
         this.rootViewModel = viewModel;
+
         FileChooser.ExtensionFilter extensionFilter = new FileChooser
                 .ExtensionFilter("ADV files (*.adv)", "*.adv");
 
@@ -92,6 +95,12 @@ public class RootView {
         bindButtonProperties();
         initButtons();
         setToolTips();
+        handleNotifications();
+    }
+
+    private void handleNotifications() {
+        notificationBar.textProperty().bindBidirectional(rootViewModel
+                .getNotificationMessageProperty());
     }
 
     /**
@@ -150,17 +159,15 @@ public class RootView {
 
     private void handleLogoVisibility() {
         sessionTabPane.getStyleClass().add("logo");
-        sessionTabPane.getTabs()
-                .addListener((ListChangeListener<? super Tab>)
-                        c -> {
-                            int tabNumber = sessionTabPane.getTabs().size();
-                            if (tabNumber == 0) {
-                                sessionTabPane.getStyleClass().add("logo");
-                            } else {
-                                sessionTabPane.getStyleClass()
-                                        .remove("logo");
-                            }
-                        });
+        sessionTabPane.getTabs().addListener((ListChangeListener<? super Tab>)
+                c -> {
+                    int tabNumber = sessionTabPane.getTabs().size();
+                    if (tabNumber == 0) {
+                        sessionTabPane.getStyleClass().add("logo");
+                    } else {
+                        sessionTabPane.getStyleClass().remove("logo");
+                    }
+                });
     }
 
     private void bindButtonProperties() {
@@ -198,8 +205,7 @@ public class RootView {
             if (n != null) {
                 logger.debug("Setting key shortcuts.");
                 ObservableMap<KeyCombination, Runnable> accelerators =
-                        saveActiveSessionButton
-                        .getScene().getAccelerators();
+                        saveActiveSessionButton.getScene().getAccelerators();
                 accelerators.put(
                         new KeyCodeCombination(KeyCode.S, KeyCombination
                                 .SHORTCUT_DOWN),

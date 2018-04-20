@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class ModuleStoreTest {
     private String testJson;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         Map<String, ADVModule> modules = new HashMap<>();
         modules.put("test", testModule);
         storeUnderTest.setAvailableModules(modules);

@@ -1,10 +1,13 @@
 package ch.adv.ui.core.service;
 
+import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.ADVModule;
 import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.domain.Snapshot;
+import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.logic.ModuleStore;
 import ch.adv.ui.core.logic.SessionStore;
+import ch.adv.ui.core.presentation.I18n;
 import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
@@ -28,13 +31,18 @@ public class ADVFlowControl {
     private final ModuleStore moduleStore;
     private final SessionStore sessionStore;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
+    private final EventManager eventManager;
 
     @Inject
-    public ADVFlowControl(final ModuleStore moduleStore, SessionStore
-            sessionStore, final LayoutedSnapshotStore layoutedSnapshotStore) {
+    public ADVFlowControl(ModuleStore moduleStore,
+                          SessionStore sessionStore,
+                          LayoutedSnapshotStore layoutedSnapshotStore,
+                          EventManager eventManager) {
+
         this.moduleStore = moduleStore;
         this.sessionStore = sessionStore;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
+        this.eventManager = eventManager;
     }
 
     /**
@@ -75,8 +83,12 @@ public class ADVFlowControl {
 
         if (!newSnapshots.isEmpty()) {
             sessionStore.addSession(session);
+            eventManager.fire(ADVEvent.NOTIFICATION, null,
+                    I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
         } else {
             sessionStore.setCurrentSession(sessionId);
+            eventManager.fire(ADVEvent.NOTIFICATION, null,
+                    I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
         }
         logger.info("Process finished: delegated session and snapshot "
                 + "creation.");

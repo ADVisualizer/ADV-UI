@@ -1,5 +1,6 @@
 package ch.adv.ui.core.logic;
 
+import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.domain.Session;
 import ch.adv.ui.core.domain.Snapshot;
 import org.slf4j.Logger;
@@ -131,7 +132,6 @@ public class SessionStore {
                 logger.info("Session {} deleted from SessionStore", id);
             }
             logger.debug("Fire change event");
-
             eventManager.fire(ADVEvent.SESSION_REMOVED, existing, null);
         }
     }

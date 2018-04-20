@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,7 @@ public class ADVFlowControlTest {
     private String testJSON;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         URL url1 = SessionStoreTest.class.getClassLoader()
                 .getResource("session1.json");
 
