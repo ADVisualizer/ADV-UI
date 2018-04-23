@@ -36,6 +36,7 @@ public class SocketServer extends Thread {
         super(THREAD_NAME);
         this.connectionFactory = connectionFactory;
         portNr = DEFAULT_PORT;
+        host = DEFAULT_HOST;
     }
 
     /**
@@ -48,9 +49,10 @@ public class SocketServer extends Thread {
 
         try {
             javaSocket = new ServerSocket(portNr);
-            logger.info("Socket server started on port {}", portNr);
+            logger.info("Socket server started on {}:{}", host, portNr);
         } catch (IOException e) {
-            logger.error("Unable to start socket server on port {}", portNr, e);
+            logger.error("Unable to start socket server on {}:{}", host,
+                    portNr, e);
         }
 
         while (true) {
@@ -72,8 +74,7 @@ public class SocketServer extends Thread {
     public void setPort(int port) {
         if (portNr >= 1024 && portNr <= 65535) {
             this.portNr = port;
-        } else {
-            this.portNr = DEFAULT_PORT;
+            logger.info("Socket port updated to {}", portNr);
         }
     }
 
@@ -85,8 +86,7 @@ public class SocketServer extends Thread {
     public void setHost(String host) {
         if (host != null) {
             this.host = host;
-        } else {
-            this.host = DEFAULT_HOST;
+            logger.info("Socket host updated to {}", host);
         }
     }
 }
