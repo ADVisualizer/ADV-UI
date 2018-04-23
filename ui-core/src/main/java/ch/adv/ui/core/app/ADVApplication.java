@@ -27,8 +27,8 @@ import java.util.concurrent.CountDownLatch;
 @Singleton
 public class ADVApplication extends Application {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            ADVApplication.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(ADVApplication.class);
 
     private static CountDownLatch latch = new CountDownLatch(1);
     private static ADVApplication instance;
@@ -52,6 +52,7 @@ public class ADVApplication extends Application {
 
     /**
      * Waits until the Application got initiated by JavaFX
+     *
      * @return application instance
      */
     public static ADVApplication waitForADVApplication() {
@@ -94,12 +95,15 @@ public class ADVApplication extends Application {
         if (port != null) {
             socketServer.setPort(Integer.parseInt(port));
         }
-
+        String host = params.get("host");
+        if (host != null) {
+            socketServer.setHost(host);
+        }
     }
 
     private void setupStage() {
-        Parent rootLayout = resourceLocator.loadFXML(ResourceLocator.Resource
-                .ROOT_LAYOUT_FXML);
+        Parent rootLayout = resourceLocator.loadFXML(
+                ResourceLocator.Resource.ROOT_LAYOUT_FXML);
         Scene scene = new Scene(rootLayout);
 
         primaryStage.setTitle("ADV UI");

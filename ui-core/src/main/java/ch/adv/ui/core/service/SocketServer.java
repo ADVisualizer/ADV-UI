@@ -18,13 +18,18 @@ import java.net.Socket;
 @Singleton
 public class SocketServer extends Thread {
 
-    private static final int DEFAULT_PORT = 8765;
-    private static final String THREAD_NAME = "SocketServer Thread";
     private static final Logger logger = LoggerFactory.getLogger(SocketServer
             .class);
+
+    private static final String THREAD_NAME = "SocketServer Thread";
+    private static final String DEFAULT_HOST = "127.0.0.1";
+    private static final int DEFAULT_PORT = 8765;
+
     private final ADVConnectionFactory connectionFactory;
+
     private ServerSocket javaSocket;
     private int portNr;
+    private String host;
 
     @Inject
     public SocketServer(ADVConnectionFactory connectionFactory) {
@@ -66,9 +71,22 @@ public class SocketServer extends Thread {
      */
     public void setPort(int port) {
         if (portNr >= 1024 && portNr <= 65535) {
-            portNr = port;
+            this.portNr = port;
         } else {
-            portNr = DEFAULT_PORT;
+            this.portNr = DEFAULT_PORT;
+        }
+    }
+
+    /**
+     * Set alternative host on which SocketServer should listen.
+     *
+     * @param host the host
+     */
+    public void setHost(String host) {
+        if (host != null) {
+            this.host = host;
+        } else {
+            this.host = DEFAULT_HOST;
         }
     }
 }
