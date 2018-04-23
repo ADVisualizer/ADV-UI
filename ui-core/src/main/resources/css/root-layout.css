@@ -5,3 +5,13 @@
     -fx-background-size: 300px;
     -fx-opacity: 0.2;
 }
+
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: none;
+}
+
+.button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

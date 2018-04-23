@@ -16,25 +16,25 @@
         <Button fx:id="loadSessionButton" mnemonicParsing="false" onAction="#handleLoadSessionClicked"
                 contentDisplay="TOP">
             <graphic>
-                <FontAwesomeIconView glyphName="FOLDER_OPEN"/>
+                <FontAwesomeIconView glyphName="FOLDER_OPEN" size="15"/>
             </graphic>
         </Button>
         <Button fx:id="saveActiveSessionButton" mnemonicParsing="false" onAction="#handleSaveSessionClicked"
                 contentDisplay="TOP">
             <graphic>
-                <FontAwesomeIconView glyphName="FLOPPY_ALT"/>
+                <FontAwesomeIconView glyphName="FLOPPY_ALT" size="15"/>
             </graphic>
         </Button>
         <Button fx:id="closeActiveSessionButton" mnemonicParsing="false" onAction="#handleRemoveSessionClicked"
                 contentDisplay="TOP">
             <graphic>
-                <FontAwesomeIconView glyphName="TIMES"/>
+                <FontAwesomeIconView glyphName="TIMES_CIRCLE" size="15"/>
             </graphic>
         </Button>
         <Button fx:id="closeAllSessionsButton" mnemonicParsing="false" onAction="#handleClearAllSessionsClicked"
                 contentDisplay="TOP">
             <graphic>
-                <FontAwesomeIconView glyphName="TIMES"/>
+                <FontAwesomeIconView glyphName="TIMES_CIRCLE" size="15"/>
             </graphic>
         </Button>
 
@@ -48,7 +48,7 @@
         </SegmentedButton>
     </ToolBar>
 
-    <SplitPane dividerPositions="0.28" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0"
+    <SplitPane dividerPositions="0.2" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0"
                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
         <AnchorPane>
             <TitledPane animated="false" fx:id="sessionListViewTitle" collapsible="false" AnchorPane.bottomAnchor="0.0"
