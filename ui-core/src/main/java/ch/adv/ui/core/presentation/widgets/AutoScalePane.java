@@ -2,6 +2,7 @@ package ch.adv.ui.core.presentation.widgets;
 
 import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -16,10 +17,16 @@ import javafx.scene.layout.Pane;
 public class AutoScalePane extends Pane {
 
     private static final double MAX_SCALE = 2;
+    private static final int DEFAULT_PADDING = 10;
     private Group content = new Group();
 
     public AutoScalePane() {
+        this(DEFAULT_PADDING);
+    }
+
+    public AutoScalePane(int padding) {
         getChildren().add(content);
+        setPadding(new Insets(padding));
     }
 
     /**
