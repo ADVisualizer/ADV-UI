@@ -26,7 +26,7 @@ public class StyleConverter {
      * @return the corresponding enum from the input string
      */
     public static BorderStrokeStyle getStrokeStyle(String name) {
-        return MAP.get(name);
+        return MAP.get(name.toLowerCase());
     }
 
     /**

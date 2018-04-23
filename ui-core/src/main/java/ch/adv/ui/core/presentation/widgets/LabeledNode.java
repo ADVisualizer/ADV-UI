@@ -63,10 +63,6 @@ public class LabeledNode extends ADVNode {
         borderProperty.setValue(createBorder(BorderWidths.DEFAULT
                 .getTop(), Color.BLACK, BorderStrokeStyle.NONE));
 
-        borderProperty.setValue(new Border(
-                new BorderStroke(Color.BLACK, BorderStrokeStyle.NONE,
-                        cornerRadii(), BorderWidths.DEFAULT, Insets.EMPTY)));
-
         backgroundProperty().bind(backgroundProperty);
         borderProperty().bind(borderProperty);
 
