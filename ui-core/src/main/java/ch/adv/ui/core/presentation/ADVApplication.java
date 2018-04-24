@@ -1,8 +1,7 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.service.SocketServer;
 import ch.adv.ui.core.presentation.util.ResourceLocator;
-import com.google.inject.Guice;
+import ch.adv.ui.core.service.SocketServer;
 import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * Main class of ADV UI.
@@ -29,49 +27,25 @@ public class ADVApplication extends Application {
 
     private static final Logger logger = LoggerFactory
             .getLogger(ADVApplication.class);
-
-    private static CountDownLatch latch = new CountDownLatch(1);
-    private static ADVApplication instance;
-
-    private final Injector injector;
-
+    private static Injector injector;
     @Inject
     private SocketServer socketServer;
-
     @Inject
     private ResourceLocator resourceLocator;
-
     private Stage primaryStage;
     private Image advIconImage;
 
-    public ADVApplication() {
-        this.injector = Guice.createInjector(new GuiceBaseModule());
-        instance = this;
-        latch.countDown();
+    public static void setInjector(Injector injector) {
+        ADVApplication.injector = injector;
     }
 
-    /**
-     * Waits until the Application got initiated by JavaFX
-     *
-     * @return application instance
-     */
-    public static ADVApplication waitForADVApplication() {
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            logger.error("ADVApplication not started");
-        }
-        return instance;
-    }
-
-    public Injector getInjector() {
-        return injector;
+    @Override
+    public void init() throws Exception {
+        injector.injectMembers(this);
     }
 
     @Override
     public void start(Stage stage) {
-        injector.injectMembers(this);
-
         this.primaryStage = stage;
         this.advIconImage = new Image(resourceLocator.getResourceAsStream(
                 ResourceLocator.Resource.ICON_IMAGE));

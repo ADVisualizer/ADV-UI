@@ -3,7 +3,7 @@ package ch.adv.ui.core.logic;
 import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.adv.ui.core.logic.domain.Session;
-import ch.adv.ui.core.presentation.GuiceBaseModule;
+import ch.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
@@ -17,7 +17,6 @@ import org.mockito.Mockito;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,33 +26,27 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 
 @RunWith(JukitoRunner.class)
-@UseModules({GuiceBaseModule.class})
+@UseModules( {GuiceCoreModule.class, GuiceTestModule.class})
 public class ADVFlowControlTest {
+
     @Inject
     private FileDatastoreAccess reader;
     @Inject
     private Gson gson;
     @Inject
-    private ADVModule testModule;
-    @Inject
-    private Parser testParser;
-    @Inject
-    private Layouter testLayouter;
-    @Inject
-    private Session testSession;
+    private Map<String, ADVModule> moduleMap;
     @Inject
     private Pane testPane;
-    @Inject
-    private ModuleStore testModuleStore;
     @Inject
     private SessionStore testSessionStore;
     @Inject
     private LayoutedSnapshotStore testLayoutedSnapshotStore;
     @Inject
+    private EventManager testEventManager;
     private FlowControl flowControl;
-
-    private LayoutedSnapshot testLayoutedSnapshot;
     private String testJSON;
+    private Session testSession;
+    private LayoutedSnapshot testLayoutedSnapshot;
 
     @Before
     public void setUp() throws IOException {
@@ -61,20 +54,20 @@ public class ADVFlowControlTest {
                 .getResource("session1.json");
 
         testJSON = reader.read(new File(url1.getPath()));
-
         testSession = gson.fromJson(testJSON, Session.class);
         testLayoutedSnapshot = new LayoutedSnapshot(1, testPane);
 
-        Map<String, ADVModule> modules = new HashMap<>();
-        modules.put("test", testModule);
-        testModuleStore.setAvailableModules(modules);
-
-        Mockito.doReturn(testParser).when(testModule).getParser();
-        Mockito.doReturn(testLayouter).when(testModule).getLayouter();
-
+        ADVModule testModule = moduleMap.get("test");
+        Parser testParser = testModule.getParser();
+        Layouter testLayouter = testModule.getLayouter();
         Mockito.doReturn(testSession).when(testParser).parse(any());
         Mockito.doReturn(testLayoutedSnapshot).when(testLayouter).
                 layout(any(), anyList());
+        ModuleParser testModuleParser = Mockito.mock(ModuleParser.class);
+        Mockito.doReturn(testModule).when(testModuleParser).parseModule(any());
+
+        flowControl = new ADVFlowControl(testModuleParser, testSessionStore,
+                testLayoutedSnapshotStore, testEventManager);
     }
 
     @Test

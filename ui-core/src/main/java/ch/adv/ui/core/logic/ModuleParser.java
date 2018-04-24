@@ -6,31 +6,25 @@ import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Stores all available modules.
  */
 @Singleton
-public class ModuleStore {
+public class ModuleParser {
 
-    private static final Map<String, ADVModule> AVAILABLE_MODULES = new
-            HashMap<>();
-    private static final Logger logger = LoggerFactory.getLogger(
-            ModuleStore.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(ModuleParser.class);
+
+    private final Map<String, ADVModule> moduleMap;
     private final JsonParser jsonParser = new JsonParser();
 
-    /**
-     * Sets available modules.
-     * Should only be called by the bootstrapper component.
-     *
-     * @param modules available modules
-     */
-    public static void setAvailableModules(final Map<String, ADVModule>
-                                                   modules) {
-        AVAILABLE_MODULES.putAll(modules);
+    @Inject
+    public ModuleParser(Map<String, ADVModule> moduleMap) {
+        this.moduleMap = moduleMap;
     }
 
     /**
@@ -48,6 +42,6 @@ public class ModuleStore {
 
         logger.info("Parsed module '{}'", parsedModuleName);
 
-        return AVAILABLE_MODULES.get(parsedModuleName);
+        return moduleMap.get(parsedModuleName);
     }
 }

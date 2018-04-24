@@ -1,8 +1,10 @@
 package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.access.FileDatastoreAccess;
+import ch.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
+import org.jukito.UseModules;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,30 +12,23 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 @RunWith(JukitoRunner.class)
-public class ModuleStoreTest {
+@UseModules( {GuiceCoreModule.class, GuiceTestModule.class})
+public class ModuleParserTest {
 
-    @Inject
-    private ADVModule testModule;
     @Inject
     private FileDatastoreAccess reader;
     @Inject
-    private ModuleStore storeUnderTest;
+    private ModuleParser parserUnderTest;
 
     private String testJson;
 
     @Before
     public void setUp() throws IOException {
-        Map<String, ADVModule> modules = new HashMap<>();
-        modules.put("test", testModule);
-        storeUnderTest.setAvailableModules(modules);
-
         URL url = SessionStoreTest.class.getClassLoader()
                 .getResource("session1.json");
 
@@ -42,14 +37,14 @@ public class ModuleStoreTest {
 
     @Test
     public void parseKnownModuleTest() {
-        ADVModule actual = storeUnderTest.parseModule(testJson);
-        assertEquals(testModule, actual);
+        ADVModule actual = parserUnderTest.parseModule(testJson);
+        assertNotNull(actual);
     }
 
     @Test
     public void parseUnknownModuleTest() {
-        String testJSON = "{\"moduleName\": \"testModule\"}";
-        ADVModule actual = storeUnderTest.parseModule(testJSON);
+        String testJSON = "{\"moduleName\": \"asdfModule\"}";
+        ADVModule actual = parserUnderTest.parseModule(testJSON);
         assertNull(actual);
     }
 }

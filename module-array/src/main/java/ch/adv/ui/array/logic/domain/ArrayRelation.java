@@ -5,7 +5,7 @@ import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 
 /**
- * Relation between two {@link ArrayElement}s
+ * Relation between two {@link ch.adv.ui.array.logic.ArrayElement}s
  */
 public class ArrayRelation implements ADVRelation {
 
