@@ -1,6 +1,5 @@
 package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.EventManager;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ import java.util.List;
  * @author mwieland
  */
 @Singleton
-public class ADVEventManager {
+public class ADVEventManager implements EventManager {
 
     private static final Logger logger = LoggerFactory.getLogger(
             ADVEventManager.class);

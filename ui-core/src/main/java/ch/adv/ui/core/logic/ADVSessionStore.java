@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * a session is removed.
  */
 @Singleton
-class ADVSessionStore implements SessionStore {
+public class ADVSessionStore implements SessionStore {
 
     private static final Logger logger = LoggerFactory.getLogger(SessionStore
             .class);
@@ -31,7 +31,7 @@ class ADVSessionStore implements SessionStore {
     private Session currentSession;
 
     @Inject
-    SessionStore(EventManager eventManager) {
+    public ADVSessionStore(EventManager eventManager) {
         this.eventManager = eventManager;
     }
 
@@ -46,7 +46,7 @@ class ADVSessionStore implements SessionStore {
      * @param newSession the session to add
      */
     @Override
-    void add(Session newSession) {
+    public void add(Session newSession) {
         if (newSession != null) {
 
             long id = newSession.getSessionId();
@@ -94,19 +94,19 @@ class ADVSessionStore implements SessionStore {
      * @return sorted list of sessions
      */
     @Override
-    List<Session> getAll() {
+    public List<Session> getAll() {
         ArrayList<Session> list = new ArrayList<>(sessions.values());
         list.sort((s1, s2) -> (int) (s2.getSessionId() - s1.getSessionId()));
         return list;
     }
 
     @Override
-    Session get(long id) {
+    public Session get(long id) {
         return sessions.get(id);
     }
 
     @Override
-    Session getCurrent() {
+    public Session getCurrent() {
         return currentSession;
     }
 
@@ -117,7 +117,7 @@ class ADVSessionStore implements SessionStore {
      * @param sessionId of the current session
      */
     @Override
-    void setCurrent(long sessionId) {
+    public void setCurrent(long sessionId) {
         logger.debug("New session {} added to SessionStore", sessionId);
         this.currentSession = sessions.get(sessionId);
         eventManager.fire(ADVEvent.CURRENT_SESSION_CHANGED, null,
@@ -129,7 +129,7 @@ class ADVSessionStore implements SessionStore {
      *
      * @param id to be deleted
      */
-    void delete(long id) {
+    public void delete(long id) {
         Session existing = sessions.get(id);
 
         if (existing != null) {
@@ -141,11 +141,11 @@ class ADVSessionStore implements SessionStore {
         eventManager.fire(ADVEvent.SESSION_REMOVED, existing, null);
     }
 
-    void clear() {
+    public void clear() {
         this.sessions.clear();
     }
 
-    boolean contains(long id) {
+    public boolean contains(long id) {
         return this.sessions.containsKey(id);
     }
 }

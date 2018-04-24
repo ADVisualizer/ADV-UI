@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * @author mtrentini
  */
 @Singleton
-public class ADVLayoutedSnapshotStore {
+public class ADVLayoutedSnapshotStore implements LayoutedSnapshotStore {
     private static final Logger logger = LoggerFactory.getLogger(
             LayoutedSnapshotStore.class);
     private final Map<Long, List<LayoutedSnapshot>> snapshotMap =
@@ -30,7 +30,7 @@ public class ADVLayoutedSnapshotStore {
     private final EventManager eventManager;
 
     @Inject
-    public LayoutedSnapshotStore(EventManager eventManager) {
+    public ADVLayoutedSnapshotStore(EventManager eventManager) {
         this.eventManager = eventManager;
     }
 
@@ -40,8 +40,9 @@ public class ADVLayoutedSnapshotStore {
      * @param sessionId        related session id
      * @param layoutedSnapshot the layouted snapshot to add
      */
-    public void addLayoutedSnapshot(long sessionId, LayoutedSnapshot
-            layoutedSnapshot) {
+    @Override
+    public void add(long sessionId, LayoutedSnapshot layoutedSnapshot) {
+
         List<LayoutedSnapshot> layoutedSnapshotList =
                 snapshotMap.get(sessionId);
         if (layoutedSnapshotList == null) {
@@ -62,7 +63,8 @@ public class ADVLayoutedSnapshotStore {
      * @param sessionId session id
      * @return List of stored Snapshots
      */
-    public List<LayoutedSnapshot> getLayoutedSnapshots(long sessionId) {
+    @Override
+    public List<LayoutedSnapshot> getAll(long sessionId) {
         return snapshotMap.get(sessionId);
     }
 
@@ -71,7 +73,8 @@ public class ADVLayoutedSnapshotStore {
      * @param snapshotId to check
      * @return true if the specified snapshot is already stored
      */
-    public boolean hasSnapshot(long sessionId, long snapshotId) {
+    @Override
+    public boolean contains(long sessionId, long snapshotId) {
         if (snapshotMap.get(sessionId) == null) {
             return false;
         }
@@ -84,17 +87,20 @@ public class ADVLayoutedSnapshotStore {
      * @param sessionId of the snapshots
      * @return a list of all the Panes of a session
      */
-    public List<Pane> getSnapshotPanes(long sessionId) {
+    @Override
+    public List<Pane> getAllPanes(long sessionId) {
         return snapshotMap.get(sessionId).stream()
                 .map(LayoutedSnapshot::getPane).collect(Collectors.toList());
     }
 
     /**
-     * Delete all snapshots belongign to the specified sessionId
+     * Delete all snapshots belonging to the specified sessionId
      *
      * @param sessionId of the deleted session
      */
-    public void deleteSession(long sessionId) {
+    @Override
+    public void deleteAll(long sessionId) {
         snapshotMap.remove(sessionId);
     }
+
 }
