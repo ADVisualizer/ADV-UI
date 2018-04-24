@@ -22,7 +22,7 @@ public class LayoutedSnapshotStoreTest {
     private LayoutedSnapshot layoutedSnapshot2;
 
     @Inject
-    private ADVLayoutedSnapshotStore storeUnderTest;
+    private LayoutedSnapshotStore storeUnderTest;
 
 
     @Before

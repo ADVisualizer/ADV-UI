@@ -33,10 +33,10 @@ public class SessionStoreTest {
     @Inject
     private PropertyChangeListener listener;
 
-    private ADVSessionStore storeUnderTest;
+    private SessionStore storeUnderTest;
 
     @Before
-    public void setUp(ADVSessionStore storeUnderTest) throws Exception {
+    public void setUp(SessionStore storeUnderTest) throws Exception {
         this.storeUnderTest = storeUnderTest;
 
         URL url1 = SessionStoreTest.class.getClassLoader()

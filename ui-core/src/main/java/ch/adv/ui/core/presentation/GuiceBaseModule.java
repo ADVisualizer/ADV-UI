@@ -3,7 +3,8 @@ package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.logic.*;
+import ch.adv.ui.core.logic.ADVFlowControl;
+import ch.adv.ui.core.logic.FlowControl;
 import ch.adv.ui.core.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -27,9 +28,6 @@ public class GuiceBaseModule extends AbstractModule {
 
         // -------- Business Logic Layer -------- //
         bind(FlowControl.class).to(ADVFlowControl.class);
-        bind(SessionStore.class).to(ADVSessionStore.class);
-        bind(LayoutedSnapshotStore.class).to(ADVLayoutedSnapshotStore.class);
-        bind(EventManager.class).to(ADVEventManager.class);
 
         // -------- Access Layer -------- //
         bind(DatastoreAccess.class).to(FileDatastoreAccess.class);
