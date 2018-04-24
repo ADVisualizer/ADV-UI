@@ -1,8 +1,5 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.presentation.sessionviewmodel.StateViewModel;
-import ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModel;
-
 /**
  * Factory interface for Guice
  *

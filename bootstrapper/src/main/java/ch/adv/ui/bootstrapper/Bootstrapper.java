@@ -1,8 +1,8 @@
 package ch.adv.ui.bootstrapper;
 
 import ch.adv.ui.array.ArrayModule;
-import ch.adv.ui.core.app.ADVApplication;
-import ch.adv.ui.core.app.ADVModule;
+import ch.adv.ui.core.presentation.ADVApplication;
+import ch.adv.ui.core.logic.ADVModule;
 import ch.adv.ui.core.logic.ModuleStore;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
