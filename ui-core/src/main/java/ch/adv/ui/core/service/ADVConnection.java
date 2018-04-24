@@ -15,8 +15,8 @@ import java.nio.charset.StandardCharsets;
  */
 public class ADVConnection {
 
-    private static final Logger logger = LoggerFactory.getLogger(ADVConnection
-            .class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(ADVConnection.class);
 
     private final Socket socket;
     private final GsonProvider gsonProvider;
