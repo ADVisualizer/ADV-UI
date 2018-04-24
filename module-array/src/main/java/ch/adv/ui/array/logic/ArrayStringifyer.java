@@ -1,4 +1,4 @@
-package ch.adv.ui.array;
+package ch.adv.ui.array.logic;
 
 import ch.adv.ui.core.logic.GsonProvider;
 import ch.adv.ui.core.logic.Stringifyer;

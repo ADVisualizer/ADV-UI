@@ -1,4 +1,4 @@
-package ch.adv.ui.array;
+package ch.adv.ui.array.logic.domain;
 
 import ch.adv.ui.core.logic.domain.ADVRelation;
 import ch.adv.ui.core.logic.domain.styles.ADVStyle;

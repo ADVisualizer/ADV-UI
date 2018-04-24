@@ -1,9 +1,10 @@
-package ch.adv.ui.array;
+package ch.adv.ui.array.logic;
 
-import ch.adv.ui.core.logic.Parser;
-import ch.adv.ui.core.logic.Stringifyer;
+import ch.adv.ui.array.ArrayParser;
 import ch.adv.ui.core.logic.ADVModule;
 import ch.adv.ui.core.logic.Layouter;
+import ch.adv.ui.core.logic.Parser;
+import ch.adv.ui.core.logic.Stringifyer;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 

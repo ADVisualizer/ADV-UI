@@ -1,4 +1,4 @@
-package ch.adv.ui.array;
+package ch.adv.ui.array.logic;
 
 import ch.adv.ui.core.logic.ADVEvent;
 import ch.adv.ui.core.logic.EventManager;
