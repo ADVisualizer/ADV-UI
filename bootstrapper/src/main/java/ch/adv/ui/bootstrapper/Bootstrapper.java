@@ -24,8 +24,11 @@ public class Bootstrapper {
     /**
      * ADV UI entry point
      * <p>
-     * Use command-line argument 'port' to configure the socket server:
-     * <code>--port=9876</code>
+     * Use command-line arguments 'port' and 'host' to configure the socket
+     * server
+     * <code>
+     * java -jar adv-ui.jar --port=9876 --host=192.168.xxx.yyy
+     * </code>
      *
      * @param args cli arguments
      */
@@ -38,7 +41,6 @@ public class Bootstrapper {
 
         ADVApplication.setInjector(injector);
 
-        //TODO pass injector to adv application
         Application.launch(ADVApplication.class, args);
     }
 
