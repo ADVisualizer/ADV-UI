@@ -1,7 +1,7 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.access.InterfaceAdapter;
-import ch.adv.ui.core.access.Parser;
+import ch.adv.ui.core.logic.InterfaceAdapter;
+import ch.adv.ui.core.logic.Parser;
 import ch.adv.ui.core.logic.domain.ADVElement;
 import ch.adv.ui.core.logic.domain.ADVRelation;
 import ch.adv.ui.core.logic.domain.Session;

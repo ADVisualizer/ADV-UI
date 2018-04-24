@@ -1,9 +1,9 @@
 package ch.adv.ui.core.logic;
 
+import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.domain.Snapshot;
 import ch.adv.ui.core.presentation.util.I18n;
-import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
@@ -58,7 +58,7 @@ public class ADVFlowControl implements FlowControl {
 
         // filter new snapshots
         List<Snapshot> newSnapshots = session.getSnapshots().stream()
-                .filter(s -> !layoutedSnapshotStore.hasSnapshot(sessionId,
+                .filter(s -> !layoutedSnapshotStore.contains(sessionId,
                         s.getSnapshotId()))
                 .collect(Collectors.toList());
 
@@ -70,16 +70,15 @@ public class ADVFlowControl implements FlowControl {
                     session.getFlags());
 
             // store layouted snapshot
-            layoutedSnapshotStore
-                    .addLayoutedSnapshot(sessionId, layoutedSnapshot);
+            layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
         });
 
         if (!newSnapshots.isEmpty()) {
-            sessionStore.addSession(session);
+            sessionStore.add(session);
             eventManager.fire(ADVEvent.NOTIFICATION, null,
                     I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
         } else {
-            sessionStore.setCurrentSession(sessionId);
+            sessionStore.setCurrent(sessionId);
             eventManager.fire(ADVEvent.NOTIFICATION, null,
                     I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
         }

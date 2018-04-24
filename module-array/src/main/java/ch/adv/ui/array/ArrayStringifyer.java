@@ -1,7 +1,7 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.access.GsonProvider;
-import ch.adv.ui.core.access.Stringifyer;
+import ch.adv.ui.core.logic.GsonProvider;
+import ch.adv.ui.core.logic.Stringifyer;
 import ch.adv.ui.core.logic.domain.Session;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;

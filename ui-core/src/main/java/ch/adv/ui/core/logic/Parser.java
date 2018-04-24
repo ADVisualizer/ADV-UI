@@ -1,4 +1,4 @@
-package ch.adv.ui.core.access;
+package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.logic.domain.Session;
 

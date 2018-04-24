@@ -18,8 +18,8 @@ public class SteppingViewModel {
 
     @Inject
     public SteppingViewModel(LayoutedSnapshotStore layoutedSnapshotStore,
-                      EventManager eventManager,
-                      @Assisted StateViewModel stateViewModel) {
+                             EventManager eventManager,
+                             @Assisted StateViewModel stateViewModel) {
 
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.eventManager = eventManager;
@@ -76,11 +76,11 @@ public class SteppingViewModel {
 
     private void fireEvent(ADVEvent event, int oldIndex, int newIndex) {
         LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore
-                .getLayoutedSnapshots(stateViewModel.getSessionId())
+                .getAll(stateViewModel.getSessionId())
                 .get(oldIndex);
 
         LayoutedSnapshot newLayoutedSnapshot = layoutedSnapshotStore
-                .getLayoutedSnapshots(stateViewModel.getSessionId())
+                .getAll(stateViewModel.getSessionId())
                 .get(newIndex);
 
         eventManager.fire(event, oldLayoutedSnapshot, newLayoutedSnapshot);

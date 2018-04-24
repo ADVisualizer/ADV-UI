@@ -33,10 +33,10 @@ public class SessionStoreTest {
     @Inject
     private PropertyChangeListener listener;
 
-    private SessionStore storeUnderTest;
+    private ADVSessionStore storeUnderTest;
 
     @Before
-    public void setUp(SessionStore storeUnderTest) throws Exception {
+    public void setUp(ADVSessionStore storeUnderTest) throws Exception {
         this.storeUnderTest = storeUnderTest;
 
         URL url1 = SessionStoreTest.class.getClassLoader()
@@ -56,48 +56,48 @@ public class SessionStoreTest {
 
     @Test
     public void addSessionTest() {
-        storeUnderTest.addSession(session1);
-        assertEquals(1, storeUnderTest.getSessions().size());
-        assertEquals(session1, storeUnderTest.getCurrentSession());
-        assertEquals(session1, storeUnderTest.getSessions().get(0));
+        storeUnderTest.add(session1);
+        assertEquals(1, storeUnderTest.getAll().size());
+        assertEquals(session1, storeUnderTest.getCurrent());
+        assertEquals(session1, storeUnderTest.getAll().get(0));
     }
 
     @Test
     public void addMultipleSessionsTest() {
-        storeUnderTest.addSession(session1);
-        storeUnderTest.addSession(session2_1);
-        assertEquals(2, storeUnderTest.getSessions().size());
-        assertEquals(session2_1, storeUnderTest.getCurrentSession());
+        storeUnderTest.add(session1);
+        storeUnderTest.add(session2_1);
+        assertEquals(2, storeUnderTest.getAll().size());
+        assertEquals(session2_1, storeUnderTest.getCurrent());
     }
 
     @Test
     public void mergeSessionsTest() {
-        storeUnderTest.addSession(session2_1);
-        storeUnderTest.addSession(session2_2);
-        assertEquals(1, storeUnderTest.getSessions().size());
-        assertEquals(session2_1, storeUnderTest.getCurrentSession());
-        assertEquals(2, storeUnderTest.getCurrentSession().getSnapshots()
+        storeUnderTest.add(session2_1);
+        storeUnderTest.add(session2_2);
+        assertEquals(1, storeUnderTest.getAll().size());
+        assertEquals(session2_1, storeUnderTest.getCurrent());
+        assertEquals(2, storeUnderTest.getCurrent().getSnapshots()
                 .size());
     }
 
     @Test
     public void addDuplicateSessionTest() {
-        storeUnderTest.addSession(session1);
-        storeUnderTest.addSession(session1);
-        assertEquals(1, storeUnderTest.getSessions().size());
-        assertEquals(session1, storeUnderTest.getCurrentSession());
-        assertEquals(session1.getSnapshots(), storeUnderTest.getCurrentSession()
+        storeUnderTest.add(session1);
+        storeUnderTest.add(session1);
+        assertEquals(1, storeUnderTest.getAll().size());
+        assertEquals(session1, storeUnderTest.getCurrent());
+        assertEquals(session1.getSnapshots(), storeUnderTest.getCurrent()
                 .getSnapshots());
     }
 
     @Test
     public void deleteSessionTest() {
-        storeUnderTest.addSession(session1);
-        assertEquals(1, storeUnderTest.getSessions().size());
-        assertEquals(session1, storeUnderTest.getCurrentSession());
-        storeUnderTest.deleteSession(session1);
-        assertEquals(0, storeUnderTest.getSessions().size());
-        assertEquals(null, storeUnderTest.getCurrentSession());
+        storeUnderTest.add(session1);
+        assertEquals(1, storeUnderTest.getAll().size());
+        assertEquals(session1, storeUnderTest.getCurrent());
+        storeUnderTest.delete(session1.getSessionId());
+        assertEquals(0, storeUnderTest.getAll().size());
+        assertEquals(null, storeUnderTest.getCurrent());
     }
 
 }

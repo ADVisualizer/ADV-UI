@@ -1,6 +1,6 @@
 package ch.adv.ui.core.service;
 
-import ch.adv.ui.core.access.GsonProvider;
+import ch.adv.ui.core.logic.GsonProvider;
 import ch.adv.ui.core.logic.FlowControl;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;

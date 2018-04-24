@@ -1,7 +1,7 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.access.Parser;
-import ch.adv.ui.core.access.Stringifyer;
+import ch.adv.ui.core.logic.Parser;
+import ch.adv.ui.core.logic.Stringifyer;
 import ch.adv.ui.core.logic.ADVModule;
 import ch.adv.ui.core.logic.Layouter;
 import com.google.inject.Inject;

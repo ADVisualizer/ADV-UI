@@ -1,9 +1,9 @@
-package ch.adv.ui.core.app;
+package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.logic.ADVEvent;
-import ch.adv.ui.core.logic.EventManager;
+import ch.adv.ui.core.presentation.GuiceBaseModule;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
+import org.jukito.UseModules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -17,6 +17,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 @RunWith(JukitoRunner.class)
+@UseModules({GuiceBaseModule.class})
 public class EventManagerTest {
 
     @Inject

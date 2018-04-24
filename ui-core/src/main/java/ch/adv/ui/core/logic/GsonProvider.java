@@ -1,4 +1,4 @@
-package ch.adv.ui.core.access;
+package ch.adv.ui.core.logic;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

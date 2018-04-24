@@ -1,4 +1,4 @@
-package ch.adv.ui.core.logic;
+package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.service.SocketServer;
 import ch.adv.ui.core.presentation.util.ResourceLocator;

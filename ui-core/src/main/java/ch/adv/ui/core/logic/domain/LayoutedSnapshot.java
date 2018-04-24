@@ -14,16 +14,18 @@ import java.util.Objects;
  */
 public class LayoutedSnapshot {
 
-    private long snapshotId;
+    private final long snapshotId;
+    private final Pane pane;
+
     private String snapshotDescription;
-    private Pane pane;
+
+    public LayoutedSnapshot(long snapshotId, Pane pane) {
+        this.snapshotId = snapshotId;
+        this.pane = pane;
+    }
 
     public long getSnapshotId() {
         return snapshotId;
-    }
-
-    public void setSnapshotId(long snapshotId) {
-        this.snapshotId = snapshotId;
     }
 
     public String getSnapshotDescription() {
@@ -36,10 +38,6 @@ public class LayoutedSnapshot {
 
     public Pane getPane() {
         return pane;
-    }
-
-    public void setPane(Pane pane) {
-        this.pane = pane;
     }
 
     @Override

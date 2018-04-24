@@ -1,10 +1,10 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.ADVEvent;
 import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.logic.LayoutedSnapshotStore;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.domain.Session;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -50,7 +50,7 @@ class StateViewModel {
     @Inject
     StateViewModel(RootViewModel rootViewModel, LayoutedSnapshotStore
             layoutedSnapshotStore, EventManager eventManager, StepButtonState
-                                  stepButtonState) {
+                           stepButtonState) {
         logger.debug("Construct StateViewModel");
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.stepButtonState = stepButtonState;
@@ -65,11 +65,11 @@ class StateViewModel {
                         .SNAPSHOT_ADDED, sessionId + "");
 
         this.availableSnapshotPanes
-                .addAll(layoutedSnapshotStore.getSnapshotPanes(sessionId));
+                .addAll(layoutedSnapshotStore.getAllPanes(sessionId));
         this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
 
         String snapshotDescription = layoutedSnapshotStore
-                .getLayoutedSnapshots(sessionId).get(0)
+                .getAll(sessionId).get(0)
                 .getSnapshotDescription();
         this.currentSnapshotDescriptionProperty.set(snapshotDescription);
 
@@ -88,7 +88,7 @@ class StateViewModel {
         currentSnapshotDescriptionProperty.addListener((e, oldV, newV) -> {
             if (newV != null) {
                 LayoutedSnapshot s = layoutedSnapshotStore
-                        .getLayoutedSnapshots(session.getSessionId())
+                        .getAll(session.getSessionId())
                         .get(currentSnapshotIndex);
                 String domainDescription = s.getSnapshotDescription();
                 if (!newV.equals(domainDescription)) {
@@ -161,7 +161,7 @@ class StateViewModel {
 
     private void updateSnapshotDescription() {
         String description = layoutedSnapshotStore
-                .getLayoutedSnapshots(session.getSessionId())
+                .getAll(session.getSessionId())
                 .get(currentSnapshotIndex).getSnapshotDescription();
         currentSnapshotDescriptionProperty.set(description);
     }
@@ -206,7 +206,7 @@ class StateViewModel {
             Platform.runLater(() -> {
                 availableSnapshotPanes.clear();
                 availableSnapshotPanes.addAll(layoutedSnapshotStore
-                        .getSnapshotPanes(session.getSessionId()));
+                        .getAllPanes(session.getSessionId()));
                 updateProgress();
                 updateStepButtonDisabilities();
             });

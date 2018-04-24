@@ -1,11 +1,7 @@
 package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.access.DatastoreAccess;
-import ch.adv.ui.core.logic.ADVEvent;
-import ch.adv.ui.core.logic.EventManager;
-import ch.adv.ui.core.logic.FlowControl;
-import ch.adv.ui.core.logic.LayoutedSnapshotStore;
-import ch.adv.ui.core.logic.SessionStore;
+import ch.adv.ui.core.logic.*;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.presentation.util.I18n;
 import javafx.application.Platform;
@@ -47,7 +43,7 @@ class RootViewModel {
             SimpleStringProperty("");
 
     private final DatastoreAccess fileAccess;
-    private final SessionStore sessionStore;
+    private final SessionStore storeRepository;
     private final FlowControl flowControl;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final ScheduledExecutorService notificationResetTimer =
@@ -61,12 +57,13 @@ class RootViewModel {
     };
 
     @Inject
-    RootViewModel(SessionStore sessionStore, FlowControl flowControl,
+    RootViewModel(SessionStore storeRepository,
+                  FlowControl flowControl,
                   DatastoreAccess fileAccess,
                   LayoutedSnapshotStore layoutedSnapshotStore,
                   EventManager eventManager) {
 
-        this.sessionStore = sessionStore;
+        this.storeRepository = storeRepository;
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
@@ -112,8 +109,8 @@ class RootViewModel {
 
     private void removeSession(Session session) {
         try {
-            sessionStore.deleteSession(session);
-            layoutedSnapshotStore.deleteSession(session.getSessionId());
+            storeRepository.delete(session.getSessionId());
+            layoutedSnapshotStore.deleteAll(session.getSessionId());
             showNotification(I18n.NOTIFICATION_SESSION_CLOSE_SUCCESSFUL);
         } catch (Exception e) {
             showNotification(I18n.NOTIFICATION_SESSION_CLOSE_UNSUCCESSFUL);
@@ -138,7 +135,7 @@ class RootViewModel {
             Session session = currentSessionProperty.get();
             if (session != null) {
                 layoutedSnapshotStore
-                        .getLayoutedSnapshots(session.getSessionId())
+                        .getAll(session.getSessionId())
                         .forEach(element -> {
                             String description = element
                                     .getSnapshotDescription();

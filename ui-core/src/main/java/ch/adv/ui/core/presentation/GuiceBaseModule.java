@@ -1,11 +1,9 @@
-package ch.adv.ui.core.logic;
+package ch.adv.ui.core.presentation;
 
 
 import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.presentation.ReplayViewModelFactory;
-import ch.adv.ui.core.presentation.SessionReplayFactory;
-import ch.adv.ui.core.presentation.SteppingViewModelFactory;
+import ch.adv.ui.core.logic.*;
 import ch.adv.ui.core.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -27,11 +25,11 @@ public class GuiceBaseModule extends AbstractModule {
                 SteppingViewModelFactory.class));
 
 
-        // -------- Service Layer -------- //
-
-
         // -------- Business Logic Layer -------- //
         bind(FlowControl.class).to(ADVFlowControl.class);
+        bind(SessionStore.class).to(ADVSessionStore.class);
+        bind(LayoutedSnapshotStore.class).to(ADVLayoutedSnapshotStore.class);
+        bind(EventManager.class).to(ADVEventManager.class);
 
         // -------- Access Layer -------- //
         bind(DatastoreAccess.class).to(FileDatastoreAccess.class);

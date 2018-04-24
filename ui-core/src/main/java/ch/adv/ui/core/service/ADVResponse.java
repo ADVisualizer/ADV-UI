@@ -1,6 +1,6 @@
 package ch.adv.ui.core.service;
 
-import ch.adv.ui.core.access.GsonProvider;
+import ch.adv.ui.core.logic.GsonProvider;
 
 /**
  * Encapsulates a response to the ADV Lib.
