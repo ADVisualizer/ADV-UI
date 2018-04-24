@@ -1,6 +1,7 @@
 package ch.adv.ui.core.service;
 
 import ch.adv.ui.core.access.GsonProvider;
+import ch.adv.ui.core.logic.FlowControl;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * A incomming connection from the ADV Lib
+ * A incoming connection from the ADV Lib
  */
 public class ADVConnection {
 
@@ -20,12 +21,12 @@ public class ADVConnection {
 
     private final Socket socket;
     private final GsonProvider gsonProvider;
-    private final ADVFlowControl flowControl;
+    private final FlowControl flowControl;
     private BufferedReader reader;
     private PrintWriter writer;
 
     @Inject
-    public ADVConnection(ADVFlowControl flowControl, GsonProvider gsonProvider,
+    public ADVConnection(FlowControl flowControl, GsonProvider gsonProvider,
                          @Assisted Socket socket) {
         this.socket = socket;
         this.flowControl = flowControl;

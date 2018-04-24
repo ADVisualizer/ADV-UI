@@ -1,12 +1,10 @@
-package ch.adv.ui.core.service;
+package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.ADVModule;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.domain.Snapshot;
 import ch.adv.ui.core.app.EventManager;
-import ch.adv.ui.core.logic.ModuleStore;
-import ch.adv.ui.core.logic.SessionStore;
 import ch.adv.ui.core.presentation.I18n;
 import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.Layouter;
@@ -23,7 +21,7 @@ import java.util.stream.Collectors;
  * Framework component which controls the default visualization flow.
  */
 @Singleton
-public class ADVFlowControl {
+public class ADVFlowControl implements FlowControl {
 
     private static final Logger logger = LoggerFactory.getLogger(
             ADVFlowControl.class);

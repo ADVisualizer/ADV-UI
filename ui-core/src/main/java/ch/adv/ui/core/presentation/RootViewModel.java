@@ -3,9 +3,9 @@ package ch.adv.ui.core.presentation;
 import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.EventManager;
+import ch.adv.ui.core.logic.FlowControl;
 import ch.adv.ui.core.logic.SessionStore;
 import ch.adv.ui.core.logic.domain.Session;
-import ch.adv.ui.core.service.ADVFlowControl;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -46,7 +46,7 @@ public class RootViewModel {
 
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
-    private final ADVFlowControl flowControl;
+    private final FlowControl flowControl;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final ScheduledExecutorService notificationResetTimer =
             Executors.newScheduledThreadPool(4);
@@ -59,7 +59,7 @@ public class RootViewModel {
     };
 
     @Inject
-    public RootViewModel(SessionStore sessionStore, ADVFlowControl flowControl,
+    public RootViewModel(SessionStore sessionStore, FlowControl flowControl,
                          DatastoreAccess fileAccess,
                          LayoutedSnapshotStore layoutedSnapshotStore,
                          EventManager eventManager) {

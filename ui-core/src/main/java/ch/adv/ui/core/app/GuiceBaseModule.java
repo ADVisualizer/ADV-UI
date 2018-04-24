@@ -3,6 +3,8 @@ package ch.adv.ui.core.app;
 
 import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.access.FileDatastoreAccess;
+import ch.adv.ui.core.logic.ADVFlowControl;
+import ch.adv.ui.core.logic.FlowControl;
 import ch.adv.ui.core.presentation.SessionReplayFactory;
 import ch.adv.ui.core.presentation.sessionviewmodel.ReplayViewModelFactory;
 import ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModelFactory;
@@ -31,7 +33,7 @@ public class GuiceBaseModule extends AbstractModule {
 
 
         // -------- Business Logic Layer -------- //
-
+        bind(FlowControl.class).to(ADVFlowControl.class);
 
         // -------- Access Layer -------- //
         bind(DatastoreAccess.class).to(FileDatastoreAccess.class);
