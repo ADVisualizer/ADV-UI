@@ -1,6 +1,5 @@
 package ch.adv.ui.array.logic;
 
-import ch.adv.ui.array.ArrayLayouterUtil;
 import ch.adv.ui.core.logic.domain.Snapshot;
 import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.presentation.widgets.AutoScalePane;

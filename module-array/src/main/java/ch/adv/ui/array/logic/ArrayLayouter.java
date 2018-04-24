@@ -1,6 +1,5 @@
 package ch.adv.ui.array.logic;
 
-import ch.adv.ui.array.ArrayObjectReferenceLayouter;
 import ch.adv.ui.core.logic.Layouter;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.adv.ui.core.logic.domain.Snapshot;
