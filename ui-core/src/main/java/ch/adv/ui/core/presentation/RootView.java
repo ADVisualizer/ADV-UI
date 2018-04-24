@@ -1,7 +1,8 @@
 package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.logic.domain.Session;
-import ch.adv.ui.core.util.ResourceLocator;
+import ch.adv.ui.core.presentation.util.I18n;
+import ch.adv.ui.core.presentation.util.ResourceLocator;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import java.util.Optional;
 /**
  * Main UI View
  */
-public class RootView {
+class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
@@ -59,7 +60,7 @@ public class RootView {
 
 
     @Inject
-    public RootView(RootViewModel viewModel) {
+    protected RootView(RootViewModel viewModel) {
         this.rootViewModel = viewModel;
 
         FileChooser.ExtensionFilter extensionFilter = new FileChooser
@@ -73,7 +74,7 @@ public class RootView {
      * its associated document have been completely loaded
      */
     @FXML
-    public void initialize() {
+    protected void initialize() {
         bindI18nStrings();
         sessionListView.setItems(rootViewModel.getAvailableSessions());
 
@@ -260,8 +261,11 @@ public class RootView {
         german.setTooltip(I18n.tooltipForKey("tooltip.session-bar.german"));
     }
 
+    /**
+     * Event handler for clear all sessions
+     */
     @FXML
-    private void handleClearAllSessionsClicked() {
+    protected void handleClearAllSessionsClicked() {
         rootViewModel.clearAllSessions();
     }
 

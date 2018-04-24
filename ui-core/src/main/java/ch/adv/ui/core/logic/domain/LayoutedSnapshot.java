@@ -1,4 +1,4 @@
-package ch.adv.ui.core.presentation.domain;
+package ch.adv.ui.core.logic.domain;
 
 import javafx.scene.layout.Pane;
 

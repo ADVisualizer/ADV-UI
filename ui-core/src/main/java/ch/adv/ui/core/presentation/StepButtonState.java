@@ -1,4 +1,4 @@
-package ch.adv.ui.core.presentation.sessionviewmodel;
+package ch.adv.ui.core.presentation;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 /**
  * Helper class to hold button state for {@link StateViewModel}
  */
-public class StepButtonState {
+class StepButtonState {
     
     private final BooleanProperty stepFirstBtnDisableProperty = new
             SimpleBooleanProperty();
@@ -25,7 +25,7 @@ public class StepButtonState {
      * @param forward  forward button property
      * @param last     last button property
      */
-    protected void disableStepButtons(boolean first, boolean backward, boolean
+    void disableStepButtons(boolean first, boolean backward, boolean
             forward, boolean last) {
         stepFirstBtnDisableProperty.set(first);
         stepBackwardBtnDisableProperty.set(backward);
@@ -33,19 +33,19 @@ public class StepButtonState {
         stepLastBtnDisableProperty.set(last);
     }
 
-    public BooleanProperty getStepFirstBtnDisableProperty() {
+    BooleanProperty getStepFirstBtnDisableProperty() {
         return stepFirstBtnDisableProperty;
     }
 
-    public BooleanProperty getStepBackwardBtnDisableProperty() {
+    BooleanProperty getStepBackwardBtnDisableProperty() {
         return stepBackwardBtnDisableProperty;
     }
 
-    public BooleanProperty getStepForwardBtnDisableProperty() {
+    BooleanProperty getStepForwardBtnDisableProperty() {
         return stepForwardBtnDisableProperty;
     }
 
-    public BooleanProperty getStepLastBtnDisableProperty() {
+    BooleanProperty getStepLastBtnDisableProperty() {
         return stepLastBtnDisableProperty;
     }
 }

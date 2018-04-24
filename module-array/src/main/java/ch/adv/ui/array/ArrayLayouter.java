@@ -1,8 +1,8 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.core.logic.domain.Snapshot;
-import ch.adv.ui.core.presentation.Layouter;
-import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.Layouter;
+import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;

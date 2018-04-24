@@ -1,8 +1,8 @@
-package ch.adv.ui.core.presentation.sessionviewmodel;
+package ch.adv.ui.core.presentation;
 
 /**
  * Guice factory interface for
- * {@link ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModel}
+ * {@link SteppingViewModel}
  */
 public interface SteppingViewModelFactory {
 

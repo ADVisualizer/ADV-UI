@@ -1,6 +1,6 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.presentation.sessionviewmodel.*;
+import ch.adv.ui.core.presentation.util.I18n;
 import ch.adv.ui.core.presentation.util.ReplaySliderStringConverter;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -23,7 +23,7 @@ import javax.inject.Inject;
  * The JavaFX Controller class for session-view.fxml. Initializes the view
  * and holds bindings to the {@link StateViewModel}.
  */
-public class SessionView {
+class SessionView {
 
     private static final double NO_MARGIN_ANCHOR = 0.0;
     private static final Logger logger = LoggerFactory.getLogger(SessionView
@@ -68,11 +68,11 @@ public class SessionView {
     private ReplaySliderStringConverter replaySliderStringConverter;
 
     @Inject
-    public SessionView(SteppingViewModelFactory steppingViewModelFactory,
-                       ReplayViewModelFactory replayViewModelFactory,
-                       StateViewModel stateViewModel,
-                       FontAwesomeIconView fontAwesomePauseView,
-                       FontAwesomeIconView fontAwesomePlayView) {
+    protected SessionView(SteppingViewModelFactory steppingViewModelFactory,
+                          ReplayViewModelFactory replayViewModelFactory,
+                          StateViewModel stateViewModel,
+                          FontAwesomeIconView fontAwesomePauseView,
+                          FontAwesomeIconView fontAwesomePlayView) {
         logger.debug("Construct SessionView");
         this.stateViewModel = stateViewModel;
         this.steppingViewModel = steppingViewModelFactory.create(
@@ -92,7 +92,7 @@ public class SessionView {
      * its associated document has been completely loaded
      */
     @FXML
-    public void initialize() {
+    protected void initialize() {
         logger.debug("Initialize SessionView");
         bindButtonDisableProperties();
         bindReplayIcons();

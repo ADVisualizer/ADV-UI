@@ -1,11 +1,10 @@
-package ch.adv.ui.core.presentation.sessionviewmodel;
+package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.EventManager;
-import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
-import ch.adv.ui.core.presentation.RootViewModel;
-import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.LayoutedSnapshotStore;
+import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -21,7 +20,7 @@ import java.beans.PropertyChangeListener;
 /**
  * Holds state for the {@link ch.adv.ui.core.presentation.SessionView}.
  */
-public class StateViewModel {
+class StateViewModel {
 
     private static final Logger logger = LoggerFactory.getLogger(
             StateViewModel.class);
@@ -49,7 +48,7 @@ public class StateViewModel {
 
 
     @Inject
-    public StateViewModel(RootViewModel rootViewModel, LayoutedSnapshotStore
+    StateViewModel(RootViewModel rootViewModel, LayoutedSnapshotStore
             layoutedSnapshotStore, EventManager eventManager, StepButtonState
                                   stepButtonState) {
         logger.debug("Construct StateViewModel");
@@ -118,7 +117,7 @@ public class StateViewModel {
     /**
      * updates State after a step
      */
-    public void handleNavigationStep() {
+    void handleNavigationStep() {
         updateProgress();
         updateStepButtonDisabilities();
         updateSnapshotDescription();
@@ -127,27 +126,27 @@ public class StateViewModel {
     }
 
 
-    public ObjectProperty<Pane> getCurrentSnapshotPaneProperty() {
+    ObjectProperty<Pane> getCurrentSnapshotPaneProperty() {
         return currentSnapshotPaneProperty;
     }
 
-    public ObjectProperty<String> getCurrentSnapshotDescriptionProperty() {
+    ObjectProperty<String> getCurrentSnapshotDescriptionProperty() {
         return currentSnapshotDescriptionProperty;
     }
 
-    public int getCurrentSnapshotIndex() {
+    int getCurrentSnapshotIndex() {
         return currentSnapshotIndex;
     }
 
-    public void setCurrentSnapshotIndex(int currentSnapshotIndex) {
+    void setCurrentSnapshotIndex(int currentSnapshotIndex) {
         this.currentSnapshotIndex = currentSnapshotIndex;
     }
 
-    public int getMaxSnapshotIndex() {
+    int getMaxSnapshotIndex() {
         return maxSnapshotIndex;
     }
 
-    public void setSession(final Session session) {
+    void setSession(final Session session) {
         this.session = session;
     }
 
@@ -167,31 +166,31 @@ public class StateViewModel {
         currentSnapshotDescriptionProperty.set(description);
     }
 
-    public StepButtonState getStepButtonState() {
+    StepButtonState getStepButtonState() {
         return stepButtonState;
     }
 
-    public BooleanProperty getReplayingProperty() {
+    BooleanProperty getReplayingProperty() {
         return replayingProperty;
     }
 
-    public BooleanProperty getSpeedSliderDisableProperty() {
+    BooleanProperty getSpeedSliderDisableProperty() {
         return speedSliderDisableProperty;
     }
 
-    public FloatProperty getProgressProperty() {
+    FloatProperty getProgressProperty() {
         return progressProperty;
     }
 
-    public StringProperty getCurrentIndexStringProperty() {
+    StringProperty getCurrentIndexStringProperty() {
         return currentIndexStringProperty;
     }
 
-    public StringProperty getMaxIndexStringProperty() {
+    StringProperty getMaxIndexStringProperty() {
         return maxIndexStringProperty;
     }
 
-    public long getSessionId() {
+    long getSessionId() {
         return sessionId;
     }
 

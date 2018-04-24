@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * A incoming connection from the ADV Lib
  */
-class ADVConnection {
+public class ADVConnection {
 
     private static final Logger logger = LoggerFactory
             .getLogger(ADVConnection.class);
@@ -38,7 +38,7 @@ class ADVConnection {
      *
      * @throws IOException r/w exception
      */
-    public void process() throws IOException {
+    void process() throws IOException {
         initializeStreams();
         readData();
     }

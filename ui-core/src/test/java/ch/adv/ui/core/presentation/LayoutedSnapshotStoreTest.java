@@ -1,6 +1,7 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.LayoutedSnapshotStore;
+import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoRunner;

@@ -1,10 +1,9 @@
-package ch.adv.ui.core.presentation.sessionviewmodel;
+package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.EventManager;
-import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
-import ch.adv.ui.core.presentation.Navigate;
-import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.LayoutedSnapshotStore;
+import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 
@@ -19,8 +18,8 @@ public class SteppingViewModel {
 
     @Inject
     public SteppingViewModel(LayoutedSnapshotStore layoutedSnapshotStore,
-                             EventManager eventManager,
-                             @Assisted StateViewModel stateViewModel) {
+                      EventManager eventManager,
+                      @Assisted StateViewModel stateViewModel) {
 
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.eventManager = eventManager;
@@ -34,7 +33,7 @@ public class SteppingViewModel {
      *
      * @param navigate direction to navigate
      */
-    public void navigateSnapshot(Navigate navigate) {
+    void navigateSnapshot(Navigate navigate) {
         int oldIndex = stateViewModel.getCurrentSnapshotIndex();
         int newIndex;
 

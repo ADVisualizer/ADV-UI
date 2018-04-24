@@ -1,9 +1,5 @@
-package ch.adv.ui.core.presentation.sessionviewmodel;
+package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.presentation.Navigate;
-import ch.adv.ui.core.presentation.ReplayController;
-import ch.adv.ui.core.presentation.SessionReplay;
-import ch.adv.ui.core.presentation.SessionReplayFactory;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +11,7 @@ import java.util.Timer;
  * Handles replay logic for the {@link ch.adv.ui.core.presentation.SessionView}.
  */
 public class ReplayViewModel {
+
     private static final Logger logger = LoggerFactory.getLogger(
             ReplayViewModel.class);
     private static final long HALF_SECOND_MS = 500;
@@ -39,7 +36,7 @@ public class ReplayViewModel {
     /**
      * Stop the current replay and stay at the current snapshot
      */
-    public void pauseReplay() {
+    void pauseReplay() {
         stateViewModel.getReplayingProperty().set(false);
         if (this.currentReplayThread != null) {
             currentReplayThread.cancel();
@@ -50,7 +47,7 @@ public class ReplayViewModel {
     /**
      * Start replaying the snapshots of this session.
      */
-    public void replay() {
+    void replay() {
         logger.info("Replaying current session...");
         stateViewModel.getReplayingProperty().set(true);
 
@@ -68,7 +65,7 @@ public class ReplayViewModel {
     /**
      * Cancel the running replay and step to the first snapshot.
      */
-    public void cancelReplay() {
+    void cancelReplay() {
         pauseReplay();
         steppingViewModel.navigateSnapshot(Navigate.FIRST);
     }

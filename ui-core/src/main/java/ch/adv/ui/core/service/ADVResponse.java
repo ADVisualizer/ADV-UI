@@ -12,11 +12,11 @@ class ADVResponse {
 
     private final transient GsonProvider gsonProvider = new GsonProvider();
 
-    public ADVResponse(ProtocolCommand command) {
+    ADVResponse(ProtocolCommand command) {
         this(command, null);
     }
 
-    public ADVResponse(ProtocolCommand command, String exceptionMessage) {
+    ADVResponse(ProtocolCommand command, String exceptionMessage) {
         this.command = command;
         this.exceptionMessage = exceptionMessage;
     }
@@ -24,7 +24,7 @@ class ADVResponse {
     /**
      * @return the serialized string representation of this class
      */
-    public String toJson() {
+    String toJson() {
         return gsonProvider.getMinifier().toJson(this);
     }
 }

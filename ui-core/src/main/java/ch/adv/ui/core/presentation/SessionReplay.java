@@ -1,7 +1,5 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.presentation.sessionviewmodel.StateViewModel;
-import ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModel;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import javafx.application.Platform;
@@ -23,7 +21,7 @@ public class SessionReplay extends TimerTask {
     private final StateViewModel stateViewModel;
     private final SteppingViewModel steppingViewModel;
     private boolean isCanceled;
-    
+
     @Inject
     public SessionReplay(@Assisted StateViewModel stateViewModel,
                          @Assisted SteppingViewModel steppingViewModel) {
@@ -59,7 +57,7 @@ public class SessionReplay extends TimerTask {
      * @return returns true if it prevents one or more scheduled executions from
      * taking place.
      */
-    public boolean cancelReplay() {
+    private boolean cancelReplay() {
         Platform.runLater(
                 () -> stateViewModel.getReplayingProperty().set(false)
         );

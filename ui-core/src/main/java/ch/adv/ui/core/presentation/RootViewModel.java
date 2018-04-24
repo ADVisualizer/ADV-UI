@@ -4,8 +4,10 @@ import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.EventManager;
 import ch.adv.ui.core.logic.FlowControl;
+import ch.adv.ui.core.logic.LayoutedSnapshotStore;
 import ch.adv.ui.core.logic.SessionStore;
 import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.presentation.util.I18n;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -30,7 +32,7 @@ import java.util.concurrent.TimeUnit;
  * the business logic layer.
  */
 @Singleton
-public class RootViewModel {
+class RootViewModel {
 
     private static final int NOTIFICATION_FADE_DELAY = 3;
     private static final Logger logger = LoggerFactory.getLogger(
@@ -59,10 +61,10 @@ public class RootViewModel {
     };
 
     @Inject
-    public RootViewModel(SessionStore sessionStore, FlowControl flowControl,
-                         DatastoreAccess fileAccess,
-                         LayoutedSnapshotStore layoutedSnapshotStore,
-                         EventManager eventManager) {
+    RootViewModel(SessionStore sessionStore, FlowControl flowControl,
+                  DatastoreAccess fileAccess,
+                  LayoutedSnapshotStore layoutedSnapshotStore,
+                  EventManager eventManager) {
 
         this.sessionStore = sessionStore;
         this.flowControl = flowControl;
@@ -79,27 +81,27 @@ public class RootViewModel {
         }, ADVEvent.NOTIFICATION);
     }
 
-    public ObservableList<Session> getAvailableSessions() {
+    ObservableList<Session> getAvailableSessions() {
         return availableSessions;
     }
 
 
-    public ObjectProperty<Session> getCurrentSessionProperty() {
+    ObjectProperty<Session> getCurrentSessionProperty() {
         return currentSessionProperty;
     }
 
-    public BooleanProperty getNoSessionsProperty() {
+    BooleanProperty getNoSessionsProperty() {
         return noSessionsProperty;
     }
 
-    public StringProperty getNotificationMessageProperty() {
+    StringProperty getNotificationMessageProperty() {
         return notificationMessageProperty;
     }
 
     /**
      * Delegates removing current session to the business logic
      */
-    public void removeCurrentSession() {
+    void removeCurrentSession() {
         Session current = currentSessionProperty.get();
         if (current != null) {
             logger.info("Removing session {} ({})", current.getSessionName(),
@@ -121,7 +123,7 @@ public class RootViewModel {
     /**
      * Delegates removing sessions to the business logic
      */
-    public void clearAllSessions() {
+    void clearAllSessions() {
         availableSessions.forEach(session -> removeSession(session));
         showNotification(I18n.NOTIFICATION_SESSION_CLOSE_ALL);
     }
@@ -131,7 +133,7 @@ public class RootViewModel {
      *
      * @param file to be saved to
      */
-    public void saveSession(final File file) {
+    void saveSession(final File file) {
         try {
             Session session = currentSessionProperty.get();
             if (session != null) {
@@ -159,7 +161,7 @@ public class RootViewModel {
      *
      * @param file file to open
      */
-    public void loadSession(File file) {
+    void loadSession(File file) {
         try {
             String json = fileAccess.read(file);
             flowControl.process(json);

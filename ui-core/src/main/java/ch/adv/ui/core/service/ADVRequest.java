@@ -9,16 +9,16 @@ class ADVRequest {
     private final ProtocolCommand command;
     private final String json;
 
-    public ADVRequest(ProtocolCommand command, String json) {
+    ADVRequest(ProtocolCommand command, String json) {
         this.command = command;
         this.json = json;
     }
 
-    public String getJson() {
+    String getJson() {
         return this.json;
     }
 
-    public ProtocolCommand getCommand() {
+    ProtocolCommand getCommand() {
         return command;
     }
 }

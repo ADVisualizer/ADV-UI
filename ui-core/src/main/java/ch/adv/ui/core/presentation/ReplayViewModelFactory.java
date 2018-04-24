@@ -1,8 +1,8 @@
-package ch.adv.ui.core.presentation.sessionviewmodel;
+package ch.adv.ui.core.presentation;
 
 /**
  * Guice factory interface for
- * {@link ch.adv.ui.core.presentation.sessionviewmodel.ReplayViewModel}
+ * {@link ReplayViewModel}
  */
 public interface ReplayViewModelFactory {
 
@@ -13,7 +13,7 @@ public interface ReplayViewModelFactory {
      * @param steppingViewModel step viewmodel
      * @return instance
      */
-    ReplayViewModel create(StateViewModel stateViewModel, SteppingViewModel
-            steppingViewModel);
+    ReplayViewModel create(StateViewModel stateViewModel,
+                           SteppingViewModel steppingViewModel);
 
 }

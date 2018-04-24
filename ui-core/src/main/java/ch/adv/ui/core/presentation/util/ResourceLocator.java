@@ -1,4 +1,4 @@
-package ch.adv.ui.core.util;
+package ch.adv.ui.core.presentation.util;
 
 import com.google.inject.Injector;
 import javafx.fxml.FXMLLoader;

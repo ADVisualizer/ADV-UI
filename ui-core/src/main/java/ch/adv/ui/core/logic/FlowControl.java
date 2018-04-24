@@ -1,5 +1,11 @@
 package ch.adv.ui.core.logic;
 
+/**
+ * This class is responsible for processing and dispatching an incomming
+ * request to the correct modules.
+ *
+ * @author mwieland
+ */
 public interface FlowControl {
 
     /**

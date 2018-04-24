@@ -1,8 +1,8 @@
-package ch.adv.ui.core.presentation;
+package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.EventManager;
-import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

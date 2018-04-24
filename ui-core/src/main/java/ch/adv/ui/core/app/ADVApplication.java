@@ -1,7 +1,7 @@
 package ch.adv.ui.core.app;
 
 import ch.adv.ui.core.service.SocketServer;
-import ch.adv.ui.core.util.ResourceLocator;
+import ch.adv.ui.core.presentation.util.ResourceLocator;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
