@@ -1,7 +1,5 @@
 package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.app.ADVEvent;
-import ch.adv.ui.core.app.EventManager;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -26,8 +24,8 @@ import java.util.stream.Collectors;
 public class LayoutedSnapshotStore {
     private static final Logger logger = LoggerFactory.getLogger(
             LayoutedSnapshotStore.class);
-    private final Map<Long, List<LayoutedSnapshot>> snapshotMap = new
-            HashMap<>();
+    private final Map<Long, List<LayoutedSnapshot>> snapshotMap =
+            new HashMap<>();
 
     private final EventManager eventManager;
 
@@ -88,8 +86,7 @@ public class LayoutedSnapshotStore {
      */
     public List<Pane> getSnapshotPanes(long sessionId) {
         return snapshotMap.get(sessionId).stream()
-                .map(layoutedSnapshot -> layoutedSnapshot
-                        .getPane()).collect(Collectors.toList());
+                .map(LayoutedSnapshot::getPane).collect(Collectors.toList());
     }
 
     /**

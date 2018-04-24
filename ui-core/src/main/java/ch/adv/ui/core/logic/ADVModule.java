@@ -1,8 +1,7 @@
-package ch.adv.ui.core.app;
+package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.access.Parser;
 import ch.adv.ui.core.access.Stringifyer;
-import ch.adv.ui.core.logic.Layouter;
 
 /**
  * Represents a generic module

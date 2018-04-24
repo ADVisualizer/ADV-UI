@@ -1,10 +1,7 @@
 package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.app.ADVEvent;
-import ch.adv.ui.core.app.ADVModule;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.domain.Snapshot;
-import ch.adv.ui.core.app.EventManager;
 import ch.adv.ui.core.presentation.util.I18n;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import com.google.inject.Inject;

@@ -1,8 +1,8 @@
 package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.logic.domain.Session;
-import ch.adv.ui.core.app.ADVEvent;
-import ch.adv.ui.core.app.EventManager;
+import ch.adv.ui.core.logic.ADVEvent;
+import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.logic.LayoutedSnapshotStore;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import javafx.application.Platform;

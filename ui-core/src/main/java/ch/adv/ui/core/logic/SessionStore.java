@@ -1,7 +1,5 @@
 package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.app.ADVEvent;
-import ch.adv.ui.core.app.EventManager;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.domain.Snapshot;
 import org.slf4j.Logger;

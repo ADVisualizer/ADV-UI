@@ -1,12 +1,10 @@
-package ch.adv.ui.core.app;
+package ch.adv.ui.core.logic;
 
 
 import ch.adv.ui.core.access.DatastoreAccess;
 import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.logic.ADVFlowControl;
-import ch.adv.ui.core.logic.FlowControl;
-import ch.adv.ui.core.presentation.SessionReplayFactory;
 import ch.adv.ui.core.presentation.ReplayViewModelFactory;
+import ch.adv.ui.core.presentation.SessionReplayFactory;
 import ch.adv.ui.core.presentation.SteppingViewModelFactory;
 import ch.adv.ui.core.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;

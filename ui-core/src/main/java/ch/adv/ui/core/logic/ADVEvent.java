@@ -1,4 +1,4 @@
-package ch.adv.ui.core.app;
+package ch.adv.ui.core.logic;
 
 /**
  * An ADVEvent within the framework.

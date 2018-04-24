@@ -2,7 +2,7 @@ package ch.adv.ui.core.service;
 
 import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.access.Parser;
-import ch.adv.ui.core.app.ADVModule;
+import ch.adv.ui.core.logic.ADVModule;
 import ch.adv.ui.core.logic.ADVFlowControl;
 import ch.adv.ui.core.logic.ModuleStore;
 import ch.adv.ui.core.logic.SessionStore;

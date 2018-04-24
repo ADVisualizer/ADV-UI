@@ -1,6 +1,6 @@
 package ch.adv.ui.core.logic.domain;
 
-import ch.adv.ui.core.app.ADVModule;
+import ch.adv.ui.core.logic.ADVModule;
 
 import java.util.ArrayList;
 import java.util.List;
