@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Available commands for the ADV protocol.
  */
-public enum ProtocolCommand {
+enum ProtocolCommand {
 
     @SerializedName("TRANSMIT")
     TRANSMIT("TRANSMIT"),

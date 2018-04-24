@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * A incoming connection from the ADV Lib
  */
-public class ADVConnection {
+class ADVConnection {
 
     private static final Logger logger = LoggerFactory
             .getLogger(ADVConnection.class);

@@ -5,7 +5,7 @@ import ch.adv.ui.core.access.GsonProvider;
 /**
  * Encapsulates a response to the ADV Lib.
  */
-public class ADVResponse {
+class ADVResponse {
 
     private final ProtocolCommand command;
     private final String exceptionMessage;

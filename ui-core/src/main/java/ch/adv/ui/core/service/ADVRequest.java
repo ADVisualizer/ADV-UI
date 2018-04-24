@@ -4,7 +4,7 @@ package ch.adv.ui.core.service;
 /**
  * Encapsulates a request from the ADV Lib.
  */
-public class ADVRequest {
+class ADVRequest {
 
     private final ProtocolCommand command;
     private final String json;
