@@ -1,6 +1,6 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.util.ResourceLocator;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableMap;

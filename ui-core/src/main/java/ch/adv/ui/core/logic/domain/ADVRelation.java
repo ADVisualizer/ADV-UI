@@ -1,6 +1,6 @@
-package ch.adv.ui.core.domain;
+package ch.adv.ui.core.logic.domain;
 
-import ch.adv.ui.core.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 
 /**
  * Represents a relation between to {@link ADVElement}

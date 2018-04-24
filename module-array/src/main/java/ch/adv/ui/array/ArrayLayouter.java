@@ -1,6 +1,6 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.domain.Snapshot;
+import ch.adv.ui.core.logic.domain.Snapshot;
 import ch.adv.ui.core.presentation.Layouter;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import com.google.inject.Inject;

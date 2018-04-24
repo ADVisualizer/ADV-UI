@@ -2,11 +2,11 @@ package ch.adv.ui.array;
 
 import ch.adv.ui.core.access.InterfaceAdapter;
 import ch.adv.ui.core.access.Parser;
-import ch.adv.ui.core.domain.ADVElement;
-import ch.adv.ui.core.domain.ADVRelation;
-import ch.adv.ui.core.domain.Session;
-import ch.adv.ui.core.domain.styles.ADVStyle;
-import ch.adv.ui.core.domain.styles.ADVValueStyle;
+import ch.adv.ui.core.logic.domain.ADVElement;
+import ch.adv.ui.core.logic.domain.ADVRelation;
+import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.ADVValueStyle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Singleton;

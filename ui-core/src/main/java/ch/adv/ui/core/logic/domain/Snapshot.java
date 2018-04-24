@@ -1,4 +1,4 @@
-package ch.adv.ui.core.domain;
+package ch.adv.ui.core.logic.domain;
 
 import java.util.ArrayList;
 import java.util.List;

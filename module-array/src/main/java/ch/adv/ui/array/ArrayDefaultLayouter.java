@@ -1,7 +1,7 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.domain.Snapshot;
-import ch.adv.ui.core.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.Snapshot;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Inject;

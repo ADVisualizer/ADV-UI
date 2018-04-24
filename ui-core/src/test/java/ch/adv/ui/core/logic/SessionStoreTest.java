@@ -1,21 +1,19 @@
 package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.domain.Session;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(JukitoRunner.class)
 public class SessionStoreTest {

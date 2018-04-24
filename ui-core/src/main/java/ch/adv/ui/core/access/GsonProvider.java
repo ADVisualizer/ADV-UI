@@ -9,6 +9,7 @@ import java.lang.reflect.Modifier;
  * Provides preconfigured GsonBuilder
  */
 public class GsonProvider {
+
     private final GsonBuilder minifier;
     private final GsonBuilder prettifyer;
 

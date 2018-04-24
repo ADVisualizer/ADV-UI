@@ -1,7 +1,7 @@
 package ch.adv.ui.array;
 
 import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.domain.Session;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;

@@ -1,6 +1,6 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.presentation.util.StyleConverter;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;

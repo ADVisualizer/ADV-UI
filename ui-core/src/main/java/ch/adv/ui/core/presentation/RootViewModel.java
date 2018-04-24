@@ -1,11 +1,10 @@
 package ch.adv.ui.core.presentation;
 
 import ch.adv.ui.core.access.DatastoreAccess;
-import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.app.ADVEvent;
-import ch.adv.ui.core.domain.Session;
-import ch.adv.ui.core.logic.EventManager;
+import ch.adv.ui.core.app.EventManager;
 import ch.adv.ui.core.logic.SessionStore;
+import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.service.ADVFlowControl;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -61,7 +60,7 @@ public class RootViewModel {
 
     @Inject
     public RootViewModel(SessionStore sessionStore, ADVFlowControl flowControl,
-                         FileDatastoreAccess fileAccess,
+                         DatastoreAccess fileAccess,
                          LayoutedSnapshotStore layoutedSnapshotStore,
                          EventManager eventManager) {
 

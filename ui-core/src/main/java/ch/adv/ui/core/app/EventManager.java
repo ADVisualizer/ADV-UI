@@ -1,6 +1,5 @@
-package ch.adv.ui.core.logic;
+package ch.adv.ui.core.app;
 
-import ch.adv.ui.core.app.ADVEvent;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,8 +1,8 @@
 package ch.adv.ui.core.presentation.sessionviewmodel;
 
-import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.app.ADVEvent;
-import ch.adv.ui.core.logic.EventManager;
+import ch.adv.ui.core.app.EventManager;
 import ch.adv.ui.core.presentation.LayoutedSnapshotStore;
 import ch.adv.ui.core.presentation.RootViewModel;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;

@@ -2,9 +2,9 @@ package ch.adv.ui.core.service;
 
 import ch.adv.ui.core.app.ADVEvent;
 import ch.adv.ui.core.app.ADVModule;
-import ch.adv.ui.core.domain.Session;
-import ch.adv.ui.core.domain.Snapshot;
-import ch.adv.ui.core.logic.EventManager;
+import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.domain.Snapshot;
+import ch.adv.ui.core.app.EventManager;
 import ch.adv.ui.core.logic.ModuleStore;
 import ch.adv.ui.core.logic.SessionStore;
 import ch.adv.ui.core.presentation.I18n;

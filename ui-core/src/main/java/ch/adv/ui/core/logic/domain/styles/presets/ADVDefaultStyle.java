@@ -1,7 +1,7 @@
-package ch.adv.ui.core.domain.styles.presets;
+package ch.adv.ui.core.logic.domain.styles.presets;
 
-import ch.adv.ui.core.domain.styles.ADVStrokeStyle;
-import ch.adv.ui.core.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.ADVStrokeStyle;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import com.google.gson.annotations.SerializedName;
 
 /**

@@ -1,6 +1,6 @@
 package ch.adv.ui.core.presentation.widgets;
 
-import ch.adv.ui.core.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.presentation.util.StyleConverter;
 import javafx.beans.Observable;
 import javafx.beans.binding.Binding;

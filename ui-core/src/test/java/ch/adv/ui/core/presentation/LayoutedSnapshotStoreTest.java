@@ -1,20 +1,14 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.logic.EventManager;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import javafx.scene.layout.Pane;
-import jdk.jfr.Event;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-
-import java.beans.PropertyChangeListener;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(JukitoRunner.class)
 public class LayoutedSnapshotStoreTest {

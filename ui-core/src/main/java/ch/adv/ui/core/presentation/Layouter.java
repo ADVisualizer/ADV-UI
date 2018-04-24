@@ -1,6 +1,6 @@
 package ch.adv.ui.core.presentation;
 
-import ch.adv.ui.core.domain.Snapshot;
+import ch.adv.ui.core.logic.domain.Snapshot;
 import ch.adv.ui.core.presentation.domain.LayoutedSnapshot;
 
 import java.util.List;

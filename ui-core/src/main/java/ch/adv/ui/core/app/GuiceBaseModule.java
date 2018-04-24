@@ -1,6 +1,8 @@
 package ch.adv.ui.core.app;
 
 
+import ch.adv.ui.core.access.DatastoreAccess;
+import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.presentation.SessionReplayFactory;
 import ch.adv.ui.core.presentation.sessionviewmodel.ReplayViewModelFactory;
 import ch.adv.ui.core.presentation.sessionviewmodel.SteppingViewModelFactory;
@@ -24,5 +26,14 @@ public class GuiceBaseModule extends AbstractModule {
         install(new FactoryModuleBuilder().build(
                 SteppingViewModelFactory.class));
 
+
+        // -------- Service Layer -------- //
+
+
+        // -------- Business Logic Layer -------- //
+
+
+        // -------- Access Layer -------- //
+        bind(DatastoreAccess.class).to(FileDatastoreAccess.class);
     }
 }

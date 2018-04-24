@@ -1,8 +1,8 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.domain.ADVRelation;
-import ch.adv.ui.core.domain.styles.ADVStyle;
-import ch.adv.ui.core.domain.styles.presets.ADVDefaultLineStyle;
+import ch.adv.ui.core.logic.domain.ADVRelation;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 
 /**
  * Relation between two {@link ArrayElement}s

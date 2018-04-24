@@ -1,8 +1,8 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.domain.Snapshot;
-import ch.adv.ui.core.domain.styles.ADVStyle;
-import ch.adv.ui.core.domain.styles.presets.ADVDefaultLineStyle;
+import ch.adv.ui.core.logic.domain.Snapshot;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.adv.ui.core.presentation.widgets.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

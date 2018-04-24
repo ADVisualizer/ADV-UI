@@ -1,8 +1,8 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.core.domain.ADVElement;
-import ch.adv.ui.core.domain.styles.ADVStyle;
-import ch.adv.ui.core.domain.styles.presets.ADVDefaultStyle;
+import ch.adv.ui.core.logic.domain.ADVElement;
+import ch.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 
 /**
  * Represents one Item in a Array

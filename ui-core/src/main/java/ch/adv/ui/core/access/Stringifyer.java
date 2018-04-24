@@ -1,7 +1,7 @@
 package ch.adv.ui.core.access;
 
 
-import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.domain.Session;
 
 /**
  * JSON Serializer
