@@ -6,13 +6,6 @@ package ch.adv.ui.core.logic;
 public interface ADVModule {
 
     /**
-     * Returns module name
-     *
-     * @return moduleName
-     */
-    String getModuleName();
-
-    /**
      * Returns the module specific layouter, which positions the nodes on a
      * pane.
      *

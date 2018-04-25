@@ -1,7 +1,7 @@
 package ch.adv.ui.core.service;
 
-import ch.adv.ui.core.logic.GsonProvider;
 import ch.adv.ui.core.logic.FlowControl;
+import ch.adv.ui.core.logic.GsonProvider;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,7 +71,7 @@ public class ADVConnection {
             writer.println(response.toJson());
 
             try {
-                logger.debug("Process json: \n {}", sessionJSON);
+                logger.debug("Process json: \n {}", request.getJson());
                 flowControl.process(request.getJson());
             } catch (Exception e) {
                 logger.error("Exception occurred during execution of "

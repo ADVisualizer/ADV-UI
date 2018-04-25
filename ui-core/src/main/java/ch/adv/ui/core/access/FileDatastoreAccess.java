@@ -35,12 +35,12 @@ public class FileDatastoreAccess implements DatastoreAccess {
             Path path = Paths.get(file.getAbsolutePath());
             try (BufferedReader reader = Files.newBufferedReader(path,
                     Charset.defaultCharset())) {
-                String jsonPayload = "";
                 String jsonLine;
+                StringBuilder builder = new StringBuilder();
                 while ((jsonLine = reader.readLine()) != null) {
-                    jsonPayload += jsonLine;
+                    builder.append(jsonLine);
                 }
-                return jsonPayload;
+                return builder.toString();
             } catch (IOException e) {
                 logger.info("Unable to read file {}",
                         file.getAbsoluteFile(), e);

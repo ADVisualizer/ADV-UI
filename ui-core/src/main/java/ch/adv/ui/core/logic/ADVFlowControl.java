@@ -21,18 +21,18 @@ public class ADVFlowControl implements FlowControl {
     private static final Logger logger = LoggerFactory.getLogger(
             ADVFlowControl.class);
 
-    private final ModuleStore moduleStore;
+    private final ModuleParser moduleParser;
     private final SessionStore sessionStore;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final EventManager eventManager;
 
     @Inject
-    public ADVFlowControl(ModuleStore moduleStore,
+    public ADVFlowControl(ModuleParser moduleParser,
                           SessionStore sessionStore,
                           LayoutedSnapshotStore layoutedSnapshotStore,
                           EventManager eventManager) {
 
-        this.moduleStore = moduleStore;
+        this.moduleParser = moduleParser;
         this.sessionStore = sessionStore;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.eventManager = eventManager;
@@ -47,7 +47,7 @@ public class ADVFlowControl implements FlowControl {
     public void process(String sessionJSON) {
         logger.info("Processing JSON...");
         // parse module
-        ADVModule currentModule = moduleStore.parseModule(sessionJSON);
+        ADVModule currentModule = moduleParser.parseModule(sessionJSON);
 
         // parse session
         Session session = currentModule.getParser().parse(sessionJSON);

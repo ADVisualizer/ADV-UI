@@ -13,28 +13,21 @@ import com.google.inject.Singleton;
 @Singleton
 public class ArrayModule implements ADVModule {
 
-    private static final String MODULE_NAME = "array";
-
     private final ArrayLayouter arrayLayouter;
     private final ArrayStringifyer arrayStringifyer;
     private final ArrayParser arrayParser;
     private final StepEventController stepEventController;
 
-
     @Inject
-    public ArrayModule(ArrayLayouter arrayLayouter, ArrayStringifyer
-            arrayStringifyer, ArrayParser arrayParser, StepEventController
-                               stepEventController) {
+    public ArrayModule(ArrayLayouter arrayLayouter,
+                       ArrayStringifyer arrayStringifyer,
+                       ArrayParser arrayParser,
+                       StepEventController stepEventController) {
 
         this.arrayLayouter = arrayLayouter;
         this.arrayStringifyer = arrayStringifyer;
         this.arrayParser = arrayParser;
         this.stepEventController = stepEventController;
-    }
-
-    @Override
-    public String getModuleName() {
-        return MODULE_NAME;
     }
 
     @Override

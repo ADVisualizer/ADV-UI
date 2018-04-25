@@ -1,16 +1,14 @@
 package ch.adv.ui.bootstrapper;
 
-import ch.adv.ui.array.logic.ArrayModule;
-import ch.adv.ui.core.logic.ADVModule;
-import ch.adv.ui.core.logic.ModuleStore;
+import ch.adv.ui.array.logic.GuiceArrayModule;
 import ch.adv.ui.core.presentation.ADVApplication;
-import com.google.inject.Inject;
+import ch.adv.ui.core.presentation.GuiceCoreModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import javafx.application.Application;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 /**
  * Registers all available modules in the ADV UI Core
@@ -20,40 +18,31 @@ import java.util.Map;
 @Singleton
 public class Bootstrapper {
 
-    private static final Logger logger = LoggerFactory.getLogger(Bootstrapper
-            .class);
-
-    @Inject
-    private ArrayModule arrayModule;
-
-    public Bootstrapper() {
-        ADVApplication instance = ADVApplication.waitForADVApplication();
-        instance.getInjector().injectMembers(this);
-        registerModules();
-    }
+    private static final Logger logger = LoggerFactory.getLogger(
+            Bootstrapper.class);
 
     /**
      * ADV UI entry point
      * <p>
-     * Use command-line argument 'port' to configure the socket server:
-     * <code>--port=9876</code>
+     * Use command-line arguments 'port' and 'host' to configure the socket
+     * server
+     * <code>
+     * java -jar adv-ui.jar --port=9876 --host=192.168.xxx.yyy
+     * </code>
      *
      * @param args cli arguments
      */
     public static void main(String[] args) {
         logger.info("Bootstrapping ADV UI");
+        Injector injector = Guice.createInjector(
+                new GuiceCoreModule(),
+                new GuiceArrayModule()
+        );
 
-        new Thread(() -> Application.launch(ADVApplication.class, args))
-                .start();
-        new Bootstrapper();
+        ADVApplication.setInjector(injector);
+
+        Application.launch(ADVApplication.class, args);
     }
 
-    private void registerModules() {
-        Map<String, ADVModule> modules = Map
-                .ofEntries(
-                        Map.entry(arrayModule.getModuleName(), arrayModule));
-
-        ModuleStore.setAvailableModules(modules);
-    }
 
 }

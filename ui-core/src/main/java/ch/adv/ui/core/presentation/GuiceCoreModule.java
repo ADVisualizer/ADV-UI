@@ -15,7 +15,7 @@ import com.google.inject.assistedinject.FactoryModuleBuilder;
  * If this class grows to a certain extend, it should be split up in
  * multiple modules.
  */
-public class GuiceBaseModule extends AbstractModule {
+public class GuiceCoreModule extends AbstractModule {
 
     @Override
     protected void configure() {

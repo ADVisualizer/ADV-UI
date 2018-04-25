@@ -17,5 +17,4 @@ public class ADVValueStyleTest {
         Assert.assertEquals(ADVStrokeStyle.NONE.getStyle(),
                 valueStyleUnderTest.getStrokeStyle());
     }
-
 }
