@@ -33,22 +33,19 @@ public class ADVApplication extends Application {
     @Inject
     private ResourceLocator resourceLocator;
     private Stage primaryStage;
-    private Image advIconImage;
 
     public static void setInjector(Injector injector) {
         ADVApplication.injector = injector;
     }
 
     @Override
-    public void init() throws Exception {
+    public void init() {
         injector.injectMembers(this);
     }
 
     @Override
     public void start(Stage stage) {
         this.primaryStage = stage;
-        this.advIconImage = new Image(resourceLocator.getResourceAsStream(
-                ResourceLocator.Resource.ICON_IMAGE));
         // use command line arguments before socketServer is started
         retrieveCLIParams();
 
@@ -79,6 +76,9 @@ public class ADVApplication extends Application {
         Parent rootLayout = resourceLocator.loadFXML(
                 ResourceLocator.Resource.ROOT_LAYOUT_FXML);
         Scene scene = new Scene(rootLayout);
+
+        Image advIconImage = new Image(resourceLocator.getResourceAsStream(
+                ResourceLocator.Resource.ICON_IMAGE));
 
         primaryStage.setTitle("ADV UI");
         primaryStage.setScene(scene);
