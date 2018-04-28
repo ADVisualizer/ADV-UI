@@ -3,6 +3,7 @@ package ch.adv.ui.core.logic;
 import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.util.ADVParseException;
 import ch.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -49,7 +50,7 @@ public class ADVFlowControlTest {
     private LayoutedSnapshot testLayoutedSnapshot;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, ADVParseException {
         URL url1 = SessionStoreTest.class.getClassLoader()
                 .getResource("session1.json");
 
