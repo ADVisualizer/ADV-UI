@@ -100,8 +100,17 @@ class RootView {
     }
 
     private void handleNotifications() {
-        notificationBar.textProperty().bindBidirectional(rootViewModel
+        notificationBar.textProperty().bind(rootViewModel
                 .getNotificationMessageProperty());
+        rootViewModel.getNotificationMessageProperty().addListener(e -> {
+            if (rootViewModel.getNotificationMessageProperty().get()
+                    .isEmpty()) {
+                notificationBar.getStyleClass().remove("active-notification");
+            } else {
+                notificationBar.getStyleClass().add("active-notification");
+            }
+        });
+
     }
 
     /**

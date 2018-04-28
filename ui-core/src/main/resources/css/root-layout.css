@@ -1,3 +1,12 @@
+.root {
+    -accent: #3f51b5;
+    -accent-light: #a9b0d8;
+    -white: #ffffff;
+    -neutral-light: #f4f4f4;
+    -darkgrey: #838383;
+}
+
+
 .logo {
     -fx-background-image: url("../images/adv-logo.png");
     -fx-background-repeat: no-repeat;
@@ -14,4 +23,42 @@
 .button:focused {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
+}
+
+.tool-bar .button .glyph-icon {
+    -fx-fill: -accent;
+
+}
+
+.tool-bar .button .glyph-icon:pressed {
+    -fx-fill: -accent-light;
+}
+
+.titled-pane > .title, .titled-pane > .title:hover {
+    -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius:0;
+    -fx-padding: 0.166667em 0.833333em 0.25em 0.833333em; /* 2 10 3 10 */
+}
+
+.titled-pane:hover {
+    -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
+}
+
+.list-cell:filled:selected{
+    -fx-background-color: -accent-light;
+    -fx-text-fill: white;
+}
+
+.list-view:focused .list-cell:filled:selected{
+    -fx-background-color: -accent;
+    -fx-text-fill: white;
+}
+
+.active-notification{
+    -fx-background-color: -accent;
+}
+
+.status-bar .label{
+    -fx-text-fill: -white;
 }

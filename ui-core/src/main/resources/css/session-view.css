@@ -1,0 +1,7 @@
+.slider .thumb {
+    -fx-background-color: -accent;
+}
+
+.progress-bar {
+    -fx-accent: -accent-light;
+}
