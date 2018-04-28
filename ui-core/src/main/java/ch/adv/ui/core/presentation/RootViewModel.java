@@ -17,6 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
@@ -43,7 +44,7 @@ class RootViewModel {
             SimpleStringProperty("");
 
     private final DatastoreAccess fileAccess;
-    private final SessionStore storeRepository;
+    private final SessionStore sessionStore;
     private final FlowControl flowControl;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final ScheduledExecutorService notificationResetTimer =
@@ -56,20 +57,21 @@ class RootViewModel {
         }
     };
 
+
     @Inject
-    RootViewModel(SessionStore storeRepository,
+    RootViewModel(SessionStore sessionStore,
                   FlowControl flowControl,
                   DatastoreAccess fileAccess,
                   LayoutedSnapshotStore layoutedSnapshotStore,
                   EventManager eventManager) {
 
-        this.storeRepository = storeRepository;
+        this.sessionStore = sessionStore;
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
 
-        eventManager.subscribe(new SessionStoreListener(), List.of(ADVEvent
-                .SESSION_ADDED, ADVEvent.SESSION_REMOVED)
+        eventManager.subscribe(new SessionStoreListener(),
+                List.of(ADVEvent.SESSION_ADDED)
         );
 
         eventManager.subscribe((e) -> {
@@ -81,7 +83,6 @@ class RootViewModel {
     ObservableList<Session> getAvailableSessions() {
         return availableSessions;
     }
-
 
     ObjectProperty<Session> getCurrentSessionProperty() {
         return currentSessionProperty;
@@ -109,8 +110,19 @@ class RootViewModel {
 
     private void removeSession(Session session) {
         try {
-            storeRepository.delete(session.getSessionId());
+            sessionStore.delete(session.getSessionId());
             layoutedSnapshotStore.deleteAll(session.getSessionId());
+            logger.info("Deleting session {} ({})", session
+                    .getSessionName(), session.getSessionId());
+            availableSessions.remove(session);
+            if (availableSessions.isEmpty()) {
+                currentSessionProperty.setValue(null);
+                noSessionsProperty.set(true);
+            } else {
+                int size = availableSessions.size();
+                currentSessionProperty
+                        .setValue(availableSessions.get(size - 1));
+            }
             showNotification(I18n.NOTIFICATION_SESSION_CLOSE_SUCCESSFUL);
         } catch (Exception e) {
             showNotification(I18n.NOTIFICATION_SESSION_CLOSE_UNSUCCESSFUL);
@@ -121,7 +133,8 @@ class RootViewModel {
      * Delegates removing sessions to the business logic
      */
     void clearAllSessions() {
-        availableSessions.forEach(session -> removeSession(session));
+        List<Session> sessionsToRemove = new ArrayList<>(availableSessions);
+        sessionsToRemove.forEach(this::removeSession);
         showNotification(I18n.NOTIFICATION_SESSION_CLOSE_ALL);
     }
 
@@ -186,38 +199,19 @@ class RootViewModel {
 
         @Override
         public void propertyChange(final PropertyChangeEvent event) {
-            if (event.getPropertyName().equals(
-                    ADVEvent.SESSION_ADDED.toString())) {
-
-                logger.debug("SessionStore has updated: Session was added. "
-                        + "Update ListView");
-                Platform.runLater(() -> {
-                    // current needs to be set first! Otherwise NullPointer when
-                    // creating SessionView
-                    Session newSession = (Session) event.getNewValue();
-                    currentSessionProperty.setValue(newSession);
-                    availableSessions.add(newSession);
-                    if (noSessionsProperty.get()) {
-                        noSessionsProperty.set(false);
-                    }
-                });
-            } else {
-                logger.debug("SessionStore has updated: Session was removed. "
-                        + "Update ListView");
-                Platform.runLater(() -> {
-                    Session removedSession = (Session) event.getOldValue();
-                    availableSessions.remove(removedSession);
-                    if (availableSessions.isEmpty()) {
-                        currentSessionProperty.setValue(null);
-                        noSessionsProperty.set(true);
-                    } else {
-                        int size = availableSessions.size();
-                        currentSessionProperty
-                                .setValue(availableSessions.get(size - 1));
-                    }
-                });
-            }
-
+            logger.debug("SessionStore has updated: Session was added. "
+                    + "Update ListView");
+            Platform.runLater(() -> {
+                // current needs to be set first! Otherwise NullPointer when
+                // creating SessionView
+                Session newSession = (Session) event.getNewValue();
+                currentSessionProperty.setValue(newSession);
+                availableSessions.add(newSession);
+                if (noSessionsProperty.get()) {
+                    noSessionsProperty.set(false);
+                }
+            });
         }
     }
 }
+

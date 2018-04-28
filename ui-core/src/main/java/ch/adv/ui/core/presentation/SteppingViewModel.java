@@ -6,6 +6,8 @@ import ch.adv.ui.core.logic.LayoutedSnapshotStore;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handles stepping logic for the
@@ -15,6 +17,9 @@ public class SteppingViewModel {
     private final EventManager eventManager;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private StateViewModel stateViewModel;
+
+    private static final Logger logger = LoggerFactory
+            .getLogger(SteppingViewModel.class);
 
     @Inject
     public SteppingViewModel(LayoutedSnapshotStore layoutedSnapshotStore,
@@ -75,6 +80,8 @@ public class SteppingViewModel {
 
 
     private void fireEvent(ADVEvent event, int oldIndex, int newIndex) {
+        logger.debug(layoutedSnapshotStore+"");
+        logger.debug(stateViewModel+"");
         LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore
                 .getAll(stateViewModel.getSessionId())
                 .get(oldIndex);
