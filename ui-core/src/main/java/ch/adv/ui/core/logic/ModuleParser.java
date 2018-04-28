@@ -51,7 +51,7 @@ public class ModuleParser {
                 throw new ADVParseException("Can't find module");
             }
             return module;
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             throw new ADVParseException("Can't find module");
         }
 
