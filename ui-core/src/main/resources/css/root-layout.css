@@ -1,9 +1,3 @@
-.root {
-    -accent: #3f51b5;
-    -white: #ffffff;
-}
-
-
 .logo {
     -fx-background-image: url("../images/adv-logo.png");
     -fx-background-repeat: no-repeat;
@@ -20,24 +14,4 @@
 .button:focused {
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
-}
-
-.active-notification{
-    -fx-text-fill: -white;
-    -fx-background-color: -accent;
-}
-
-.status-bar .label{
-    -fx-text-fill: -white;
-}
-
-
-.tool-bar .button .glyph-icon {
-    -fx-text-fill: red;
-
-}
-
-.glyph-icon {
-    -fx-text-fill: red;
-
 }
