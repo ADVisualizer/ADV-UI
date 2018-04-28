@@ -1,6 +1,7 @@
 package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.util.ADVParseException;
 
 /**
  * Session parser
@@ -15,6 +16,7 @@ public interface Parser {
      *
      * @param json json to parse
      * @return parsed {@link Session}
+     * @throws ADVParseException if anything goes wrong with parsing the session8
      */
-    Session parse(String json);
+    Session parse(String json) throws ADVParseException;
 }
