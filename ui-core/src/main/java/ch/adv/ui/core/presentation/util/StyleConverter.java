@@ -58,7 +58,7 @@ public class StyleConverter {
      */
     public static Color getLabelColor(Color color) {
         double brightness = color.getBrightness();
-        if (brightness >= 0.95) {
+        if (brightness >= 0.90) {
             return Color.BLACK;
         } else {
             return Color.WHITE;
