@@ -128,7 +128,7 @@
  * Notification Bar
  */
 .active-notification {
-    -fx-background-color: -grey-lightest;
+    -fx-background-color: -accent;
 }
 
 .status-bar .label {
