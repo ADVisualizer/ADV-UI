@@ -110,7 +110,6 @@ class RootView {
                 notificationBar.getStyleClass().add("active-notification");
             }
         });
-
     }
 
     /**

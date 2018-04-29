@@ -1,5 +1,6 @@
 package ch.adv.ui.core.logic;
 
+import ch.adv.ui.core.logic.util.ADVParseException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -34,14 +35,26 @@ public class ModuleParser {
      *
      * @param sessionJSON json string
      * @return parsed module
+     * @throws ADVParseException if module can't be found
      */
-    public ADVModule parseModule(final String sessionJSON) {
-        JsonElement sessionElement = jsonParser.parse(sessionJSON);
-        JsonObject sessionObject = sessionElement.getAsJsonObject();
-        String parsedModuleName = sessionObject.get("moduleName").getAsString();
+    public ADVModule parseModule(final String sessionJSON) throws
+            ADVParseException {
+        try {
+            JsonElement sessionElement = jsonParser.parse(sessionJSON);
+            JsonObject sessionObject = sessionElement.getAsJsonObject();
+            String parsedModuleName = sessionObject.get("moduleName")
+                    .getAsString();
 
-        logger.info("Parsed module '{}'", parsedModuleName);
+            logger.info("Parsed module '{}'", parsedModuleName);
+            ADVModule module = moduleMap.get(parsedModuleName);
+            if (module == null) {
+                throw new ADVParseException("Can't find module");
+            }
+            return module;
+        } catch (NullPointerException e) {
+            throw new ADVParseException("Can't find module");
+        }
 
-        return moduleMap.get(parsedModuleName);
+
     }
 }

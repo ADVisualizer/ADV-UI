@@ -1,6 +1,7 @@
 package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.access.FileDatastoreAccess;
+import ch.adv.ui.core.logic.util.ADVParseException;
 import ch.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
@@ -36,15 +37,14 @@ public class ModuleParserTest {
     }
 
     @Test
-    public void parseKnownModuleTest() {
+    public void parseKnownModuleTest() throws ADVParseException {
         ADVModule actual = parserUnderTest.parseModule(testJson);
         assertNotNull(actual);
     }
 
-    @Test
-    public void parseUnknownModuleTest() {
+    @Test(expected = ADVParseException.class)
+    public void parseUnknownModuleTest() throws ADVParseException {
         String testJSON = "{\"moduleName\": \"asdfModule\"}";
-        ADVModule actual = parserUnderTest.parseModule(testJSON);
-        assertNull(actual);
+        parserUnderTest.parseModule(testJSON);
     }
 }

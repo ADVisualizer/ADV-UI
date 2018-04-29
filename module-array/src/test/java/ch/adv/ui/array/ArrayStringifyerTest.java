@@ -4,6 +4,7 @@ import ch.adv.ui.array.logic.ArrayParser;
 import ch.adv.ui.array.logic.ArrayStringifyer;
 import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.util.ADVParseException;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -29,7 +30,7 @@ public class ArrayStringifyerTest {
     private Session testSession;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, ADVParseException {
         URL url = ArrayStringifyerTest.class.getClassLoader()
                 .getResource("session1.json");
 
@@ -38,7 +39,7 @@ public class ArrayStringifyerTest {
     }
 
     @Test
-    public void stringifyTest() {
+    public void stringifyTest() throws ADVParseException {
         String actual = stringifyerUnderTest.stringify(testSession);
         Session actualSession = testParser.parse(actual);
         assertEquals(testSession, actualSession);

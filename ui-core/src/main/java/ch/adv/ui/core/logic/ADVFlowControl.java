@@ -3,6 +3,7 @@ package ch.adv.ui.core.logic;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.domain.Snapshot;
+import ch.adv.ui.core.logic.util.ADVParseException;
 import ch.adv.ui.core.presentation.util.I18n;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -45,45 +46,50 @@ public class ADVFlowControl implements FlowControl {
      * @param sessionJSON json
      */
     public void process(String sessionJSON) {
-        logger.info("Processing JSON...");
-        // parse module
-        ADVModule currentModule = moduleParser.parseModule(sessionJSON);
+        try {
+            logger.info("Processing JSON...");
+            // parse module
+            ADVModule currentModule = moduleParser.parseModule(sessionJSON);
 
-        // parse session
-        Session session = currentModule.getParser().parse(sessionJSON);
-        session.setModule(currentModule);
-        long sessionId = session.getSessionId();
+            // parse session
+            Session session = currentModule.getParser().parse(sessionJSON);
+            session.setModule(currentModule);
+            long sessionId = session.getSessionId();
 
-        Layouter layouter = currentModule.getLayouter();
+            Layouter layouter = currentModule.getLayouter();
 
-        // filter new snapshots
-        List<Snapshot> newSnapshots = session.getSnapshots().stream()
-                .filter(s -> !layoutedSnapshotStore.contains(sessionId,
-                        s.getSnapshotId()))
-                .collect(Collectors.toList());
+            // filter new snapshots
+            List<Snapshot> newSnapshots = session.getSnapshots().stream()
+                    .filter(s -> !layoutedSnapshotStore.contains(sessionId,
+                            s.getSnapshotId()))
+                    .collect(Collectors.toList());
 
-        // Layout only snapshots that have not yet been layouted
-        newSnapshots.forEach(snapshot -> {
+            // Layout only snapshots that have not yet been layouted
+            newSnapshots.forEach(snapshot -> {
 
-            // layout
-            LayoutedSnapshot layoutedSnapshot = layouter.layout(snapshot,
-                    session.getFlags());
+                // layout
+                LayoutedSnapshot layoutedSnapshot = layouter.layout(snapshot,
+                        session.getFlags());
 
-            // store layouted snapshot
-            layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
-        });
+                // store layouted snapshot
+                layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
+            });
 
-        if (!newSnapshots.isEmpty()) {
-            sessionStore.add(session);
+            if (!newSnapshots.isEmpty()) {
+                sessionStore.add(session);
+                eventManager.fire(ADVEvent.NOTIFICATION, null,
+                        I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
+            } else {
+                sessionStore.setCurrent(sessionId);
+                eventManager.fire(ADVEvent.NOTIFICATION, null,
+                        I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
+            }
+            logger.info("Process finished: delegated session and snapshot "
+                    + "creation.");
+        } catch (ADVParseException e) {
             eventManager.fire(ADVEvent.NOTIFICATION, null,
-                    I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
-        } else {
-            sessionStore.setCurrent(sessionId);
-            eventManager.fire(ADVEvent.NOTIFICATION, null,
-                    I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
+                    I18n.NOTIFICATION_SESSION_LOAD_UNSUCCESSFUL);
         }
-        logger.info("Process finished: delegated session and snapshot "
-                + "creation.");
     }
 
 }
