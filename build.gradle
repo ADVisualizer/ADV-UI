@@ -64,6 +64,7 @@ subprojects {
     dependencies {
         //only use slf4j implementation (e.g. logback) in core
         compile "org.slf4j:slf4j-api:1+"
+        compile 'de.jensd:shichimifx:1.0.5'
         compile group: 'com.google.inject', name: 'guice', version: '4+'
         compile group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: '4+'
         compile group: 'com.google.code.gson', name: 'gson', version: '2+'

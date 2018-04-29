@@ -3,6 +3,7 @@ package ch.adv.ui.core.presentation;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.presentation.util.I18n;
 import ch.adv.ui.core.presentation.util.ResourceLocator;
+import de.jensd.shichimifx.utils.TabPaneDetacher;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
@@ -78,6 +79,7 @@ public class RootView {
         bindI18nStrings();
         sessionListView.setItems(rootViewModel.getAvailableSessions());
 
+        TabPaneDetacher.create().makeTabsDetachable(sessionTabPane);
 
         rootViewModel.getAvailableSessions()
                 .addListener(handleAvailableSessionUpdate());
