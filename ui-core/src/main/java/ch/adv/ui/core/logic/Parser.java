@@ -16,7 +16,8 @@ public interface Parser {
      *
      * @param json json to parse
      * @return parsed {@link Session}
-     * @throws ADVParseException if anything goes wrong with parsing the session8
+     * @throws ADVParseException if anything goes wrong with parsing the
+     *                           session
      */
     Session parse(String json) throws ADVParseException;
 }
