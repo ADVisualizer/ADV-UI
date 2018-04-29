@@ -1,7 +1,7 @@
-.slider .thumb {
-    -fx-background-color: -accent;
+.progress-bar {
+    -fx-accent: -accent;
 }
 
-.progress-bar {
-    -fx-accent: -accent-light;
+.text-area {
+    -fx-focus-color: -accent;
 }

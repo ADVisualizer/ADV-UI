@@ -11,8 +11,8 @@
             fx:controller="ch.adv.ui.core.presentation.RootView">
 
 
-    <ToolBar prefHeight="55.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-             AnchorPane.topAnchor="0.0">
+    <ToolBar prefHeight="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+             AnchorPane.topAnchor="0.0" styleClass="root-toolbar">
         <Button fx:id="loadSessionButton" mnemonicParsing="false" onAction="#handleLoadSessionClicked"
                 contentDisplay="TOP">
             <graphic>
@@ -49,7 +49,7 @@
     </ToolBar>
 
     <SplitPane dividerPositions="0.2" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0"
-               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
         <AnchorPane>
             <TitledPane animated="false" fx:id="sessionListViewTitle" collapsible="false" AnchorPane.bottomAnchor="0.0"
                         AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
