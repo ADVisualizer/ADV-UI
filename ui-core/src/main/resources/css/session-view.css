@@ -1,6 +1,12 @@
-.progress-bar {
-    -fx-accent: -accent;
+.progress-bar .bar {
+    -fx-background-color: -grey-light;
+    -fx-background-insets: 0.1em;
 }
+
+.slider .thumb {
+    -fx-focus-color: -accent;
+}
+
 
 .text-area {
     -fx-focus-color: -accent;

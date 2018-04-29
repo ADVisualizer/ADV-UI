@@ -23,7 +23,7 @@ import javax.inject.Inject;
  * The JavaFX Controller class for session-view.fxml. Initializes the view
  * and holds bindings to the {@link StateViewModel}.
  */
-class SessionView {
+public class SessionView {
 
     private static final double NO_MARGIN_ANCHOR = 0.0;
     private static final Logger logger = LoggerFactory.getLogger(SessionView

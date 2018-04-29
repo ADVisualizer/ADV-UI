@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * Main UI View
  */
-class RootView {
+public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
