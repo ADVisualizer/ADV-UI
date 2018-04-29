@@ -14,12 +14,11 @@ import org.slf4j.LoggerFactory;
  * {@link ch.adv.ui.core.presentation.SessionView}.
  */
 public class SteppingViewModel {
+    private static final Logger logger = LoggerFactory
+            .getLogger(SteppingViewModel.class);
     private final EventManager eventManager;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private StateViewModel stateViewModel;
-
-    private static final Logger logger = LoggerFactory
-            .getLogger(SteppingViewModel.class);
 
     @Inject
     public SteppingViewModel(LayoutedSnapshotStore layoutedSnapshotStore,
@@ -80,8 +79,8 @@ public class SteppingViewModel {
 
 
     private void fireEvent(ADVEvent event, int oldIndex, int newIndex) {
-        logger.debug(layoutedSnapshotStore+"");
-        logger.debug(stateViewModel+"");
+        logger.debug(layoutedSnapshotStore + "");
+        logger.debug(stateViewModel + "");
         LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore
                 .getAll(stateViewModel.getSessionId())
                 .get(oldIndex);
