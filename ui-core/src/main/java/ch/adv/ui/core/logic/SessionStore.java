@@ -144,7 +144,7 @@ public class SessionStore {
             logger.info("Session {} deleted from SessionStore", id);
         }
         logger.debug("Fire change event");
-        eventManager.fire(ADVEvent.SESSION_REMOVED, existing, null);
+        eventManager.fire(ADVEvent.SESSION_REMOVED, existing, null, id + "");
     }
 
     /**
