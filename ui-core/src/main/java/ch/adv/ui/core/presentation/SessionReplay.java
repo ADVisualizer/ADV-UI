@@ -39,8 +39,8 @@ public class SessionReplay extends TimerTask {
         this.eventManager = eventManager;
         this.listener = new SessionReplay.DeleteSessionChangeListener();
         this.sessionId = stateViewModel.getSessionId();
-        eventManager
-                .subscribe(listener, ADVEvent.SESSION_REMOVED, sessionId + "");
+        eventManager.subscribe(listener,
+                ADVEvent.SESSION_REMOVED, sessionId + "");
         if (stateViewModel.getCurrentSnapshotIndex() == stateViewModel
                 .getMaxSnapshotIndex()) {
             steppingViewModel.navigateSnapshot(Navigate.FIRST);
@@ -71,9 +71,8 @@ public class SessionReplay extends TimerTask {
      * taking place.
      */
     private boolean cancelReplay() {
-        eventManager
-                .unsubscribe(listener, ADVEvent.SESSION_REMOVED,
-                        sessionId + "");
+        eventManager.unsubscribe(
+                listener, ADVEvent.SESSION_REMOVED, sessionId + "");
         Platform.runLater(
                 () -> stateViewModel.getReplayingProperty().set(false)
         );
