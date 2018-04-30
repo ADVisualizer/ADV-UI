@@ -1,10 +1,10 @@
 package ch.adv.ui.array.logic;
 
-import ch.adv.ui.array.logic.domain.ArrayRelation;
+import ch.adv.ui.array.logic.domain.ArrayElement;
 import ch.adv.ui.core.logic.InterfaceAdapter;
 import ch.adv.ui.core.logic.Parser;
 import ch.adv.ui.core.logic.domain.ADVElement;
-import ch.adv.ui.core.logic.domain.ADVRelation;
+import ch.adv.ui.core.logic.domain.Module;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.logic.domain.styles.ADVValueStyle;
@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * Parses a json of an array session to a Session object.
  */
 @Singleton
+@Module("array")
 public class ArrayParser implements Parser {
 
     private static final Logger logger = LoggerFactory.getLogger(ArrayParser

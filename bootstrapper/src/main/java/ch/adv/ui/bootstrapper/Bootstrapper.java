@@ -1,14 +1,21 @@
 package ch.adv.ui.bootstrapper;
 
-import ch.adv.ui.array.logic.GuiceArrayModule;
+import ch.adv.ui.core.logic.ADVModule;
+import ch.adv.ui.core.logic.domain.Module;
 import ch.adv.ui.core.presentation.ADVApplication;
 import ch.adv.ui.core.presentation.GuiceCoreModule;
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
+import com.google.inject.multibindings.MapBinder;
 import javafx.application.Application;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Type;
+import java.util.Set;
 
 /**
  * Registers all available modules in the ADV UI Core
@@ -36,8 +43,9 @@ public class Bootstrapper {
         logger.info("Bootstrapping ADV UI");
         Injector injector = Guice.createInjector(
                 new GuiceCoreModule(),
-                new GuiceArrayModule()
+                new GuiceBootstrapperModule()
         );
+
 
         ADVApplication.setInjector(injector);
 

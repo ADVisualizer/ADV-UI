@@ -5,6 +5,8 @@ mainClassName = "ch.adv.ui.bootstrapper.Bootstrapper"
 dependencies {
     compile "ch.qos.logback:logback-core:1+"
     compile "ch.qos.logback:logback-classic:1+"
+    compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
+
 
     compile project(':ui-core')
     compile project(':module-array')

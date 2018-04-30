@@ -2,6 +2,7 @@ package ch.adv.ui.array.logic;
 
 import ch.adv.ui.core.logic.Layouter;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.domain.Module;
 import ch.adv.ui.core.logic.domain.Snapshot;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -15,6 +16,7 @@ import java.util.List;
  * Positions the ArrayElements on the Pane
  */
 @Singleton
+@Module("array")
 public class ArrayLayouter implements Layouter {
 
     private static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";
