@@ -1,7 +1,133 @@
+* {
+    -blue-darkest: #0f2c3d;
+    -grey-light: #ced8e0;
+    -grey-lightest: #f4f5f5;
+    -accent: #44B6FF;
+}
+
+.root {
+    -fx-base: white;
+    -fx-background: white;
+    -fx-color: white;
+    -fx-text-background-color: -blue-darkest;
+    -fx-control-inner-background: white;
+    -fx-control-inner-background-alt: white;
+}
+
 .logo {
     -fx-background-image: url("../images/adv-logo.png");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-size: 300px;
     -fx-opacity: 0.2;
+}
+
+/**
+ * Icon Buttons
+ */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: none;
+}
+
+.button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/**
+ * Toolbar
+ */
+.root-toolbar {
+    -fx-background-color: -blue-darkest;
+}
+
+.root-toolbar .button {
+    -fx-text-fill: -grey-lightest;
+}
+
+.root-toolbar .button .glyph-icon {
+    -fx-fill: -accent;
+}
+
+
+.root-toolbar .toggle-button,
+.root-toolbar .toggle-button:focused {
+    -fx-text-fill: -grey-light;
+    -fx-background-color: -grey-lightest, -blue-darkest transparent transparent;
+}
+
+.root-toolbar .toggle-button:selected,
+.root-toolbar .toggle-button:selected:focused {
+    -fx-text-fill: -blue-darkest;
+    -fx-background-color: -grey-lightest, -grey-lightest transparent transparent;
+}
+
+.root-toolbar .toggle-button.right-pill{
+    -fx-background-insets: -0.2 -0.2 -0.2 -1, 1 1 1 0, 2 2 2 1, -1.4 -1.4 -1.4 -1, 2.6 2.6 2.6 1.6;
+    -fx-background-radius: 0 3 3 0, 0 2 2 0, 0 1 1 0, 0 4 4 0, 0 1 1 0;
+}
+
+.root-toolbar .toggle-button.left-pill {
+    -fx-background-insets: -0.2 0 -0.2 -0.2, 1, -1.4 0 -1.4 -1.4, 2.6;
+    -fx-background-radius: 3 0 0 3, 2 0 0 2, 4 0 0 4, 0;
+}
+
+
+/**
+ * List View
+ */
+.titled-pane > .title {
+    -fx-background-color: -grey-light;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-radius: 0;
+    -fx-padding: 0.6em;
+}
+
+.titled-pane > *.content {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0, 0;
+    -fx-padding: 0;
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-effect: none;
+}
+
+.list-cell {
+    -fx-padding: 0.4em;
+}
+
+.list-cell:filled:selected,
+.list-cell:filled:selected:focused {
+    -fx-background-color: -grey-lightest;
+}
+
+/**
+ * Tabs
+ */
+.tab-pane *.tab-header-background {
+    -fx-background-color: -grey-light;
+}
+
+.tab:selected {
+    -fx-base: -grey-light;
+}
+
+.tab:selected .focus-indicator {
+    -fx-focus-color: transparent;
+    -fx-border-color: transparent;
+}
+
+/**
+ * Notification Bar
+ */
+.active-notification {
+    -fx-background-color: -accent;
+}
+
+.status-bar .label {
+    -fx-text-fill: white;
 }

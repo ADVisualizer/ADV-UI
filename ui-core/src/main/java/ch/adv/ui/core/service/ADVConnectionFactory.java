@@ -9,6 +9,7 @@ public interface ADVConnectionFactory {
 
     /**
      * Creates a {@link ADVConnection} instance
+     *
      * @param client custom argument
      * @return ADVConnection
      */

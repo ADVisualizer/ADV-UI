@@ -24,6 +24,8 @@
       <module name="module-_test" target="1.9" />
       <module name="module-array_main" target="1.9" />
       <module name="module-array_test" target="1.9" />
+      <module name="module-name_main" target="1.9" />
+      <module name="module-name_test" target="1.9" />
       <module name="module-recursion_main" target="1.9" />
       <module name="module-recursion_test" target="1.9" />
       <module name="module-sort_main" target="1.9" />

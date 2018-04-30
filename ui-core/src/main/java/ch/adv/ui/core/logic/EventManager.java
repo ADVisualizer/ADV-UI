@@ -103,9 +103,13 @@ public class EventManager {
      */
     public void fire(ADVEvent event, Object oldVal, Object newVal,
                      String... filterArgs) {
-        String handle = event.toString() + String.join("-", filterArgs);
+        String handle = event.toString();
         eventStore.firePropertyChange(handle, oldVal, newVal);
         logger.debug("Fired event {}", handle);
+        if (filterArgs.length > 0) {
+            handle += String.join("-", filterArgs);
+            eventStore.firePropertyChange(handle, oldVal, newVal);
+            logger.debug("Fired event {}", handle);
+        }
     }
-
 }

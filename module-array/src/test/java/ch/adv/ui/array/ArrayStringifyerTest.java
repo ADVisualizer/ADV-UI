@@ -1,8 +1,10 @@
 package ch.adv.ui.array;
 
+import ch.adv.ui.array.logic.ArrayParser;
+import ch.adv.ui.array.logic.ArrayStringifyer;
 import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.domain.Session;
-import com.google.gson.Gson;
+import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.util.ADVParseException;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -10,12 +12,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
 public class ArrayStringifyerTest {
+
     @Inject
     private FileDatastoreAccess reader;
     @Inject
@@ -26,7 +30,7 @@ public class ArrayStringifyerTest {
     private Session testSession;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException, ADVParseException {
         URL url = ArrayStringifyerTest.class.getClassLoader()
                 .getResource("session1.json");
 
@@ -35,14 +39,13 @@ public class ArrayStringifyerTest {
     }
 
     @Test
-    public void stringifyTest() {
+    public void stringifyTest() throws ADVParseException {
         String actual = stringifyerUnderTest.stringify(testSession);
         Session actualSession = testParser.parse(actual);
         assertEquals(testSession, actualSession);
 
         String[] lines = actual.split(System.getProperty("line.separator"));
         assertEquals("  \"snapshots\": [", lines[1]);
-        assertEquals(46, lines.length);
     }
 
 }

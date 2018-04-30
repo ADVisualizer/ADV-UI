@@ -1,7 +1,9 @@
 package ch.adv.ui.core.logic;
 
+import ch.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
+import org.jukito.UseModules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -15,6 +17,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 @RunWith(JukitoRunner.class)
+@UseModules({GuiceCoreModule.class})
 public class EventManagerTest {
 
     @Inject
@@ -77,12 +80,24 @@ public class EventManagerTest {
     }
 
     @Test
-    public void receiveNoChangeEvent() {
-        long sessionId = 123789;
+    public void receiveNotifyForUniversalListener() {
+        long sessionId = 42;
 
         eventManagerUnterTest.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED);
         eventManagerUnterTest.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
                 sessionId + "");
+
+        Mockito.verify(listenerTest).propertyChange(any());
+    }
+
+    @Test
+    public void receiveNoChangeEvent() {
+        long sessionIdListened = 42;
+        long sessionIdIgnored = 123789;
+
+        eventManagerUnterTest.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED, sessionIdListened+"");
+        eventManagerUnterTest.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
+                sessionIdIgnored + "");
 
         Mockito.verify(listenerTest, never()).propertyChange(any());
     }

@@ -1,8 +1,11 @@
 package ch.adv.ui.array;
 
+import ch.adv.ui.array.logic.ArrayElement;
+import ch.adv.ui.array.logic.ArrayParser;
 import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.domain.ADVElement;
-import ch.adv.ui.core.domain.Session;
+import ch.adv.ui.core.logic.domain.ADVElement;
+import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.util.ADVParseException;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -10,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
@@ -26,7 +30,7 @@ public class ArrayParserTest {
     private String testJson;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         URL url = ArrayParserTest.class.getClassLoader()
                 .getResource("session1.json");
 
@@ -34,7 +38,7 @@ public class ArrayParserTest {
     }
 
     @Test
-    public void parseSessionDetailsTest() {
+    public void parseSessionDetailsTest() throws ADVParseException {
         Session actual = parserUnderTest.parse(testJson);
         assertEquals("TestSession", actual.getSessionName());
         assertEquals(123456, actual.getSessionId());
@@ -42,7 +46,7 @@ public class ArrayParserTest {
     }
 
     @Test
-    public void parseADVElementToArrayElementTest() {
+    public void parseADVElementToArrayElementTest() throws ADVParseException {
         Session actual = parserUnderTest.parse(testJson);
         ADVElement element = actual.getFirstSnapshot().getElements().get(0);
         assertEquals(ArrayElement.class, element.getClass());
@@ -51,7 +55,7 @@ public class ArrayParserTest {
     }
 
     @Test
-    public void parseSnapshotDescriptionTest() {
+    public void parseSnapshotDescriptionTest() throws ADVParseException {
         Session actual = parserUnderTest.parse(testJson);
         String description1 = actual.getSnapshots().get(0)
                 .getSnapshotDescription();
@@ -62,7 +66,7 @@ public class ArrayParserTest {
     }
 
     @Test
-    public void parsePositionTest() {
+    public void parsePositionTest() throws ADVParseException {
         Session actual = parserUnderTest.parse(testJson);
         List<ADVElement> elements1 = actual.getSnapshots().get(0)
                 .getElements();

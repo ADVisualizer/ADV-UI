@@ -1,7 +1,7 @@
 package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.domain.Session;
-import ch.adv.ui.core.domain.Snapshot;
+import ch.adv.ui.core.logic.domain.Session;
+import ch.adv.ui.core.logic.domain.Snapshot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Singleton
 public class SessionStore {
 
-    private static final Logger logger = LoggerFactory.getLogger(SessionStore
-            .class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            SessionStore.class);
 
     private final Map<Long, Session> sessions = new HashMap<>();
     private final EventManager eventManager;
@@ -45,7 +45,7 @@ public class SessionStore {
      *
      * @param newSession the session to add
      */
-    public void addSession(Session newSession) {
+    public void add(Session newSession) {
         if (newSession != null) {
 
             long id = newSession.getSessionId();
@@ -53,13 +53,12 @@ public class SessionStore {
 
             if (existing == null) {
                 sessions.put(id, newSession);
-                setCurrentSession(newSession.getSessionId());
+                setCurrent(newSession.getSessionId());
+                eventManager.fire(ADVEvent.SESSION_ADDED, null, newSession);
             } else {
                 mergeSession(existing, newSession);
-                setCurrentSession(existing.getSessionId());
+                setCurrent(existing.getSessionId());
             }
-
-            eventManager.fire(ADVEvent.SESSION_ADDED, existing, newSession);
         }
     }
 
@@ -93,13 +92,28 @@ public class SessionStore {
     /**
      * @return sorted list of sessions
      */
-    public List<Session> getSessions() {
+    public List<Session> getAll() {
         ArrayList<Session> list = new ArrayList<>(sessions.values());
         list.sort((s1, s2) -> (int) (s2.getSessionId() - s1.getSessionId()));
         return list;
     }
 
-    public Session getCurrentSession() {
+    /**
+     * Retuns the session with the given session
+     *
+     * @param sessionId session id
+     * @return session or null
+     */
+    public Session get(long sessionId) {
+        return sessions.get(sessionId);
+    }
+
+    /**
+     * Returns the current session
+     *
+     * @return currentSession
+     */
+    public Session getCurrent() {
         return currentSession;
     }
 
@@ -109,7 +123,7 @@ public class SessionStore {
      *
      * @param sessionId of the current session
      */
-    public void setCurrentSession(long sessionId) {
+    public void setCurrent(long sessionId) {
         logger.debug("New session {} added to SessionStore", sessionId);
         this.currentSession = sessions.get(sessionId);
         eventManager.fire(ADVEvent.CURRENT_SESSION_CHANGED, null,
@@ -119,21 +133,34 @@ public class SessionStore {
     /**
      * Delete the specified session and fire changeEvent.
      *
-     * @param session to be deleted
+     * @param id to be deleted
      */
-    public void deleteSession(Session session) {
-        if (session != null) {
-            long id = session.getSessionId();
-            Session existing = sessions.get(id);
+    public void delete(long id) {
+        Session existing = sessions.get(id);
 
-            if (existing != null) {
-                sessions.remove(session.getSessionId());
-                currentSession = null;
-                logger.info("Session {} deleted from SessionStore", id);
-            }
-            logger.debug("Fire change event");
-
-            eventManager.fire(ADVEvent.SESSION_REMOVED, existing, null);
+        if (existing != null) {
+            sessions.remove(id);
+            currentSession = null;
+            logger.info("Session {} deleted from SessionStore", id);
         }
+        logger.debug("Fire change event");
+        eventManager.fire(ADVEvent.SESSION_REMOVED, existing, null, id + "");
+    }
+
+    /**
+     * Clear all sessions
+     */
+    public void clear() {
+        this.sessions.clear();
+    }
+
+    /**
+     * Checks whether the session store contains the given id
+     *
+     * @param sessionId session id
+     * @return true if the session is in the store
+     */
+    public boolean contains(long sessionId) {
+        return this.sessions.containsKey(sessionId);
     }
 }

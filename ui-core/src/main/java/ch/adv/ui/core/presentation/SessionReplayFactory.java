@@ -11,9 +11,11 @@ public interface SessionReplayFactory {
      * Construct a SessionReplay with dependencies, which are not
      * automatically injectable.
      *
-     * @param sessionViewModel related sessionViewModel
-     * @return new instance
+     * @param stateViewModel    StateViewModel of corresponding Session
+     * @param steppingViewModel SteppingViewModel of corresponding Session
+     * @return new instance of SessionReplay
      */
-    SessionReplay create(SessionViewModel sessionViewModel);
+    SessionReplay create(StateViewModel stateViewModel, SteppingViewModel
+            steppingViewModel);
 }
 

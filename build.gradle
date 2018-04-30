@@ -12,7 +12,7 @@ allprojects {
     apply plugin: 'jacoco'
 
     group = 'ch.adv'
-    version = '0.1'
+    version = '0.2'
 
     repositories {
         jcenter()
@@ -64,6 +64,7 @@ subprojects {
     dependencies {
         //only use slf4j implementation (e.g. logback) in core
         compile "org.slf4j:slf4j-api:1+"
+        compile 'de.jensd:shichimifx:1.0.5'
         compile group: 'com.google.inject', name: 'guice', version: '4+'
         compile group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: '4+'
         compile group: 'com.google.code.gson', name: 'gson', version: '2+'
@@ -91,6 +92,7 @@ dependencies {
 jar {
     dependsOn configurations.childJars
     from { configurations.childJars.collect { zipTree(it) } }
+    exclude("**/logback.xml")
     manifest {
         attributes 'Main-Class': 'ch.adv.ui.bootstrapper.Bootstrapper'
     }
