@@ -1,12 +1,14 @@
 package ch.adv.ui.array.logic;
 
 import ch.adv.ui.core.logic.domain.ADVElement;
+import ch.adv.ui.core.logic.domain.Module;
 import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 
 /**
  * Represents one Item in a Array
  */
+@Module(name = "array")
 public class ArrayElement implements ADVElement<String> {
 
     private long id;
