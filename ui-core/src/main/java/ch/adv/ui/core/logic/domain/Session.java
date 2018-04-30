@@ -23,7 +23,14 @@ public class Session {
         return sessionId;
     }
 
-    public void setSessionId(Long sessionId) {
+    /**
+     * The sessionId will always be set by the jsonBuilder according to the
+     * value in the session-json. The setter should therefore not be used
+     * manually.
+     *
+     * @param sessionId to be set.
+     */
+    void setSessionId(long sessionId) {
         this.sessionId = sessionId;
     }
 

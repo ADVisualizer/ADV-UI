@@ -3,7 +3,6 @@ package ch.adv.ui.core.logic.domain;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Represents the state of a data structure in the user's module
@@ -12,9 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class Snapshot {
 
-    private static final transient AtomicLong SNAPSHOT_COUNTER = new
-            AtomicLong(0);
-    private final long snapshotId = SNAPSHOT_COUNTER.incrementAndGet();
+    private long snapshotId;
 
     private String snapshotDescription;
     private List<ADVElement> elements = new ArrayList<>();
@@ -23,6 +20,17 @@ public class Snapshot {
 
     public long getSnapshotId() {
         return snapshotId;
+    }
+
+    /**
+     * The snapshotId will always be set by the jsonBuilder according to the
+     * value in the session-json. The setter should therefore not be used
+     * manually.
+     *
+     * @param snapshotId to be set.
+     */
+    void setSnapshotId(long snapshotId) {
+        this.snapshotId = snapshotId;
     }
 
     public String getSnapshotDescription() {
