@@ -32,8 +32,6 @@ public class ArrayParser implements Parser {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(ADVElement.class, new
                 InterfaceAdapter(ArrayElement.class));
-        gsonBuilder.registerTypeAdapter(ADVRelation.class, new
-                InterfaceAdapter(ArrayRelation.class));
         gsonBuilder.registerTypeAdapter(ADVStyle.class, new
                 InterfaceAdapter(ADVValueStyle.class));
         gson = gsonBuilder.create();
