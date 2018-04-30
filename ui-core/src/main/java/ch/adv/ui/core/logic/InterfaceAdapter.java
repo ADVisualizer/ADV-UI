@@ -7,7 +7,7 @@ import java.lang.reflect.Type;
 /**
  * JSON Deserializer for a specific class
  *
- * @param <T>
+ * @param <T> type T
  */
 public class InterfaceAdapter<T> implements JsonDeserializer<T> {
 
@@ -18,7 +18,7 @@ public class InterfaceAdapter<T> implements JsonDeserializer<T> {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public T deserialize(JsonElement jsonElement, Type type,

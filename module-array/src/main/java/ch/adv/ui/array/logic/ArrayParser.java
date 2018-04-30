@@ -1,10 +1,8 @@
 package ch.adv.ui.array.logic;
 
-import ch.adv.ui.array.logic.domain.ArrayRelation;
 import ch.adv.ui.core.logic.InterfaceAdapter;
 import ch.adv.ui.core.logic.Parser;
 import ch.adv.ui.core.logic.domain.ADVElement;
-import ch.adv.ui.core.logic.domain.ADVRelation;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.logic.domain.styles.ADVValueStyle;
@@ -38,7 +36,7 @@ public class ArrayParser implements Parser {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public Session parse(String json) throws ADVParseException {

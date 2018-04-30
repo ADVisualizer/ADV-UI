@@ -1,8 +1,10 @@
 # Generated folders
 log/
 build/
+sign-key/
 **/.idea/workspace.xml
 **/.idea/tasks.xml
+
 
 # Eclipse
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -50,6 +52,7 @@ local.properties
 # Gradle:
 .idea/**/gradle.xml
 .idea/**/libraries
+gradle.properties
 
 # CMake
 cmake-build-debug/
