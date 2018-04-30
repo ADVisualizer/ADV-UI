@@ -6,8 +6,9 @@ import com.google.inject.multibindings.MapBinder;
 
 /**
  * Adds the array module in the module map, which is maintained by guice
- * <p>
- * {@see https://github.com/google/guice/wiki/Multibindings}
+ *
+ * @see <a href="https://github.com/google/guice/wiki/Multibindings">
+ * Multibindings</a>
  */
 public class GuiceArrayModule extends AbstractModule {
 
