@@ -24,17 +24,20 @@ public class ADVFlowControl implements FlowControl {
 
     private final ModuleParser moduleParser;
     private final SessionStore sessionStore;
+    private final ServiceProvider serviceProvider;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final EventManager eventManager;
 
     @Inject
     public ADVFlowControl(ModuleParser moduleParser,
                           SessionStore sessionStore,
+                          ServiceProvider serviceProvider,
                           LayoutedSnapshotStore layoutedSnapshotStore,
                           EventManager eventManager) {
 
         this.moduleParser = moduleParser;
         this.sessionStore = sessionStore;
+        this.serviceProvider = serviceProvider;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.eventManager = eventManager;
     }
@@ -49,14 +52,14 @@ public class ADVFlowControl implements FlowControl {
         try {
             logger.info("Processing JSON...");
             // parse module
-            ADVModule currentModule = moduleParser.parseModule(sessionJSON);
+            String currentModule = moduleParser.parseModule(sessionJSON);
 
             // parse session
-            Session session = currentModule.getParser().parse(sessionJSON);
-            session.setModule(currentModule);
+            Parser parser = serviceProvider.getParser(currentModule);
+            Session session = parser.parse(sessionJSON);
             long sessionId = session.getSessionId();
 
-            Layouter layouter = currentModule.getLayouter();
+            Layouter layouter = serviceProvider.getLayouter(currentModule);
 
             // filter new snapshots
             List<Snapshot> newSnapshots = session.getSnapshots().stream()

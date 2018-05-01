@@ -1,7 +1,5 @@
 package ch.adv.ui.core.logic.domain;
 
-import ch.adv.ui.core.logic.ADVModule;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +15,6 @@ public class Session {
     private long sessionId;
     private String sessionName;
     private String moduleName;
-    private transient ADVModule module;
 
     public long getSessionId() {
         return sessionId;
@@ -48,20 +45,6 @@ public class Session {
 
     public void setModuleName(String moduleName) {
         this.moduleName = moduleName;
-    }
-
-    public ADVModule getModule() {
-        return module;
-    }
-
-    /**
-     * Sets the related {@link ADVModule} and stores its name, which needs to
-     * be stringified to the filesystem.
-     *
-     * @param module related module
-     */
-    public void setModule(ADVModule module) {
-        this.module = module;
     }
 
     public List<Snapshot> getSnapshots() {

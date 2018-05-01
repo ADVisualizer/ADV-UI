@@ -1,6 +1,8 @@
 package ch.adv.ui.bootstrapper;
 
-import ch.adv.ui.core.logic.ADVModule;
+import ch.adv.ui.core.logic.Layouter;
+import ch.adv.ui.core.logic.Parser;
+import ch.adv.ui.core.logic.Stringifyer;
 import ch.adv.ui.core.logic.domain.Module;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.MapBinder;
@@ -26,26 +28,46 @@ public class GuiceBootstrapperModule extends AbstractModule {
     @Override
     protected void configure() {
 
-        MapBinder<String, ADVModule> moduleMapBinder =
+        MapBinder<String, Layouter> layouterMapBinder =
                 MapBinder.newMapBinder(binder(), String.class,
-                        ADVModule.class);
+                        Layouter.class);
+
+        MapBinder<String, Parser> parserMapBinder =
+                MapBinder.newMapBinder(binder(), String.class,
+                        Parser.class);
+
+        MapBinder<String, Stringifyer> stringifyerMapBinder =
+                MapBinder.newMapBinder(binder(), String.class,
+                        Stringifyer.class);
 
         Reflections reflections = new Reflections(PACKAGE);
         Set<Class<?>> annotated = reflections
                 .getTypesAnnotatedWith(Module.class);
-        annotated.forEach(e -> {
-            String nameKey = e.getAnnotation(Module.class).value();
+        annotated.forEach(instance -> {
 
-            for (Type t : e.getInterfaces()) {
+            String moduleNameKey = instance.getAnnotation(Module.class).value();
+
+            for (Type t : instance.getInterfaces()) {
+
                 String type = t.getTypeName();
-                if (type.equals(ADVModule.class.getName())) {
-                    Class<? extends ADVModule> module =
-                            (Class<? extends ADVModule>) e;
-                    moduleMapBinder.addBinding(nameKey).to(module);
+
+                if (type.equals(Layouter.class.getName())) {
+                    Class<? extends Layouter> layouter =
+                            (Class<? extends Layouter>) instance;
+                    layouterMapBinder.addBinding(moduleNameKey).to(layouter);
+                } else if (type.equals(Parser.class.getName())) {
+                    Class<? extends Parser> parser =
+                            (Class<? extends Parser>) instance;
+                    parserMapBinder.addBinding(moduleNameKey).to(parser);
+                } else if (type.equals(Stringifyer.class.getName())) {
+                    Class<? extends Stringifyer> stringifyer =
+                            (Class<? extends Stringifyer>) instance;
+                    stringifyerMapBinder.addBinding(moduleNameKey)
+                            .to(stringifyer);
                 } else {
-                    logger.debug("No fitting type found. Type was: {}",
-                            type);
+                    logger.debug("No fitting type found. Type was: {}", type);
                 }
+
             }
         });
     }

@@ -8,7 +8,6 @@ import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 /**
  * Relation between two {@link ArrayElement}s
  */
-@Module("array")
 public class ArrayRelation implements ADVRelation {
 
     private long sourceElementId;
