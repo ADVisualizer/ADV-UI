@@ -34,7 +34,6 @@ public class ADVFlowControl implements FlowControl {
                           ServiceProvider serviceProvider,
                           LayoutedSnapshotStore layoutedSnapshotStore,
                           EventManager eventManager) {
-
         this.moduleParser = moduleParser;
         this.sessionStore = sessionStore;
         this.serviceProvider = serviceProvider;

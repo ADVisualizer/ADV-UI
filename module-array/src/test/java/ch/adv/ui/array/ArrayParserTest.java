@@ -42,7 +42,7 @@ public class ArrayParserTest {
         Session actual = parserUnderTest.parse(testJson);
         assertEquals("TestSession", actual.getSessionName());
         assertEquals(123456, actual.getSessionId());
-        assertNull(actual.getModule());
+        assertEquals("array",actual.getModuleName());
     }
 
     @Test

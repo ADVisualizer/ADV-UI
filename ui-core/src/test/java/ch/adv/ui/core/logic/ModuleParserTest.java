@@ -1,6 +1,7 @@
 package ch.adv.ui.core.logic;
 
 import ch.adv.ui.core.access.FileDatastoreAccess;
+import ch.adv.ui.core.logic.mocks.GuiceTestModule;
 import ch.adv.ui.core.logic.util.ADVParseException;
 import ch.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
@@ -14,8 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
 @UseModules( {GuiceCoreModule.class, GuiceTestModule.class})
@@ -38,13 +38,13 @@ public class ModuleParserTest {
 
     @Test
     public void parseKnownModuleTest() throws ADVParseException {
-        ADVModule actual = parserUnderTest.parseModule(testJson);
-        assertNotNull(actual);
+        String actual = parserUnderTest.parseModule(testJson);
+        assertEquals("test", actual);
     }
 
     @Test(expected = ADVParseException.class)
-    public void parseUnknownModuleTest() throws ADVParseException {
-        String testJSON = "{\"moduleName\": \"asdfModule\"}";
+    public void parseIncorrectFormatTest() throws ADVParseException {
+        String testJSON = "{\"moduleKey\": \"asdfModule\"}";
         parserUnderTest.parseModule(testJSON);
     }
 }
