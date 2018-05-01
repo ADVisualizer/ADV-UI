@@ -1,7 +1,7 @@
 package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.logic.domain.Snapshot;
 import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
+import ch.adv.ui.core.logic.domain.Snapshot;
 
 import java.util.List;
 

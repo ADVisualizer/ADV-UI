@@ -2,6 +2,7 @@ package ch.adv.ui.array.logic;
 
 import ch.adv.ui.core.logic.GsonProvider;
 import ch.adv.ui.core.logic.Stringifyer;
+import ch.adv.ui.core.logic.domain.Module;
 import ch.adv.ui.core.logic.domain.Session;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * Generates a json representation of an array session.
  */
 @Singleton
+@Module("array")
 public class ArrayStringifyer implements Stringifyer {
 
     private static final String EXPECTED_MODULE = "array";

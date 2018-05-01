@@ -1,6 +1,5 @@
 package ch.adv.ui.bootstrapper;
 
-import ch.adv.ui.array.logic.GuiceArrayModule;
 import ch.adv.ui.core.presentation.ADVApplication;
 import ch.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Guice;
@@ -36,8 +35,9 @@ public class Bootstrapper {
         logger.info("Bootstrapping ADV UI");
         Injector injector = Guice.createInjector(
                 new GuiceCoreModule(),
-                new GuiceArrayModule()
+                new GuiceBootstrapperModule()
         );
+
 
         ADVApplication.setInjector(injector);
 

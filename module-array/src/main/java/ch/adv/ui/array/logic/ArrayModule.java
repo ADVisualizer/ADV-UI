@@ -4,6 +4,7 @@ import ch.adv.ui.core.logic.ADVModule;
 import ch.adv.ui.core.logic.Layouter;
 import ch.adv.ui.core.logic.Parser;
 import ch.adv.ui.core.logic.Stringifyer;
+import ch.adv.ui.core.logic.domain.Module;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -11,6 +12,7 @@ import com.google.inject.Singleton;
  * Module encapsulating module-specific Stringifyer, Parser and Layouter.
  */
 @Singleton
+@Module("array")
 public class ArrayModule implements ADVModule {
 
     private final ArrayLayouter arrayLayouter;

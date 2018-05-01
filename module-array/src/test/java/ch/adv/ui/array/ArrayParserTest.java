@@ -1,6 +1,6 @@
 package ch.adv.ui.array;
 
-import ch.adv.ui.array.logic.ArrayElement;
+import ch.adv.ui.array.logic.domain.ArrayElement;
 import ch.adv.ui.array.logic.ArrayParser;
 import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.logic.domain.ADVElement;
