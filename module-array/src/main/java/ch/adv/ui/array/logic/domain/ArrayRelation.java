@@ -1,14 +1,12 @@
 package ch.adv.ui.array.logic.domain;
 
 import ch.adv.ui.core.logic.domain.ADVRelation;
-import ch.adv.ui.core.logic.domain.Module;
 import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 
 /**
  * Relation between two {@link ArrayElement}s
  */
-@Module("array")
 public class ArrayRelation implements ADVRelation {
 
     private long sourceElementId;

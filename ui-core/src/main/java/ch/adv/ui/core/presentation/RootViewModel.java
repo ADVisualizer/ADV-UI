@@ -43,6 +43,7 @@ class RootViewModel {
     private final StringProperty notificationMessageProperty = new
             SimpleStringProperty("");
 
+    private final ServiceProvider serviceProvider;
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final FlowControl flowControl;
@@ -63,11 +64,13 @@ class RootViewModel {
                   FlowControl flowControl,
                   DatastoreAccess fileAccess,
                   LayoutedSnapshotStore layoutedSnapshotStore,
-                  EventManager eventManager) {
+                  EventManager eventManager,
+                  ServiceProvider serviceProvider) {
 
         this.sessionStore = sessionStore;
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
+        this.serviceProvider = serviceProvider;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
 
         eventManager.subscribe(new SessionStoreListener(),
@@ -156,8 +159,11 @@ class RootViewModel {
                             session.getSnapshotById(id)
                                     .setSnapshotDescription(description);
                         });
-                String json = session.getModule()
-                        .getStringifyer().stringify(session);
+
+                Stringifyer stringifyer = serviceProvider
+                        .getStringifyer(session.getModuleName());
+
+                String json = stringifyer.stringify(session);
                 fileAccess.write(file, json);
             }
             showNotification(I18n.NOTIFICATION_SESSION_SAVE_SUCCESSFUL);
