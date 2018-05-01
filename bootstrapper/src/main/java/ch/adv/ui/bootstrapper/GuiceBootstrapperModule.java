@@ -10,7 +10,6 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Type;
 import java.util.Set;
 
 /**
@@ -47,27 +46,26 @@ public class GuiceBootstrapperModule extends AbstractModule {
 
             String moduleNameKey = instance.getAnnotation(Module.class).value();
 
-            for (Type t : instance.getInterfaces()) {
+            for (Class<?> clazz : instance.getInterfaces()) {
 
-                String type = t.getTypeName();
-
-                if (type.equals(Layouter.class.getName())) {
+                if (Layouter.class.isAssignableFrom(clazz)) {
                     Class<? extends Layouter> layouter =
                             (Class<? extends Layouter>) instance;
                     layouterMapBinder.addBinding(moduleNameKey).to(layouter);
-                } else if (type.equals(Parser.class.getName())) {
+
+                } else if (Parser.class.isAssignableFrom(clazz)) {
                     Class<? extends Parser> parser =
                             (Class<? extends Parser>) instance;
                     parserMapBinder.addBinding(moduleNameKey).to(parser);
-                } else if (type.equals(Stringifyer.class.getName())) {
+
+                } else if (Stringifyer.class.isAssignableFrom(clazz)) {
                     Class<? extends Stringifyer> stringifyer =
                             (Class<? extends Stringifyer>) instance;
                     stringifyerMapBinder.addBinding(moduleNameKey)
                             .to(stringifyer);
                 } else {
-                    logger.debug("No fitting type found. Type was: {}", type);
+                    logger.debug("No fitting type found. Type was: {}", clazz);
                 }
-
             }
         });
     }
