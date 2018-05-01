@@ -1,7 +1,9 @@
 package ch.adv.ui.core.logic.domain;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * To be used on every module implementation with the name/key of the module
@@ -9,6 +11,7 @@ import java.lang.annotation.RetentionPolicy;
  *
  * @author mtrentini
  */
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Module {
     /**
