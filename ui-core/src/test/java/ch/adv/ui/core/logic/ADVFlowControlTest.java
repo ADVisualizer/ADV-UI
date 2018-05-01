@@ -1,6 +1,5 @@
 package ch.adv.ui.core.logic;
 
-import ch.adv.ui.core.access.FileDatastoreAccess;
 import ch.adv.ui.core.logic.domain.Session;
 import ch.adv.ui.core.logic.mocks.GuiceTestModule;
 import ch.adv.ui.core.logic.mocks.TestLayouter;
@@ -33,6 +32,7 @@ public class ADVFlowControlTest {
     private SessionStore testSessionStore;
     @Inject
     private LayoutedSnapshotStore testLayoutedSnapshotStore;
+
     @Inject
     private ADVFlowControl flowControlUnderTest;
 
@@ -50,7 +50,6 @@ public class ADVFlowControlTest {
                 .contains(testSessionId, testLayouter.getTestLayoutedSnapshot()
                         .getSnapshotId()));
     }
-
 
     @Test
     public void processDuplicatedSessionTest() {

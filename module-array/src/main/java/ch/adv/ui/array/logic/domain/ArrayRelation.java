@@ -1,7 +1,6 @@
 package ch.adv.ui.array.logic.domain;
 
 import ch.adv.ui.core.logic.domain.ADVRelation;
-import ch.adv.ui.core.logic.domain.Module;
 import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 
