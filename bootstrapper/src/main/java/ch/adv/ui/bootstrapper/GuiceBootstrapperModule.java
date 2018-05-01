@@ -11,6 +11,13 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Type;
 import java.util.Set;
 
+/**
+ * Uses reflection to add module implementations with the {@link Module}
+ * annotation to a Guice MapBinder to be injected into the adv ui core.
+ * Classes injected this way will be lazily loaded once they are needed.
+ *
+ * @author mtrentini
+ */
 public class GuiceBootstrapperModule extends AbstractModule {
     private static final Logger logger = LoggerFactory.getLogger(
             GuiceBootstrapperModule.class);
