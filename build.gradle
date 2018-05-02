@@ -2,6 +2,10 @@ plugins {
     id 'com.github.spotbugs' version '1.6.0'
 }
 
+
+group = 'ch.hsr.adv'
+version = '0.3'
+
 /****************************************
  * instructions for all projects
  ****************************************/
@@ -10,9 +14,6 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'jacoco'
-
-    group = 'ch.hsr.adv'
-    version = '0.3'
 
     repositories {
         jcenter()
