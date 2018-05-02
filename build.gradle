@@ -1,6 +1,17 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+    }
+}
+
 plugins {
     id 'com.github.spotbugs' version '1.6.0'
 }
+
+
 
 /****************************************
  * instructions for all projects
@@ -10,7 +21,9 @@ allprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'jacoco'
+    apply plugin: 'com.bmuschko.nexus'
 
+    archivesBaseName = 'adv-ui'
     group = 'ch.hsr.adv'
     version = '0.3'
 
@@ -127,6 +140,58 @@ task jacocoRootReport(type: JacocoReport) {
 }
 
 check.finalizedBy(jacocoRootReport)
+
+
+/****************************************
+ * Nexus deployment (needed for Maven Central)
+ ****************************************/
+modifyPom {
+    project {
+        name 'Algorithm & Data Structure Visualizer'
+        description 'JavaFX UI component which visualizes your algorithm and data structures'
+        url 'https://github.com/ADVisualizer'
+        inceptionYear '2018'
+
+        scm {
+            url 'https://github.com/ADVisualizer/ADV-UI'
+            connection 'https://git@github.com/ADVisualizer/ADV-UI.git'
+            developerConnection 'scm:git:https://github.com/ADVisualizer/ADV-UI.git'
+        }
+
+        licenses {
+            license {
+                name 'GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0'
+                url 'https://www.gnu.org/licenses/agpl.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'mwieland'
+                name 'Michael Wieland'
+                email 'mwieland@hsr.ch'
+            }
+            developer {
+                id 'mtrentini'
+                name 'Murièle Trentini'
+                email 'mtrentin@hsr.ch'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = true
+    tests = false
+    javadoc = true
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+}
 
 
 
