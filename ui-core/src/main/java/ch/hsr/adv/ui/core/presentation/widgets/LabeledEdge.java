@@ -27,6 +27,7 @@ public class LabeledEdge extends Group {
 
     private static final Logger logger = LoggerFactory.getLogger(
             LabeledEdge.class);
+
     private static final int LABEL_MARGIN = 5;
     private static final int LABEL_FONT_SIZE = 8;
 
@@ -129,15 +130,24 @@ public class LabeledEdge extends Group {
             Point2D endConnectorPoint = getConnectorPoint(endNode,
                     endNode.getConnectorTypeIncoming());
 
-            // transform parent coordinate space
-            endConnectorPoint = endNode.getParent().localToParent(
-                    endConnectorPoint);
+            if (startNode.getParent() != null && endNode.getParent() != null) {
+
+                if (!startNode.getParent().equals(endNode.getParent())) {
+
+                    Node parent = findFirstCommonAncestor(startNode, endNode);
+                    if (parent != null) {
+                        startConnectorPoint = localToAncestor(
+                                startConnectorPoint, startNode, parent);
+                        endConnectorPoint = localToAncestor(
+                                endConnectorPoint, endNode, parent);
+                    }
+                }
+            }
 
             curve.setStartX(startConnectorPoint.getX());
             curve.setStartY(startConnectorPoint.getY());
             curve.setEndX(endConnectorPoint.getX());
             curve.setEndY(endConnectorPoint.getY());
-
             setControlPoints(curve, startConnectorPoint, endConnectorPoint);
 
             // arrow
@@ -158,6 +168,34 @@ public class LabeledEdge extends Group {
         }
     }
 
+    private Point2D localToAncestor(Point2D point, Node local, Node ancestor) {
+        if (local == ancestor) {
+            return point;
+        }
+
+        Point2D transformedPoint = local.localToParent(point);
+        return localToAncestor(transformedPoint, local.getParent(), ancestor);
+    }
+
+    private Node findFirstCommonAncestor(Node node1, Node node2) {
+        if (node1 == null || node2 == null) {
+            return null;
+        }
+        if (isDescendant(node1, node2)) {
+            return node2;
+        }
+        return findFirstCommonAncestor(node1, node2.getParent());
+    }
+
+    private boolean isDescendant(Node candidate, Node node) {
+        if (candidate == null) {
+            return false;
+        } else if (candidate == node) {
+            return true;
+        }
+        return isDescendant(candidate.getParent(), node);
+    }
+
     private Point2D getConnectorPoint(ADVNode node,
                                       ConnectorType connectorType) {
         switch (connectorType) {
@@ -170,9 +208,18 @@ public class LabeledEdge extends Group {
             case RIGHT:
                 return getRightConnectorPoint(node);
             case DIRECT:
-                return findIntersectionPoint(node,
-                        startNode.getCenter(),
-                        endNode.getCenter());
+
+                Point2D inside;
+                Point2D outside;
+                if (node == endNode) {
+                    inside = endNode.getCenter();
+                    outside = startNode.getCenter();
+                } else {
+                    inside = startNode.getCenter();
+                    outside = endNode.getCenter();
+                }
+
+                return findIntersectionPoint(node, inside, outside);
             default:
                 logger.warn("Unknown ConnectorType {}", connectorType);
                 return null;
@@ -260,9 +307,9 @@ public class LabeledEdge extends Group {
     /**
      * Relationship type of the arrow
      * <p>
-     * Can be unidirectionl, bidirectional or no arrow.
+     * Can be unidirectional, bidirectional or no arrow.
      */
     public enum DirectionType {
-        UNIDIRECTIONAL, BIDIRECTIONAL, NONE;
+        UNIDIRECTIONAL, BIDIRECTIONAL, NONE
     }
 }

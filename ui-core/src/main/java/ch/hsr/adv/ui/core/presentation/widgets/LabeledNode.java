@@ -164,12 +164,16 @@ public class LabeledNode extends ADVNode {
     }
 
     private void computeCenter() {
-        double centerX = getBoundsInParent().getMinX()
-                + getBoundsInParent().getWidth() / 2;
-        double centerY = getBoundsInParent().getMinY()
-                + getBoundsInParent().getHeight() / 2;
+        if (getBoundsInParent().getWidth() > 0
+                && getBoundsInParent().getHeight() > 0) {
 
-        centerProperty.set(new Point2D(centerX, centerY));
+            double centerX = getBoundsInParent().getMinX()
+                    + getBoundsInParent().getWidth() / 2;
+            double centerY = getBoundsInParent().getMinY()
+                    + getBoundsInParent().getHeight() / 2;
+
+            centerProperty.set(new Point2D(centerX, centerY));
+        }
     }
 
     @Override

@@ -80,8 +80,10 @@ public class GraphLayouter implements Layouter {
                 type = LabeledEdge.DirectionType.UNIDIRECTIONAL;
             }
 
-            scalePane.addChildren(new LabeledEdge(
-                    r.getLabel(), source, target, style, type));
+            LabeledEdge edge = new LabeledEdge(r.getLabel(), source, target,
+                    style, type);
+
+            scalePane.addChildren(edge);
         });
     }
 
