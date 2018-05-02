@@ -107,7 +107,7 @@ jar {
     from { configurations.childJars.collect { zipTree(it) } }
     exclude("**/logback.xml")
     manifest {
-        attributes 'Main-Class': 'ch.adv.ui.bootstrapper.Bootstrapper'
+        attributes 'Main-Class': 'ch.hsr.adv.ui.bootstrapper.Bootstrapper'
     }
 }
 

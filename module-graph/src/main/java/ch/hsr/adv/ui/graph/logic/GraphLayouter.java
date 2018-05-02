@@ -3,9 +3,12 @@ package ch.hsr.adv.ui.graph.logic;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.*;
 import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +30,9 @@ public class GraphLayouter implements Layouter {
     private AutoScalePane scalePane = new AutoScalePane();
     private List<ADVElement> elements;
 
+    @Inject
+    private GraphLayouterUtil util;
+
     @Override
     public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
         elements = snapshot.getElements();
@@ -42,7 +48,12 @@ public class GraphLayouter implements Layouter {
     private void createElements() {
         elements.forEach(e -> {
             String label = e.getContent().toString();
-            LabeledNode vertex = new LabeledNode( label, true);
+            LabeledNode vertex = new LabeledNode(label, true);
+            if (e.getFixedPosX() != 0 || e.getFixedPosY() != 0) {
+                vertex.setX(e.getFixedPosX());
+                vertex.setY(e.getFixedPosY());
+            } //TODO: else use layouting algorithm
+            util.setStyling(vertex, e.getStyle());
             vertices.put(e.getElementId(), vertex);
             scalePane.addChildren(vertex);
         });
@@ -52,8 +63,12 @@ public class GraphLayouter implements Layouter {
         relations.forEach(r -> {
             LabeledNode source = vertices.get(r.getSourceElementId());
             LabeledNode target = vertices.get(r.getTargetElementId());
+            ADVStyle style = r.getStyle();
+            if (style == null) {
+                style = new ADVDefaultStyle();
+            }
             scalePane.addChildren(new LabeledEdge(
-                    r.getLabel(), source, target, r.getStyle()));
+                    r.getLabel(), source, target, style));
         });
     }
 
