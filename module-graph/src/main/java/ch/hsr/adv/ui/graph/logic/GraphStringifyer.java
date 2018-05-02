@@ -7,6 +7,9 @@ import ch.hsr.adv.ui.core.logic.domain.Session;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
+/**
+ * Serializes a graph session to json
+ */
 @Singleton
 @Module("graph")
 public class GraphStringifyer implements Stringifyer {
