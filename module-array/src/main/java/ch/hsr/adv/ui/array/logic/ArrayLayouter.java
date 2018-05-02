@@ -1,9 +1,9 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.adv.ui.core.logic.Layouter;
-import ch.adv.ui.core.logic.domain.LayoutedSnapshot;
-import ch.adv.ui.core.logic.domain.Module;
-import ch.adv.ui.core.logic.domain.Snapshot;
+import ch.hsr.adv.ui.core.logic.Layouter;
+import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
+import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.Snapshot;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;

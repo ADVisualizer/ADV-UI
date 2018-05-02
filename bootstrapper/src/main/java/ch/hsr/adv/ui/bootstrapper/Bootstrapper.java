@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.bootstrapper;
 
-import ch.adv.ui.core.presentation.ADVApplication;
-import ch.adv.ui.core.presentation.GuiceCoreModule;
+import ch.hsr.adv.ui.core.presentation.ADVApplication;
+import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;

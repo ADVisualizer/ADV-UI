@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.adv.ui.core.presentation.util.StyleConverter;
-import ch.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
+import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
 import javafx.scene.paint.Color;
 

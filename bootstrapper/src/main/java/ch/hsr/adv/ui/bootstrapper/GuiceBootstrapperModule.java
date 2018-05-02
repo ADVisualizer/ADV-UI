@@ -1,9 +1,9 @@
 package ch.hsr.adv.ui.bootstrapper;
 
-import ch.adv.ui.core.logic.Layouter;
-import ch.adv.ui.core.logic.Parser;
-import ch.adv.ui.core.logic.Stringifyer;
-import ch.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.Layouter;
+import ch.hsr.adv.ui.core.logic.Parser;
+import ch.hsr.adv.ui.core.logic.Stringifyer;
+import ch.hsr.adv.ui.core.logic.domain.Module;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.MapBinder;
 import org.reflections.Reflections;

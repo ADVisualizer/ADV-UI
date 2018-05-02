@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.graph.logic.domain;
 
 
-import ch.adv.ui.core.logic.domain.ADVRelation;
-import ch.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
+import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 
 /**
  * Object adapter. Maps an ADVEdge to an ADVRelation.
@@ -11,51 +11,47 @@ public class GraphRelation implements ADVRelation {
     private long sourceElementId;
     private long targetElementId;
     private ADVStyle style;
-    private String content;
+    private String label;
     private boolean isDirected;
 
 
-    public GraphRelation() {
-
-    }
-
     @Override
     public long getSourceElementId() {
-        return 0;
+        return sourceElementId;
     }
 
     @Override
     public void setSourceElementId(long sourceElementId) {
-
+        this.sourceElementId = sourceElementId;
     }
 
     @Override
     public long getTargetElementId() {
-        return 0;
+        return targetElementId;
     }
 
     @Override
     public void setTargetElementId(long targetElementId) {
-
+        this.targetElementId = targetElementId;
     }
 
     @Override
     public String getLabel() {
-        return null;
+        return label;
     }
 
     @Override
     public void setLabel(String label) {
-
+        this.label = label;
     }
 
     @Override
     public ADVStyle getStyle() {
-        return null;
+        return style;
     }
 
     @Override
     public void setStyle(ADVStyle style) {
-
+        this.style = style;
     }
 }

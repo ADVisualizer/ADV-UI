@@ -1,14 +1,14 @@
 package ch.hsr.adv.ui.graph.logic;
 
-import ch.adv.ui.core.logic.InterfaceAdapter;
-import ch.adv.ui.core.logic.Parser;
-import ch.adv.ui.core.logic.domain.ADVElement;
-import ch.adv.ui.core.logic.domain.ADVRelation;
-import ch.adv.ui.core.logic.domain.Module;
-import ch.adv.ui.core.logic.domain.Session;
-import ch.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.adv.ui.core.logic.domain.styles.ADVValueStyle;
-import ch.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
+import ch.hsr.adv.ui.core.logic.Parser;
+import ch.hsr.adv.ui.core.logic.domain.ADVElement;
+import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
+import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.ui.core.logic.domain.styles.ADVValueStyle;
+import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.graph.logic.domain.GraphElement;
 import ch.hsr.adv.ui.graph.logic.domain.GraphRelation;
 import com.google.gson.Gson;

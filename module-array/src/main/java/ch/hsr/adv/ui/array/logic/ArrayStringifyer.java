@@ -1,9 +1,9 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.adv.ui.core.logic.GsonProvider;
-import ch.adv.ui.core.logic.Stringifyer;
-import ch.adv.ui.core.logic.domain.Module;
-import ch.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.GsonProvider;
+import ch.hsr.adv.ui.core.logic.Stringifyer;
+import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.Session;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.adv.ui.core.logic.ADVEvent;
-import ch.adv.ui.core.logic.EventManager;
+import ch.hsr.adv.ui.core.logic.ADVEvent;
+import ch.hsr.adv.ui.core.logic.EventManager;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;

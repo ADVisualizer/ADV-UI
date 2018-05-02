@@ -1,11 +1,11 @@
 package ch.hsr.adv.ui.graph.logic;
 
-import ch.adv.ui.core.logic.Layouter;
-import ch.adv.ui.core.logic.domain.*;
-import ch.adv.ui.core.logic.domain.Module;
-import ch.adv.ui.core.presentation.widgets.AutoScalePane;
-import ch.adv.ui.core.presentation.widgets.LabeledEdge;
-import ch.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.core.logic.Layouter;
+import ch.hsr.adv.ui.core.logic.domain.*;
+import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
+import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
+import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,8 +41,8 @@ public class GraphLayouter implements Layouter {
     //TODO: change ConnectorType if more than one edge between two vertices
     private void createElements() {
         elements.forEach(e -> {
-            LabeledNode vertex = new LabeledNode(e.getContent()
-                    .toString(), true);
+            String label = e.getContent().toString();
+            LabeledNode vertex = new LabeledNode( label, true);
             vertices.put(e.getElementId(), vertex);
             scalePane.addChildren(vertex);
         });

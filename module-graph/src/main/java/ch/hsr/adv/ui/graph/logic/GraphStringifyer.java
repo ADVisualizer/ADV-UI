@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.graph.logic;
 
-import ch.adv.ui.core.logic.Stringifyer;
-import ch.adv.ui.core.logic.domain.Module;
-import ch.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.Stringifyer;
+import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.Session;
 import com.google.inject.Singleton;
 
 @Singleton

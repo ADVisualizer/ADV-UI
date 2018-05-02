@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.adv.ui.core.access.FileDatastoreAccess;
-import ch.adv.ui.core.logic.domain.Session;
-import ch.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
+import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;

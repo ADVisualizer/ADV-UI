@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/root-layout.css"
             xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ch.adv.ui.core.presentation.RootView">
+            fx:controller="ch.hsr.adv.ui.core.presentation.RootView">
 
 
     <ToolBar prefHeight="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
