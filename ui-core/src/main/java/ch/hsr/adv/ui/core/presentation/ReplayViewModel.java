@@ -8,7 +8,8 @@ import javax.inject.Inject;
 import java.util.Timer;
 
 /**
- * Handles replay logic for the {@link ch.hsr.adv.ui.core.presentation.SessionView}.
+ * Handles replay logic for the
+ * {@link ch.hsr.adv.ui.core.presentation.SessionView}.
  */
 public class ReplayViewModel {
 

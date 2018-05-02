@@ -3,7 +3,6 @@ package ch.hsr.adv.ui.graph.logic;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
 import javafx.scene.paint.Color;
