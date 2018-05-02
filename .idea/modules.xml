@@ -11,6 +11,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" group="module-array" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-graph.iml" filepath="$PROJECT_DIR$/.idea/modules/module-graph.iml" group="module-graph" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-graph/module-graph_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-graph/module-graph_main.iml" group="module-graph" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-graph/module-graph_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-graph/module-graph_test.iml" group="module-graph" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core.iml" group="ui-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core_main.iml" group="ui-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core_test.iml" group="ui-core" />

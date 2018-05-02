@@ -1,6 +1,6 @@
 apply plugin: 'application'
 
-mainClassName = "ch.adv.ui.bootstrapper.Bootstrapper"
+mainClassName = "ch.hsr.adv.ui.bootstrapper.Bootstrapper"
 
 dependencies {
     compile "ch.qos.logback:logback-core:1+"
@@ -10,4 +10,5 @@ dependencies {
 
     compile project(':ui-core')
     compile project(':module-array')
+    compile project(':module-graph')
 }
