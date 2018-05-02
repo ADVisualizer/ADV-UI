@@ -25,6 +25,7 @@ import java.util.Map;
 public class GraphLayouter implements Layouter {
     private static final Logger logger = LoggerFactory.getLogger(
             GraphLayouter.class);
+
     private Map<Long, LabeledNode> vertices;
     private AutoScalePane scalePane;
     private List<ADVRelation> relations;
@@ -45,8 +46,7 @@ public class GraphLayouter implements Layouter {
         createRelations();
 
         LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
-                snapshot.getSnapshotId(),
-                scalePane);
+                snapshot.getSnapshotId(), scalePane);
         layoutedSnapshot.setSnapshotDescription(
                 snapshot.getSnapshotDescription());
         return layoutedSnapshot;

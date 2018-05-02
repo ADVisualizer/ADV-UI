@@ -2,12 +2,14 @@ package ch.hsr.adv.ui.core.logic;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.inject.Singleton;
 
 import java.lang.reflect.Modifier;
 
 /**
  * Provides preconfigured GsonBuilder
  */
+@Singleton
 public class GsonProvider {
 
     private final GsonBuilder minifier;

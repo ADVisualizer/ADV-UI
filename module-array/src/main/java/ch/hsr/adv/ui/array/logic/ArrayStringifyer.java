@@ -4,6 +4,7 @@ import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.Session;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +17,13 @@ import org.slf4j.LoggerFactory;
 public class ArrayStringifyer implements Stringifyer {
 
     private static final String EXPECTED_MODULE = "array";
-    private static final Logger logger = LoggerFactory.getLogger(
-            ArrayStringifyer.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(ArrayStringifyer.class);
     private final GsonProvider gsonProvider;
 
-    //can't be injected, because has to be instantiated with 'new' keyword in
-    // Module implementations (default methods of interfaces)
-    public ArrayStringifyer() {
-        this.gsonProvider = new GsonProvider();
+    @Inject
+    public ArrayStringifyer(GsonProvider gsonProvider) {
+        this.gsonProvider = gsonProvider;
     }
 
     /**
