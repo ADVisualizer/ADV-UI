@@ -10,6 +10,8 @@ import ch.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.adv.ui.core.presentation.widgets.LabeledNode;
 import ch.adv.ui.stack.logic.domain.StackElement;
 import com.google.inject.Singleton;
+import javafx.geometry.Insets;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import org.slf4j.Logger;
@@ -27,9 +29,6 @@ public class StackLayouter implements Layouter {
     private static final Logger logger = LoggerFactory.getLogger(
             StackLayouter.class);
 
-    private final AutoScalePane scalePane = new AutoScalePane();
-    private final VBox stackBox = new VBox();
-
     /**
      * Layouts an Stack snapshot if it is not already layouted
      *
@@ -38,27 +37,34 @@ public class StackLayouter implements Layouter {
      */
     @Override
     public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
-        drawElements(snapshot);
-
-        scalePane.addChildren(stackBox);
+        Pane pane = drawElements(snapshot);
 
         LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
-                snapshot.getSnapshotId(),
-                scalePane);
+                snapshot.getSnapshotId(), pane);
         layoutedSnapshot.setSnapshotDescription(
                 snapshot.getSnapshotDescription());
+
         return layoutedSnapshot;
     }
 
-    private void drawElements(Snapshot snapshot) {
+    private Pane drawElements(Snapshot snapshot) {
+        AutoScalePane scalePane = new AutoScalePane();
+        VBox stackBox = new VBox();
+        stackBox.setSpacing(5);
+        stackBox.setPadding(new Insets(2));
+        String borderStyle = "-fx-border-color: transparent black black black;"
+                + "-fx-border-width: 2;";
+        stackBox.setStyle(borderStyle);
+
+        stackBox.getStyleClass().add("stack-box");
 
         snapshot.getElements().forEach(e -> {
             StackElement element = (StackElement) e;
             ADVStyle style = element.getStyle();
 
             LabeledNode node = new LabeledNode(element.getContent());
-            Color fillColor = StyleConverter
-                    .getColorFromHexValue(style.getFillColor());
+            Color fillColor = StyleConverter.getColorFromHexValue(
+                    style.getFillColor());
 
             node.setBackgroundColor(fillColor);
             node.setFontColor(StyleConverter.getLabelColor(fillColor));
@@ -68,6 +74,9 @@ public class StackLayouter implements Layouter {
 
             stackBox.getChildren().add(node);
         });
+
+        scalePane.addChildren(stackBox);
+        return scalePane;
     }
 
 }
