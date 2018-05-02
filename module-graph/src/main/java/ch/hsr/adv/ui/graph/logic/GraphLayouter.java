@@ -4,7 +4,7 @@ import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.*;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
+import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
@@ -25,9 +25,9 @@ import java.util.Map;
 public class GraphLayouter implements Layouter {
     private static final Logger logger = LoggerFactory.getLogger(
             GraphLayouter.class);
-    private final Map<Long, LabeledNode> vertices = new HashMap<>();
-    List<ADVRelation> relations;
-    private AutoScalePane scalePane = new AutoScalePane();
+    private Map<Long, LabeledNode> vertices;
+    private AutoScalePane scalePane;
+    private List<ADVRelation> relations;
     private List<ADVElement> elements;
 
     @Inject
@@ -35,13 +35,21 @@ public class GraphLayouter implements Layouter {
 
     @Override
     public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
+        logger.info("Layouting graph snapshot...");
+        vertices = new HashMap<>();
+        scalePane = new AutoScalePane();
         elements = snapshot.getElements();
         relations = snapshot.getRelations();
 
         createElements();
         createRelations();
 
-        return new LayoutedSnapshot(snapshot.getSnapshotId(), scalePane);
+        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
+                snapshot.getSnapshotId(),
+                scalePane);
+        layoutedSnapshot.setSnapshotDescription(
+                snapshot.getSnapshotDescription());
+        return layoutedSnapshot;
     }
 
     //TODO: change ConnectorType if more than one edge between two vertices
@@ -65,10 +73,15 @@ public class GraphLayouter implements Layouter {
             LabeledNode target = vertices.get(r.getTargetElementId());
             ADVStyle style = r.getStyle();
             if (style == null) {
-                style = new ADVDefaultStyle();
+                style = new ADVDefaultLineStyle();
             }
+            LabeledEdge.DirectionType type = LabeledEdge.DirectionType.NONE;
+            if (r.isDirected()) {
+                type = LabeledEdge.DirectionType.UNIDIRECTIONAL;
+            }
+
             scalePane.addChildren(new LabeledEdge(
-                    r.getLabel(), source, target, style));
+                    r.getLabel(), source, target, style, type));
         });
     }
 

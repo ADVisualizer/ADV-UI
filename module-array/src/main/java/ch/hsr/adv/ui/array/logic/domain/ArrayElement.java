@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.array.logic;
+package ch.hsr.adv.ui.array.logic.domain;
 
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;

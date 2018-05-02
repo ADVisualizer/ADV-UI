@@ -4,12 +4,12 @@ import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 
 /**
  * Represents a relation between to {@link ADVElement}
- *
  */
 public interface ADVRelation {
 
     /**
      * Returns the source {@link ADVElement} id
+     *
      * @return id
      */
     long getSourceElementId();
@@ -24,6 +24,7 @@ public interface ADVRelation {
 
     /**
      * Returns the target {@link ADVElement} id
+     *
      * @return id
      */
     long getTargetElementId();
@@ -37,6 +38,7 @@ public interface ADVRelation {
 
     /**
      * Returns relation label
+     *
      * @return label
      */
     String getLabel();
@@ -50,6 +52,7 @@ public interface ADVRelation {
 
     /**
      * Returns the relation style
+     *
      * @return style
      */
     ADVStyle getStyle();
@@ -61,4 +64,12 @@ public interface ADVRelation {
      * @param style for the relation
      */
     void setStyle(ADVStyle style);
+
+
+    /**
+     * @return whether the relation is directed. If {@code false},
+     * sourceElement and targetElement can be switched without changing the
+     * information of the relation.
+     */
+    boolean isDirected();
 }

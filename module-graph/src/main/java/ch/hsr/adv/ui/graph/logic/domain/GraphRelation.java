@@ -54,4 +54,9 @@ public class GraphRelation implements ADVRelation {
     public void setStyle(ADVStyle style) {
         this.style = style;
     }
+
+    @Override
+    public boolean isDirected() {
+        return isDirected;
+    }
 }

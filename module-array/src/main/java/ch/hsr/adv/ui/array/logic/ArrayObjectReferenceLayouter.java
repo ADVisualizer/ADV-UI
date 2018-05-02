@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.array.logic;
 
+import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
 import ch.hsr.adv.ui.core.logic.domain.Snapshot;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;

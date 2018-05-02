@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.array.logic;
 
+import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;

@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.array.logic;
+package ch.hsr.adv.ui.array.logic.domain;
 
 import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
@@ -56,5 +56,10 @@ public class ArrayRelation implements ADVRelation {
     @Override
     public void setStyle(ADVStyle style) {
         this.style = style;
+    }
+
+    @Override
+    public boolean isDirected() {
+        return true;
     }
 }
