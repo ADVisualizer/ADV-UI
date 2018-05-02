@@ -39,7 +39,7 @@ public class ArrayParser implements Parser {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     @Override
     public Session parse(String json) throws ADVParseException {
