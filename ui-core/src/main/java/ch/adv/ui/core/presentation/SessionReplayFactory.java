@@ -3,8 +3,8 @@ package ch.adv.ui.core.presentation;
 /**
  * Factory interface for Guice
  *
- * @see
- * <a href="https://github.com/google/guice/wiki/AssistedInject">AssistedInject</a>
+ * @see <a href="https://github.com/google/guice/wiki/AssistedInject">
+ * AssistedInject</a>
  */
 public interface SessionReplayFactory {
 
