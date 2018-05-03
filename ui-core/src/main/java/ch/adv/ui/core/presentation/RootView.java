@@ -79,7 +79,17 @@ public class RootView {
         bindI18nStrings();
         sessionListView.setItems(rootViewModel.getAvailableSessions());
 
-        TabPaneDetacher.create().makeTabsDetachable(sessionTabPane);
+        TabPaneDetacher detacher = TabPaneDetacher.create();
+        String globalCss = resourceLocator
+                .getResourcePath(ResourceLocator.Resource.CSS_GLOBAL)
+                .toExternalForm();
+        String sessionCss = resourceLocator
+                .getResourcePath(ResourceLocator.Resource.CSS_SESSION)
+                .toExternalForm();
+
+        detacher.stylesheets(globalCss, sessionCss);
+        detacher.makeTabsDetachable(sessionTabPane);
+
 
         rootViewModel.getAvailableSessions()
                 .addListener(handleAvailableSessionUpdate());

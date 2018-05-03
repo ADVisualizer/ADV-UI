@@ -77,7 +77,12 @@ public class ResourceLocator {
         SESSION_VIEW_FXML("fxml/session-view.fxml"),
 
         ICON_IMAGE("images/adv-icon.png"),
-        LOGO_IMAGE("images/adv-logo.png");
+        LOGO_IMAGE("images/adv-logo.png"),
+
+        CSS_GLOBAL("css/style.css"),
+        CSS_ROOT("css/session-view.css"),
+        CSS_SESSION("css/root-layout.css");
+
 
 
         private String relativePath = "./";

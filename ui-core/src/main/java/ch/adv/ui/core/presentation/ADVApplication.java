@@ -77,6 +77,12 @@ public class ADVApplication extends Application {
                 ResourceLocator.Resource.ROOT_LAYOUT_FXML);
         Scene scene = new Scene(rootLayout);
 
+        String globalCss = resourceLocator
+                .getResourcePath(ResourceLocator.Resource.CSS_GLOBAL)
+                .toExternalForm();
+
+        scene.getStylesheets().add(globalCss);
+
         Image advIconImage = new Image(resourceLocator.getResourceAsStream(
                 ResourceLocator.Resource.ICON_IMAGE));
 

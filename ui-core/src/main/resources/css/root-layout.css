@@ -1,38 +1,9 @@
-* {
-    -blue-darkest: #0f2c3d;
-    -grey-light: #ced8e0;
-    -grey-lightest: #f4f5f5;
-    -accent: #44B6FF;
-}
-
-.root {
-    -fx-base: white;
-    -fx-background: white;
-    -fx-color: white;
-    -fx-text-background-color: -blue-darkest;
-    -fx-control-inner-background: white;
-    -fx-control-inner-background-alt: white;
-}
-
 .logo {
     -fx-background-image: url("../images/adv-logo.png");
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-size: 300px;
     -fx-opacity: 0.2;
-}
-
-/**
- * Icon Buttons
- */
-.button {
-    -fx-background-color: transparent;
-    -fx-border-color: none;
-}
-
-.button:focused {
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
 }
 
 /**
@@ -47,9 +18,8 @@
 }
 
 .root-toolbar .button .glyph-icon {
-    -fx-fill: -accent;
+    -fx-fill: -grey-lightest;
 }
-
 
 .root-toolbar .toggle-button,
 .root-toolbar .toggle-button:focused {
