@@ -10,4 +10,5 @@ dependencies {
 
     compile project(':ui-core')
     compile project(':module-array')
+    compile project(':module-stack')
 }

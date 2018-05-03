@@ -12,6 +12,8 @@ plugins {
 }
 
 
+group = 'ch.hsr.adv'
+version = '0.3'
 
 /****************************************
  * instructions for all projects
@@ -22,10 +24,6 @@ allprojects {
     apply plugin: 'maven'
     apply plugin: 'jacoco'
     apply plugin: 'com.bmuschko.nexus'
-
-    archivesBaseName = 'adv-ui'
-    group = 'ch.hsr.adv'
-    version = '0.3'
 
     repositories {
         jcenter()
