@@ -30,7 +30,7 @@ public class StackLayouter implements Layouter {
             StackLayouter.class);
 
     /**
-     * Layouts an Stack snapshot if it is not already layouted
+     * Layouts n Stack snapshot if it is not already layouted
      *
      * @param snapshot to be layouted
      * @return layouted snapshot

@@ -38,9 +38,6 @@ public class ArrayParser implements Parser {
         gson = gsonBuilder.create();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Session parse(String json) throws ADVParseException {
         logger.debug("Parsing json: \n {}", json);

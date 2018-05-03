@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Parses a json of an stack session to a Session object.
+ * Parses a json of a stack session to a Session object.
  */
 @Singleton
 @Module("stack")
@@ -37,10 +37,7 @@ public class StackParser implements Parser {
                 InterfaceAdapter(ADVValueStyle.class));
         gson = gsonBuilder.create();
     }
-
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
     public Session parse(String json) throws ADVParseException {
         logger.debug("Parsing json: \n {}", json);

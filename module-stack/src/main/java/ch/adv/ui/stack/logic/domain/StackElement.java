@@ -5,7 +5,7 @@ import ch.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 
 /**
- * Represents one Item in a Stack
+ * Represents one item in a Stack
  */
 public class StackElement implements ADVElement<String> {
 

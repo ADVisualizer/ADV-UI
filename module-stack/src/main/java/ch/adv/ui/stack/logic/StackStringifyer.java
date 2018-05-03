@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Generates a json representation of an stack session.
+ * Generates a json representation of a stack session.
  */
 @Singleton
 @Module("stack")
@@ -27,7 +27,7 @@ public class StackStringifyer implements Stringifyer {
     }
 
     /**
-     * Builds a json string from an stack session.
+     * Builds a json string from a stack session.
      *
      * @param session the session to be transmitted
      * @return json string representation of the session
