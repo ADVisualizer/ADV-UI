@@ -11,6 +11,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_main.iml" group="module-array" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-array/module-array_test.iml" group="module-array" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-graph/module-graph.iml" filepath="$PROJECT_DIR$/.idea/modules/module-graph/module-graph.iml" group="module-graph" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-graph/module-graph_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-graph/module-graph_main.iml" group="module-graph" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-graph/module-graph_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-graph/module-graph_test.iml" group="module-graph" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack.iml" group="module-stack" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack_main.iml" group="module-stack" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack_test.iml" group="module-stack" />

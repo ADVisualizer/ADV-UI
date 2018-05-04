@@ -11,7 +11,6 @@ plugins {
     id 'com.github.spotbugs' version '1.6.0'
 }
 
-
 group = 'ch.hsr.adv'
 version = '0.3'
 
@@ -105,7 +104,7 @@ jar {
     from { configurations.childJars.collect { zipTree(it) } }
     exclude("**/logback.xml")
     manifest {
-        attributes 'Main-Class': 'ch.adv.ui.bootstrapper.Bootstrapper'
+        attributes 'Main-Class': 'ch.hsr.adv.ui.bootstrapper.Bootstrapper'
     }
 }
 

@@ -12,6 +12,5 @@ include 'ui-core'
 //ADV Modules
 include 'module-array'
 include 'module-stack'
-
-
+include 'module-graph'
 

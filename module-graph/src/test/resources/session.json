@@ -1,0 +1,71 @@
+{
+  "snapshots": [
+    {
+      "snapshotId": 1,
+      "snapshotDescription": "Inital graph",
+      "elements": [
+        {
+          "id": 6,
+          "content": "A",
+          "fixedPosX": 60,
+          "fixedPosY": 50
+        },
+        {
+          "id": 7,
+          "content": "B",
+          "fixedPosX": 140,
+          "fixedPosY": 50
+        },
+        {
+          "id": 8,
+          "content": "C",
+          "fixedPosX": 180,
+          "fixedPosY": 100
+        },
+        {
+          "id": 9,
+          "content": "D",
+          "fixedPosX": 100,
+          "fixedPosY": 150
+        },
+        {
+          "id": 10,
+          "content": "E",
+          "fixedPosX": 20,
+          "fixedPosY": 100
+        }
+      ],
+      "relations": [
+        {
+          "sourceElementId": 6,
+          "targetElementId": 7,
+          "isDirected": false
+        },
+        {
+          "sourceElementId": 6,
+          "targetElementId": 8,
+          "isDirected": false
+        },
+        {
+          "sourceElementId": 8,
+          "targetElementId": 7,
+          "isDirected": false
+        },
+        {
+          "sourceElementId": 10,
+          "targetElementId": 9,
+          "isDirected": false
+        },
+        {
+          "sourceElementId": 10,
+          "targetElementId": 7,
+          "isDirected": false
+        }
+      ]
+    }
+  ],
+  "flags": [],
+  "sessionId": 123456,
+  "sessionName": "TestSession",
+  "moduleName": "graph"
+}
