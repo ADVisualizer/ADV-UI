@@ -7,9 +7,12 @@ import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,23 +25,25 @@ public class ADVFlowControl implements FlowControl {
     private static final Logger logger = LoggerFactory.getLogger(
             ADVFlowControl.class);
 
-    private final ModuleParser moduleParser;
     private final SessionStore sessionStore;
     private final ServiceProvider serviceProvider;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final EventManager eventManager;
+    private final CoreParser coreParser;
+    private final CoreLayouter coreLayouter;
 
     @Inject
-    public ADVFlowControl(ModuleParser moduleParser,
-                          SessionStore sessionStore,
+    public ADVFlowControl(SessionStore sessionStore,
                           ServiceProvider serviceProvider,
                           LayoutedSnapshotStore layoutedSnapshotStore,
-                          EventManager eventManager) {
-        this.moduleParser = moduleParser;
+                          EventManager eventManager,
+                          CoreParser coreParser, CoreLayouter coreLayouter) {
         this.sessionStore = sessionStore;
         this.serviceProvider = serviceProvider;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.eventManager = eventManager;
+        this.coreParser = coreParser;
+        this.coreLayouter = coreLayouter;
     }
 
     /**
@@ -50,15 +55,10 @@ public class ADVFlowControl implements FlowControl {
     public void process(String sessionJSON) {
         try {
             logger.info("Processing JSON...");
-            // parse module
-            String currentModule = moduleParser.parseModule(sessionJSON);
 
             // parse session
-            Parser parser = serviceProvider.getParser(currentModule);
-            Session session = parser.parse(sessionJSON);
+            Session session = coreParser.parse(sessionJSON);
             long sessionId = session.getSessionId();
-
-            Layouter layouter = serviceProvider.getLayouter(currentModule);
 
             // filter new snapshots
             List<Snapshot> newSnapshots = session.getSnapshots().stream()
@@ -70,11 +70,21 @@ public class ADVFlowControl implements FlowControl {
             newSnapshots.forEach(snapshot -> {
 
                 // layout
-                LayoutedSnapshot layoutedSnapshot = layouter.layout(snapshot,
-                        session.getFlags());
+                List<Pane> panes = new ArrayList<>();
+                snapshot.getModuleGroups().forEach(group -> {
+                    String moduleName = group.getModuleName();
+                    Layouter layouter = serviceProvider.getLayouter(moduleName);
+                    Pane pane = layouter.layout(group, session.getFlags());
+                    panes.add(pane);
+                });
+
+                Region parent = coreLayouter.layout(panes);
+                LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
+                        snapshot.getSnapshotId(), parent);
 
                 // store layouted snapshot
                 layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
+
             });
 
             if (!newSnapshots.isEmpty()) {

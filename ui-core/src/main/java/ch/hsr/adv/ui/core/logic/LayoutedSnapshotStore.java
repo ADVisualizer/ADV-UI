@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.logic;
 
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +84,7 @@ public class LayoutedSnapshotStore {
      * @param sessionId of the snapshots
      * @return a list of all the Panes of a session
      */
-    public List<Pane> getAllPanes(long sessionId) {
+    public List<Region> getAllPanes(long sessionId) {
         return snapshotMap.get(sessionId).stream()
                 .map(LayoutedSnapshot::getPane).collect(Collectors.toList());
     }

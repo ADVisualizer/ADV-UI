@@ -10,6 +10,7 @@ import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,21 +36,17 @@ public class GraphLayouter implements Layouter {
     private GraphLayouterUtil util;
 
     @Override
-    public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
+    public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         logger.info("Layouting graph snapshot...");
         vertices = new HashMap<>();
         scalePane = new AutoScalePane();
-        elements = snapshot.getElements();
-        relations = snapshot.getRelations();
+        elements = moduleGroup.getElements();
+        relations = moduleGroup.getRelations();
 
         createElements();
         createRelations();
 
-        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
-                snapshot.getSnapshotId(), scalePane);
-        layoutedSnapshot.setSnapshotDescription(
-                snapshot.getSnapshotDescription());
-        return layoutedSnapshot;
+        return scalePane;
     }
 
     //TODO: change ConnectorType if more than one edge between two vertices

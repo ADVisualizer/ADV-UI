@@ -3,7 +3,8 @@ package ch.hsr.adv.ui.graph.logic;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import ch.hsr.adv.ui.core.logic.domain.Module;
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -22,14 +23,14 @@ public class GraphStringifyer implements Stringifyer {
     }
 
     /**
-     * Builds a json string from an graph session.
+     * Builds a json string from an graph module group.
      *
-     * @param session the session to be transmitted
+     * @param moduleGroup the moduleGroup to be transmitted
      * @return json string representation of the session
      */
     @Override
-    public String stringify(final Session session) {
-        return gsonProvider.getPrettifyer().toJson(session);
+    public JsonElement stringify(ModuleGroup moduleGroup) {
+        return gsonProvider.getPrettifyer().toJsonTree(moduleGroup);
     }
 
 }

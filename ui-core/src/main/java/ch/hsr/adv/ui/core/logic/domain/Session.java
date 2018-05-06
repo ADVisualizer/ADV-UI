@@ -14,7 +14,6 @@ public class Session {
     private final List<String> flags = new ArrayList<>();
     private long sessionId;
     private String sessionName;
-    private String moduleName;
 
     public long getSessionId() {
         return sessionId;
@@ -38,15 +37,7 @@ public class Session {
     public void setSessionName(String sessionName) {
         this.sessionName = sessionName;
     }
-
-    public String getModuleName() {
-        return moduleName;
-    }
-
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
-    }
-
+    
     public List<Snapshot> getSnapshots() {
         return snapshots;
     }

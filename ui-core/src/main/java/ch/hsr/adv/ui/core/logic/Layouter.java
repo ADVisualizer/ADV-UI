@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
-import ch.hsr.adv.ui.core.logic.domain.Snapshot;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import javafx.scene.layout.Pane;
 
 import java.util.List;
 
@@ -18,9 +18,9 @@ public interface Layouter {
      * Layouts the snapshot. Builds necessary JavaFX Elements and places them
      * on a pane, which will be displayed in the session view.
      *
-     * @param snapshot to be layouted
-     * @param flags    optional flags on session level
+     * @param moduleGroup to be layouted
+     * @param flags       optional flags on session level
      * @return a wrapper containing a layouted JavaFX Pane and the snapshot
      */
-    LayoutedSnapshot layout(Snapshot snapshot, List<String> flags);
+    Pane layout(ModuleGroup moduleGroup, List<String> flags);
 }

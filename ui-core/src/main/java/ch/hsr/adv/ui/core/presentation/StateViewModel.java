@@ -9,7 +9,7 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +24,8 @@ class StateViewModel {
 
     private static final Logger logger = LoggerFactory.getLogger(
             StateViewModel.class);
-    private final ObservableList<Pane> availableSnapshotPanes;
-    private final ObjectProperty<Pane> currentSnapshotPaneProperty = new
+    private final ObservableList<Region> availableSnapshotPanes;
+    private final ObjectProperty<Region> currentSnapshotPaneProperty = new
             SimpleObjectProperty<>();
     private final ObjectProperty<String> currentSnapshotDescriptionProperty =
             new SimpleObjectProperty<>();
@@ -126,7 +126,7 @@ class StateViewModel {
     }
 
 
-    ObjectProperty<Pane> getCurrentSnapshotPaneProperty() {
+    ObjectProperty<Region> getCurrentSnapshotPaneProperty() {
         return currentSnapshotPaneProperty;
     }
 

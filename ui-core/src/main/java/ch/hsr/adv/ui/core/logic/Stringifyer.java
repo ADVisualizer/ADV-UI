@@ -1,7 +1,8 @@
 package ch.hsr.adv.ui.core.logic;
 
 
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import com.google.gson.JsonElement;
 
 /**
  * JSON Serializer
@@ -14,8 +15,8 @@ public interface Stringifyer {
     /**
      * Serializes the given Session into JSON
      *
-     * @param session {@link Session} to stringify
+     * @param moduleGroup {@link ModuleGroup} to stringify
      * @return json string
      */
-    String stringify(Session session);
+    JsonElement stringify(ModuleGroup moduleGroup);
 }

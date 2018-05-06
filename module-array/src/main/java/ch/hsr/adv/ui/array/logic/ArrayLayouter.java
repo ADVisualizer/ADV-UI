@@ -3,6 +3,7 @@ package ch.hsr.adv.ui.array.logic;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.Snapshot;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -40,7 +41,7 @@ public class ArrayLayouter implements Layouter {
      * @return layouted snapshot
      */
     @Override
-    public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
+    public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
 
         boolean showObjectRelations = false;
         if (flags != null) {
@@ -51,22 +52,12 @@ public class ArrayLayouter implements Layouter {
         Pane pane;
         if (showObjectRelations) {
             logger.info("Use Object Reference Array Layouter");
-            pane = arrayObjectReferenceLayouter.layout(snapshot);
+            pane = arrayObjectReferenceLayouter.layout(moduleGroup);
         } else {
             logger.info("Use Default Array Layouter");
-            pane = arrayDefaultLayouter.layout(snapshot);
+            pane = arrayDefaultLayouter.layout(moduleGroup);
         }
 
-        return createLayoutedSnapshot(snapshot, pane);
-    }
-
-    private LayoutedSnapshot createLayoutedSnapshot(Snapshot snapshot,
-                                                    Pane scalePane) {
-        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
-                snapshot.getSnapshotId(),
-                scalePane);
-        layoutedSnapshot.setSnapshotDescription(
-                snapshot.getSnapshotDescription());
-        return layoutedSnapshot;
+        return pane;
     }
 }

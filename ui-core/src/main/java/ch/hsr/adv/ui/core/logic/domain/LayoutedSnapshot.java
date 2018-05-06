@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.logic.domain;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 
 import java.util.Objects;
 
@@ -15,11 +15,11 @@ import java.util.Objects;
 public class LayoutedSnapshot {
 
     private final long snapshotId;
-    private final Pane pane;
+    private final Region pane;
 
     private String snapshotDescription;
 
-    public LayoutedSnapshot(long snapshotId, Pane pane) {
+    public LayoutedSnapshot(long snapshotId, Region pane) {
         this.snapshotId = snapshotId;
         this.pane = pane;
     }
@@ -36,7 +36,7 @@ public class LayoutedSnapshot {
         this.snapshotDescription = snapshotDescription;
     }
 
-    public Pane getPane() {
+    public Region getPane() {
         return pane;
     }
 
