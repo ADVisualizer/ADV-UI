@@ -30,7 +30,7 @@ public class GraphStringifyer implements Stringifyer {
      */
     @Override
     public JsonElement stringify(ModuleGroup moduleGroup) {
-        return gsonProvider.getPrettifyer().toJsonTree(moduleGroup);
+        return gsonProvider.getPrettifyer().create().toJsonTree(moduleGroup);
     }
 
 }

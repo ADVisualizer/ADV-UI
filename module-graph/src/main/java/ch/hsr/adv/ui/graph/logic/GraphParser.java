@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.graph.logic;
 
+import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
@@ -32,14 +33,15 @@ public class GraphParser implements Parser {
 
 
     @Inject
-    public GraphParser(GsonBuilder gsonBuilder) {
-        gsonBuilder.registerTypeAdapter(ADVElement.class, new
+    public GraphParser(GsonProvider gsonProvider) {
+        GsonBuilder builder = gsonProvider.getMinifier();
+        builder.registerTypeAdapter(ADVElement.class, new
                 InterfaceAdapter(GraphElement.class));
-        gsonBuilder.registerTypeAdapter(ADVRelation.class, new
+        builder.registerTypeAdapter(ADVRelation.class, new
                 InterfaceAdapter(GraphRelation.class));
-        gsonBuilder.registerTypeAdapter(ADVStyle.class, new
+        builder.registerTypeAdapter(ADVStyle.class, new
                 InterfaceAdapter(ADVValueStyle.class));
-        gson = gsonBuilder.create();
+        gson = builder.create();
     }
 
     @Override

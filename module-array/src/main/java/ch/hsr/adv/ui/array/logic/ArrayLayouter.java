@@ -1,10 +1,8 @@
 package ch.hsr.adv.ui.array.logic;
 
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.domain.Snapshot;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
@@ -30,14 +28,15 @@ public class ArrayLayouter implements Layouter {
     @Inject
     public ArrayLayouter(ArrayObjectReferenceLayouter objectLayouter,
                          ArrayDefaultLayouter arrayDefaultLayouter) {
+
         this.arrayObjectReferenceLayouter = objectLayouter;
         this.arrayDefaultLayouter = arrayDefaultLayouter;
     }
 
     /**
-     * Layouts an Array snapshot if it is not already layouted
+     * Layouts an Array module group if it is not already layouted
      *
-     * @param snapshot to be layouted
+     * @param moduleGroup to be layouted
      * @return layouted snapshot
      */
     @Override
@@ -45,19 +44,16 @@ public class ArrayLayouter implements Layouter {
 
         boolean showObjectRelations = false;
         if (flags != null) {
-            showObjectRelations = flags.stream().anyMatch(
-                    f -> f.equals(SHOW_OBJECT_RELATIONS));
+            showObjectRelations = flags.stream()
+                    .anyMatch(f -> f.equals(SHOW_OBJECT_RELATIONS));
         }
 
-        Pane pane;
         if (showObjectRelations) {
             logger.info("Use Object Reference Array Layouter");
-            pane = arrayObjectReferenceLayouter.layout(moduleGroup);
+            return arrayObjectReferenceLayouter.layout(moduleGroup);
         } else {
             logger.info("Use Default Array Layouter");
-            pane = arrayDefaultLayouter.layout(moduleGroup);
+            return arrayDefaultLayouter.layout(moduleGroup);
         }
-
-        return pane;
     }
 }

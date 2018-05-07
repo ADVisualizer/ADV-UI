@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 @Module("array")
 public class ArrayStringifyer implements Stringifyer {
 
-    private static final String EXPECTED_MODULE = "array";
     private static final Logger logger = LoggerFactory
             .getLogger(ArrayStringifyer.class);
     private final GsonProvider gsonProvider;
@@ -35,7 +34,8 @@ public class ArrayStringifyer implements Stringifyer {
      */
     @Override
     public JsonElement stringify(ModuleGroup moduleGroup) {
-        return gsonProvider.getPrettifyer().toJsonTree(moduleGroup);
+        logger.info("Serialize array group");
+        return gsonProvider.getPrettifyer().create().toJsonTree(moduleGroup);
     }
 }
 

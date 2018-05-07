@@ -22,10 +22,11 @@ public class CoreParser {
     private final Gson gson;
 
     @Inject
-    public CoreParser(GsonBuilder gsonBuilder,
+    public CoreParser(GsonProvider gsonProvider,
                       ModuleGroupDeserializer deserializer) {
-        gsonBuilder.registerTypeAdapter(ModuleGroup.class, deserializer);
-        gson = gsonBuilder.create();
+        GsonBuilder builder = gsonProvider.getMinifier();
+        builder.registerTypeAdapter(ModuleGroup.class, deserializer);
+        gson = builder.create();
     }
 
     public Session parse(String json) throws ADVParseException {

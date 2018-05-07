@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.stack.logic;
 
+import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
@@ -12,6 +13,7 @@ import ch.hsr.adv.ui.stack.logic.domain.StackElement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
+import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,16 +29,18 @@ public class StackParser implements Parser {
             .class);
     private final Gson gson;
 
+
     /**
      * Registers Stack specific types to the GsonBuilder
      */
-    public StackParser() {
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.registerTypeAdapter(ADVElement.class, new
+    @Inject
+    public StackParser(GsonProvider gsonProvider) {
+        GsonBuilder builder = gsonProvider.getMinifier();
+        builder.registerTypeAdapter(ADVElement.class, new
                 InterfaceAdapter(StackElement.class));
-        gsonBuilder.registerTypeAdapter(ADVStyle.class, new
+        builder.registerTypeAdapter(ADVStyle.class, new
                 InterfaceAdapter(ADVValueStyle.class));
-        gson = gsonBuilder.create();
+        gson = builder.create();
     }
 
     @Override

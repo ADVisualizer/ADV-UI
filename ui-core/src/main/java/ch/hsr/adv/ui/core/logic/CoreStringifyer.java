@@ -11,10 +11,11 @@ public class CoreStringifyer {
     private final Gson gson;
 
     @Inject
-    public CoreStringifyer(GsonBuilder gsonBuilder,
+    public CoreStringifyer(GsonProvider gsonProvider,
                            ModuleGroupSerializer serializer) {
-        gsonBuilder.registerTypeAdapter(ModuleGroup.class, serializer);
-        gson = gsonBuilder.create();
+        GsonBuilder builder = gsonProvider.getPrettifyer();
+        builder.registerTypeAdapter(ModuleGroup.class, serializer);
+        gson = builder.create();
     }
 
     /**

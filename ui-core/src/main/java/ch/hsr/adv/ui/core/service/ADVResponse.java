@@ -25,6 +25,6 @@ class ADVResponse {
      * @return the serialized string representation of this class
      */
     String toJson() {
-        return gsonProvider.getMinifier().toJson(this);
+        return gsonProvider.getMinifier().create().toJson(this);
     }
 }

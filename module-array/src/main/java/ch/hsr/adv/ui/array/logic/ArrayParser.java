@@ -1,6 +1,7 @@
 package ch.hsr.adv.ui.array.logic;
 
 import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
+import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
@@ -24,17 +25,18 @@ import org.slf4j.LoggerFactory;
 @Module("array")
 public class ArrayParser implements Parser {
 
-    private static final Logger logger = LoggerFactory.getLogger(ArrayParser
-            .class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            ArrayParser.class);
     private final Gson gson;
 
     @Inject
-    public ArrayParser(GsonBuilder gsonBuilder) {
-        gsonBuilder.registerTypeAdapter(ADVElement.class, new
+    public ArrayParser(GsonProvider gsonProvider) {
+        GsonBuilder builder = gsonProvider.getMinifier();
+        builder.registerTypeAdapter(ADVElement.class, new
                 InterfaceAdapter(ArrayElement.class));
-        gsonBuilder.registerTypeAdapter(ADVStyle.class, new
+        builder.registerTypeAdapter(ADVStyle.class, new
                 InterfaceAdapter(ADVValueStyle.class));
-        gson = gsonBuilder.create();
+        gson = builder.create();
     }
 
     @Override
