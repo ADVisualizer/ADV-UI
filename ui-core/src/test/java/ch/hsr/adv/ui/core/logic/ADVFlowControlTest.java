@@ -1,16 +1,13 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.ADVFlowControl;
-import ch.hsr.adv.ui.core.logic.LayoutedSnapshotStore;
-import ch.hsr.adv.ui.core.logic.SessionStore;
 import ch.hsr.adv.ui.core.logic.domain.Session;
-import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import ch.hsr.adv.ui.core.logic.mocks.GuiceTestModule;
 import ch.hsr.adv.ui.core.logic.mocks.TestLayouter;
-import ch.hsr.adv.ui.core.logic.mocks.TestParser;
+import ch.hsr.adv.ui.core.logic.mocks.TestSession;
 import ch.hsr.adv.ui.core.logic.mocks.TestStringifyer;
+import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
 import org.junit.Test;
@@ -21,12 +18,15 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Rather an integration test for the whole flow control process
+ */
 @RunWith(JukitoRunner.class)
 @UseModules( {GuiceCoreModule.class, GuiceTestModule.class})
 public class ADVFlowControlTest {
 
     @Inject
-    private TestParser testParser;
+    private TestSession testSession;
     @Inject
     private TestLayouter testLayouter;
     @Inject
@@ -34,34 +34,36 @@ public class ADVFlowControlTest {
     @Inject
     private SessionStore testSessionStore;
     @Inject
-    private LayoutedSnapshotStore testLayoutedSnapshotStore;
+    private LayoutedSnapshotStore layoutedSnapshotStore;
 
     @Inject
-    private ADVFlowControl flowControlUnderTest;
+    private ADVFlowControl sut;
 
     @Test
     public void processTest() {
-        flowControlUnderTest.process(stringifyer.getTestJSON());
-        List<Session> sessions = testSessionStore.getAll();
-        assertTrue(sessions.contains(testParser.getTestSession()));
+        // WHEN
+        sut.process(stringifyer.getTestJSON());
 
-        long testSessionId = testParser.getTestSession().getSessionId();
-        List<Pane> panes = testLayoutedSnapshotStore
-                .getAllPanes(testSessionId);
+        // THEN
+        List<Session> sessions = testSessionStore.getAll();
+        assertTrue(sessions.contains(testSession.getSession()));
+
+        long testSessionId = testSession.getSession().getSessionId();
+        List<Region> panes = layoutedSnapshotStore.getAllPanes(testSessionId);
         assertTrue(panes.contains(testLayouter.getTestPane()));
-        assertTrue(testLayoutedSnapshotStore
-                .contains(testSessionId, testLayouter.getTestLayoutedSnapshot()
-                        .getSnapshotId()));
+        assertTrue(layoutedSnapshotStore.contains(testSessionId,
+                testLayouter.getLayoutedSnapshotTest().getSnapshotId()));
     }
 
     @Test
     public void processDuplicatedSessionTest() {
+        // GIVEN
         String testJSON = stringifyer.getTestJSON();
-        flowControlUnderTest.process(testJSON);
-        flowControlUnderTest.process(testJSON);
+        sut.process(testJSON);
+        sut.process(testJSON);
         assertEquals(1, testSessionStore.getAll().size());
-        assertEquals(1, testLayoutedSnapshotStore
-                .getAll(testParser.getTestSession().getSessionId()).size());
+        assertEquals(1, layoutedSnapshotStore.getAll(
+                testSession.getSession().getSessionId()).size());
     }
 
 

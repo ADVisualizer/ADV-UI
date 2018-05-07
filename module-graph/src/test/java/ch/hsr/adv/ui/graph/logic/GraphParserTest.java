@@ -2,9 +2,11 @@ package ch.hsr.adv.ui.graph.logic;
 
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.graph.logic.domain.GraphElement;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -20,51 +22,51 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
 public class GraphParserTest {
-    @Inject
-    private FileDatastoreAccess reader;
-    @Inject
-    private GraphParser parserUnderTest;
 
-    private String testJson;
+    private JsonElement jsonElement;
+
+    @Inject
+    private GraphParser sut;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp(FileDatastoreAccess reader) throws IOException {
         URL url = GraphParserTest.class.getClassLoader()
                 .getResource("session.json");
 
-        testJson = reader.read(new File(url.getPath()));
+        String json = reader.read(new File(url.getPath()));
+
+        Gson gson = new Gson();
+        jsonElement = gson.fromJson(json, JsonElement.class);
     }
 
     @Test
     public void parseSessionDetailsTest() throws ADVParseException {
-        Session actual = parserUnderTest.parse(testJson);
-        assertEquals("TestSession", actual.getSessionName());
-        assertEquals(123456, actual.getSessionId());
+        // WHEN
+        ModuleGroup actual = sut.parse(jsonElement);
+
+        // THEN
+        assertEquals("graph", actual.getModuleName());
+
     }
 
     @Test
     public void parseADVElementToArrayElementTest() throws ADVParseException {
-        Session actual = parserUnderTest.parse(testJson);
-        assertEquals(5, actual.getFirstSnapshot().getElements().size());
-        ADVElement element = actual.getFirstSnapshot().getElements().get(0);
+        // WHEN
+        ModuleGroup actual = sut.parse(jsonElement);
+
+        // THEN
+        assertEquals(5, actual.getElements().size());
+        ADVElement element = actual.getElements().get(0);
         assertEquals(GraphElement.class, element.getClass());
         GraphElement graphElement = (GraphElement) element;
         assertEquals("A", graphElement.getContent());
     }
-
-    @Test
-    public void parseSnapshotDescriptionTest() throws ADVParseException {
-        Session actual = parserUnderTest.parse(testJson);
-        String description1 = actual.getSnapshots().get(0)
-                .getSnapshotDescription();
-        assertEquals(description1, "Inital graph");
-    }
-
+    
     @Test
     public void parsePositionTest() throws ADVParseException {
-        Session actual = parserUnderTest.parse(testJson);
-        List<ADVElement> elements = actual.getFirstSnapshot()
-                .getElements();
+        // WHEN
+        ModuleGroup actual = sut.parse(jsonElement);
+        List<ADVElement> elements = actual.getElements();
         int posX = elements.get(0).getFixedPosX();
         int posY = elements.get(0).getFixedPosY();
         assertEquals(60, posX);

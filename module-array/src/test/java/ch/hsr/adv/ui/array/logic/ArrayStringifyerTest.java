@@ -1,8 +1,10 @@
 package ch.hsr.adv.ui.array.logic;
 
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -13,37 +15,36 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(JukitoRunner.class)
 public class ArrayStringifyerTest {
 
-    @Inject
-    private FileDatastoreAccess reader;
-    @Inject
-    private ArrayParser testParser;
-    @Inject
-    private ArrayStringifyer stringifyerUnderTest;
+    private ModuleGroup moduleGroup;
 
-    private Session testSession;
+    @Inject
+    private ArrayStringifyer sut;
 
     @Before
-    public void setUp() throws IOException, ADVParseException {
-        URL url = ArrayStringifyerTest.class.getClassLoader()
-                .getResource("session1.json");
+    public void setup(FileDatastoreAccess reader, ArrayParser testParser)
+            throws ADVParseException, IOException {
 
-        String testJson = reader.read(new File(url.getPath()));
-        testSession = testParser.parse(testJson);
+        URL url = getClass().getClassLoader().getResource("session1.json");
+
+        String json = reader.read(new File(url.getPath()));
+        Gson gson = new Gson();
+        JsonElement element = gson.fromJson (json, JsonElement.class);
+        moduleGroup = testParser.parse(element);
     }
+
 
     @Test
     public void stringifyTest() throws ADVParseException {
-        String actual = stringifyerUnderTest.stringify(testSession);
-        Session actualSession = testParser.parse(actual);
-        assertEquals(testSession, actualSession);
+        // WHEN
+        JsonElement actual = sut.stringify(moduleGroup);
 
-        String[] lines = actual.split(System.getProperty("line.separator"));
-        assertEquals("  \"snapshots\": [", lines[1]);
+        // THEN
+        assertNotNull(actual);
     }
 
 }

@@ -23,4 +23,8 @@ public class TestLayouter implements Layouter {
     public LayoutedSnapshot getLayoutedSnapshotTest() {
         return testLayoutedSnapshot;
     }
+
+    public Pane getTestPane() {
+        return testPane;
+    }
 }
