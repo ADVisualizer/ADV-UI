@@ -9,6 +9,12 @@ import com.google.inject.Singleton;
 
 import java.lang.reflect.Type;
 
+/**
+ * Custom serializer which delegates serialization to the module specific
+ * stringifier.
+ *
+ * @author mwieland
+ */
 @Singleton
 public class ModuleGroupSerializer implements JsonSerializer<ModuleGroup> {
 
@@ -19,6 +25,14 @@ public class ModuleGroupSerializer implements JsonSerializer<ModuleGroup> {
         this.serviceProvider = serviceProvider;
     }
 
+    /**
+     * Serializes the module group with the module stringifiers.
+     *
+     * @param moduleGroup module group
+     * @param typeOfSrc   module group type
+     * @param context     serialization context
+     * @return serialized json
+     */
     @Override
     public JsonElement serialize(ModuleGroup moduleGroup, Type typeOfSrc,
                                  JsonSerializationContext context) {

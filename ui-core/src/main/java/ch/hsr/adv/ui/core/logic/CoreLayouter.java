@@ -8,9 +8,18 @@ import javafx.scene.layout.Region;
 
 import java.util.List;
 
+/**
+ * The Core Layouter wraps the panes of the module layouter in a SplitPane.
+ */
 @Singleton
 public class CoreLayouter {
 
+    /**
+     * Wraps child panes in a SplitPane
+     *
+     * @param panes child panes of the module-specific layouter
+     * @return split pane
+     */
     public Region layout(List<Pane> panes) {
         SplitPane parentPane = new SplitPane();
         parentPane.setOrientation(Orientation.HORIZONTAL);

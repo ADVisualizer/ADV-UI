@@ -3,6 +3,10 @@ package ch.hsr.adv.ui.core.logic.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A module group wraps all module specific elements and allows us to address
+ * multiple modules in a snapshot.
+ */
 public class ModuleGroup {
 
     private String moduleName;

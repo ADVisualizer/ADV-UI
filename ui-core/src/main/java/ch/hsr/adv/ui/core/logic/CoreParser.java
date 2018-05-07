@@ -11,7 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Parses a json of an array session to a Session object.
+ * Responsible for parsing a session and delegating work to module specific
+ * parsers.
  */
 @Singleton
 public class CoreParser {
@@ -29,6 +30,14 @@ public class CoreParser {
         gson = builder.create();
     }
 
+    /**
+     * Parses the session up to the module group which is handled
+     * module-specificly.
+     *
+     * @param json session json
+     * @return parsed session
+     * @throws ADVParseException if no session id is set
+     */
     public Session parse(String json) throws ADVParseException {
         logger.debug("Parsing json: \n {}", json);
         Session session = gson.fromJson(json, Session.class);

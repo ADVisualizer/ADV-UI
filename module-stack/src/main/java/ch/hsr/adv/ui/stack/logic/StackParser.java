@@ -29,9 +29,10 @@ public class StackParser implements Parser {
             .class);
     private final Gson gson;
 
-
     /**
      * Registers Stack specific types to the GsonBuilder
+     *
+     * @param gsonProvider preconfigured gson builder
      */
     @Inject
     public StackParser(GsonProvider gsonProvider) {

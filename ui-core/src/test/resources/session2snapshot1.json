@@ -15,6 +15,5 @@
     }
   ],
   "sessionId": 123789,
-  "sessionName": "TestSession",
-  "moduleName": "test"
+  "sessionName": "TestSession"
 }
