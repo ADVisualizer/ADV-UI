@@ -96,7 +96,7 @@ public class ADVFlowControl implements FlowControl {
             snapshot.getModuleGroups().forEach(group -> {
                 String moduleName = group.getModuleName();
                 Layouter layouter = serviceProvider.getLayouter(moduleName);
-                Pane pane = layouter.layout(group, session.getFlags());
+                Pane pane = layouter.layout(group, group.getFlags());
                 panes.add(pane);
             });
 

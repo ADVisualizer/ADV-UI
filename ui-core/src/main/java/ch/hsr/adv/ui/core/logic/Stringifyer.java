@@ -13,9 +13,10 @@ import com.google.gson.JsonElement;
 public interface Stringifyer {
 
     /**
-     * Serializes the given Session into JSON
+     * Serializes the given module group to JSON
      *
-     * @param moduleGroup {@link ModuleGroup} to stringify
+     * @param moduleGroup {@link ch.hsr.adv.ui.core.logic.domain.ModuleGroup}
+     * to stringify
      * @return json string
      */
     JsonElement stringify(ModuleGroup moduleGroup);

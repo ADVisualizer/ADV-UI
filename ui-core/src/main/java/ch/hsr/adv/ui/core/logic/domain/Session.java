@@ -13,8 +13,6 @@ public class Session {
     private long sessionId;
     private String sessionName;
     private final List<Snapshot> snapshots = new ArrayList<>();
-    private final List<String> flags = new ArrayList<>();
-
 
     public long getSessionId() {
         return sessionId;
@@ -41,10 +39,6 @@ public class Session {
     
     public List<Snapshot> getSnapshots() {
         return snapshots;
-    }
-
-    public List<String> getFlags() {
-        return flags;
     }
 
     /**
