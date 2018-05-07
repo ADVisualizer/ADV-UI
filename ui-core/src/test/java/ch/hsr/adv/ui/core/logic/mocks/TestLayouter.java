@@ -2,7 +2,7 @@ package ch.hsr.adv.ui.core.logic.mocks;
 
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
-import ch.hsr.adv.ui.core.logic.domain.Snapshot;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 
@@ -16,15 +16,11 @@ public class TestLayouter implements Layouter {
             new LayoutedSnapshot(1, testPane);
 
     @Override
-    public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
-        return testLayoutedSnapshot;
-    }
-
-    public Pane getTestPane() {
+    public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         return testPane;
     }
 
-    public LayoutedSnapshot getTestLayoutedSnapshot() {
+    public LayoutedSnapshot getLayoutedSnapshotTest() {
         return testLayoutedSnapshot;
     }
 }

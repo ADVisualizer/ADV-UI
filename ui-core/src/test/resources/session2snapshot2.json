@@ -3,9 +3,14 @@
     {
       "snapshotId": 4,
       "snapshotDescription": "2",
-      "elements": [
-      ],
-      "relations": [
+      "moduleGroups": [
+        {
+          "moduleName" : "test",
+          "elements": [
+          ],
+          "relations": [
+          ]
+        }
       ]
     }
   ],

@@ -6,6 +6,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
+/**
+ * Serializes the an ADV Session
+ */
 public class CoreStringifyer {
 
     private final Gson gson;

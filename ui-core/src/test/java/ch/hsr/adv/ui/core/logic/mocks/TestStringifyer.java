@@ -1,9 +1,10 @@
 package ch.hsr.adv.ui.core.logic.mocks;
 
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.Stringifyer;
-import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.SessionStoreTest;
+import ch.hsr.adv.ui.core.logic.Stringifyer;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
@@ -22,12 +23,12 @@ public class TestStringifyer implements Stringifyer {
         testJSON = reader.read(new File(url1.getPath()));
     }
 
-    @Override
-    public String stringify(Session session) {
+    public String getTestJSON() {
         return testJSON;
     }
 
-    public String getTestJSON() {
-        return testJSON;
+    @Override
+    public JsonElement stringify(ModuleGroup moduleGroup) {
+        return null;
     }
 }

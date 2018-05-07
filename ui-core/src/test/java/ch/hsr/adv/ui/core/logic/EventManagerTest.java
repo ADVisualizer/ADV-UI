@@ -1,7 +1,5 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.ADVEvent;
-import ch.hsr.adv.ui.core.logic.EventManager;
 import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
@@ -23,84 +21,100 @@ import static org.mockito.Mockito.times;
 public class EventManagerTest {
 
     @Inject
-    private EventManager eventManagerUnterTest;
+    private EventManager sut;
 
     @Inject
     private PropertyChangeListener listenerTest;
 
-
     @Test
     public void fireTest() {
+        // GIVEN
         String oldValue = "Before";
         String newValue = "After";
 
         PropertyChangeListener testListener = e -> {
+            // THEN
             assertEquals(e.getPropertyName(), ADVEvent.STEP_FIRST.toString());
             assertEquals(e.getOldValue(), oldValue);
             assertEquals(e.getNewValue(), newValue);
         };
+        sut.subscribe(testListener, ADVEvent.STEP_FIRST);
 
-        eventManagerUnterTest.subscribe(testListener, ADVEvent.STEP_FIRST);
-        eventManagerUnterTest.fire(ADVEvent.STEP_FIRST, oldValue, newValue);
+        // WHEN
+        sut.fire(ADVEvent.STEP_FIRST, oldValue, newValue);
     }
 
     @Test
     public void subscribeMultipleEvents() {
-        eventManagerUnterTest.subscribe(listenerTest, List.of(ADVEvent
+        // GIVEN
+        sut.subscribe(listenerTest, List.of(ADVEvent
                 .STEP_FIRST, ADVEvent.STEP_LAST, ADVEvent.STEP_FORWARD));
 
-        eventManagerUnterTest.fire(ADVEvent.STEP_FIRST, null, null);
-        eventManagerUnterTest.fire(ADVEvent.STEP_LAST, null, null);
+        // WHEN
+        sut.fire(ADVEvent.STEP_FIRST, null, null);
+        sut.fire(ADVEvent.STEP_LAST, null, null);
 
+        // THEN
         Mockito.verify(listenerTest, times(2)).propertyChange(any());
     }
 
     @Test
     public void unsubscribeMultipleEvents() {
-        eventManagerUnterTest.subscribe(listenerTest, List.of(ADVEvent
+        // GIVEN
+        sut.subscribe(listenerTest, List.of(ADVEvent
                 .STEP_FIRST, ADVEvent.STEP_LAST, ADVEvent.STEP_FORWARD));
 
-        eventManagerUnterTest.unsubscribe(listenerTest, List.of(ADVEvent
+        // WHEN
+        sut.unsubscribe(listenerTest, List.of(ADVEvent
                 .STEP_FIRST, ADVEvent.STEP_LAST, ADVEvent.STEP_FORWARD));
+        sut.fire(ADVEvent.STEP_FIRST, null, null);
+        sut.fire(ADVEvent.STEP_LAST, null, null);
 
-        eventManagerUnterTest.fire(ADVEvent.STEP_FIRST, null, null);
-        eventManagerUnterTest.fire(ADVEvent.STEP_LAST, null, null);
-
+        // THEN
         Mockito.verify(listenerTest, never()).propertyChange(any());
     }
 
     @Test
     public void filterEventHandleContext() {
+        // GIVEN
         long sessionId = 42;
-
-        eventManagerUnterTest.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED,
-                sessionId + "");
-        eventManagerUnterTest.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
+        sut.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED,
                 sessionId + "");
 
+        // WHEN
+        sut.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
+                sessionId + "");
+
+        // THEN
         Mockito.verify(listenerTest).propertyChange(any());
     }
 
     @Test
     public void receiveNotifyForUniversalListener() {
+        // GIVEN
         long sessionId = 42;
+        sut.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED);
 
-        eventManagerUnterTest.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED);
-        eventManagerUnterTest.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
+        // WHEN
+        sut.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
                 sessionId + "");
 
+        // THEN
         Mockito.verify(listenerTest).propertyChange(any());
     }
 
     @Test
     public void receiveNoChangeEvent() {
+        // GIVEN
         long sessionIdListened = 42;
         long sessionIdIgnored = 123789;
+        sut.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED, sessionIdListened+"");
 
-        eventManagerUnterTest.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED, sessionIdListened+"");
-        eventManagerUnterTest.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
+        // WHEN
+        sut.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
                 sessionIdIgnored + "");
 
+        // THEN
         Mockito.verify(listenerTest, never()).propertyChange(any());
     }
 }

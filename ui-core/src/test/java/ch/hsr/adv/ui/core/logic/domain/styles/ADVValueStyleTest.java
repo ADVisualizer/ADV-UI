@@ -1,7 +1,5 @@
 package ch.hsr.adv.ui.core.logic.domain.styles;
 
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStrokeStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVValueStyle;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Assert;
@@ -12,11 +10,11 @@ import org.junit.runner.RunWith;
 public class ADVValueStyleTest {
 
     @Inject
-    private ADVValueStyle valueStyleUnderTest;
+    private ADVValueStyle sut;
 
     @Test
     public void defaultStrokeStyleTest() {
         Assert.assertEquals(ADVStrokeStyle.NONE.getStyle(),
-                valueStyleUnderTest.getStrokeStyle());
+                sut.getStrokeStyle());
     }
 }

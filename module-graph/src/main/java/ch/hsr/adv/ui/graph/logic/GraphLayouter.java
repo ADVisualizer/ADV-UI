@@ -1,8 +1,10 @@
 package ch.hsr.adv.ui.graph.logic;
 
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.*;
+import ch.hsr.adv.ui.core.logic.domain.ADVElement;
+import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
 import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
@@ -24,6 +26,7 @@ import java.util.Map;
 @Singleton
 @Module("graph")
 public class GraphLayouter implements Layouter {
+
     private static final Logger logger = LoggerFactory.getLogger(
             GraphLayouter.class);
 
@@ -35,6 +38,13 @@ public class GraphLayouter implements Layouter {
     @Inject
     private GraphLayouterUtil util;
 
+    /**
+     * Layout the graph module group
+     *
+     * @param moduleGroup to be layouted
+     * @param flags       optional flags on session level
+     * @return layouted pane
+     */
     @Override
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         logger.info("Layouting graph snapshot...");

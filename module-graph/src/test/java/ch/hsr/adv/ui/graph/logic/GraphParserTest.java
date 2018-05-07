@@ -40,7 +40,6 @@ public class GraphParserTest {
         Session actual = parserUnderTest.parse(testJson);
         assertEquals("TestSession", actual.getSessionName());
         assertEquals(123456, actual.getSessionId());
-        assertEquals("graph", actual.getModuleName());
     }
 
     @Test

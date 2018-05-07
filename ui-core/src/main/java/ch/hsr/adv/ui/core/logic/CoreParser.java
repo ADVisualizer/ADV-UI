@@ -16,8 +16,8 @@ import org.slf4j.LoggerFactory;
 @Singleton
 public class CoreParser {
 
-    private static final Logger logger = LoggerFactory.getLogger(CoreParser
-            .class);
+    private static final Logger logger = LoggerFactory.getLogger(
+            CoreParser.class);
 
     private final Gson gson;
 
