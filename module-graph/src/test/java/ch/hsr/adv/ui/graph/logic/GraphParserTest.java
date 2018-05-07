@@ -46,7 +46,6 @@ public class GraphParserTest {
 
         // THEN
         assertEquals("graph", actual.getModuleName());
-
     }
 
     @Test
@@ -61,7 +60,7 @@ public class GraphParserTest {
         GraphElement graphElement = (GraphElement) element;
         assertEquals("A", graphElement.getContent());
     }
-    
+
     @Test
     public void parsePositionTest() throws ADVParseException {
         // WHEN

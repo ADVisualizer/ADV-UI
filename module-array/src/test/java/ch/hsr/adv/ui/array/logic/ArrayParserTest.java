@@ -30,11 +30,11 @@ public class ArrayParserTest {
 
     @Before
     public void setup(FileDatastoreAccess reader) throws IOException {
-        URL url = getClass().getClassLoader().getResource("session1.json");
+        URL url = getClass().getClassLoader().getResource("session.json");
         String json = reader.read(new File(url.getPath()));
 
         Gson gson = new Gson();
-        jsonElement = gson.fromJson (json, JsonElement.class);
+        jsonElement = gson.fromJson(json, JsonElement.class);
     }
 
     @Test
@@ -63,10 +63,11 @@ public class ArrayParserTest {
         // WHEN
         ModuleGroup actual = sut.parse(jsonElement);
         List<ADVElement> elements1 = actual.getElements();
-        List<ADVElement> elements2 = actual.getElements();
-        int posX1 = elements1.get(0).getFixedPosX();
-        int posX2 = elements2.get(0).getFixedPosX();
-        assertEquals(10, posX1);
-        assertEquals(0, posX2);
+        int posX = elements1.get(0).getFixedPosX();
+        int posY = elements1.get(0).getFixedPosY();
+
+        // THEN
+        assertEquals(10, posX);
+        assertEquals(0, posY);
     }
 }

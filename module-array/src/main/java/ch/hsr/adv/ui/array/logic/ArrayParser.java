@@ -9,7 +9,6 @@ import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVValueStyle;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -25,8 +24,9 @@ import org.slf4j.LoggerFactory;
 @Module("array")
 public class ArrayParser implements Parser {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            ArrayParser.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(ArrayParser.class);
+
     private final Gson gson;
 
     @Inject
@@ -40,7 +40,7 @@ public class ArrayParser implements Parser {
     }
 
     @Override
-    public ModuleGroup parse(JsonElement json) throws ADVParseException {
+    public ModuleGroup parse(JsonElement json) {
         logger.debug("Parsing json: \n {}", json);
         return gson.fromJson(json, ModuleGroup.class);
     }

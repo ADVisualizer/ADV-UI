@@ -1,0 +1,20 @@
+{
+  "moduleName": "array",
+  "elements": [
+    {
+      "id": 0,
+      "fixedPosX": 10,
+      "fixedPosY": 0,
+      "content": "1"
+    },
+    {
+      "id": 1,
+      "style": {},
+      "fixedPosX": 0,
+      "fixedPosY": 0,
+      "content": "1"
+    }
+  ],
+  "relations": [
+  ]
+}
