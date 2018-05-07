@@ -38,6 +38,7 @@ public class ADVFlowControl implements FlowControl {
                           LayoutedSnapshotStore layoutedSnapshotStore,
                           EventManager eventManager,
                           CoreParser coreParser, CoreLayouter coreLayouter) {
+
         this.sessionStore = sessionStore;
         this.serviceProvider = serviceProvider;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
@@ -56,52 +57,70 @@ public class ADVFlowControl implements FlowControl {
         try {
             logger.info("Processing JSON...");
 
-            // parse session
-            Session session = coreParser.parse(sessionJSON);
-            long sessionId = session.getSessionId();
+            Session session = parseSession(sessionJSON);
 
-            // filter new snapshots
-            List<Snapshot> newSnapshots = session.getSnapshots().stream()
-                    .filter(s -> !layoutedSnapshotStore.contains(sessionId,
-                            s.getSnapshotId()))
-                    .collect(Collectors.toList());
+            boolean existing = layoutSession(session);
 
-            // Layout only snapshots that have not yet been layouted
-            newSnapshots.forEach(snapshot -> {
-
-                // layout
-                List<Pane> panes = new ArrayList<>();
-                snapshot.getModuleGroups().forEach(group -> {
-                    String moduleName = group.getModuleName();
-                    Layouter layouter = serviceProvider.getLayouter(moduleName);
-                    Pane pane = layouter.layout(group, session.getFlags());
-                    panes.add(pane);
-                });
-
-                Region parent = coreLayouter.layout(panes);
-                LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
-                        snapshot.getSnapshotId(), parent);
-
-                // store layouted snapshot
-                layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
-
-            });
-
-            if (!newSnapshots.isEmpty()) {
-                sessionStore.add(session);
-                eventManager.fire(ADVEvent.NOTIFICATION, null,
-                        I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
+            if (existing) {
+                changeCurrentSession(session);
             } else {
-                sessionStore.setCurrent(sessionId);
-                eventManager.fire(ADVEvent.NOTIFICATION, null,
-                        I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
+                storeNewSession(session);
             }
-            logger.info("Process finished: delegated session and snapshot "
-                    + "creation.");
+
+            logger.info("JSON successfully processed.");
+
         } catch (ADVParseException e) {
             eventManager.fire(ADVEvent.NOTIFICATION, null,
                     I18n.NOTIFICATION_SESSION_LOAD_UNSUCCESSFUL);
         }
+    }
+
+    private Session parseSession(String sessionJSON) throws ADVParseException {
+        return coreParser.parse(sessionJSON);
+    }
+
+    private boolean layoutSession(Session session) {
+        // filter new snapshots
+        long sessionId = session.getSessionId();
+        List<Snapshot> newSnapshots = session.getSnapshots().stream()
+                .filter(s -> !layoutedSnapshotStore.contains(sessionId,
+                        s.getSnapshotId()))
+                .collect(Collectors.toList());
+
+        // Layout only snapshots that have not yet been layouted
+        newSnapshots.forEach(snapshot -> {
+
+            // layout
+            List<Pane> panes = new ArrayList<>();
+            snapshot.getModuleGroups().forEach(group -> {
+                String moduleName = group.getModuleName();
+                Layouter layouter = serviceProvider.getLayouter(moduleName);
+                Pane pane = layouter.layout(group, session.getFlags());
+                panes.add(pane);
+            });
+
+            // wrap in split pane
+            Region parent = coreLayouter.layout(panes);
+            LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
+                    snapshot.getSnapshotId(), parent);
+
+            // store layouted snapshot
+            layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
+        });
+
+        return newSnapshots.isEmpty();
+    }
+
+    private void storeNewSession(Session session) {
+        sessionStore.add(session);
+        eventManager.fire(ADVEvent.NOTIFICATION, null,
+                I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
+    }
+
+    private void changeCurrentSession(Session session) {
+        sessionStore.setCurrent(session.getSessionId());
+        eventManager.fire(ADVEvent.NOTIFICATION, null,
+                I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
     }
 
 }
