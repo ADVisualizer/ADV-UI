@@ -155,10 +155,10 @@ class RootViewModel {
             if (session != null) {
                 layoutedSnapshotStore
                         .getAll(session.getSessionId())
-                        .forEach(element -> {
-                            String description = element
+                        .forEach(snapshot -> {
+                            String description = snapshot
                                     .getSnapshotDescription();
-                            long id = element.getSnapshotId();
+                            long id = snapshot.getSnapshotId();
                             session.getSnapshotById(id)
                                     .setSnapshotDescription(description);
                         });
