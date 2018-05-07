@@ -1,47 +1,50 @@
 package ch.hsr.adv.ui.core.presentation;
 
 import ch.hsr.adv.ui.core.logic.domain.Session;
+import com.google.inject.Singleton;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
-import javafx.scene.control.Tooltip;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ViewStore {
+/**
+ * Maps Sessions to their corresponding tab or stage.
+ *
+ * @author mtrentini
+ */
+@Singleton
+public class ViewMapper {
 
     private final ObservableList<Session> sessionList;
     private final Map<Session, Tab> sessionToTapMap = new HashMap<>();
     private final Map<Tab, Session> tabToSessionMap = new HashMap<>();
-    private final Map<Session, Window> sessionToWindowMap = new HashMap<>();
-    private final Map<Window, Session> windowToSessionMap = new HashMap<>();
+    private final Map<Session, Stage> sessionToStageMap = new HashMap<>();
+    private final Map<Stage, Session> stageToSessionMap = new HashMap<>();
 
-    public ViewStore(ObservableList<Window> windows, ObservableList<Tab>
+    ViewMapper(ObservableList<Stage> stages, ObservableList<Tab>
             tabs, ObservableList<Session> sessionList) {
         this.sessionList = sessionList;
-        windows.addListener(handleWindowListChange());
+        stages.addListener(handleStageListChange());
         tabs.addListener(handleTabListChange());
     }
 
-    private ListChangeListener<Window> handleWindowListChange() {
+    private ListChangeListener<Stage> handleStageListChange() {
         return change -> {
             while (change.next()) {
-                change.getAddedSubList().forEach(window -> {
-                    if (!Tooltip.class.isAssignableFrom(window.getClass())) {
-                        String sessionString = ((Stage) window).getTitle();
-                        sessionToWindowMap
-                                .put(getSession(sessionString), window);
-                        windowToSessionMap
-                                .put(window, getSession(sessionString));
-                    }
+                change.getAddedSubList().forEach(stage -> {
+                    String sessionString = stage.getTitle();
+                    sessionToStageMap
+                            .put(getSession(sessionString), stage);
+                    stageToSessionMap
+                            .put(stage, getSession(sessionString));
                 });
-                change.getRemoved().forEach(window -> {
-                    Session s = windowToSessionMap.get(window);
-                    windowToSessionMap.remove(window);
-                    sessionToWindowMap.remove(s);
+                change.getRemoved().forEach(stage -> {
+                    Session s = stageToSessionMap.get(stage);
+                    stageToSessionMap.remove(stage);
+                    sessionToStageMap.remove(s);
                 });
             }
         };
@@ -65,28 +68,37 @@ public class ViewStore {
     }
 
     private Session getSession(String sessionString) {
-        Session associatedSession = sessionList.stream()
+        return sessionList.stream()
                 .filter(session -> session.toString().equals(sessionString))
                 .findFirst().orElse(null);
-        return associatedSession;
     }
 
-    public Window getWindow(Session session) {
-        return sessionToWindowMap.get(session);
+    /**
+     * Get associated stage to this session
+     *
+     * @param session to query for
+     * @return the associated stage or null if no stage is present
+     */
+    public Stage getStage(Session session) {
+        return sessionToStageMap.get(session);
     }
 
-    public Window getWindow(String sessionString) {
-        return sessionToWindowMap.get(getSession(sessionString));
-    }
-
+    /**
+     * Get associated Tab to this session
+     *
+     * @param session to query for
+     * @return the associated Tab or null if no tab is present
+     */
     public Tab getTab(Session session) {
         return sessionToTapMap.get(session);
     }
 
-    public Tab getTab(String sessionString) {
-        return sessionToTapMap.get(getSession(sessionString));
-    }
-
+    /**
+     * Get associated Session to this Tab
+     *
+     * @param tab to query for
+     * @return the associated Session or null if no session is present
+     */
     public Session getSession(Tab tab) {
         return tabToSessionMap.get(tab);
     }

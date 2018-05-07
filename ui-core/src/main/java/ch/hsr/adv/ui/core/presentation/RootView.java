@@ -3,7 +3,7 @@ package ch.hsr.adv.ui.core.presentation;
 import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import ch.hsr.adv.ui.core.presentation.util.ResourceLocator;
-import de.jensd.shichimifx.utils.TabPaneDetacher;
+import ch.hsr.adv.ui.core.presentation.util.TabPaneDetacher;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
@@ -57,7 +57,9 @@ public class RootView {
     private StatusBar notificationBar;
     @Inject
     private ResourceLocator resourceLocator;
-    private ViewStore viewStore;
+    @Inject
+    private TabPaneDetacher detacher;
+    private ViewMapper viewMapper;
 
 
     @Inject
@@ -79,7 +81,6 @@ public class RootView {
         bindI18nStrings();
         sessionListView.setItems(rootViewModel.getAvailableSessions());
 
-        TabPaneDetacher detacher = TabPaneDetacher.create();
         String globalCss = resourceLocator
                 .getResourcePath(ResourceLocator.Resource.CSS_GLOBAL)
                 .toExternalForm();
@@ -90,7 +91,7 @@ public class RootView {
         detacher.stylesheets(globalCss, sessionCss);
         detacher.makeTabsDetachable(sessionTabPane);
 
-        viewStore = new ViewStore(Window.getWindows(), sessionTabPane
+        viewMapper = new ViewMapper(detacher.getCreatedStages(), sessionTabPane
                 .getTabs(), sessionListView.getItems());
 
 
@@ -135,7 +136,7 @@ public class RootView {
         return change -> {
             while (change.next()) {
                 change.getAddedSubList().forEach(session -> {
-                    Tab existingTab = viewStore.getTab(session);
+                    Tab existingTab = viewMapper.getTab(session);
                     if (existingTab == null) {
                         Node sessionView = resourceLocator
                                 .loadFXML(ResourceLocator
@@ -150,13 +151,12 @@ public class RootView {
                     }
                 });
                 change.getRemoved().forEach(session -> {
-                    Tab existingTab = viewStore.getTab(session);
+                    Tab existingTab = viewMapper.getTab(session);
                     if (existingTab != null) {
                         sessionTabPane.getTabs().remove(existingTab);
                     } else {
-                        Window existingWindow = viewStore.getWindow(session);
-                        Stage stage = (Stage) existingWindow;
-                        stage.close();
+                        Stage existingStage = viewMapper.getStage(session);
+                        existingStage.close();
                     }
                 });
             }
@@ -164,10 +164,10 @@ public class RootView {
     }
 
     private void updateSelected(Session session) {
-        Tab tabToSelect = viewStore.getTab(session);
+        Tab tabToSelect = viewMapper.getTab(session);
         if (tabToSelect == null) {
-            Window windowToFocus = viewStore.getWindow(session);
-            windowToFocus.requestFocus();
+            Stage stageToFocus = viewMapper.getStage(session);
+            stageToFocus.requestFocus();
         } else {
             sessionTabPane.getSelectionModel().select(tabToSelect);
         }
@@ -176,7 +176,7 @@ public class RootView {
     }
 
     private void updateSelected(Tab tab) {
-        Session sessionToSelect = viewStore.getSession(tab);
+        Session sessionToSelect = viewMapper.getSession(tab);
         sessionListView.getSelectionModel().select(sessionToSelect);
         rootViewModel.getCurrentSessionProperty()
                 .setValue(sessionToSelect);
