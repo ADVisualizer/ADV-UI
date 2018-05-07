@@ -4,6 +4,7 @@ import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -19,11 +20,11 @@ public class ArrayStringifyer implements Stringifyer {
 
     private static final Logger logger = LoggerFactory
             .getLogger(ArrayStringifyer.class);
-    private final GsonProvider gsonProvider;
+    private final Gson gson;
 
     @Inject
     public ArrayStringifyer(GsonProvider gsonProvider) {
-        this.gsonProvider = gsonProvider;
+        this.gson = gsonProvider.getPrettifyer().create();
     }
 
     /**
@@ -35,7 +36,8 @@ public class ArrayStringifyer implements Stringifyer {
     @Override
     public JsonElement stringify(ModuleGroup moduleGroup) {
         logger.info("Serialize array group");
-        return gsonProvider.getPrettifyer().create().toJsonTree(moduleGroup);
+        String json = gson.toJson(moduleGroup);
+        return gson.fromJson(json, JsonElement.class);
     }
 }
 

@@ -4,9 +4,12 @@ import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Serializes a graph session to json
@@ -15,11 +18,14 @@ import com.google.inject.Singleton;
 @Module("graph")
 public class GraphStringifyer implements Stringifyer {
 
-    private final GsonProvider gsonProvider;
+    private static final Logger logger = LoggerFactory
+            .getLogger(GraphStringifyer.class);
+
+    private final Gson gson;
 
     @Inject
     public GraphStringifyer(GsonProvider gsonProvider) {
-        this.gsonProvider = gsonProvider;
+        this.gson = gsonProvider.getPrettifyer().create();
     }
 
     /**
@@ -30,7 +36,9 @@ public class GraphStringifyer implements Stringifyer {
      */
     @Override
     public JsonElement stringify(ModuleGroup moduleGroup) {
-        return gsonProvider.getPrettifyer().create().toJsonTree(moduleGroup);
+        logger.info("Serialize stack group");
+        String json = gson.toJson(moduleGroup);
+        return gson.fromJson(json, JsonElement.class);
     }
 
 }
