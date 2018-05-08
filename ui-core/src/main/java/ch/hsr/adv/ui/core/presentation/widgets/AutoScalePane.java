@@ -39,6 +39,10 @@ public class AutoScalePane extends Pane {
         requestLayout();
     }
 
+    public Group getContent(){
+        return  content;
+    }
+
     @Override
     protected void layoutChildren() {
 

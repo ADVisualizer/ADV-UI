@@ -12,20 +12,6 @@ import javafx.scene.layout.Region;
 public abstract class ADVNode extends Region {
 
     /**
-     * Connector position for all outgoing connectors
-     *
-     * @return outgoing connector type
-     */
-    public abstract ConnectorType getConnectorTypeOutgoing();
-
-    /**
-     * Connector position for all incoming connectors
-     *
-     * @return incoming connector type
-     */
-    public abstract ConnectorType getConnectorTypeIncoming();
-
-    /**
      * X/Y coordinate of the node center
      *
      * @return node center

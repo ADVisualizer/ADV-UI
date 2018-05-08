@@ -2,6 +2,7 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import javafx.geometry.Point2D;
+import javafx.scene.layout.Region;
 import javafx.scene.shape.CubicCurve;
 
 /**
@@ -11,21 +12,32 @@ public class CurvedLabeledEdge extends LabeledEdge {
 
     public CurvedLabeledEdge(String labelText,
                              ADVNode startNode,
+                             ConnectorType startConnector,
                              ADVNode endNode,
+                             ConnectorType endConnector,
+                             Region edgeContainer,
                              ADVStyle style) {
 
-        super(labelText, startNode, endNode, style);
+        super(labelText, startNode, startConnector, endNode, endConnector,
+                edgeContainer, style);
     }
 
-    public CurvedLabeledEdge(String labelText, ADVNode startNode,
-                             ADVNode endNode, ADVStyle style,
+    public CurvedLabeledEdge(String labelText,
+                             ADVNode startNode,
+                             ConnectorType startConnector,
+                             ADVNode endNode,
+                             ConnectorType endConnector,
+                             Region edgeContainer,
+                             ADVStyle style,
                              LabeledEdge.DirectionType directionType) {
 
-        super(labelText, startNode, endNode, style, directionType);
+        super(labelText, startNode, startConnector,
+                endNode, endConnector, edgeContainer,
+                style, directionType);
     }
 
     @Override
-    protected void setControlPoints(CubicCurve curve,
+    protected void setControlPoints(CubicCurve cubicCurve,
                                     Point2D startIntersectionPoint,
                                     Point2D endIntersectionPoint) {
         double startHeight = getStartNode().getBoundsInParent().getHeight();
@@ -36,42 +48,46 @@ public class CurvedLabeledEdge extends LabeledEdge {
         double y = mid.getY();
         double x = mid.getX();
 
-        if ((getStartNode().getConnectorTypeOutgoing()
+        ConnectorType startConnector = getStartConnector();
+        ConnectorType endConnector = getEndConnector();
+
+        //TODO: is this right?
+        if ((startConnector
                 .equals(ConnectorType.BOTTOM)
-                || getStartNode().getConnectorTypeOutgoing()
+                || startConnector
                 .equals(ConnectorType.LEFT))
-                && (getEndNode().getConnectorTypeIncoming()
+                && (endConnector
                 .equals(ConnectorType.LEFT)
-                || getEndNode().getConnectorTypeIncoming()
+                || endConnector
                 .equals(ConnectorType.BOTTOM))) {
             x -= avgHeight;
             y += avgHeight;
-        } else if ((getStartNode().getConnectorTypeOutgoing()
+        } else if ((startConnector
                 .equals(ConnectorType.TOP)
-                || getStartNode().getConnectorTypeOutgoing()
+                || startConnector
                 .equals(ConnectorType.RIGHT))
-                && (getEndNode().getConnectorTypeIncoming()
+                && (endConnector
                 .equals(ConnectorType.RIGHT)
-                || getEndNode().getConnectorTypeIncoming()
+                || endConnector
                 .equals(ConnectorType.TOP))) {
             x += avgHeight;
             y -= avgHeight;
-        } else if (getStartNode().getConnectorTypeOutgoing()
+        } else if (startConnector
                 .equals(ConnectorType.TOP)
-                && getEndNode().getConnectorTypeIncoming()
+                && endConnector
                 .equals(ConnectorType.TOP)) {
             y -= avgHeight;
-        } else if (getStartNode().getConnectorTypeOutgoing()
+        } else if (startConnector
                 .equals(ConnectorType.BOTTOM)
-                && getEndNode().getConnectorTypeIncoming()
+                && endConnector
                 .equals(ConnectorType.BOTTOM)) {
             y += avgHeight;
         }
 
-        curve.setControlX1(x);
-        curve.setControlY1(y);
-        curve.setControlX2(x);
-        curve.setControlY2(y);
+        cubicCurve.setControlX1(x);
+        cubicCurve.setControlY1(y);
+        cubicCurve.setControlX2(x);
+        cubicCurve.setControlY2(y);
     }
 
 }

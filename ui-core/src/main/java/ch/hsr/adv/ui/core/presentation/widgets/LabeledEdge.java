@@ -5,16 +5,19 @@ import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import javafx.beans.Observable;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 /**
  * Generic component for an labeled edge with optional arrows.
@@ -32,28 +35,45 @@ public class LabeledEdge extends Group {
     private static final int LABEL_FONT_SIZE = 8;
 
     private final ADVNode startNode;
+    private final ConnectorType startConnector;
     private final ADVNode endNode;
-
+    private final ConnectorType endConnector;
     private final CubicCurve curve = new CubicCurve();
     private final Label label = new Label();
     private final ADVStyle style;
-
     private final DirectionType directionType;
     private final ArrowHead startArrowHead;
     private final ArrowHead endArrowHead;
+    private final Region edgeContainer;
 
 
-    public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,
-                       ADVStyle style) {
-        this(labelText, startNode, endNode, style, DirectionType.NONE);
+    public LabeledEdge(
+            String labelText,
+            ADVNode startNode,
+            ConnectorType startConnector,
+            ADVNode endNode,
+            ConnectorType endConnector,
+            Region edgeContainer,
+            ADVStyle style) {
+        this(labelText, startNode, startConnector, endNode, endConnector,
+                edgeContainer, style, DirectionType.NONE);
     }
 
-    public LabeledEdge(String labelText, ADVNode startNode, ADVNode endNode,
-                       ADVStyle style, DirectionType directionType) {
+    public LabeledEdge(
+            String labelText,
+            ADVNode startNode,
+            ConnectorType startConnector,
+            ADVNode endNode,
+            ConnectorType endConnector,
+            Region edgeContainer,
+            ADVStyle style, DirectionType directionType) {
 
         this.style = style;
         this.startNode = startNode;
+        this.startConnector = startConnector;
         this.endNode = endNode;
+        this.endConnector = endConnector;
+        this.edgeContainer = edgeContainer;
         this.directionType = directionType;
 
         // draw arrow
@@ -76,7 +96,6 @@ public class LabeledEdge extends Group {
         // bind listener
         startNode.centerProperty().addListener(this::drawCurve);
         endNode.centerProperty().addListener(this::drawCurve);
-
         initializeComponent(labelText);
     }
 
@@ -122,79 +141,51 @@ public class LabeledEdge extends Group {
 
     private void drawCurve(Observable o) {
         if (startNode.getCenter() != null && endNode.getCenter() != null) {
+            if (startNode.getWidth() != 0 && startNode.getHeight() != 0 &&
+                    endNode.getWidth() != 0 && endNode.getHeight() != 0) {
+                Point2D startConnectorPoint = getConnectorPoint
+                        (startNode, startConnector);
+                startConnectorPoint = convertToEdgeContainer
+                        (startConnectorPoint);
+                curve.setStartX(startConnectorPoint.getX());
+                curve.setStartY(startConnectorPoint.getY());
 
-            // start and end connector point
-            Point2D startConnectorPoint = getConnectorPoint(startNode,
-                    startNode.getConnectorTypeOutgoing());
 
-            Point2D endConnectorPoint = getConnectorPoint(endNode,
-                    endNode.getConnectorTypeIncoming());
+                Point2D endConnectorPoint = getConnectorPoint
+                        (endNode, endConnector);
+                endConnectorPoint = convertToEdgeContainer(endConnectorPoint);
+                curve.setEndX(endConnectorPoint.getX());
+                curve.setEndY(endConnectorPoint.getY());
 
-            if (startNode.getParent() != null && endNode.getParent() != null) {
 
-                if (!startNode.getParent().equals(endNode.getParent())) {
-
-                    Node parent = findFirstCommonAncestor(startNode, endNode);
-                    if (parent != null) {
-                        startConnectorPoint = localToAncestor(
-                                startConnectorPoint, startNode, parent);
-                        endConnectorPoint = localToAncestor(
-                                endConnectorPoint, endNode, parent);
-                    }
-                }
-            }
-
-            curve.setStartX(startConnectorPoint.getX());
-            curve.setStartY(startConnectorPoint.getY());
-            curve.setEndX(endConnectorPoint.getX());
-            curve.setEndY(endConnectorPoint.getY());
-            setControlPoints(curve, startConnectorPoint, endConnectorPoint);
-
-            // arrow
-            switch (directionType) {
-                case BIDIRECTIONAL:
-                    startArrowHead.update();
-                    endArrowHead.update();
-                    break;
-                case UNIDIRECTIONAL:
-                    endArrowHead.update();
-                    break;
-                case NONE:
-                    break;
-                default:
-                    logger.warn("Unsupported direction type: {}",
-                            directionType);
+                setControlPoints(curve, startConnectorPoint, endConnectorPoint);
             }
         }
+
+        // arrow
+        switch (directionType) {
+            case BIDIRECTIONAL:
+                startArrowHead.update();
+                endArrowHead.update();
+                break;
+            case UNIDIRECTIONAL:
+                endArrowHead.update();
+                break;
+            case NONE:
+                break;
+            default:
+                logger.warn("Unsupported direction type: {}",
+                        directionType);
+        }
     }
 
-    private Point2D localToAncestor(Point2D point, Node local, Node ancestor) {
-        if (local == ancestor) {
-            return point;
-        }
-
-        Point2D transformedPoint = local.localToParent(point);
-        return localToAncestor(transformedPoint, local.getParent(), ancestor);
+    private Point2D convertToEdgeContainer(Point2D point) {
+        //TODO:
+        Point2D pointInLocal = ((AutoScalePane) edgeContainer).getContent()
+                .sceneToLocal(point);
+        return pointInLocal;
     }
 
-    private Node findFirstCommonAncestor(Node node1, Node node2) {
-        if (node1 == null || node2 == null) {
-            return null;
-        }
-        if (isDescendant(node1, node2)) {
-            return node2;
-        }
-        return findFirstCommonAncestor(node1, node2.getParent());
-    }
-
-    private boolean isDescendant(Node candidate, Node node) {
-        if (candidate == null) {
-            return false;
-        } else if (candidate == node) {
-            return true;
-        }
-        return isDescendant(candidate.getParent(), node);
-    }
 
     private Point2D getConnectorPoint(ADVNode node,
                                       ConnectorType connectorType) {
@@ -253,14 +244,16 @@ public class LabeledEdge extends Group {
     /**
      * Determines the intersection of the curve and the target node.
      *
-     * @param targetBounds target node
-     * @param outside      point outside the target node
-     * @param inside       point inside the target node
+     * @param node    target node
+     * @param outside point outside the target node
+     * @param inside  point inside the target node
      * @return intersection point
      */
-    private Point2D findIntersectionPoint(Node targetBounds,
+    private Point2D findIntersectionPoint(Node node,
                                           Point2D inside,
                                           Point2D outside) {
+        Bounds bounds = node.getLayoutBounds();
+        bounds = node.localToScene(bounds);
 
         Point2D middle = outside.midpoint(inside);
 
@@ -270,10 +263,10 @@ public class LabeledEdge extends Group {
         if (Math.hypot(deltaX, deltaY) < 1.) {
             return middle;
         } else {
-            if (targetBounds.contains(targetBounds.parentToLocal(middle))) {
-                return findIntersectionPoint(targetBounds, middle, outside);
+            if (bounds.contains(middle)) {
+                return findIntersectionPoint(node, middle, outside);
             } else {
-                return findIntersectionPoint(targetBounds, inside, middle);
+                return findIntersectionPoint(node, inside, middle);
             }
         }
     }
@@ -281,19 +274,21 @@ public class LabeledEdge extends Group {
     /**
      * Sets the control points of the curve
      *
-     * @param respectiveCurve        curve
+     * @param cubicCurve             curve to adapt curvature on
      * @param startIntersectionPoint calculated intersection point
      * @param endIntersectionPoint   calculated intersection point
      */
-    protected void setControlPoints(CubicCurve respectiveCurve,
-                                    Point2D startIntersectionPoint,
+    // needs curve as an input parameter, so the curvature can be adapted in
+    // subclasses
+    protected void setControlPoints(CubicCurve cubicCurve, Point2D
+            startIntersectionPoint,
                                     Point2D endIntersectionPoint) {
         // straight line
         Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
-        respectiveCurve.setControlX1(mid.getX());
-        respectiveCurve.setControlY1(mid.getY());
-        respectiveCurve.setControlX2(mid.getX());
-        respectiveCurve.setControlY2(mid.getY());
+        cubicCurve.setControlX1(mid.getX());
+        cubicCurve.setControlY1(mid.getY());
+        cubicCurve.setControlX2(mid.getX());
+        cubicCurve.setControlY2(mid.getY());
     }
 
     protected ADVNode getStartNode() {
@@ -302,6 +297,14 @@ public class LabeledEdge extends Group {
 
     protected ADVNode getEndNode() {
         return endNode;
+    }
+
+    protected ConnectorType getStartConnector() {
+        return startConnector;
+    }
+
+    protected ConnectorType getEndConnector() {
+        return endConnector;
     }
 
     /**

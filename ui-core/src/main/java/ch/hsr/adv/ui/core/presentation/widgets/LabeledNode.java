@@ -4,10 +4,7 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.geometry.VPos;
+import javafx.geometry.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -32,8 +29,6 @@ public class LabeledNode extends ADVNode {
             SimpleObjectProperty<>();
     private final boolean isRoundedDown;
     private Paint backgroundColor = Color.BLACK;
-    private ConnectorType connectorTypeOutgoing = ConnectorType.DIRECT;
-    private ConnectorType connectorTypeIncoming = ConnectorType.DIRECT;
 
     public LabeledNode(String labelText) {
         this(labelText, false);
@@ -164,13 +159,20 @@ public class LabeledNode extends ADVNode {
     }
 
     private void computeCenter() {
+        // check for bounds in parent because bounds in local get calculated
+        // very late and listener doesn't work well with bounds in local
         if (getBoundsInParent().getWidth() > 0
                 && getBoundsInParent().getHeight() > 0) {
 
-            double centerX = getBoundsInParent().getMinX()
-                    + getBoundsInParent().getWidth() / 2;
-            double centerY = getBoundsInParent().getMinY()
-                    + getBoundsInParent().getHeight() / 2;
+            // to calculate the center use the local bounds and convert them
+            // to the scene coordinates
+            Bounds inLocal = getBoundsInLocal();
+            Bounds localToScene = localToScene(inLocal);
+
+            double centerX = localToScene.getMinX()
+                    + localToScene.getWidth() / 2;
+            double centerY = localToScene.getMinY()
+                    + localToScene.getHeight() / 2;
 
             centerProperty.set(new Point2D(centerX, centerY));
         }
@@ -184,23 +186,5 @@ public class LabeledNode extends ADVNode {
     @Override
     public ObjectProperty<Point2D> centerProperty() {
         return centerProperty;
-    }
-
-    @Override
-    public ConnectorType getConnectorTypeOutgoing() {
-        return connectorTypeOutgoing;
-    }
-
-    public void setConnectorTypeOutgoing(ConnectorType type) {
-        this.connectorTypeOutgoing = type;
-    }
-
-    @Override
-    public ConnectorType getConnectorTypeIncoming() {
-        return connectorTypeIncoming;
-    }
-
-    public void setConnectorTypeIncoming(ConnectorType type) {
-        this.connectorTypeIncoming = type;
     }
 }

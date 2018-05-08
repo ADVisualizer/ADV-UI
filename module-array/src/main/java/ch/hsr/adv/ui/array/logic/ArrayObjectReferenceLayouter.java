@@ -4,7 +4,10 @@ import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
 import ch.hsr.adv.ui.core.logic.domain.Snapshot;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
-import ch.hsr.adv.ui.core.presentation.widgets.*;
+import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
+import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
+import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
+import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.geometry.Pos;
@@ -85,11 +88,12 @@ public class ArrayObjectReferenceLayouter {
 
     private void drawRelations(LabeledNode referenceNode,
                                LabeledNode valueNode) {
-        referenceNode.setConnectorTypeOutgoing(ConnectorType.BOTTOM);
-        valueNode.setConnectorTypeIncoming(ConnectorType.TOP);
 
-        LabeledEdge relation = new CurvedLabeledEdge("",
-                referenceNode, valueNode, new ADVDefaultLineStyle(),
+        LabeledEdge relation = new LabeledEdge("",
+                referenceNode, ConnectorType.BOTTOM,
+                valueNode, ConnectorType.TOP,
+                scalePane,
+                new ADVDefaultLineStyle(),
                 LabeledEdge.DirectionType.UNIDIRECTIONAL);
 
         scalePane.addChildren(relation);

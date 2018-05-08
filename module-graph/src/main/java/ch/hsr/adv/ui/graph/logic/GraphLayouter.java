@@ -6,6 +6,7 @@ import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
+import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Inject;
@@ -80,7 +81,11 @@ public class GraphLayouter implements Layouter {
                 type = LabeledEdge.DirectionType.UNIDIRECTIONAL;
             }
 
-            LabeledEdge edge = new LabeledEdge(r.getLabel(), source, target,
+            LabeledEdge edge = new LabeledEdge(
+                    r.getLabel(),
+                    source, ConnectorType.DIRECT,
+                    target, ConnectorType.DIRECT,
+                    scalePane,
                     style, type);
 
             scalePane.addChildren(edge);
