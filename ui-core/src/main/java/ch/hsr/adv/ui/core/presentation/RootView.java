@@ -3,7 +3,7 @@ package ch.hsr.adv.ui.core.presentation;
 import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import ch.hsr.adv.ui.core.presentation.util.ResourceLocator;
-import de.jensd.shichimifx.utils.TabPaneDetacher;
+import ch.hsr.adv.ui.core.presentation.util.TabPaneDetacher;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
@@ -13,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.controlsfx.control.SegmentedButton;
 import org.controlsfx.control.StatusBar;
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.io.File;
 import java.util.Locale;
-import java.util.Optional;
 
 /**
  * Main UI View
@@ -31,8 +31,11 @@ public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
-    private final RootViewModel rootViewModel;
+
     private final FileChooser fileChooser = new FileChooser();
+    private final RootViewModel rootViewModel;
+    private final ResourceLocator resourceLocator;
+    private final TabPaneDetacher detacher;
 
     @FXML
     private Button loadSessionButton;
@@ -56,13 +59,17 @@ public class RootView {
     private ToggleButton german;
     @FXML
     private StatusBar notificationBar;
-    @Inject
-    private ResourceLocator resourceLocator;
 
+    private ViewMapper viewMapper;
 
     @Inject
-    protected RootView(RootViewModel viewModel) {
+    protected RootView(RootViewModel viewModel,
+                       ResourceLocator resourceLocator,
+                       TabPaneDetacher detacher) {
+
         this.rootViewModel = viewModel;
+        this.detacher = detacher;
+        this.resourceLocator = resourceLocator;
 
         FileChooser.ExtensionFilter extensionFilter = new FileChooser
                 .ExtensionFilter("ADV files (*.adv)", "*.adv");
@@ -79,7 +86,6 @@ public class RootView {
         bindI18nStrings();
         sessionListView.setItems(rootViewModel.getAvailableSessions());
 
-        TabPaneDetacher detacher = TabPaneDetacher.create();
         String globalCss = resourceLocator
                 .getResourcePath(ResourceLocator.Resource.CSS_GLOBAL)
                 .toExternalForm();
@@ -90,19 +96,18 @@ public class RootView {
         detacher.stylesheets(globalCss, sessionCss);
         detacher.makeTabsDetachable(sessionTabPane);
 
+        viewMapper = new ViewMapper(detacher.getCreatedStages(), sessionTabPane
+                .getTabs(), sessionListView.getItems());
+
 
         rootViewModel.getAvailableSessions()
                 .addListener(handleAvailableSessionUpdate());
 
-        sessionListView.setOnMouseClicked(e -> {
-            updateSelected(sessionListView
-                    .getSelectionModel(), sessionTabPane.getSelectionModel());
-        });
+        sessionListView.setOnMouseClicked(e -> updateSelected(
+                sessionListView.getSelectionModel().getSelectedItem()));
 
-        sessionTabPane.setOnMouseClicked(e -> {
-            updateSelected(sessionTabPane.getSelectionModel(), sessionListView
-                    .getSelectionModel());
-        });
+        sessionTabPane.setOnMouseClicked(e -> updateSelected(
+                sessionTabPane.getSelectionModel().getSelectedItem()));
 
         handleLogoVisibility();
         bindButtonProperties();
@@ -136,8 +141,8 @@ public class RootView {
         return change -> {
             while (change.next()) {
                 change.getAddedSubList().forEach(session -> {
-                    Optional<Tab> existingTab = getExistingTab(session);
-                    if (!existingTab.isPresent()) {
+                    Tab existingTab = viewMapper.getTab(session);
+                    if (existingTab == null) {
                         Node sessionView = resourceLocator
                                 .loadFXML(ResourceLocator
                                         .Resource.SESSION_VIEW_FXML);
@@ -151,22 +156,37 @@ public class RootView {
                     }
                 });
                 change.getRemoved().forEach(session -> {
-                    getExistingTab(session)
-                            .ifPresent(t -> sessionTabPane.getTabs().remove(t));
+                    Tab existingTab = viewMapper.getTab(session);
+                    if (existingTab != null) {
+                        sessionTabPane.getTabs().remove(existingTab);
+                    } else {
+                        Stage existingStage = viewMapper.getStage(session);
+                        existingStage.close();
+                    }
                 });
             }
         };
     }
 
-    private void updateSelected(SelectionModel source, SelectionModel target) {
-        int selectedIndex = source.getSelectedIndex();
-        if (selectedIndex >= 0) {
-            target.select(selectedIndex);
-            Session selectedSession = sessionListView.getItems()
-                    .get(selectedIndex);
-            rootViewModel.getCurrentSessionProperty().setValue(selectedSession);
+    private void updateSelected(Session session) {
+        Tab tabToSelect = viewMapper.getTab(session);
+        if (tabToSelect == null) {
+            Stage stageToFocus = viewMapper.getStage(session);
+            if (stageToFocus != null) {
+                stageToFocus.requestFocus();
+            }
+        } else {
+            sessionTabPane.getSelectionModel().select(tabToSelect);
         }
+        rootViewModel.getCurrentSessionProperty()
+                .setValue(session);
+    }
 
+    private void updateSelected(Tab tab) {
+        Session sessionToSelect = viewMapper.getSession(tab);
+        sessionListView.getSelectionModel().select(sessionToSelect);
+        rootViewModel.getCurrentSessionProperty()
+                .setValue(sessionToSelect);
     }
 
     private void bindI18nStrings() {
@@ -198,20 +218,6 @@ public class RootView {
                 .bind(rootViewModel.getNoSessionsProperty());
         closeAllSessionsButton.disableProperty()
                 .bind(rootViewModel.getNoSessionsProperty());
-    }
-
-
-    /**
-     * Checks if a Tab is already existing for the given session
-     *
-     * @param session session to check
-     * @return optional tab
-     */
-    private Optional<Tab> getExistingTab(Session session) {
-        return sessionTabPane.getTabs()
-                .stream()
-                .filter(t -> t.getText().equals(session.toString()))
-                .findFirst();
     }
 
     private void initButtons() {
