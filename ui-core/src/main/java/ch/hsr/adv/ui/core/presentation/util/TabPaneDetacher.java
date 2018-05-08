@@ -48,6 +48,9 @@ public class TabPaneDetacher {
     private Tab currentTab;
     private String[] stylesheets = new String[] {};
 
+    /**
+     * @return always on top property
+     */
     public BooleanProperty alwaysOnTopProperty() {
         return alwaysOnTop;
     }
@@ -59,11 +62,11 @@ public class TabPaneDetacher {
     /**
      * Sets whether detached Tabs should be always on top.
      *
-     * @param alwaysOnTop The state to be set.
+     * @param onTop The state to be set.
      * @return The current TabPaneDetacher instance.
      */
-    public TabPaneDetacher alwaysOnTop(boolean alwaysOnTop) {
-        alwaysOnTopProperty().set(alwaysOnTop);
+    public TabPaneDetacher alwaysOnTop(boolean onTop) {
+        alwaysOnTopProperty().set(onTop);
         return this;
     }
 
@@ -71,22 +74,22 @@ public class TabPaneDetacher {
      * Sets the stylesheets that should be assigend to the new created
      * {@link Stage}.
      *
-     * @param stylesheets The stylesheets to be set.
+     * @param stylesheet The stylesheets to be set.
      * @return The current TabPaneDetacher instance.
      */
-    public TabPaneDetacher stylesheets(String... stylesheets) {
-        this.stylesheets = stylesheets;
+    public TabPaneDetacher stylesheets(String... stylesheet) {
+        this.stylesheets = stylesheet;
         return this;
     }
 
     /**
      * Make all added {@link Tab}s of the given {@link TabPane} detachable.
      *
-     * @param tabPane The {@link TabPane} to take over.
+     * @param pane The {@link TabPane} to take over.
      * @return The current TabPaneDetacher instance.
      */
-    public TabPaneDetacher makeTabsDetachable(TabPane tabPane) {
-        this.tabPane = tabPane;
+    public TabPaneDetacher makeTabsDetachable(TabPane pane) {
+        this.tabPane = pane;
         originalTabs.addAll(tabPane.getTabs());
         for (int i = 0; i < tabPane.getTabs().size(); i++) {
             tapTransferMap.put(i, tabPane.getTabs().get(i));

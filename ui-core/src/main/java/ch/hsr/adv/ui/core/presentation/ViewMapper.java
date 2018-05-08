@@ -19,13 +19,14 @@ import java.util.Map;
 public class ViewMapper {
 
     private final ObservableList<Session> sessionList;
-    private final Map<Session, Tab> sessionToTapMap = new HashMap<>();
+    private final Map<Session, Tab> sessionToTabMap = new HashMap<>();
     private final Map<Tab, Session> tabToSessionMap = new HashMap<>();
     private final Map<Session, Stage> sessionToStageMap = new HashMap<>();
     private final Map<Stage, Session> stageToSessionMap = new HashMap<>();
 
     ViewMapper(ObservableList<Stage> stages, ObservableList<Tab>
             tabs, ObservableList<Session> sessionList) {
+
         this.sessionList = sessionList;
         stages.addListener(handleStageListChange());
         tabs.addListener(handleTabListChange());
@@ -55,13 +56,13 @@ public class ViewMapper {
         return change -> {
             while (change.next()) {
                 change.getAddedSubList().forEach(tab -> {
-                    sessionToTapMap.put(getSession(tab.getText()), tab);
+                    sessionToTabMap.put(getSession(tab.getText()), tab);
                     tabToSessionMap.put(tab, getSession(tab.getText()));
                 });
                 change.getRemoved().forEach(tab -> {
                     Session s = tabToSessionMap.get(tab);
                     tabToSessionMap.remove(tab);
-                    sessionToTapMap.remove(s);
+                    sessionToTabMap.remove(s);
                 });
             }
         };
@@ -90,7 +91,7 @@ public class ViewMapper {
      * @return the associated Tab or null if no tab is present
      */
     public Tab getTab(Session session) {
-        return sessionToTapMap.get(session);
+        return sessionToTabMap.get(session);
     }
 
     /**

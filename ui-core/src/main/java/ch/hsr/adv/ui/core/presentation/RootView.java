@@ -31,8 +31,12 @@ public class RootView {
 
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
-    private final RootViewModel rootViewModel;
+
     private final FileChooser fileChooser = new FileChooser();
+    private final RootViewModel rootViewModel;
+    private final ResourceLocator resourceLocator;
+    private final TabPaneDetacher detacher;
+
     @FXML
     private Button loadSessionButton;
     @FXML
@@ -55,16 +59,17 @@ public class RootView {
     private ToggleButton german;
     @FXML
     private StatusBar notificationBar;
-    @Inject
-    private ResourceLocator resourceLocator;
-    @Inject
-    private TabPaneDetacher detacher;
+
     private ViewMapper viewMapper;
 
-
     @Inject
-    protected RootView(RootViewModel viewModel) {
+    protected RootView(RootViewModel viewModel,
+                       ResourceLocator resourceLocator,
+                       TabPaneDetacher detacher) {
+
         this.rootViewModel = viewModel;
+        this.detacher = detacher;
+        this.resourceLocator = resourceLocator;
 
         FileChooser.ExtensionFilter extensionFilter = new FileChooser
                 .ExtensionFilter("ADV files (*.adv)", "*.adv");
@@ -167,7 +172,9 @@ public class RootView {
         Tab tabToSelect = viewMapper.getTab(session);
         if (tabToSelect == null) {
             Stage stageToFocus = viewMapper.getStage(session);
-            stageToFocus.requestFocus();
+            if (stageToFocus != null) {
+                stageToFocus.requestFocus();
+            }
         } else {
             sessionTabPane.getSelectionModel().select(tabToSelect);
         }
