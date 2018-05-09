@@ -7,6 +7,7 @@ import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.stack.logic.domain.ModuleConstants;
 import ch.hsr.adv.ui.stack.logic.domain.StackElement;
 import com.google.inject.Singleton;
 import javafx.geometry.Insets;
@@ -22,7 +23,7 @@ import java.util.List;
  * Positions the StackElements on the Pane
  */
 @Singleton
-@Module("stack")
+@Module(ModuleConstants.MODULE_NAME)
 public class StackLayouter implements Layouter {
 
     private static final Logger logger = LoggerFactory.getLogger(

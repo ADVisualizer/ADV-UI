@@ -12,6 +12,7 @@ import ch.hsr.adv.ui.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.graph.logic.domain.GraphElement;
 import ch.hsr.adv.ui.graph.logic.domain.GraphRelation;
+import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -24,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Parses a json of an graph session to a Session object.
  */
 @Singleton
-@Module("graph")
+@Module(ModuleConstants.MODULE_NAME)
 public class GraphParser implements Parser {
 
     private static final Logger logger = LoggerFactory.getLogger(GraphParser

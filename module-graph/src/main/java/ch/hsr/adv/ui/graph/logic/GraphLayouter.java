@@ -10,6 +10,7 @@ import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
@@ -24,7 +25,7 @@ import java.util.Map;
  * Creates JavaFX Nodes for the graph elements and adds them to a pane
  */
 @Singleton
-@Module("graph")
+@Module(ModuleConstants.MODULE_NAME)
 public class GraphLayouter implements Layouter {
 
     private static final Logger logger = LoggerFactory.getLogger(

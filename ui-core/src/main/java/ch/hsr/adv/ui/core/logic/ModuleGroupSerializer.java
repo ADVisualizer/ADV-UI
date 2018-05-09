@@ -26,7 +26,7 @@ public class ModuleGroupSerializer implements JsonSerializer<ModuleGroup> {
     }
 
     /**
-     * Serializes the module group with the module stringifiers.
+     * Serializes the module group with the needed module stringifyer.
      *
      * @param moduleGroup module group
      * @param typeOfSrc   module group type

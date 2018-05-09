@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.array.logic;
 
+import ch.hsr.adv.ui.array.logic.domain.ModuleConstants;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
@@ -15,7 +16,7 @@ import java.util.List;
  * Positions the ArrayElements on the Pane
  */
 @Singleton
-@Module("array")
+@Module(ModuleConstants.MODULE_NAME)
 public class ArrayLayouter implements Layouter {
 
     private static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";

@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.array.logic;
 
+import ch.hsr.adv.ui.array.logic.domain.ModuleConstants;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import ch.hsr.adv.ui.core.logic.domain.Module;
@@ -15,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Generates a json representation of an array session.
  */
 @Singleton
-@Module("array")
+@Module(ModuleConstants.MODULE_NAME)
 public class ArrayStringifyer implements Stringifyer {
 
     private static final Logger logger = LoggerFactory

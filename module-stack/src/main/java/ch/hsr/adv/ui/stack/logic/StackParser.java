@@ -9,6 +9,7 @@ import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.stack.logic.domain.ModuleConstants;
 import ch.hsr.adv.ui.stack.logic.domain.StackElement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * Parses a json of a stack session to a Session object.
  */
 @Singleton
-@Module("stack")
+@Module(ModuleConstants.MODULE_NAME)
 public class StackParser implements Parser {
 
     private static final Logger logger = LoggerFactory.getLogger(StackParser

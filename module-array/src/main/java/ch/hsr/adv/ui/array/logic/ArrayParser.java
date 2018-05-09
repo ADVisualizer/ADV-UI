@@ -1,6 +1,7 @@
 package ch.hsr.adv.ui.array.logic;
 
 import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
+import ch.hsr.adv.ui.array.logic.domain.ModuleConstants;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * Parses a json of an array session to a Session object.
  */
 @Singleton
-@Module("array")
+@Module(ModuleConstants.MODULE_NAME)
 public class ArrayParser implements Parser {
 
     private static final Logger logger = LoggerFactory
