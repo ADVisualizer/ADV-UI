@@ -1,13 +1,13 @@
 package ch.hsr.adv.ui.stack.logic;
 
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.hsr.adv.ui.core.logic.domain.Module;
-import ch.hsr.adv.ui.core.logic.domain.Snapshot;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.stack.logic.domain.ModuleConstants;
 import ch.hsr.adv.ui.stack.logic.domain.StackElement;
 import com.google.inject.Singleton;
 import javafx.geometry.Insets;
@@ -23,7 +23,7 @@ import java.util.List;
  * Positions the StackElements on the Pane
  */
 @Singleton
-@Module("stack")
+@Module(ModuleConstants.MODULE_NAME)
 public class StackLayouter implements Layouter {
 
     private static final Logger logger = LoggerFactory.getLogger(
@@ -32,22 +32,16 @@ public class StackLayouter implements Layouter {
     /**
      * Layouts n Stack snapshot if it is not already layouted
      *
-     * @param snapshot to be layouted
+     * @param moduleGroup to be layouted
      * @return layouted snapshot
      */
     @Override
-    public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
-        Pane pane = drawElements(snapshot);
-
-        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
-                snapshot.getSnapshotId(), pane);
-        layoutedSnapshot.setSnapshotDescription(
-                snapshot.getSnapshotDescription());
-
-        return layoutedSnapshot;
+    public Pane layout(ModuleGroup moduleGroup, List<String>
+            flags) {
+        return drawElements(moduleGroup);
     }
 
-    private Pane drawElements(Snapshot snapshot) {
+    private Pane drawElements(ModuleGroup moduleGroup) {
         AutoScalePane scalePane = new AutoScalePane();
         VBox stackBox = new VBox();
         stackBox.setSpacing(5);
@@ -58,7 +52,7 @@ public class StackLayouter implements Layouter {
 
         stackBox.getStyleClass().add("stack-box");
 
-        snapshot.getElements().forEach(e -> {
+        moduleGroup.getElements().forEach(e -> {
             StackElement element = (StackElement) e;
             ADVStyle style = element.getStyle();
 

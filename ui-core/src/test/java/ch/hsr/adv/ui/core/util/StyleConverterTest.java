@@ -12,21 +12,28 @@ public class StyleConverterTest {
 
     @Test
     public void getStrokeStyleValidTest() {
-        BorderStrokeStyle style = StyleConverter
-                .getStrokeStyle("dotted");
+        // WHEN
+        BorderStrokeStyle style = StyleConverter.getStrokeStyle("dotted");
+
+        // THEN
         assertEquals(BorderStrokeStyle.DOTTED, style);
     }
 
     @Test
     public void getStrokeStyleInvalidTest() {
-        BorderStrokeStyle style = StyleConverter
-                .getStrokeStyle("stroked");
+        // WHEN
+        BorderStrokeStyle style = StyleConverter.getStrokeStyle("stroked");
+
+        // THEN
         assertEquals(null, style);
     }
 
     @Test
     public void getValidColorTest() {
+        // WHEN
         Paint color = StyleConverter.getColorFromHexValue(0);
+
+        // THEN
         assertEquals(Color.BLACK, color);
     }
 

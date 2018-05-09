@@ -1,6 +1,5 @@
 package ch.hsr.adv.ui.core.logic;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.Singleton;
 
@@ -32,8 +31,8 @@ public class GsonProvider {
      *
      * @return a pretty-printing json serializer
      */
-    public Gson getMinifier() {
-        return minifier.create();
+    public GsonBuilder getMinifier() {
+        return minifier;
     }
 
     /**
@@ -42,7 +41,7 @@ public class GsonProvider {
      *
      * @return a pretty-printing json serializer
      */
-    public Gson getPrettifyer() {
-        return prettifyer.create();
+    public GsonBuilder getPrettifyer() {
+        return prettifyer;
     }
 }

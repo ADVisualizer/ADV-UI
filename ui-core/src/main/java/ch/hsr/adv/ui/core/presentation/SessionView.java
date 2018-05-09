@@ -13,7 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -205,14 +205,14 @@ public class SessionView {
     }
 
     private void setCurrentSnapshotAsContent() {
-        Pane currentSnapshot = stateViewModel.getCurrentSnapshotPaneProperty()
+        Region currentSnapshot = stateViewModel.getCurrentSnapshotPaneProperty()
                 .get();
         this.contentPane.getChildren().clear();
         this.contentPane.getChildren().add(currentSnapshot);
         setAnchors(currentSnapshot);
     }
 
-    private void setAnchors(final Pane currentSnapshot) {
+    private void setAnchors(final Region currentSnapshot) {
         AnchorPane.setBottomAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
         AnchorPane.setTopAnchor(currentSnapshot, NO_MARGIN_ANCHOR);
         AnchorPane.setLeftAnchor(currentSnapshot, NO_MARGIN_ANCHOR);

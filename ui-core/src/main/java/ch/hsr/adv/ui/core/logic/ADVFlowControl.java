@@ -7,9 +7,12 @@ import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,23 +25,27 @@ public class ADVFlowControl implements FlowControl {
     private static final Logger logger = LoggerFactory.getLogger(
             ADVFlowControl.class);
 
-    private final ModuleParser moduleParser;
     private final SessionStore sessionStore;
     private final ServiceProvider serviceProvider;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private final EventManager eventManager;
+    private final CoreParser coreParser;
+    private final CoreLayouter coreLayouter;
 
     @Inject
-    public ADVFlowControl(ModuleParser moduleParser,
-                          SessionStore sessionStore,
+    public ADVFlowControl(SessionStore sessionStore,
                           ServiceProvider serviceProvider,
                           LayoutedSnapshotStore layoutedSnapshotStore,
-                          EventManager eventManager) {
-        this.moduleParser = moduleParser;
+                          EventManager eventManager,
+                          CoreParser coreParser,
+                          CoreLayouter coreLayouter) {
+
         this.sessionStore = sessionStore;
         this.serviceProvider = serviceProvider;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.eventManager = eventManager;
+        this.coreParser = coreParser;
+        this.coreLayouter = coreLayouter;
     }
 
     /**
@@ -50,48 +57,78 @@ public class ADVFlowControl implements FlowControl {
     public void process(String sessionJSON) {
         try {
             logger.info("Processing JSON...");
-            // parse module
-            String currentModule = moduleParser.parseModule(sessionJSON);
 
-            // parse session
-            Parser parser = serviceProvider.getParser(currentModule);
-            Session session = parser.parse(sessionJSON);
-            long sessionId = session.getSessionId();
+            Session session = parseSession(sessionJSON);
 
-            Layouter layouter = serviceProvider.getLayouter(currentModule);
+            boolean existing = layoutSession(session);
 
-            // filter new snapshots
-            List<Snapshot> newSnapshots = session.getSnapshots().stream()
-                    .filter(s -> !layoutedSnapshotStore.contains(sessionId,
-                            s.getSnapshotId()))
-                    .collect(Collectors.toList());
-
-            // Layout only snapshots that have not yet been layouted
-            newSnapshots.forEach(snapshot -> {
-
-                // layout
-                LayoutedSnapshot layoutedSnapshot = layouter.layout(snapshot,
-                        session.getFlags());
-
-                // store layouted snapshot
-                layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
-            });
-
-            if (!newSnapshots.isEmpty()) {
-                sessionStore.add(session);
-                eventManager.fire(ADVEvent.NOTIFICATION, null,
-                        I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
+            if (existing) {
+                changeCurrentSession(session);
             } else {
-                sessionStore.setCurrent(sessionId);
-                eventManager.fire(ADVEvent.NOTIFICATION, null,
-                        I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
+                updateSessionStore(session);
             }
-            logger.info("Process finished: delegated session and snapshot "
-                    + "creation.");
+
+            logger.info("JSON successfully processed.");
+
         } catch (ADVParseException e) {
             eventManager.fire(ADVEvent.NOTIFICATION, null,
                     I18n.NOTIFICATION_SESSION_LOAD_UNSUCCESSFUL);
         }
+    }
+
+    private Session parseSession(String sessionJSON) throws ADVParseException {
+        return coreParser.parse(sessionJSON);
+    }
+
+    /**
+     * @param session containing snapshots to be layouted
+     * @return true, if the input session contains any snapshots, that have
+     * not yet been layouted. Return false, if and only if the input session
+     * is a duplicated session, i.e. contains no new snapshots
+     */
+    private boolean layoutSession(Session session) {
+        // filter new snapshots
+        long sessionId = session.getSessionId();
+        List<Snapshot> newSnapshots = session.getSnapshots().stream()
+                .filter(s -> !layoutedSnapshotStore.contains(sessionId,
+                        s.getSnapshotId()))
+                .collect(Collectors.toList());
+
+        // Layout only snapshots that have not yet been layouted
+        newSnapshots.forEach(snapshot -> {
+
+            // layout
+            List<Pane> panes = new ArrayList<>();
+            snapshot.getModuleGroups().forEach(group -> {
+                String moduleName = group.getModuleName();
+                Layouter layouter = serviceProvider.getLayouter(moduleName);
+                Pane pane = layouter.layout(group, group.getFlags());
+                panes.add(pane);
+            });
+
+            // wrap in split pane
+            Region parent = coreLayouter.layout(panes);
+            LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
+                    snapshot.getSnapshotId(), parent);
+            layoutedSnapshot.setSnapshotDescription(snapshot.getSnapshotDescription());
+
+            // store layouted snapshot
+            layoutedSnapshotStore.add(sessionId, layoutedSnapshot);
+        });
+
+        return newSnapshots.isEmpty();
+    }
+
+    private void updateSessionStore(Session session) {
+        sessionStore.add(session);
+        eventManager.fire(ADVEvent.NOTIFICATION, null,
+                I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);
+    }
+
+    private void changeCurrentSession(Session session) {
+        sessionStore.setCurrent(session.getSessionId());
+        eventManager.fire(ADVEvent.NOTIFICATION, null,
+                I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
     }
 
 }

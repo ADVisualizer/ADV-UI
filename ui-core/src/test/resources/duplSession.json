@@ -27,6 +27,6 @@
       ]
     }
   ],
-  "sessionId": 123456,
-  "sessionName": "TestSession"
+  "sessionId": 1024,
+  "sessionName": "Duplicate Test Session"
 }

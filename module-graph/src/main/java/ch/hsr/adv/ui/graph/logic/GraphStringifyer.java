@@ -3,33 +3,43 @@ package ch.hsr.adv.ui.graph.logic;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import ch.hsr.adv.ui.core.logic.domain.Module;
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Serializes a graph session to json
  */
 @Singleton
-@Module("graph")
+@Module(ModuleConstants.MODULE_NAME)
 public class GraphStringifyer implements Stringifyer {
 
-    private final GsonProvider gsonProvider;
+    private static final Logger logger = LoggerFactory
+            .getLogger(GraphStringifyer.class);
+
+    private final Gson gson;
 
     @Inject
     public GraphStringifyer(GsonProvider gsonProvider) {
-        this.gsonProvider = gsonProvider;
+        this.gson = gsonProvider.getPrettifyer().create();
     }
 
     /**
-     * Builds a json string from an graph session.
+     * Builds a json string from an graph module group.
      *
-     * @param session the session to be transmitted
+     * @param moduleGroup the moduleGroup to be transmitted
      * @return json string representation of the session
      */
     @Override
-    public String stringify(final Session session) {
-        return gsonProvider.getPrettifyer().toJson(session);
+    public JsonElement stringify(ModuleGroup moduleGroup) {
+        logger.info("Serialize stack group");
+        String json = gson.toJson(moduleGroup);
+        return gson.fromJson(json, JsonElement.class);
     }
 
 }

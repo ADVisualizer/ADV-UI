@@ -58,7 +58,7 @@ public class ADVConnection {
         while ((sessionJSON = reader.readLine()) != null) {
 
             logger.debug("Parse incoming request");
-            ADVRequest request = gsonProvider.getMinifier().fromJson(
+            ADVRequest request = gsonProvider.getMinifier().create().fromJson(
                     sessionJSON, ADVRequest.class);
 
             if (request.getCommand().equals(ProtocolCommand.END)) {

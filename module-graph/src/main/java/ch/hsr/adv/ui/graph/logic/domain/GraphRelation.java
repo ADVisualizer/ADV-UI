@@ -59,4 +59,8 @@ public class GraphRelation implements ADVRelation {
     public boolean isDirected() {
         return isDirected;
     }
+
+    public void setDirected(boolean directed) {
+        isDirected = directed;
+    }
 }

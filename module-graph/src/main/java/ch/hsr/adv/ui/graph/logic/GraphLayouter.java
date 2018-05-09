@@ -1,15 +1,19 @@
 package ch.hsr.adv.ui.graph.logic;
 
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.*;
+import ch.hsr.adv.ui.core.logic.domain.ADVElement;
+import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
 import ch.hsr.adv.ui.core.logic.domain.Module;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +25,9 @@ import java.util.Map;
  * Creates JavaFX Nodes for the graph elements and adds them to a pane
  */
 @Singleton
-@Module("graph")
+@Module(ModuleConstants.MODULE_NAME)
 public class GraphLayouter implements Layouter {
+
     private static final Logger logger = LoggerFactory.getLogger(
             GraphLayouter.class);
 
@@ -34,22 +39,25 @@ public class GraphLayouter implements Layouter {
     @Inject
     private GraphLayouterUtil util;
 
+    /**
+     * Layout the graph module group
+     *
+     * @param moduleGroup to be layouted
+     * @param flags       optional flags on session level
+     * @return layouted pane
+     */
     @Override
-    public LayoutedSnapshot layout(Snapshot snapshot, List<String> flags) {
+    public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         logger.info("Layouting graph snapshot...");
         vertices = new HashMap<>();
         scalePane = new AutoScalePane();
-        elements = snapshot.getElements();
-        relations = snapshot.getRelations();
+        elements = moduleGroup.getElements();
+        relations = moduleGroup.getRelations();
 
         createElements();
         createRelations();
 
-        LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
-                snapshot.getSnapshotId(), scalePane);
-        layoutedSnapshot.setSnapshotDescription(
-                snapshot.getSnapshotDescription());
-        return layoutedSnapshot;
+        return scalePane;
     }
 
     //TODO: change ConnectorType if more than one edge between two vertices

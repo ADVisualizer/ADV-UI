@@ -1,7 +1,8 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import com.google.gson.JsonElement;
 
 /**
  * Session parser
@@ -12,12 +13,13 @@ import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 public interface Parser {
 
     /**
-     * Parses the given json into a {@link Session}
+     * Parses the given json into a
+     * {@link ch.hsr.adv.ui.core.logic.domain.Session}
      *
      * @param json json to parse
-     * @return parsed {@link Session}
+     * @return parsed {@link ch.hsr.adv.ui.core.logic.domain.Session}
      * @throws ADVParseException if anything goes wrong with parsing the
      *                           session
      */
-    Session parse(String json) throws ADVParseException;
+    ModuleGroup parse(JsonElement json) throws ADVParseException;
 }

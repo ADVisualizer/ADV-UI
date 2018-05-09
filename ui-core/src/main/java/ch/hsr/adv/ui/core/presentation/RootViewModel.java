@@ -43,6 +43,7 @@ class RootViewModel {
     private final StringProperty notificationMessageProperty = new
             SimpleStringProperty("");
 
+    private final CoreStringifyer coreStringifyer;
     private final ServiceProvider serviceProvider;
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
@@ -65,13 +66,15 @@ class RootViewModel {
                   DatastoreAccess fileAccess,
                   LayoutedSnapshotStore layoutedSnapshotStore,
                   EventManager eventManager,
-                  ServiceProvider serviceProvider) {
+                  ServiceProvider serviceProvider,
+                  CoreStringifyer coreStringifyer1) {
 
         this.sessionStore = sessionStore;
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
         this.serviceProvider = serviceProvider;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
+        this.coreStringifyer = coreStringifyer1;
 
         eventManager.subscribe(new SessionStoreListener(),
                 List.of(ADVEvent.SESSION_ADDED)
@@ -152,18 +155,15 @@ class RootViewModel {
             if (session != null) {
                 layoutedSnapshotStore
                         .getAll(session.getSessionId())
-                        .forEach(element -> {
-                            String description = element
+                        .forEach(snapshot -> {
+                            String description = snapshot
                                     .getSnapshotDescription();
-                            long id = element.getSnapshotId();
+                            long id = snapshot.getSnapshotId();
                             session.getSnapshotById(id)
                                     .setSnapshotDescription(description);
                         });
 
-                Stringifyer stringifyer = serviceProvider
-                        .getStringifyer(session.getModuleName());
-
-                String json = stringifyer.stringify(session);
+                String json = coreStringifyer.stringify(session);
                 fileAccess.write(file, json);
             }
             showNotification(I18n.NOTIFICATION_SESSION_SAVE_SUCCESSFUL);

@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.array.logic;
 
 import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
-import ch.hsr.adv.ui.core.logic.domain.Snapshot;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
@@ -29,12 +29,12 @@ public class ArrayDefaultLayouter {
 
     /**
      * Layouts a default array
-     * @param snapshot snapshot to layout
+     * @param moduleGroup moduleGroup to layout
      * @return layouted pane
      */
-    public Pane layout(Snapshot snapshot) {
+    public Pane layout(ModuleGroup moduleGroup) {
         initializeContainer();
-        drawElements(snapshot);
+        drawElements(moduleGroup);
 
         scalePane.addChildren(valueContainer);
 
@@ -47,9 +47,9 @@ public class ArrayDefaultLayouter {
         valueContainer.setAlignment(Pos.CENTER);
     }
 
-    private void drawElements(Snapshot snapshot) {
+    private void drawElements(ModuleGroup moduleGroup) {
 
-        snapshot.getElements().forEach(e -> {
+        moduleGroup.getElements().forEach(e -> {
             ArrayElement element = (ArrayElement) e;
             ADVStyle style = element.getStyle();
 

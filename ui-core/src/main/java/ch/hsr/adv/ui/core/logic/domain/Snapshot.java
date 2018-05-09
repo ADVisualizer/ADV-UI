@@ -2,7 +2,6 @@ package ch.hsr.adv.ui.core.logic.domain;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents the state of a data structure in the user's module
@@ -12,11 +11,8 @@ import java.util.Objects;
 public class Snapshot {
 
     private long snapshotId;
-
     private String snapshotDescription;
-    private List<ADVElement> elements = new ArrayList<>();
-    private List<ADVRelation> relations = new ArrayList<>();
-
+    private List<ModuleGroup> moduleGroups = new ArrayList<>();
 
     public long getSnapshotId() {
         return snapshotId;
@@ -41,52 +37,11 @@ public class Snapshot {
         this.snapshotDescription = snapshotDescription;
     }
 
-    /**
-     * Adds a element to the snapshot
-     *
-     * @param element element to add
-     */
-    public void addElement(ADVElement<?> element) {
-        elements.add(element);
+    public List<ModuleGroup> getModuleGroups() {
+        return moduleGroups;
     }
 
-    /**
-     * Adds a relation to the snapshot
-     *
-     * @param relation relation to add
-     */
-    public void addRelation(ADVRelation relation) {
-        relations.add(relation);
-    }
-
-    public List<ADVElement> getElements() {
-        return elements;
-    }
-
-    public List<ADVRelation> getRelations() {
-        return relations;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Snapshot snapshot = (Snapshot) o;
-        return snapshotId == snapshot.snapshotId
-                && Objects.equals(snapshotDescription, snapshot
-                .snapshotDescription)
-                && elements.size() == snapshot.elements.size()
-                && relations.size() == snapshot.relations.size();
-
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(snapshotId, snapshotDescription, elements,
-                relations);
+    public void setModuleGroups(List<ModuleGroup> moduleGroups) {
+        this.moduleGroups = moduleGroups;
     }
 }

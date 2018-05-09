@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.array.logic;
 
 import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
-import ch.hsr.adv.ui.core.logic.domain.Snapshot;
+import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.*;
@@ -35,12 +35,12 @@ public class ArrayObjectReferenceLayouter {
     /**
      * Layout array object reference
      *
-     * @param snapshot snapshot to layout
+     * @param moduleGroup moduleGroup to layout
      * @return layouted pane
      */
-    public Pane layout(Snapshot snapshot) {
+    public Pane layout(ModuleGroup moduleGroup) {
         initializeContainer();
-        drawElements(snapshot);
+        drawElements(moduleGroup);
 
         boxContainer.getChildren().addAll(referenceContainer, valueContainer);
         scalePane.addChildren(boxContainer);
@@ -59,8 +59,8 @@ public class ArrayObjectReferenceLayouter {
         boxContainer.setSpacing(SPACING);
     }
 
-    private void drawElements(Snapshot snapshot) {
-        snapshot.getElements().forEach(e -> {
+    private void drawElements(ModuleGroup moduleGroup) {
+        moduleGroup.getElements().forEach(e -> {
             ArrayElement element = (ArrayElement) e;
             ADVStyle style = element.getStyle();
 

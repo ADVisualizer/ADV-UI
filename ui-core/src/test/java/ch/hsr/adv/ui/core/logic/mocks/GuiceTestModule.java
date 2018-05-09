@@ -1,10 +1,12 @@
 package ch.hsr.adv.ui.core.logic.mocks;
 
+import ch.hsr.adv.ui.core.logic.CoreLayouter;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import com.google.inject.AbstractModule;
 import com.google.inject.multibindings.MapBinder;
+import org.mockito.Mockito;
 
 public class GuiceTestModule extends AbstractModule {
 
@@ -12,6 +14,8 @@ public class GuiceTestModule extends AbstractModule {
 
     @Override
     protected void configure() {
+        bind(CoreLayouter.class).toInstance(Mockito.mock(CoreLayouter.class));
+
         MapBinder<String, Layouter> layouterMapBinder =
                 MapBinder.newMapBinder(binder(), String.class,
                         Layouter.class);
