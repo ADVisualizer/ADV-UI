@@ -65,7 +65,7 @@ public class ADVFlowControl implements FlowControl {
             if (existing) {
                 changeCurrentSession(session);
             } else {
-                storeNewSession(session);
+                updateSessionStore(session);
             }
 
             logger.info("JSON successfully processed.");
@@ -80,6 +80,12 @@ public class ADVFlowControl implements FlowControl {
         return coreParser.parse(sessionJSON);
     }
 
+    /**
+     * @param session containing snapshots to be layouted
+     * @return true, if the input session contains any snapshots, that have
+     * not yet been layouted. Return false, if and only if the input session
+     * is a duplicated session, i.e. contains no new snapshots
+     */
     private boolean layoutSession(Session session) {
         // filter new snapshots
         long sessionId = session.getSessionId();
@@ -112,7 +118,7 @@ public class ADVFlowControl implements FlowControl {
         return newSnapshots.isEmpty();
     }
 
-    private void storeNewSession(Session session) {
+    private void updateSessionStore(Session session) {
         sessionStore.add(session);
         eventManager.fire(ADVEvent.NOTIFICATION, null,
                 I18n.NOTIFICATION_SESSION_LOAD_SUCCESSFUL);

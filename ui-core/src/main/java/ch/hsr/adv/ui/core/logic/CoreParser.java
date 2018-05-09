@@ -32,7 +32,7 @@ public class CoreParser {
 
     /**
      * Parses the session up to the module group which is handled
-     * module-specificly.
+     * module-specifically.
      *
      * @param json session json
      * @return parsed session

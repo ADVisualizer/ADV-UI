@@ -29,7 +29,7 @@ public class ArrayStringifyerTest {
     public void setup(FileDatastoreAccess reader, ArrayParser testParser)
             throws ADVParseException, IOException {
 
-        URL url = getClass().getClassLoader().getResource("session.json");
+        URL url = getClass().getClassLoader().getResource("module-group.json");
 
         String json = reader.read(new File(url.getPath()));
         Gson gson = new Gson();

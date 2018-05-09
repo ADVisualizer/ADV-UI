@@ -31,7 +31,7 @@ public class GraphParserTest {
     @Before
     public void setUp(FileDatastoreAccess reader) throws IOException {
         URL url = GraphParserTest.class.getClassLoader()
-                .getResource("session.json");
+                .getResource("module-group.json");
 
         String json = reader.read(new File(url.getPath()));
 
