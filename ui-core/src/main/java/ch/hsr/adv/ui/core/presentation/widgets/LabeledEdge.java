@@ -44,6 +44,8 @@ public class LabeledEdge extends Group {
     private final ArrowHead startArrowHead;
     private final ArrowHead endArrowHead;
     private final Node commonAncestor;
+    private Bounds startBounds;
+    private Bounds endBounds;
 
 
     public LabeledEdge(
@@ -92,10 +94,6 @@ public class LabeledEdge extends Group {
                 this.endArrowHead = null;
         }
 
-        // bind listener
-        startNode.boundsInParentProperty().addListener(this::drawCurve);
-        endNode.boundsInParentProperty().addListener(this::drawCurve);
-
         initializeComponent(labelText);
     }
 
@@ -143,42 +141,29 @@ public class LabeledEdge extends Group {
      * Manually update the position of this edge
      */
     public void update() {
-        drawCurve(null);
-    }
-
-    private void drawCurve(Observable o) {
-        Bounds startInCommonAncestor = getRelativeBounds(startNode,
+        startBounds = getRelativeBounds(startNode,
                 commonAncestor);
-        Bounds endInCommonAncestor = getRelativeBounds(endNode, commonAncestor);
-        if (startInCommonAncestor.getHeight() != 0 && startInCommonAncestor
+        endBounds = getRelativeBounds(endNode, commonAncestor);
+        if (startBounds.getHeight() != 0 && startBounds
                 .getWidth() != 0) {
 
-            Point2D startCenter = getConnectorPoint(startInCommonAncestor,
+            Point2D startCenter = getConnectorPoint(startBounds,
                     startConnector);
 
             curve.setStartX(startCenter.getX());
             curve.setStartY(startCenter.getY());
-
-            // straight line
-            curve.setControlX1(startCenter.getX());
-            curve.setControlY1(startCenter.getY());
-
         }
-        if (endInCommonAncestor.getWidth() != 0 && endInCommonAncestor
+        if (endBounds.getWidth() != 0 && endBounds
                 .getHeight() != 0) {
-            Point2D endCenter = getConnectorPoint(endInCommonAncestor,
+            Point2D endCenter = getConnectorPoint(endBounds,
                     endConnector);
             curve.setEndX(endCenter.getX());
             curve.setEndY(endCenter.getY());
-
-            // straight line
-            curve.setControlX2(endCenter.getX());
-            curve.setControlY2(endCenter.getY());
         }
-        if (startInCommonAncestor.getHeight() != 0
-                && startInCommonAncestor.getWidth() != 0
-                && endInCommonAncestor.getWidth() != 0
-                && endInCommonAncestor.getHeight() != 0) {
+        if (startBounds.getHeight() != 0
+                && startBounds.getWidth() != 0
+                && endBounds.getWidth() != 0
+                && endBounds.getHeight() != 0) {
             setControlPoints(
                     curve,
                     new Point2D(curve.getStartX(), curve.getStartY()),
@@ -204,8 +189,6 @@ public class LabeledEdge extends Group {
 
     private Point2D getConnectorPoint(Bounds boundsInCommonAncestor,
                                       ConnectorType connectorType) {
-        Bounds startBounds = getRelativeBounds(startNode, commonAncestor);
-        Bounds endBounds = getRelativeBounds(endNode, commonAncestor);
         Point2D center = getCenter(boundsInCommonAncestor);
         Point2D startCenter = getCenter(startBounds);
         Point2D endCenter = getCenter(endBounds);
@@ -300,19 +283,19 @@ public class LabeledEdge extends Group {
         cubicCurve.setControlY2(mid.getY());
     }
 
-    protected LabeledNode getStartNode() {
-        return startNode;
+    public Bounds getStartBounds() {
+        return startBounds;
     }
 
-    protected LabeledNode getEndNode() {
-        return endNode;
+    public Bounds getEndBounds() {
+        return endBounds;
     }
 
-    protected ConnectorType getStartConnector() {
+    public ConnectorType getStartConnector() {
         return startConnector;
     }
 
-    protected ConnectorType getEndConnector() {
+    public ConnectorType getEndConnector() {
         return endConnector;
     }
 

@@ -55,13 +55,7 @@ public class ArrayObjectReferenceLayouter {
 
     private void initializeContainer() {
         scalePane = new AutoScalePane();
-        boxContainer = new VBox() {
-            @Override
-            protected void layoutChildren() {
-                edgeList.forEach(LabeledEdge::update);
-                super.layoutChildren();
-            }
-        };
+        boxContainer = new VBox();
         valueContainer = new HBox();
         referenceContainer = new HBox();
         referenceContainer.setAlignment(Pos.CENTER);
