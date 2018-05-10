@@ -11,7 +11,6 @@ import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -59,7 +58,7 @@ public class ArrayObjectReferenceLayouter {
         boxContainer = new VBox() {
             @Override
             protected void layoutChildren() {
-                edgeList.forEach(e -> e.update());
+                edgeList.forEach(LabeledEdge::update);
                 super.layoutChildren();
             }
         };

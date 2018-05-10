@@ -175,6 +175,15 @@ public class LabeledEdge extends Group {
             curve.setControlX2(endCenter.getX());
             curve.setControlY2(endCenter.getY());
         }
+        if (startInCommonAncestor.getHeight() != 0
+                && startInCommonAncestor.getWidth() != 0
+                && endInCommonAncestor.getWidth() != 0
+                && endInCommonAncestor.getHeight() != 0) {
+            setControlPoints(
+                    curve,
+                    new Point2D(curve.getStartX(), curve.getStartY()),
+                    new Point2D(curve.getEndX(), curve.getEndY()));
+        }
 
         // arrow
         switch (directionType) {
