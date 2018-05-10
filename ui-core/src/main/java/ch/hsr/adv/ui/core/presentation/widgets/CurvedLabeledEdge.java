@@ -11,9 +11,9 @@ import javafx.scene.shape.CubicCurve;
 public class CurvedLabeledEdge extends LabeledEdge {
 
     public CurvedLabeledEdge(String labelText,
-                             ADVNode startNode,
+                             LabeledNode startNode,
                              ConnectorType startConnector,
-                             ADVNode endNode,
+                             LabeledNode endNode,
                              ConnectorType endConnector,
                              Region edgeContainer,
                              ADVStyle style) {
@@ -23,9 +23,9 @@ public class CurvedLabeledEdge extends LabeledEdge {
     }
 
     public CurvedLabeledEdge(String labelText,
-                             ADVNode startNode,
+                             LabeledNode startNode,
                              ConnectorType startConnector,
-                             ADVNode endNode,
+                             LabeledNode endNode,
                              ConnectorType endConnector,
                              Region edgeContainer,
                              ADVStyle style,

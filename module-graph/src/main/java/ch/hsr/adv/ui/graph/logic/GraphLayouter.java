@@ -85,7 +85,7 @@ public class GraphLayouter implements Layouter {
                     r.getLabel(),
                     source, ConnectorType.DIRECT,
                     target, ConnectorType.DIRECT,
-                    scalePane,
+                    scalePane.getContent(),
                     style, type);
 
             scalePane.addChildren(edge);

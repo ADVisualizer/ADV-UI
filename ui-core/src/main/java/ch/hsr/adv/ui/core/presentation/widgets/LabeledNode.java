@@ -5,6 +5,7 @@ import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.*;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -15,7 +16,7 @@ import javafx.scene.paint.Paint;
  *
  * @author mtrentini
  */
-public class LabeledNode extends ADVNode {
+public class LabeledNode extends Region {
 
     private static final int LABEL_PADDING = 5;
 
@@ -73,6 +74,7 @@ public class LabeledNode extends ADVNode {
         }
     }
 
+    //TODO: do we need to reset this for every bounds change
     private void handleBoundsChanged(Observable o) {
 
         BackgroundFill fill = new BackgroundFill(backgroundColor,
@@ -85,7 +87,6 @@ public class LabeledNode extends ADVNode {
         Border border = createBorder(width, color, strokeStyle);
         borderProperty.setValue(border);
 
-        computeCenter();
     }
 
     /**
@@ -158,33 +159,4 @@ public class LabeledNode extends ADVNode {
                 getBaselineOffset(), HPos.CENTER, VPos.CENTER);
     }
 
-    private void computeCenter() {
-        // check for bounds in parent because bounds in local get calculated
-        // very late and listener doesn't work well with bounds in local
-        if (getBoundsInParent().getWidth() > 0
-                && getBoundsInParent().getHeight() > 0) {
-
-            // to calculate the center use the local bounds and convert them
-            // to the scene coordinates
-            Bounds inLocal = getBoundsInLocal();
-            Bounds localToScene = localToScene(inLocal);
-
-            double centerX = localToScene.getMinX()
-                    + localToScene.getWidth() / 2;
-            double centerY = localToScene.getMinY()
-                    + localToScene.getHeight() / 2;
-
-            centerProperty.set(new Point2D(centerX, centerY));
-        }
-    }
-
-    @Override
-    public Point2D getCenter() {
-        return centerProperty.get();
-    }
-
-    @Override
-    public ObjectProperty<Point2D> centerProperty() {
-        return centerProperty;
-    }
 }

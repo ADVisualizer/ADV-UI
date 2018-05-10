@@ -11,20 +11,22 @@ import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Positions the array objects inclusive the references on the Pane
  */
 @Singleton
 public class ArrayObjectReferenceLayouter {
-
     private static final int SPACING = 30;
-
     private final ArrayLayouterUtil layouterUtil;
-
+    private List<LabeledEdge> edgeList = new ArrayList<>();
     private AutoScalePane scalePane;
     private VBox boxContainer;
     private HBox valueContainer;
@@ -45,7 +47,8 @@ public class ArrayObjectReferenceLayouter {
         initializeContainer();
         drawElements(snapshot);
 
-        boxContainer.getChildren().addAll(referenceContainer, valueContainer);
+        boxContainer.getChildren()
+                .addAll(referenceContainer, valueContainer);
         scalePane.addChildren(boxContainer);
 
         return scalePane;
@@ -53,7 +56,13 @@ public class ArrayObjectReferenceLayouter {
 
     private void initializeContainer() {
         scalePane = new AutoScalePane();
-        boxContainer = new VBox();
+        boxContainer = new VBox() {
+            @Override
+            protected void layoutChildren() {
+                edgeList.forEach(e -> e.update());
+                super.layoutChildren();
+            }
+        };
         valueContainer = new HBox();
         referenceContainer = new HBox();
         referenceContainer.setAlignment(Pos.CENTER);
@@ -76,6 +85,8 @@ public class ArrayObjectReferenceLayouter {
                 layouterUtil.setStyling(valueNode, style);
 
                 valueContainer.getChildren().add(valueNode);
+                valueContainer.layout();
+                boxContainer.layout();
             } else {
                 referenceNode = new LabeledNode("null");
             }
@@ -83,6 +94,8 @@ public class ArrayObjectReferenceLayouter {
             layouterUtil.setStyling(referenceNode, style);
 
             referenceContainer.getChildren().addAll(referenceNode);
+            referenceContainer.layout();
+            boxContainer.layout();
         });
     }
 
@@ -92,10 +105,11 @@ public class ArrayObjectReferenceLayouter {
         LabeledEdge relation = new LabeledEdge("",
                 referenceNode, ConnectorType.BOTTOM,
                 valueNode, ConnectorType.TOP,
-                scalePane,
+                scalePane.getContent(),
                 new ADVDefaultLineStyle(),
                 LabeledEdge.DirectionType.UNIDIRECTIONAL);
 
         scalePane.addChildren(relation);
+        edgeList.add(relation);
     }
 }
