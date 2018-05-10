@@ -1,6 +1,5 @@
 package ch.hsr.adv.ui.graph.logic.domain;
 
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 
 import java.util.HashMap;

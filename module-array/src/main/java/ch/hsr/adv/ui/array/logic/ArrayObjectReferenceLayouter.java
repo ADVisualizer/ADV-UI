@@ -15,9 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Positions the array objects inclusive the references on the Pane
  */
@@ -25,7 +22,6 @@ import java.util.List;
 public class ArrayObjectReferenceLayouter {
     private static final int SPACING = 30;
     private final ArrayLayouterUtil layouterUtil;
-    private List<LabeledEdge> edgeList = new ArrayList<>();
     private AutoScalePane scalePane;
     private VBox boxContainer;
     private HBox valueContainer;
@@ -78,8 +74,6 @@ public class ArrayObjectReferenceLayouter {
                 layouterUtil.setStyling(valueNode, style);
 
                 valueContainer.getChildren().add(valueNode);
-                valueContainer.layout();
-                boxContainer.layout();
             } else {
                 referenceNode = new LabeledNode("null");
             }
@@ -87,8 +81,6 @@ public class ArrayObjectReferenceLayouter {
             layouterUtil.setStyling(referenceNode, style);
 
             referenceContainer.getChildren().addAll(referenceNode);
-            referenceContainer.layout();
-            boxContainer.layout();
         });
     }
 
@@ -102,6 +94,5 @@ public class ArrayObjectReferenceLayouter {
                 LabeledEdge.DirectionType.UNIDIRECTIONAL);
 
         scalePane.addChildren(relation);
-        edgeList.add(relation);
     }
 }
