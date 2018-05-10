@@ -2,7 +2,6 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
-import javafx.beans.Observable;
 import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Bounds;
@@ -43,7 +42,6 @@ public class LabeledEdge extends Group {
     private final DirectionType directionType;
     private final ArrowHead startArrowHead;
     private final ArrowHead endArrowHead;
-    private final Node commonAncestor;
     private Bounds startBounds;
     private Bounds endBounds;
 
@@ -54,10 +52,9 @@ public class LabeledEdge extends Group {
             ConnectorType startConnector,
             LabeledNode endNode,
             ConnectorType endConnector,
-            Node commonAncestor,
             ADVStyle style) {
         this(labelText, startNode, startConnector, endNode, endConnector,
-                commonAncestor, style, DirectionType.NONE);
+                style, DirectionType.NONE);
     }
 
     public LabeledEdge(
@@ -66,7 +63,6 @@ public class LabeledEdge extends Group {
             ConnectorType startConnector,
             LabeledNode endNode,
             ConnectorType endConnector,
-            Node commonAncestor,
             ADVStyle style, DirectionType directionType) {
 
         this.style = style;
@@ -74,7 +70,6 @@ public class LabeledEdge extends Group {
         this.startConnector = startConnector;
         this.endNode = endNode;
         this.endConnector = endConnector;
-        this.commonAncestor = commonAncestor;
         this.directionType = directionType;
 
         // draw arrow
@@ -141,9 +136,8 @@ public class LabeledEdge extends Group {
      * Manually update the position of this edge
      */
     public void update() {
-        startBounds = getRelativeBounds(startNode,
-                commonAncestor);
-        endBounds = getRelativeBounds(endNode, commonAncestor);
+        startBounds = getRelativeBounds(startNode, getParent());
+        endBounds = getRelativeBounds(endNode, getParent());
         if (startBounds.getHeight() != 0 && startBounds
                 .getWidth() != 0) {
 
@@ -228,14 +222,14 @@ public class LabeledEdge extends Group {
         }
     }
 
-    private Point2D getCenter(Bounds bounds) {
-        return new Point2D(bounds.getMinX() + bounds.getWidth() / 2, bounds
-                .getMinY() + bounds.getHeight() / 2);
-    }
-
     private Bounds getRelativeBounds(Node node, Node relativeNode) {
         Bounds nodeBoundsInScene = node.localToScene(node.getBoundsInLocal());
         return relativeNode.sceneToLocal(nodeBoundsInScene);
+    }
+
+    private Point2D getCenter(Bounds bounds) {
+        return new Point2D(bounds.getMinX() + bounds.getWidth() / 2, bounds
+                .getMinY() + bounds.getHeight() / 2);
     }
 
     /**

@@ -2,7 +2,6 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import javafx.geometry.Point2D;
-import javafx.scene.Node;
 import javafx.scene.shape.CubicCurve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,11 +19,10 @@ public class CurvedLabeledEdge extends LabeledEdge {
                              ConnectorType startConnector,
                              LabeledNode endNode,
                              ConnectorType endConnector,
-                             Node commonAncestor,
                              ADVStyle style) {
 
         super(labelText, startNode, startConnector, endNode, endConnector,
-                commonAncestor, style);
+                style);
     }
 
     public CurvedLabeledEdge(String labelText,
@@ -32,13 +30,11 @@ public class CurvedLabeledEdge extends LabeledEdge {
                              ConnectorType startConnector,
                              LabeledNode endNode,
                              ConnectorType endConnector,
-                             Node commonAncestor,
                              ADVStyle style,
                              LabeledEdge.DirectionType directionType) {
 
         super(labelText, startNode, startConnector,
-                endNode, endConnector, commonAncestor,
-                style, directionType);
+                endNode, endConnector, style, directionType);
     }
 
     @Override

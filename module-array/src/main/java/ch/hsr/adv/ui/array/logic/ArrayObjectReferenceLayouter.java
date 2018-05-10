@@ -98,7 +98,6 @@ public class ArrayObjectReferenceLayouter {
         LabeledEdge relation = new LabeledEdge("",
                 referenceNode, ConnectorType.BOTTOM,
                 valueNode, ConnectorType.TOP,
-                scalePane.getContent(),
                 new ADVDefaultLineStyle(),
                 LabeledEdge.DirectionType.UNIDIRECTIONAL);
 

@@ -88,7 +88,6 @@ public class GraphLayouter implements Layouter {
                         r.getLabel(),
                         source, ConnectorType.DIRECT,
                         target, ConnectorType.DIRECT,
-                        scalePane.getContent(),
                         style, type
                 );
             } else {
@@ -96,7 +95,6 @@ public class GraphLayouter implements Layouter {
                         r.getLabel(),
                         source, ConnectorType.DIRECT,
                         target, ConnectorType.DIRECT,
-                        scalePane.getContent(),
                         style, type);
             }
             edgeMatrix.addEdge(source, target);
