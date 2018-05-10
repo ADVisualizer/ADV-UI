@@ -86,8 +86,8 @@ public class GraphLayouter implements Layouter {
             if (edgeMatrix.hasEdges(source, target)) {
                 edge = new CurvedLabeledEdge(
                         r.getLabel(),
-                        source, ConnectorType.TOP,
-                        target, ConnectorType.TOP,
+                        source, ConnectorType.DIRECT,
+                        target, ConnectorType.DIRECT,
                         scalePane.getContent(),
                         style, type
                 );
