@@ -4,8 +4,9 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.geometry.*;
-import javafx.scene.Node;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -22,8 +23,6 @@ public class LabeledNode extends Region {
 
     private final Label label = new Label();
 
-    private final ObjectProperty<Point2D> centerProperty = new
-            SimpleObjectProperty<>();
     private final ObjectProperty<Background> backgroundProperty = new
             SimpleObjectProperty<>();
     private final ObjectProperty<Border> borderProperty = new
@@ -48,6 +47,7 @@ public class LabeledNode extends Region {
 
         label.setPadding(new Insets(LABEL_PADDING));
         label.setText(labelText);
+
         getChildren().addAll(label);
     }
 
@@ -61,8 +61,26 @@ public class LabeledNode extends Region {
 
         backgroundProperty().bind(backgroundProperty);
         borderProperty().bind(borderProperty);
+        boundsInParentProperty().addListener(this::redrawRoundedBorder);
+    }
 
-        boundsInParentProperty().addListener(this::handleBoundsChanged);
+
+    /**
+     * the rounded corners need to be redrawn every bounds change
+     *
+     * @param o observable event
+     */
+    private void redrawRoundedBorder(Observable o) {
+        BackgroundFill fill = new BackgroundFill(backgroundColor, cornerRadii(),
+                Insets.EMPTY);
+        backgroundProperty.setValue(new Background(fill));
+
+        BorderStroke borderStroke = borderProperty.get().getStrokes().get(0);
+        Paint color = borderStroke.getTopStroke();
+        double width = borderStroke.getWidths().getTop();
+        BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
+        Border border = createBorder(width, color, strokeStyle);
+        borderProperty.setValue(border);
     }
 
     private CornerRadii cornerRadii() {
@@ -74,20 +92,6 @@ public class LabeledNode extends Region {
         }
     }
 
-    //TODO: do we need to reset this for every bounds change
-    private void handleBoundsChanged(Observable o) {
-
-        BackgroundFill fill = new BackgroundFill(backgroundColor,
-                cornerRadii(), Insets.EMPTY);
-        backgroundProperty.setValue(new Background(fill));
-        BorderStroke borderStroke = borderProperty.get().getStrokes().get(0);
-        Paint color = borderStroke.getTopStroke();
-        double width = borderStroke.getWidths().getTop();
-        BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
-        Border border = createBorder(width, color, strokeStyle);
-        borderProperty.setValue(border);
-
-    }
 
     /**
      * Sets the X property

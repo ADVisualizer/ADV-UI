@@ -138,46 +138,37 @@ public class LabeledEdge extends Group {
     public void update() {
         startBounds = getRelativeBounds(startNode, getParent());
         endBounds = getRelativeBounds(endNode, getParent());
-        if (startBounds.getHeight() != 0 && startBounds
-                .getWidth() != 0) {
+        if (startBounds.getHeight() != 0 && startBounds.getWidth() != 0
+                && endBounds.getWidth() != 0 && endBounds.getHeight() != 0) {
 
             Point2D startCenter = getConnectorPoint(startBounds,
                     startConnector);
-
             curve.setStartX(startCenter.getX());
             curve.setStartY(startCenter.getY());
-        }
-        if (endBounds.getWidth() != 0 && endBounds
-                .getHeight() != 0) {
-            Point2D endCenter = getConnectorPoint(endBounds,
-                    endConnector);
+
+            Point2D endCenter = getConnectorPoint(endBounds, endConnector);
             curve.setEndX(endCenter.getX());
             curve.setEndY(endCenter.getY());
-        }
-        if (startBounds.getHeight() != 0
-                && startBounds.getWidth() != 0
-                && endBounds.getWidth() != 0
-                && endBounds.getHeight() != 0) {
-            setControlPoints(
-                    curve,
+
+            setControlPoints(curve,
                     new Point2D(curve.getStartX(), curve.getStartY()),
                     new Point2D(curve.getEndX(), curve.getEndY()));
-        }
 
-        // arrow
-        switch (directionType) {
-            case BIDIRECTIONAL:
-                startArrowHead.update();
-                endArrowHead.update();
-                break;
-            case UNIDIRECTIONAL:
-                endArrowHead.update();
-                break;
-            case NONE:
-                break;
-            default:
-                logger.warn("Unsupported direction type: {}",
-                        directionType);
+            // arrow
+            switch (directionType) {
+                case BIDIRECTIONAL:
+                    startArrowHead.update();
+                    endArrowHead.update();
+                    break;
+                case UNIDIRECTIONAL:
+                    endArrowHead.update();
+                    break;
+                case NONE:
+                    break;
+                default:
+                    logger.warn("Unsupported direction type: {}",
+                            directionType);
+            }
         }
     }
 

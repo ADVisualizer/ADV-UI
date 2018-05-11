@@ -38,11 +38,7 @@ public class AutoScalePane extends Pane {
         content.getChildren().addAll(children);
         requestLayout();
     }
-
-    public Group getContent() {
-        return content;
-    }
-
+    
     @Override
     protected void layoutChildren() {
 

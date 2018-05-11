@@ -105,6 +105,11 @@ public class CurvedLabeledEdge extends LabeledEdge {
         cubicCurve.setControlY2(y);
     }
 
+    /**
+     * Helper Enum which represents all supported representations of
+     * connector type combinations. Allows us to use a switch statement
+     * instead of string matching.
+     */
     private enum BiConnectionType {
         TOPTOP(ConnectorType.TOP, ConnectorType.TOP),
         BOTTOMBOTTOM(ConnectorType.BOTTOM, ConnectorType.BOTTOM),
@@ -113,7 +118,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
         LEFTRIGHT(ConnectorType.LEFT, ConnectorType.RIGHT),
         RIGHTLEFT(ConnectorType.RIGHT, ConnectorType.LEFT),
         TOPBOTTOM(ConnectorType.TOP, ConnectorType.BOTTOM),
-        BOTTOMTOP(ConnectorType.BOTTOM, ConnectorType.TOP);
+        BOTTOMTOP(ConnectorType.BOTTOM, ConnectorType.TOP),
+        DEFAULT(null, null);
 
         private ConnectorType start;
         private ConnectorType end;
@@ -125,7 +131,12 @@ public class CurvedLabeledEdge extends LabeledEdge {
 
         static BiConnectionType valueOf(ConnectorType start, ConnectorType
                 end) {
-            return valueOf(start.name() + end.name());
+            try {
+                return Enum.valueOf(BiConnectionType.class, start.name() + end
+                        .name());
+            } catch (IllegalArgumentException e) {
+                return DEFAULT;
+            }
         }
     }
 

@@ -6,16 +6,12 @@ import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.*;
-import ch.hsr.adv.ui.graph.logic.domain.Matrix;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Creates JavaFX Nodes for the graph elements and adds them to a pane
@@ -30,7 +26,6 @@ public class GraphLayouter implements Layouter {
     private AutoScalePane scalePane;
     private List<ADVRelation> relations;
     private List<ADVElement> elements;
-    private Matrix edgeMatrix;
 
     @Inject
     private GraphLayouterUtil util;
@@ -70,10 +65,14 @@ public class GraphLayouter implements Layouter {
 
     //TODO: change ConnectorType if more than one edge between two vertices
     private void createRelations() {
-        edgeMatrix = new Matrix(new ArrayList<>(vertices.values()));
+        Set<Integer> edgeHashes = new HashSet<>();
+
         relations.forEach(r -> {
             LabeledNode source = vertices.get(r.getSourceElementId());
             LabeledNode target = vertices.get(r.getTargetElementId());
+            boolean combinationNotExists = edgeHashes.add(
+                    source.hashCode() + target.hashCode());
+
             ADVStyle style = r.getStyle();
             if (style == null) {
                 style = new ADVDefaultLineStyle();
@@ -82,22 +81,22 @@ public class GraphLayouter implements Layouter {
             if (r.isDirected()) {
                 type = LabeledEdge.DirectionType.UNIDIRECTIONAL;
             }
+
+            // does an edge already exists
             LabeledEdge edge;
-            if (edgeMatrix.hasEdges(source, target)) {
-                edge = new CurvedLabeledEdge(
-                        r.getLabel(),
-                        source, ConnectorType.DIRECT,
-                        target, ConnectorType.DIRECT,
-                        style, type
-                );
-            } else {
+            if (combinationNotExists) {
                 edge = new LabeledEdge(
                         r.getLabel(),
                         source, ConnectorType.DIRECT,
                         target, ConnectorType.DIRECT,
                         style, type);
+            } else {
+                edge = new CurvedLabeledEdge(
+                        r.getLabel(),
+                        source, ConnectorType.DIRECT,
+                        target, ConnectorType.DIRECT,
+                        style, type);
             }
-            edgeMatrix.addEdge(source, target);
 
             scalePane.addChildren(edge);
         });
