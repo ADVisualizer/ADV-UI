@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.graph.logic;
 
+
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
 import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
@@ -7,9 +8,7 @@ import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
-import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.core.presentation.widgets.*;
 import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -17,9 +16,8 @@ import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 /**
  * Creates JavaFX Nodes for the graph elements and adds them to a pane
@@ -60,7 +58,7 @@ public class GraphLayouter implements Layouter {
         return scalePane;
     }
 
-    //TODO: change ConnectorType if more than one edge between two vertices
+
     private void createElements() {
         elements.forEach(e -> {
             String label = e.getContent().toString();
@@ -75,10 +73,16 @@ public class GraphLayouter implements Layouter {
         });
     }
 
+    //TODO: change ConnectorType if more than one edge between two vertices
     private void createRelations() {
+        Set<Integer> edgeHashes = new HashSet<>();
+
         relations.forEach(r -> {
             LabeledNode source = vertices.get(r.getSourceElementId());
             LabeledNode target = vertices.get(r.getTargetElementId());
+            boolean combinationNotExists = edgeHashes.add(
+                    source.hashCode() + target.hashCode());
+
             ADVStyle style = r.getStyle();
             if (style == null) {
                 style = new ADVDefaultLineStyle();
@@ -88,8 +92,21 @@ public class GraphLayouter implements Layouter {
                 type = LabeledEdge.DirectionType.UNIDIRECTIONAL;
             }
 
-            LabeledEdge edge = new LabeledEdge(r.getLabel(), source, target,
-                    style, type);
+            // does an edge already exists
+            LabeledEdge edge;
+            if (combinationNotExists) {
+                edge = new LabeledEdge(
+                        r.getLabel(),
+                        source, ConnectorType.DIRECT,
+                        target, ConnectorType.DIRECT,
+                        style, type);
+            } else {
+                edge = new CurvedLabeledEdge(
+                        r.getLabel(),
+                        source, ConnectorType.DIRECT,
+                        target, ConnectorType.DIRECT,
+                        style, type);
+            }
 
             scalePane.addChildren(edge);
         });

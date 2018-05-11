@@ -6,7 +6,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -18,22 +17,18 @@ import javafx.scene.paint.Paint;
  *
  * @author mtrentini
  */
-public class LabeledNode extends ADVNode {
+public class LabeledNode extends Region {
 
     private static final int LABEL_PADDING = 5;
 
     private final Label label = new Label();
 
-    private final ObjectProperty<Point2D> centerProperty = new
-            SimpleObjectProperty<>();
     private final ObjectProperty<Background> backgroundProperty = new
             SimpleObjectProperty<>();
     private final ObjectProperty<Border> borderProperty = new
             SimpleObjectProperty<>();
     private final boolean isRoundedDown;
     private Paint backgroundColor = Color.BLACK;
-    private ConnectorType connectorTypeOutgoing = ConnectorType.DIRECT;
-    private ConnectorType connectorTypeIncoming = ConnectorType.DIRECT;
 
     public LabeledNode(String labelText) {
         this(labelText, false);
@@ -52,6 +47,7 @@ public class LabeledNode extends ADVNode {
 
         label.setPadding(new Insets(LABEL_PADDING));
         label.setText(labelText);
+
         getChildren().addAll(label);
     }
 
@@ -65,8 +61,26 @@ public class LabeledNode extends ADVNode {
 
         backgroundProperty().bind(backgroundProperty);
         borderProperty().bind(borderProperty);
+        boundsInParentProperty().addListener(this::redrawRoundedBorder);
+    }
 
-        boundsInParentProperty().addListener(this::handleBoundsChanged);
+
+    /**
+     * the rounded corners need to be redrawn every bounds change
+     *
+     * @param o observable event
+     */
+    private void redrawRoundedBorder(Observable o) {
+        BackgroundFill fill = new BackgroundFill(backgroundColor, cornerRadii(),
+                Insets.EMPTY);
+        backgroundProperty.setValue(new Background(fill));
+
+        BorderStroke borderStroke = borderProperty.get().getStrokes().get(0);
+        Paint color = borderStroke.getTopStroke();
+        double width = borderStroke.getWidths().getTop();
+        BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
+        Border border = createBorder(width, color, strokeStyle);
+        borderProperty.setValue(border);
     }
 
     private CornerRadii cornerRadii() {
@@ -78,20 +92,6 @@ public class LabeledNode extends ADVNode {
         }
     }
 
-    private void handleBoundsChanged(Observable o) {
-
-        BackgroundFill fill = new BackgroundFill(backgroundColor,
-                cornerRadii(), Insets.EMPTY);
-        backgroundProperty.setValue(new Background(fill));
-        BorderStroke borderStroke = borderProperty.get().getStrokes().get(0);
-        Paint color = borderStroke.getTopStroke();
-        double width = borderStroke.getWidths().getTop();
-        BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
-        Border border = createBorder(width, color, strokeStyle);
-        borderProperty.setValue(border);
-
-        computeCenter();
-    }
 
     /**
      * Sets the X property
@@ -163,44 +163,4 @@ public class LabeledNode extends ADVNode {
                 getBaselineOffset(), HPos.CENTER, VPos.CENTER);
     }
 
-    private void computeCenter() {
-        if (getBoundsInParent().getWidth() > 0
-                && getBoundsInParent().getHeight() > 0) {
-
-            double centerX = getBoundsInParent().getMinX()
-                    + getBoundsInParent().getWidth() / 2;
-            double centerY = getBoundsInParent().getMinY()
-                    + getBoundsInParent().getHeight() / 2;
-
-            centerProperty.set(new Point2D(centerX, centerY));
-        }
-    }
-
-    @Override
-    public Point2D getCenter() {
-        return centerProperty.get();
-    }
-
-    @Override
-    public ObjectProperty<Point2D> centerProperty() {
-        return centerProperty;
-    }
-
-    @Override
-    public ConnectorType getConnectorTypeOutgoing() {
-        return connectorTypeOutgoing;
-    }
-
-    public void setConnectorTypeOutgoing(ConnectorType type) {
-        this.connectorTypeOutgoing = type;
-    }
-
-    @Override
-    public ConnectorType getConnectorTypeIncoming() {
-        return connectorTypeIncoming;
-    }
-
-    public void setConnectorTypeIncoming(ConnectorType type) {
-        this.connectorTypeIncoming = type;
-    }
 }

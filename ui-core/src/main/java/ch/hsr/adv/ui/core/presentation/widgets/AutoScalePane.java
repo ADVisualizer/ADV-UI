@@ -38,7 +38,7 @@ public class AutoScalePane extends Pane {
         content.getChildren().addAll(children);
         requestLayout();
     }
-
+    
     @Override
     protected void layoutChildren() {
 
@@ -63,6 +63,12 @@ public class AutoScalePane extends Pane {
 
         layoutInArea(content, insetLeft, insetTop, contentWidth, contentHeight,
                 getBaselineOffset(), HPos.CENTER, VPos.CENTER);
+
+        content.getChildren().forEach(c -> {
+            if (c instanceof LabeledEdge) {
+                ((LabeledEdge) c).update();
+            }
+        });
 
     }
 }

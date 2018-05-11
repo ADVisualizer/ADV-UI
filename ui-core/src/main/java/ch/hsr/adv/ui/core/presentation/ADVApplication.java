@@ -50,6 +50,7 @@ public class ADVApplication extends Application {
         retrieveCLIParams();
 
         logger.info("Starting SocketServer...");
+        socketServer.setDaemon(true);
         socketServer.start();
 
         logger.info("Starting ADV UI...");

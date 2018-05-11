@@ -4,7 +4,10 @@ import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
-import ch.hsr.adv.ui.core.presentation.widgets.*;
+import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
+import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
+import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
+import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.geometry.Pos;
@@ -17,11 +20,8 @@ import javafx.scene.layout.VBox;
  */
 @Singleton
 public class ArrayObjectReferenceLayouter {
-
     private static final int SPACING = 30;
-
     private final ArrayLayouterUtil layouterUtil;
-
     private AutoScalePane scalePane;
     private VBox boxContainer;
     private HBox valueContainer;
@@ -42,7 +42,8 @@ public class ArrayObjectReferenceLayouter {
         initializeContainer();
         drawElements(moduleGroup);
 
-        boxContainer.getChildren().addAll(referenceContainer, valueContainer);
+        boxContainer.getChildren()
+                .addAll(referenceContainer, valueContainer);
         scalePane.addChildren(boxContainer);
 
         return scalePane;
@@ -85,11 +86,11 @@ public class ArrayObjectReferenceLayouter {
 
     private void drawRelations(LabeledNode referenceNode,
                                LabeledNode valueNode) {
-        referenceNode.setConnectorTypeOutgoing(ConnectorType.BOTTOM);
-        valueNode.setConnectorTypeIncoming(ConnectorType.TOP);
 
-        LabeledEdge relation = new CurvedLabeledEdge("",
-                referenceNode, valueNode, new ADVDefaultLineStyle(),
+        LabeledEdge relation = new LabeledEdge("",
+                referenceNode, ConnectorType.BOTTOM,
+                valueNode, ConnectorType.TOP,
+                new ADVDefaultLineStyle(),
                 LabeledEdge.DirectionType.UNIDIRECTIONAL);
 
         scalePane.addChildren(relation);
