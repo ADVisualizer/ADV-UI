@@ -4,7 +4,6 @@ import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import ch.hsr.adv.ui.stack.logic.domain.ModuleConstants;
@@ -13,7 +12,6 @@ import com.google.inject.Singleton;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,15 +54,7 @@ public class StackLayouter implements Layouter {
             StackElement element = (StackElement) e;
             ADVStyle style = element.getStyle();
 
-            LabeledNode node = new LabeledNode(element.getContent());
-            Color fillColor = StyleConverter.getColorFromHexValue(
-                    style.getFillColor());
-
-            node.setBackgroundColor(fillColor);
-            node.setFontColor(StyleConverter.getLabelColor(fillColor));
-            node.setBorder(style.getStrokeThickness(),
-                    StyleConverter.getColorFromHexValue(style.getStrokeColor()),
-                    StyleConverter.getStrokeStyle(style.getStrokeStyle()));
+            LabeledNode node = new LabeledNode(element.getContent(), style);
 
             stackBox.getChildren().add(node);
         });

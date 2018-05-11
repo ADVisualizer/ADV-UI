@@ -5,7 +5,6 @@ import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -17,18 +16,12 @@ import javafx.scene.layout.Pane;
 @Singleton
 public class ArrayDefaultLayouter {
 
-    private final ArrayLayouterUtil layouterUtil;
-
     private AutoScalePane scalePane;
     private HBox valueContainer;
 
-    @Inject
-    public ArrayDefaultLayouter(ArrayLayouterUtil layouterUtil) {
-        this.layouterUtil = layouterUtil;
-    }
-
     /**
      * Layouts a default array
+     *
      * @param moduleGroup moduleGroup to layout
      * @return layouted pane
      */
@@ -53,8 +46,8 @@ public class ArrayDefaultLayouter {
             ArrayElement element = (ArrayElement) e;
             ADVStyle style = element.getStyle();
 
-            LabeledNode valueNode = new LabeledNode(element.getContent());
-            layouterUtil.setStyling(valueNode, style);
+            LabeledNode valueNode = new LabeledNode(element
+                    .getContent(), style);
 
             if (element.getFixedPosX() > 0 && element.getFixedPosY() > 0) {
 

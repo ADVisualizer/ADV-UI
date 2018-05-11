@@ -8,9 +8,9 @@ import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
+import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.*;
 import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -33,9 +33,6 @@ public class GraphLayouter implements Layouter {
     private AutoScalePane scalePane;
     private List<ADVRelation> relations;
     private List<ADVElement> elements;
-
-    @Inject
-    private GraphLayouterUtil util;
 
     /**
      * Layout the graph module group
@@ -62,12 +59,16 @@ public class GraphLayouter implements Layouter {
     private void createElements() {
         elements.forEach(e -> {
             String label = e.getContent().toString();
-            LabeledNode vertex = new LabeledNode(label, true);
+            ADVStyle style = e.getStyle();
+            if (style == null) {
+                style = new ADVDefaultStyle();
+            }
+            LabeledNode vertex = new LabeledNode(label, style, true);
+
             if (e.getFixedPosX() != 0 || e.getFixedPosY() != 0) {
                 vertex.setX(e.getFixedPosX());
                 vertex.setY(e.getFixedPosY());
             } //TODO: else use layouting algorithm
-            util.setStyling(vertex, e.getStyle());
             vertices.put(e.getElementId(), vertex);
             scalePane.addChildren(vertex);
         });
