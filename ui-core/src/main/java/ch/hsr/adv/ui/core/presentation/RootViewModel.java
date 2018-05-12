@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,10 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Handles presentation logic for the {@link RootView}. Delegates tasks to
@@ -31,9 +28,11 @@ import java.util.concurrent.TimeUnit;
 @Singleton
 class RootViewModel {
 
-    private static final int NOTIFICATION_FADE_DELAY = 3;
     private static final Logger logger = LoggerFactory.getLogger(
             RootViewModel.class);
+
+    private static final int NOTIFICATION_FADE_DELAY = 3_000;
+
     private final ObservableList<Session> availableSessions = FXCollections
             .observableArrayList();
     private final ObjectProperty<Session> currentSessionProperty = new
@@ -44,21 +43,10 @@ class RootViewModel {
             SimpleStringProperty("");
 
     private final CoreStringifyer coreStringifyer;
-    private final ServiceProvider serviceProvider;
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final FlowControl flowControl;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
-    private final ScheduledExecutorService notificationResetTimer =
-            Executors.newScheduledThreadPool(4);
-
-    private final TimerTask resetTask = new TimerTask() {
-        @Override
-        public void run() {
-            Platform.runLater(() -> notificationMessageProperty.set(""));
-        }
-    };
-
 
     @Inject
     RootViewModel(SessionStore sessionStore,
@@ -66,13 +54,11 @@ class RootViewModel {
                   DatastoreAccess fileAccess,
                   LayoutedSnapshotStore layoutedSnapshotStore,
                   EventManager eventManager,
-                  ServiceProvider serviceProvider,
                   CoreStringifyer coreStringifyer1) {
 
         this.sessionStore = sessionStore;
         this.flowControl = flowControl;
         this.fileAccess = fileAccess;
-        this.serviceProvider = serviceProvider;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
         this.coreStringifyer = coreStringifyer1;
 
@@ -188,14 +174,28 @@ class RootViewModel {
 
     private void showNotification(String i18nKey) {
         Platform.runLater(() -> {
-            notificationMessageProperty.set(I18n.get(i18nKey));
-            startNotificationResetTimer();
-        });
-    }
 
-    private void startNotificationResetTimer() {
-        notificationResetTimer
-                .schedule(resetTask, NOTIFICATION_FADE_DELAY, TimeUnit.SECONDS);
+            // show notification
+            notificationMessageProperty.set(I18n.get(i18nKey));
+
+            // fade notification after delay
+            Task<Void> resetTask = new Task<>() {
+                @Override
+                public Void call() {
+                    try {
+                        Thread.sleep(NOTIFICATION_FADE_DELAY);
+                    } catch (InterruptedException e) {
+                        logger.error("Notification reset task failed");
+                    }
+                    return null;
+                }
+            };
+
+            resetTask.setOnSucceeded(taskFinishEvent ->
+                    notificationMessageProperty.set(""));
+
+            new Thread(resetTask).start();
+        });
     }
 
     /**
