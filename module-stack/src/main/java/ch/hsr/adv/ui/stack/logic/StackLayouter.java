@@ -14,8 +14,6 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -26,8 +24,7 @@ import java.util.List;
 @Module(ModuleConstants.MODULE_NAME)
 public class StackLayouter implements Layouter {
 
-    private static final Logger logger = LoggerFactory.getLogger(
-            StackLayouter.class);
+    public static final int PADDING = 5;
 
     /**
      * Layouts n Stack snapshot if it is not already layouted
@@ -44,7 +41,7 @@ public class StackLayouter implements Layouter {
     private Pane drawElements(ModuleGroup moduleGroup) {
         AutoScalePane scalePane = new AutoScalePane();
         VBox stackBox = new VBox();
-        stackBox.setSpacing(5);
+        stackBox.setSpacing(PADDING);
         stackBox.setPadding(new Insets(2));
         String borderStyle = "-fx-border-color: transparent black black black;"
                 + "-fx-border-width: 2;";
