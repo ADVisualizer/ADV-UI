@@ -72,7 +72,7 @@ public class ADVConnection {
 
             try {
                 logger.debug("Process json: \n {}", request.getJson());
-                flowControl.process(request.getJson());
+                flowControl.load(request.getJson());
             } catch (Exception e) {
                 logger.error("Exception occurred during execution of "
                         + "ADV UI. Send exception to Lib", e);
