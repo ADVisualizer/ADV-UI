@@ -14,6 +14,11 @@ cache:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+
 # Automatic Github deploy of the adv-ui jar for tagged commits
 deploy:
   provider: releases
