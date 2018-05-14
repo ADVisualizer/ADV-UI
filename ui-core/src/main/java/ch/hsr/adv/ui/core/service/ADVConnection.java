@@ -57,20 +57,22 @@ public class ADVConnection {
         String sessionJSON;
         while ((sessionJSON = reader.readLine()) != null) {
 
-            logger.debug("Parse incoming request");
-            ADVRequest request = gsonProvider.getMinifier().create().fromJson(
-                    sessionJSON, ADVRequest.class);
-
-            if (request.getCommand().equals(ProtocolCommand.END)) {
-                logger.info("End of session transmission");
-                break;
-            }
-
-            logger.debug("Acknowledge received json");
-            ADVResponse response = new ADVResponse(ProtocolCommand.ACKNOWLEDGE);
-            writer.println(response.toJson());
-
             try {
+                logger.debug("Parse incoming request");
+                ADVRequest request = gsonProvider.getMinifier().create()
+                        .fromJson(sessionJSON, ADVRequest.class);
+
+                if (request.getCommand().equals(ProtocolCommand.END)) {
+                    logger.info("End of session transmission");
+                    break;
+                }
+
+
+                logger.debug("Acknowledge received json");
+                ADVResponse response = new ADVResponse(ProtocolCommand
+                        .ACKNOWLEDGE);
+                writer.println(response.toJson());
+
                 logger.debug("Process json: \n {}", request.getJson());
                 flowControl.load(request.getJson());
             } catch (Exception e) {
