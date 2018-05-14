@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
+import ch.hsr.adv.ui.core.access.DatastoreAccess;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.domain.Snapshot;
@@ -12,6 +13,8 @@ import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +34,9 @@ public class ADVFlowControl implements FlowControl {
     private final EventManager eventManager;
     private final CoreParser coreParser;
     private final CoreLayouter coreLayouter;
+    private final CoreStringifyer coreStringifyer;
+    private final DatastoreAccess fileAccess;
+
 
     @Inject
     public ADVFlowControl(SessionStore sessionStore,
@@ -38,7 +44,9 @@ public class ADVFlowControl implements FlowControl {
                           LayoutedSnapshotStore layoutedSnapshotStore,
                           EventManager eventManager,
                           CoreParser coreParser,
-                          CoreLayouter coreLayouter) {
+                          CoreLayouter coreLayouter,
+                          CoreStringifyer coreStringifyer,
+                          DatastoreAccess fileAccess) {
 
         this.sessionStore = sessionStore;
         this.serviceProvider = serviceProvider;
@@ -46,6 +54,9 @@ public class ADVFlowControl implements FlowControl {
         this.eventManager = eventManager;
         this.coreParser = coreParser;
         this.coreLayouter = coreLayouter;
+        this.coreStringifyer = coreStringifyer;
+        this.fileAccess = fileAccess;
+
     }
 
     /**
@@ -54,7 +65,7 @@ public class ADVFlowControl implements FlowControl {
      *
      * @param sessionJSON json
      */
-    public void process(String sessionJSON) {
+    public void load(String sessionJSON) {
         try {
             logger.info("Processing JSON...");
 
@@ -110,6 +121,7 @@ public class ADVFlowControl implements FlowControl {
             Region parent = coreLayouter.layout(panes);
             LayoutedSnapshot layoutedSnapshot =
                     new LayoutedSnapshot(snapshot.getSnapshotId(), parent);
+
             layoutedSnapshot
                     .setSnapshotDescription(snapshot.getSnapshotDescription());
 
@@ -130,6 +142,38 @@ public class ADVFlowControl implements FlowControl {
         sessionStore.setCurrent(session.getSessionId());
         eventManager.fire(ADVEvent.NOTIFICATION, null,
                 I18n.NOTIFICATION_SESSION_LOAD_EXISTING);
+    }
+
+    /**
+     * Delegates saving sessions to the access layer
+     *
+     * @param session the loaded session
+     * @param file    the file to save the session
+     */
+    public void save(Session session, File file) {
+        try {
+            storeSnapshotDescription(session);
+
+            String json = coreStringifyer.stringify(session);
+            fileAccess.write(file, json);
+            eventManager.fire(ADVEvent.NOTIFICATION, null,
+                    I18n.NOTIFICATION_SESSION_SAVE_SUCCESSFUL);
+
+        } catch (IOException e) {
+            eventManager.fire(ADVEvent.NOTIFICATION, null,
+                    I18n.NOTIFICATION_SESSION_SAVE_UNSUCCESSFUL);
+        }
+    }
+
+    private void storeSnapshotDescription(Session session) {
+        layoutedSnapshotStore.getAll(session.getSessionId())
+                .forEach(layoutedSnapshot -> {
+                    String description = layoutedSnapshot
+                            .getSnapshotDescription();
+                    long id = layoutedSnapshot.getSnapshotId();
+                    session.getSnapshotById(id)
+                            .setSnapshotDescription(description);
+                });
     }
 
 }

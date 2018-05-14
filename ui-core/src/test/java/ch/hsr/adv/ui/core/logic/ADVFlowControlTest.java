@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Rather an integration test for the whole flow control process
+ * Rather an integration test for the whole flow control load
  */
 @RunWith(JukitoRunner.class)
 @UseModules( {GuiceCoreModule.class, GuiceTestModule.class})
@@ -50,7 +50,7 @@ public class ADVFlowControlTest {
         String testJSON = reader.read(new File(url1.getPath()));
 
         // WHEN
-        sut.process(testJSON);
+        sut.load(testJSON);
 
         // THEN
         List<Session> sessions = testSessionStore.getAll();
@@ -69,8 +69,8 @@ public class ADVFlowControlTest {
         String testJSON = reader.read(new File(url1.getPath()));
 
         // WHEN
-        sut.process(testJSON);
-        sut.process(testJSON);
+        sut.load(testJSON);
+        sut.load(testJSON);
 
         // THEN
         assertEquals(1, testSessionStore.getAll().size());

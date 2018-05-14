@@ -42,7 +42,6 @@ class RootViewModel {
     private final StringProperty notificationMessageProperty = new
             SimpleStringProperty("");
 
-    private final CoreStringifyer coreStringifyer;
     private final DatastoreAccess fileAccess;
     private final SessionStore sessionStore;
     private final FlowControl flowControl;
@@ -51,16 +50,14 @@ class RootViewModel {
     @Inject
     RootViewModel(SessionStore sessionStore,
                   FlowControl flowControl,
-                  DatastoreAccess fileAccess,
                   LayoutedSnapshotStore layoutedSnapshotStore,
                   EventManager eventManager,
-                  CoreStringifyer coreStringifyer1) {
+                  DatastoreAccess fileAccess) {
 
         this.sessionStore = sessionStore;
         this.flowControl = flowControl;
-        this.fileAccess = fileAccess;
         this.layoutedSnapshotStore = layoutedSnapshotStore;
-        this.coreStringifyer = coreStringifyer1;
+        this.fileAccess = fileAccess;
 
         eventManager.subscribe(new SessionStoreListener(),
                 List.of(ADVEvent.SESSION_ADDED)
@@ -135,27 +132,9 @@ class RootViewModel {
      *
      * @param file to be saved to
      */
-    void saveSession(final File file) {
-        try {
-            Session session = currentSessionProperty.get();
-            if (session != null) {
-                layoutedSnapshotStore
-                        .getAll(session.getSessionId())
-                        .forEach(snapshot -> {
-                            String description = snapshot
-                                    .getSnapshotDescription();
-                            long id = snapshot.getSnapshotId();
-                            session.getSnapshotById(id)
-                                    .setSnapshotDescription(description);
-                        });
-
-                String json = coreStringifyer.stringify(session);
-                fileAccess.write(file, json);
-            }
-            showNotification(I18n.NOTIFICATION_SESSION_SAVE_SUCCESSFUL);
-        } catch (IOException e) {
-            showNotification(I18n.NOTIFICATION_SESSION_SAVE_UNSUCCESSFUL);
-        }
+    void saveSession(File file) {
+        Session session = currentSessionProperty.get();
+        flowControl.save(session, file);
     }
 
     /**
@@ -166,7 +145,7 @@ class RootViewModel {
     void loadSession(File file) {
         try {
             String json = fileAccess.read(file);
-            flowControl.process(json);
+            flowControl.load(json);
         } catch (IOException e) {
             showNotification(I18n.NOTIFICATION_SESSION_LOAD_UNSUCCESSFUL);
         }
