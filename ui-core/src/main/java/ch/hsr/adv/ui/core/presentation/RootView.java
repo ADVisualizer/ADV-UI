@@ -320,8 +320,11 @@ public class RootView {
     protected void handleSaveSessionClicked() {
         Window stage = sessionTabPane.getScene().getWindow();
         fileChooser.setTitle("Save Session File");
-        fileChooser.setInitialFileName(sessionListView.getSelectionModel()
-                .getSelectedItem().getSessionName());
+
+        String fileName = sessionListView.getSelectionModel()
+                .getSelectedItem().getSessionName();
+        fileName = fileName.replace(' ', '-');
+        fileChooser.setInitialFileName(fileName);
         File file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
