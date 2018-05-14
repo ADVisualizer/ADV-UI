@@ -5,7 +5,14 @@ import com.google.gson.*;
 import java.lang.reflect.Type;
 
 /**
- * JSON Deserializer for a specific class
+ * Represents the mapping between an interface and a concrete class during
+ * deserialization.
+ * <p>
+ * Usage:
+ * <code>
+ * gsonBuilder.registerTypeAdapter(Interface.class,
+ * new InterfaceAdapter(ConcreteClass.class))
+ * </code>
  *
  * @param <T> type
  */
@@ -13,7 +20,7 @@ public class InterfaceAdapter<T> implements JsonDeserializer<T> {
 
     private final Class className;
 
-    public InterfaceAdapter(final Class className) {
+    public InterfaceAdapter(Class className) {
         this.className = className;
     }
 
