@@ -1,10 +1,10 @@
 package ch.hsr.adv.ui.core.presentation;
 
-import ch.hsr.adv.ui.core.logic.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.events.ADVEvent;
 import ch.hsr.adv.ui.core.logic.events.EventManager;
+import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;

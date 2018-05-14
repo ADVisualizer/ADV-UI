@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.core.logic;
+package ch.hsr.adv.ui.core.logic.stores;
 
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
 import com.google.inject.Inject;
