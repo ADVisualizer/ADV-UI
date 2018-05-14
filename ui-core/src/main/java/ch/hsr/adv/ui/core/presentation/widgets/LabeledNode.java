@@ -23,6 +23,10 @@ public class LabeledNode extends Region {
     private final boolean isRoundedDown;
     private final Label label = new Label();
     private final ADVStyle style;
+    private Color fillColor;
+    private Color strokeColor;
+    private BorderStrokeStyle strokeStyle;
+    private BorderWidths borderWidth;
 
 
     public LabeledNode(String labelText, ADVStyle style) {
@@ -42,34 +46,43 @@ public class LabeledNode extends Region {
         this.style = style;
         label.setText(labelText);
 
-        widthProperty().addListener(this::styleNode);
+        styleNode();
+
+        widthProperty().addListener(this::styleBackgroundAndBorder);
 
         getChildren().addAll(label);
     }
 
-    private void styleNode(Observable observable) {
-        // padding
-        label.setPadding(new Insets(LABEL_PADDING));
-
-        // background and font
-        Color fillColor = StyleConverter
-                .getColorFromHexValue(style.getFillColor());
+    private void styleBackgroundAndBorder(Observable observable) {
+        // background
         Background background = new Background(new BackgroundFill(fillColor,
                 cornerRadius(), Insets.EMPTY));
         setBackground(background);
-        label.setTextFill(StyleConverter.getLabelColor(fillColor));
 
         // border
-        Color strokeColor = StyleConverter
-                .getColorFromHexValue(style.getStrokeColor());
-        BorderStrokeStyle strokeStyle = StyleConverter
-                .getStrokeStyle(style.getStrokeStyle());
-
-        BorderWidths borderWidth = new BorderWidths(style.getStrokeThickness());
         BorderStroke stroke = new BorderStroke(strokeColor, strokeStyle,
                 cornerRadius(), borderWidth, Insets.EMPTY);
-        Border border = new Border(stroke);
-        setBorder(border);
+        setBorder(new Border(stroke));
+    }
+
+    private void styleNode() {
+        // padding
+        label.setPadding(new Insets(LABEL_PADDING));
+
+        // background
+        fillColor = StyleConverter
+                .getColorFromHexValue(style.getFillColor());
+
+        // border
+        strokeColor = StyleConverter
+                .getColorFromHexValue(style.getStrokeColor());
+        strokeStyle = StyleConverter
+                .getStrokeStyle(style.getStrokeStyle());
+        borderWidth = new BorderWidths(style.getStrokeThickness());
+
+        // font
+        label.setTextFill(StyleConverter.getLabelColor(fillColor));
+
     }
 
     private CornerRadii cornerRadius() {
