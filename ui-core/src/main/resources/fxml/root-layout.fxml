@@ -6,7 +6,7 @@
 <?import org.controlsfx.control.SegmentedButton?>
 <?import org.controlsfx.control.StatusBar?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/root-layout.css"
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" stylesheets="@../css/root-view.css"
             xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ch.hsr.adv.ui.core.presentation.RootView">
 
