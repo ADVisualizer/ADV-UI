@@ -21,6 +21,10 @@ public class SocketServer extends Thread {
     private static final Logger logger = LoggerFactory.getLogger(SocketServer
             .class);
 
+    private static final int REGISTERED_PORT_MIN = 1024;
+    private static final int REGISTERED_PORT_MAX = 65535;
+
+
     private static final String THREAD_NAME = "SocketServer Thread";
     private static final String DEFAULT_HOST = "127.0.0.1";
     private static final int DEFAULT_PORT = 8765;
@@ -72,7 +76,7 @@ public class SocketServer extends Thread {
      * @param port the port number to listen on
      */
     public void setPort(int port) {
-        if (portNr >= 1024 && portNr <= 65535) {
+        if (portNr >= REGISTERED_PORT_MIN && portNr <= REGISTERED_PORT_MAX) {
             this.portNr = port;
             logger.info("Socket port updated to {}", portNr);
         }

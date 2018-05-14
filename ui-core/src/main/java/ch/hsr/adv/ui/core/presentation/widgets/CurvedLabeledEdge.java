@@ -14,6 +14,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
     private static final Logger logger = LoggerFactory.getLogger(
             CurvedLabeledEdge.class);
 
+    private static final double CURVATURE_FACTOR = 0.1;
+
     public CurvedLabeledEdge(String labelText,
                              LabeledNode startNode,
                              ConnectorType startConnector,
@@ -52,7 +54,7 @@ public class CurvedLabeledEdge extends LabeledEdge {
                 .subtract(endIntersectionPoint);
         Point2D distanceVector = new Point2D(Math.abs(connectionVector
                 .getY()), -connectionVector.getX());
-        distanceVector = distanceVector.multiply(0.1);
+        distanceVector = distanceVector.multiply(CURVATURE_FACTOR);
 
 
         BiConnectionType biConnectionType = BiConnectionType.valueOf(

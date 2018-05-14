@@ -10,9 +10,9 @@ import java.util.TimeZone;
  */
 public class Session {
 
+    private final List<Snapshot> snapshots = new ArrayList<>();
     private long sessionId;
     private String sessionName;
-    private final List<Snapshot> snapshots = new ArrayList<>();
 
     public long getSessionId() {
         return sessionId;
@@ -36,7 +36,7 @@ public class Session {
     public void setSessionName(String sessionName) {
         this.sessionName = sessionName;
     }
-    
+
     public List<Snapshot> getSnapshots() {
         return snapshots;
     }

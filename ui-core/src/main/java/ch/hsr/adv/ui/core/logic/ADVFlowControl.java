@@ -121,7 +121,6 @@ public class ADVFlowControl implements FlowControl {
             Region parent = coreLayouter.layout(panes);
             LayoutedSnapshot layoutedSnapshot =
                     new LayoutedSnapshot(snapshot.getSnapshotId(), parent);
-
             layoutedSnapshot
                     .setSnapshotDescription(snapshot.getSnapshotDescription());
 

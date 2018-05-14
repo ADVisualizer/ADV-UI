@@ -16,7 +16,7 @@ public class InterfaceAdapter<T> implements JsonDeserializer<T> {
     public InterfaceAdapter(final Class className) {
         this.className = className;
     }
-    
+
     @Override
     public T deserialize(JsonElement jsonElement, Type type,
                          JsonDeserializationContext context)
