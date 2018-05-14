@@ -166,10 +166,10 @@ public class ADVFlowControl implements FlowControl {
 
     private void storeSnapshotDescription(Session session) {
         layoutedSnapshotStore.getAll(session.getSessionId())
-                .forEach(snapshot -> {
-                    String description = snapshot
+                .forEach(layoutedSnapshot -> {
+                    String description = layoutedSnapshot
                             .getSnapshotDescription();
-                    long id = snapshot.getSnapshotId();
+                    long id = layoutedSnapshot.getSnapshotId();
                     session.getSnapshotById(id)
                             .setSnapshotDescription(description);
                 });
