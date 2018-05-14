@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.core.logic;
+package ch.hsr.adv.ui.core.logic.events;
 
 import com.google.inject.Singleton;
 import org.slf4j.Logger;

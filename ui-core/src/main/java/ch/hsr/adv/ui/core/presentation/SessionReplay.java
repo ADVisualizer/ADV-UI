@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.presentation;
 
-import ch.hsr.adv.ui.core.logic.ADVEvent;
-import ch.hsr.adv.ui.core.logic.EventManager;
+import ch.hsr.adv.ui.core.logic.events.ADVEvent;
+import ch.hsr.adv.ui.core.logic.events.EventManager;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import javafx.application.Platform;

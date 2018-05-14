@@ -2,6 +2,8 @@ package ch.hsr.adv.ui.core.logic;
 
 import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.domain.Snapshot;
+import ch.hsr.adv.ui.core.logic.events.ADVEvent;
+import ch.hsr.adv.ui.core.logic.events.EventManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
