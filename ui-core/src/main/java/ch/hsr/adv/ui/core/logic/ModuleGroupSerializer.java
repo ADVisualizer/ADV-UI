@@ -19,14 +19,19 @@ import java.lang.reflect.Type;
 public class ModuleGroupSerializer implements JsonSerializer<ModuleGroup> {
 
     private final ServiceProvider serviceProvider;
+    private final DefaultStringifyer defaultStringifyer;
+
 
     @Inject
-    public ModuleGroupSerializer(ServiceProvider serviceProvider) {
+    public ModuleGroupSerializer(ServiceProvider serviceProvider,
+                                 DefaultStringifyer defaultStringifyer) {
         this.serviceProvider = serviceProvider;
+        this.defaultStringifyer = defaultStringifyer;
     }
 
     /**
-     * Serializes the module group with the needed module stringifyer.
+     * Serializes the module group with the correct module stringifyer.
+     * If no module-specific stringifyer is available, the default is used.
      *
      * @param moduleGroup module group
      * @param typeOfSrc   module group type
@@ -38,8 +43,12 @@ public class ModuleGroupSerializer implements JsonSerializer<ModuleGroup> {
                                  JsonSerializationContext context) {
 
         String moduleName = moduleGroup.getModuleName();
-        Stringifyer stringifyer = serviceProvider.getStringifyer(moduleName);
-
-        return stringifyer.stringify(moduleGroup);
+        Stringifyer moduleStringifyer = serviceProvider
+                .getStringifyer(moduleName);
+        if (moduleStringifyer != null) {
+            return moduleStringifyer.stringify(moduleGroup);
+        } else {
+            return defaultStringifyer.stringify(moduleGroup);
+        }
     }
 }

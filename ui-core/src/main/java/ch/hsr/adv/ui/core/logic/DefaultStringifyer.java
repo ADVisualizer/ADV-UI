@@ -1,9 +1,5 @@
-package ch.hsr.adv.ui.array.logic;
+package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.array.logic.domain.ModuleConstants;
-import ch.hsr.adv.ui.core.logic.GsonProvider;
-import ch.hsr.adv.ui.core.logic.Stringifyer;
-import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -13,32 +9,33 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Generates a json representation of an array session.
+ * The default stringifyer is used when no module specific serialization is
+ * needed or provided.
+ *
+ * @author mwieland
  */
 @Singleton
-@Module(ModuleConstants.MODULE_NAME)
-public class ArrayStringifyer implements Stringifyer {
+public class DefaultStringifyer implements Stringifyer {
 
     private static final Logger logger = LoggerFactory
-            .getLogger(ArrayStringifyer.class);
+            .getLogger(DefaultStringifyer.class);
     private final Gson gson;
 
     @Inject
-    public ArrayStringifyer(GsonProvider gsonProvider) {
+    public DefaultStringifyer(GsonProvider gsonProvider) {
         this.gson = gsonProvider.getPrettifyer().create();
     }
 
     /**
-     * Builds a json string from an array module group.
+     * Builds a json string from an generic module group.
      *
-     * @param moduleGroup the moduleGroup to be transmitted
+     * @param moduleGroup the moduleGroup to serialize
      * @return json string representation of the session
      */
     @Override
     public JsonElement stringify(ModuleGroup moduleGroup) {
-        logger.info("Serialize array group");
+        logger.info("Serialize module group with default stringifyer");
         String json = gson.toJson(moduleGroup);
         return gson.fromJson(json, JsonElement.class);
     }
 }
-
