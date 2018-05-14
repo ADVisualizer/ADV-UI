@@ -1,16 +1,15 @@
 package ch.hsr.adv.ui.core.presentation.widgets;
 
 
+import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import javafx.beans.Observable;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 /**
  * Widget component for a labeled node with optional rounded corners
@@ -21,69 +20,72 @@ public class LabeledNode extends Region {
 
     private static final int LABEL_PADDING = 5;
 
-    private final Label label = new Label();
-
-    private final ObjectProperty<Background> backgroundProperty = new
-            SimpleObjectProperty<>();
-    private final ObjectProperty<Border> borderProperty = new
-            SimpleObjectProperty<>();
     private final boolean isRoundedDown;
-    private Paint backgroundColor = Color.BLACK;
+    private final Label label = new Label();
+    private final ADVStyle style;
+    private Color fillColor;
+    private Color strokeColor;
+    private BorderStrokeStyle strokeStyle;
+    private BorderWidths borderWidth;
 
-    public LabeledNode(String labelText) {
-        this(labelText, false);
+
+    public LabeledNode(String labelText, ADVStyle style) {
+        this(labelText, style, false);
     }
 
     /**
      * Create a LabeledNode with rounded corners
      *
      * @param labelText     to be used
+     * @param style         adv style
      * @param isRoundedDown flag to round corners
      */
-    public LabeledNode(String labelText, boolean isRoundedDown) {
+    public LabeledNode(String labelText, ADVStyle style, boolean
+            isRoundedDown) {
         this.isRoundedDown = isRoundedDown;
-
-        setBindings();
-
-        label.setPadding(new Insets(LABEL_PADDING));
+        this.style = style;
         label.setText(labelText);
+
+        styleNode();
+
+        widthProperty().addListener(this::styleBackgroundAndBorder);
 
         getChildren().addAll(label);
     }
 
-    private void setBindings() {
-        backgroundProperty.setValue(
-                new Background(new BackgroundFill(backgroundColor,
-                        CornerRadii.EMPTY, Insets.EMPTY)));
+    private void styleBackgroundAndBorder(Observable observable) {
+        // background
+        Background background = new Background(new BackgroundFill(fillColor,
+                cornerRadius(), Insets.EMPTY));
+        setBackground(background);
 
-        borderProperty.setValue(createBorder(BorderWidths.DEFAULT
-                .getTop(), Color.BLACK, BorderStrokeStyle.NONE));
-
-        backgroundProperty().bind(backgroundProperty);
-        borderProperty().bind(borderProperty);
-        boundsInParentProperty().addListener(this::redrawRoundedBorder);
+        // border
+        BorderStroke stroke = new BorderStroke(strokeColor, strokeStyle,
+                cornerRadius(), borderWidth, Insets.EMPTY);
+        setBorder(new Border(stroke));
     }
 
+    private void styleNode() {
+        // padding
+        label.setPadding(new Insets(LABEL_PADDING));
 
-    /**
-     * the rounded corners need to be redrawn every bounds change
-     *
-     * @param o observable event
-     */
-    private void redrawRoundedBorder(Observable o) {
-        BackgroundFill fill = new BackgroundFill(backgroundColor, cornerRadii(),
-                Insets.EMPTY);
-        backgroundProperty.setValue(new Background(fill));
+        // background
+        fillColor = StyleConverter
+                .getColorFromHexValue(style.getFillColor());
 
-        BorderStroke borderStroke = borderProperty.get().getStrokes().get(0);
-        Paint color = borderStroke.getTopStroke();
-        double width = borderStroke.getWidths().getTop();
-        BorderStrokeStyle strokeStyle = borderStroke.getTopStyle();
-        Border border = createBorder(width, color, strokeStyle);
-        borderProperty.setValue(border);
+        // border
+        strokeColor = StyleConverter
+                .getColorFromHexValue(style.getStrokeColor());
+        strokeStyle = StyleConverter
+                .getStrokeStyle(style.getStrokeStyle());
+        borderWidth = new BorderWidths(style.getStrokeThickness());
+
+        // font
+        label.setTextFill(StyleConverter.getLabelColor(fillColor));
+
     }
 
-    private CornerRadii cornerRadii() {
+    private CornerRadii cornerRadius() {
         if (isRoundedDown) {
             double radius = getBoundsInParent().getWidth() / 2;
             return new CornerRadii(radius);
@@ -109,42 +111,6 @@ public class LabeledNode extends Region {
      */
     public void setY(int y) {
         this.layoutYProperty().set(y);
-    }
-
-    /**
-     * Sets the background color of the rectangle
-     *
-     * @param color color
-     */
-    public void setBackgroundColor(Paint color) {
-        this.backgroundColor = color;
-    }
-
-    /**
-     * Sets the font color of the label
-     *
-     * @param color color
-     */
-    public void setFontColor(Paint color) {
-        label.setTextFill(color);
-    }
-
-    /**
-     * Sets the border of the rectangle
-     *
-     * @param width       of the border
-     * @param color       of the border
-     * @param strokeStyle of the border
-     */
-    public void setBorder(double width, Paint color,
-                          BorderStrokeStyle strokeStyle) {
-        borderProperty.setValue(createBorder(width, color, strokeStyle));
-    }
-
-    private Border createBorder(double width, Paint color,
-                                BorderStrokeStyle strokeStyle) {
-        return new Border(new BorderStroke(color, strokeStyle, cornerRadii(),
-                new BorderWidths(width), Insets.EMPTY));
     }
 
     @Override

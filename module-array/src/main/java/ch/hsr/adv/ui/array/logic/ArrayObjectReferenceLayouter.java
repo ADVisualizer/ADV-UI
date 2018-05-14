@@ -8,7 +8,6 @@ import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -21,16 +20,10 @@ import javafx.scene.layout.VBox;
 @Singleton
 public class ArrayObjectReferenceLayouter {
     private static final int SPACING = 30;
-    private final ArrayLayouterUtil layouterUtil;
     private AutoScalePane scalePane;
     private VBox boxContainer;
     private HBox valueContainer;
     private HBox referenceContainer;
-
-    @Inject
-    public ArrayObjectReferenceLayouter(ArrayLayouterUtil layouterUtil) {
-        this.layouterUtil = layouterUtil;
-    }
 
     /**
      * Layout array object reference
@@ -67,18 +60,15 @@ public class ArrayObjectReferenceLayouter {
 
             LabeledNode referenceNode;
             if (element.getContent() != null) {
-                LabeledNode valueNode = new LabeledNode(element.getContent());
-                referenceNode = new LabeledNode("*");
+                LabeledNode valueNode = new LabeledNode(
+                        element.getContent(), style);
+                referenceNode = new LabeledNode("*", style);
                 drawRelations(referenceNode, valueNode);
-
-                layouterUtil.setStyling(valueNode, style);
 
                 valueContainer.getChildren().add(valueNode);
             } else {
-                referenceNode = new LabeledNode("null");
+                referenceNode = new LabeledNode("null", style);
             }
-
-            layouterUtil.setStyling(referenceNode, style);
 
             referenceContainer.getChildren().addAll(referenceNode);
         });
