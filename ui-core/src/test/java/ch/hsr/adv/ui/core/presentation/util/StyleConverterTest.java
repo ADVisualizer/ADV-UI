@@ -1,6 +1,5 @@
-package ch.hsr.adv.ui.core.util;
+package ch.hsr.adv.ui.core.presentation.util;
 
-import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
