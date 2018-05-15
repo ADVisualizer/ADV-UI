@@ -23,6 +23,8 @@ import java.util.List;
 public class StackLayouter implements Layouter {
 
     public static final int PADDING = 5;
+    public static final int MIN_WIDTH = 25;
+    public static final int MIN_HEIGHT = 35;
 
     /**
      * Layouts n Stack snapshot if it is not already layouted
@@ -40,6 +42,8 @@ public class StackLayouter implements Layouter {
         AutoScalePane scalePane = new AutoScalePane();
         VBox stackBox = new VBox();
         stackBox.setSpacing(PADDING);
+        stackBox.setMinHeight(MIN_HEIGHT);
+        stackBox.setMinWidth(MIN_WIDTH);
         stackBox.setPadding(new Insets(2));
         String borderStyle = "-fx-border-color: transparent black black black;"
                 + "-fx-border-width: 2;";

@@ -95,9 +95,13 @@ public class GraphLayouter implements Layouter {
 
             // does an edge already exists
             LabeledEdge edge;
+            String label = "";
+            if (r.getLabel() != null) {
+                label = r.getLabel().toString();
+            }
             if (combinationNotExists) {
                 edge = new LabeledEdge(
-                        r.getLabel().toString(),
+                        label,
                         source, ConnectorType.DIRECT,
                         target, ConnectorType.DIRECT,
                         style, type);

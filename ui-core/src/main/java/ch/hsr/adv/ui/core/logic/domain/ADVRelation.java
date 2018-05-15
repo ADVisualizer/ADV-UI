@@ -65,7 +65,6 @@ public interface ADVRelation<T> {
      */
     void setStyle(ADVStyle style);
 
-
     /**
      * @return whether the relation is directed. If {@code false},
      * sourceElement and targetElement can be switched without changing the
