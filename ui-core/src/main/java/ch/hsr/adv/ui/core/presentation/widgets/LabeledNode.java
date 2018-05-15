@@ -18,7 +18,7 @@ import javafx.scene.paint.Color;
  */
 public class LabeledNode extends Region {
 
-    private static final int LABEL_PADDING = 5;
+    private static final int LABEL_PADDING = 3;
 
     private final boolean isRoundedDown;
     private final Label label = new Label();

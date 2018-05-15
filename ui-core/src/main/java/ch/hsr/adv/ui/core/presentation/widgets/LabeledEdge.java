@@ -105,9 +105,6 @@ public class LabeledEdge extends Group {
                 .getColorFromHexValue(style.getStrokeColor()));
         curve.setFill(Color.TRANSPARENT);
         curve.setStrokeType(StrokeType.CENTERED);
-
-        Color fillColor = StyleConverter.getColorFromHexValue(
-                style.getFillColor());
     }
 
     /**

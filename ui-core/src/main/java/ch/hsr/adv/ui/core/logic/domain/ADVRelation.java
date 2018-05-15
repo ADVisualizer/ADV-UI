@@ -4,6 +4,8 @@ import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 
 /**
  * Represents a relation between to {@link ADVElement}
+ *
+ * @param <T> content type
  */
 public interface ADVRelation<T> {
 

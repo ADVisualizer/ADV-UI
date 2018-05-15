@@ -10,8 +10,8 @@ import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 public class ADVDefaultStyle implements ADVStyle {
 
     private static final int BLACK = 0;
-    private static final int STROKE_THICKNESS = 0;
-    private static final String STOKE_STYLE = ADVStrokeStyle.NONE.getStyle();
+    private static final int STROKE_THICKNESS = 2;
+    private static final String STOKE_STYLE = ADVStrokeStyle.SOLID.getStyle();
 
     @Override
     public int getFillColor() {
