@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.core.logic;
+package ch.hsr.adv.ui.core.logic.events;
 
 /**
  * An ADVEvent within the framework.

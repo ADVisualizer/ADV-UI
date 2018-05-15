@@ -1,9 +1,9 @@
 package ch.hsr.adv.ui.core.presentation;
 
-import ch.hsr.adv.ui.core.logic.ADVEvent;
-import ch.hsr.adv.ui.core.logic.EventManager;
-import ch.hsr.adv.ui.core.logic.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
+import ch.hsr.adv.ui.core.logic.events.ADVEvent;
+import ch.hsr.adv.ui.core.logic.events.EventManager;
+import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;

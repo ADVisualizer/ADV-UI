@@ -27,7 +27,7 @@ public class CoreStringifyer {
      * @param session the session to be transmitted
      * @return json string representation of the session
      */
-    public String stringify(final Session session) {
+    public String stringify(Session session) {
         return gson.toJson(session);
     }
 }

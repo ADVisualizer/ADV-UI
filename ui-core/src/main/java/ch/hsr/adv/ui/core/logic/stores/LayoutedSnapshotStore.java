@@ -1,6 +1,8 @@
-package ch.hsr.adv.ui.core.logic;
+package ch.hsr.adv.ui.core.logic.stores;
 
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
+import ch.hsr.adv.ui.core.logic.events.ADVEvent;
+import ch.hsr.adv.ui.core.logic.events.EventManager;
 import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.core.logic;
+package ch.hsr.adv.ui.core.logic.events;
 
 import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;

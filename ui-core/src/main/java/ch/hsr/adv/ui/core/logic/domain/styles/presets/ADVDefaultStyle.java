@@ -2,30 +2,25 @@ package ch.hsr.adv.ui.core.logic.domain.styles.presets;
 
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStrokeStyle;
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * The default implementation of the ADV Style sets standard values for all
  * style variables.
  */
 public class ADVDefaultStyle implements ADVStyle {
-    @SerializedName("fillColor")
-    private static final int FILL_COLOR = 0;
-    @SerializedName("strokeColor")
-    private static final int STROKE_COLOR = 0;
-    @SerializedName("strokeStyle")
-    private static final String STOKE_STYLE = ADVStrokeStyle.NONE.getStyle();
-    @SerializedName("strokeThickness")
+
+    private static final int BLACK = 0;
     private static final int STROKE_THICKNESS = 0;
+    private static final String STOKE_STYLE = ADVStrokeStyle.NONE.getStyle();
 
     @Override
     public int getFillColor() {
-        return FILL_COLOR;
+        return BLACK;
     }
 
     @Override
     public int getStrokeColor() {
-        return STROKE_COLOR;
+        return BLACK;
     }
 
     @Override

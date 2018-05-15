@@ -79,9 +79,9 @@ public class ResourceLocator {
         ICON_IMAGE("images/adv-icon.png"),
         LOGO_IMAGE("images/adv-logo.png"),
 
-        CSS_GLOBAL("css/style.css"),
-        CSS_ROOT("css/session-view.css"),
-        CSS_SESSION("css/root-layout.css");
+        CSS_GLOBAL("css/global.css"),
+        CSS_ROOT("css/root-view.css"),
+        CSS_SESSION("css/session-view.css");
 
 
 
