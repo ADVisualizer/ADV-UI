@@ -107,7 +107,7 @@ public class GraphLayouter implements Layouter {
                         style, type);
             } else {
                 edge = new CurvedLabeledEdge(
-                        r.getLabel().toString(),
+                        label,
                         source, ConnectorType.DIRECT,
                         target, ConnectorType.DIRECT,
                         style, type);
