@@ -97,13 +97,13 @@ public class GraphLayouter implements Layouter {
             LabeledEdge edge;
             if (combinationNotExists) {
                 edge = new LabeledEdge(
-                        r.getLabel(),
+                        r.getLabel().toString(),
                         source, ConnectorType.DIRECT,
                         target, ConnectorType.DIRECT,
                         style, type);
             } else {
                 edge = new CurvedLabeledEdge(
-                        r.getLabel(),
+                        r.getLabel().toString(),
                         source, ConnectorType.DIRECT,
                         target, ConnectorType.DIRECT,
                         style, type);

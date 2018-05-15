@@ -48,12 +48,12 @@ public class LabeledNode extends Region {
 
         styleNode();
 
-        widthProperty().addListener(this::styleBackgroundAndBorder);
+        widthProperty().addListener(this::updateRoundedCorner);
 
         getChildren().addAll(label);
     }
 
-    private void styleBackgroundAndBorder(Observable observable) {
+    private void updateRoundedCorner(Observable observable) {
         // background
         Background background = new Background(new BackgroundFill(fillColor,
                 cornerRadius(), Insets.EMPTY));

@@ -30,7 +30,7 @@ public class LabeledEdge extends Group {
             LabeledEdge.class);
 
     private static final int LABEL_MARGIN = 5;
-    private static final int LABEL_FONT_SIZE = 8;
+    private static final int LABEL_FONT_SIZE = 10;
 
     private final LabeledNode startNode;
     private final ConnectorType startConnector;
@@ -105,6 +105,9 @@ public class LabeledEdge extends Group {
                 .getColorFromHexValue(style.getStrokeColor()));
         curve.setFill(Color.TRANSPARENT);
         curve.setStrokeType(StrokeType.CENTERED);
+
+        Color fillColor = StyleConverter.getColorFromHexValue(
+                style.getFillColor());
     }
 
     /**
@@ -125,8 +128,8 @@ public class LabeledEdge extends Group {
         }, curve.startYProperty(), curve.endYProperty());
 
         label.setText(labelText);
-        label.setTextFill(StyleConverter.getLabelColor(
-                StyleConverter.getColorFromHexValue(style.getFillColor())));
+        label.setTextFill(StyleConverter.getColorFromHexValue(
+                style.getFillColor()));
         label.setFont(new Font(LABEL_FONT_SIZE));
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);

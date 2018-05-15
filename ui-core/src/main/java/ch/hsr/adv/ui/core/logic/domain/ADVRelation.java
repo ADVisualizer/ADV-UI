@@ -5,7 +5,7 @@ import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 /**
  * Represents a relation between to {@link ADVElement}
  */
-public interface ADVRelation {
+public interface ADVRelation<T> {
 
     /**
      * Returns the source {@link ADVElement} id
@@ -41,7 +41,7 @@ public interface ADVRelation {
      *
      * @return label
      */
-    String getLabel();
+    T getLabel();
 
     /**
      * Sets the label for the relation. For example the weight of an edge.
