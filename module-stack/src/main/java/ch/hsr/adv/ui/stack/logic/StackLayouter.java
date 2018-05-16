@@ -22,34 +22,34 @@ import java.util.List;
 @Module(ModuleConstants.MODULE_NAME)
 public class StackLayouter implements Layouter {
 
-    public static final int PADDING = 5;
-    public static final int MIN_WIDTH = 25;
-    public static final int MIN_HEIGHT = 35;
+    private static final int SPACING = 2;
+    private static final int PADDING = 2;
+    private static final int MIN_WIDTH = 25;
+    private static final int MIN_HEIGHT = 35;
+    private static final String BORDER_STYLE = "-fx-border-color: transparent"
+            + " black black black;"
+            + "-fx-border-width: 2;";
 
     /**
-     * Layouts n Stack snapshot if it is not already layouted
+     * Layouts a Stack snapshot if it is not already layouted
      *
      * @param moduleGroup to be layouted
      * @return layouted snapshot
      */
     @Override
-    public Pane layout(ModuleGroup moduleGroup, List<String>
-            flags) {
+    public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         return drawElements(moduleGroup);
     }
 
     private Pane drawElements(ModuleGroup moduleGroup) {
-        AutoScalePane scalePane = new AutoScalePane();
+        AutoScalePane parent = new AutoScalePane();
+
         VBox stackBox = new VBox();
-        stackBox.setSpacing(PADDING);
+        stackBox.setSpacing(SPACING);
         stackBox.setMinHeight(MIN_HEIGHT);
         stackBox.setMinWidth(MIN_WIDTH);
-        stackBox.setPadding(new Insets(2));
-        String borderStyle = "-fx-border-color: transparent black black black;"
-                + "-fx-border-width: 2;";
-        stackBox.setStyle(borderStyle);
-
-        stackBox.getStyleClass().add("stack-box");
+        stackBox.setStyle(BORDER_STYLE);
+        stackBox.setPadding(new Insets(PADDING));
 
         moduleGroup.getElements().forEach(e -> {
             StackElement element = (StackElement) e;
@@ -60,8 +60,8 @@ public class StackLayouter implements Layouter {
             stackBox.getChildren().add(node);
         });
 
-        scalePane.addChildren(stackBox);
-        return scalePane;
+        parent.addChildren(stackBox);
+        return parent;
     }
 
 }

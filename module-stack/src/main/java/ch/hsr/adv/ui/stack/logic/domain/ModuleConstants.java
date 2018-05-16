@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.stack.logic.domain;
 
 /**
- * Module specific constants
+ * Stack module constants
  */
 public class ModuleConstants {
 
