@@ -10,6 +10,14 @@ public class ADVValueStyle implements ADVStyle {
     private String strokeStyle;
     private int strokeThickness;
 
+    public ADVValueStyle(int fillColor, int strokeColor, String strokeStyle,
+                         int strokeThickness) {
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
+        this.strokeStyle = strokeStyle;
+        this.strokeThickness = strokeThickness;
+    }
+
     @Override
     public int getFillColor() {
         return fillColor;

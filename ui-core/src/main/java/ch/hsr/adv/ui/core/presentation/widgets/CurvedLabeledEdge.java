@@ -14,7 +14,7 @@ public class CurvedLabeledEdge extends LabeledEdge {
     private static final Logger logger = LoggerFactory.getLogger(
             CurvedLabeledEdge.class);
 
-    private static final double CURVATURE_FACTOR = 0.1;
+    private static final double CURVATURE_FACTOR = 0.2;
 
     public CurvedLabeledEdge(String labelText,
                              LabeledNode startNode,
@@ -40,60 +40,51 @@ public class CurvedLabeledEdge extends LabeledEdge {
     }
 
     @Override
-    protected void setControlPoints(CubicCurve cubicCurve,
-                                    Point2D startIntersectionPoint,
+    protected void drawLabel(String labelText) {
+        //TODO: reposition label according to curve
+    }
+
+    @Override
+    protected void setControlPoints(Point2D startIntersectionPoint,
                                     Point2D endIntersectionPoint) {
 
         logger.debug("Calculating curvature...");
+        CubicCurve cubicCurve = getCurve();
         Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
         double y = mid.getY();
         double x = mid.getX();
 
         // calculate offset
-        Point2D connectionVector = startIntersectionPoint
+        Point2D startEndVector = startIntersectionPoint
                 .subtract(endIntersectionPoint);
-        Point2D distanceVector = new Point2D(Math.abs(connectionVector
-                .getY()), -connectionVector.getX());
+        Point2D distanceVector = new Point2D(startEndVector
+                .getY(), -startEndVector.getX());
+
+        // change direction if vector direction is in 1st or 4th quadrant
+        if (endIntersectionPoint.getX() > startIntersectionPoint.getX()) {
+            distanceVector = distanceVector.multiply(-1);
+        }
+
+        // scale distance
         distanceVector = distanceVector.multiply(CURVATURE_FACTOR);
 
-
+        // create
         BiConnectionType biConnectionType = BiConnectionType.valueOf(
                 getStartConnector(), getEndConnector());
 
 
         switch (biConnectionType) {
-            case TOPTOP:
-                createCurve(cubicCurve, x + distanceVector
-                        .getX(), y + distanceVector.getY());
-                break;
             case LEFTLEFT:
-                createCurve(cubicCurve, x - distanceVector
-                        .getX(), y - distanceVector.getY());
-                break;
-            case RIGHTRIGHT:
-                createCurve(cubicCurve, x + distanceVector
-                        .getX(), y + distanceVector.getY());
-                break;
             case BOTTOMBOTTOM:
-                createCurve(cubicCurve, x - distanceVector
-                        .getX(), y - distanceVector.getY());
-                break;
-            case LEFTRIGHT:
-                createCurve(cubicCurve, x + distanceVector
-                        .getX(), y + distanceVector.getY());
-                break;
             case RIGHTLEFT:
-                createCurve(cubicCurve, x - distanceVector
-                        .getX(), y - distanceVector.getY());
-                break;
             case TOPBOTTOM:
                 createCurve(cubicCurve, x - distanceVector
                         .getX(), y - distanceVector.getY());
                 break;
+            case TOPTOP:
+            case RIGHTRIGHT:
+            case LEFTRIGHT:
             case BOTTOMTOP:
-                createCurve(cubicCurve, x + distanceVector
-                        .getX(), y + distanceVector.getY());
-                break;
             default:
                 createCurve(cubicCurve, x + distanceVector
                         .getX(), y + distanceVector.getY());
