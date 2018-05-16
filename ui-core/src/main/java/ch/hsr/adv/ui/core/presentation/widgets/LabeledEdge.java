@@ -176,7 +176,7 @@ public class LabeledEdge extends Group {
         }
     }
 
-    private Point2D getConnectorPoint(Bounds boundsInCommonAncestor,
+    protected Point2D getConnectorPoint(Bounds boundsInCommonAncestor,
                                       ConnectorType connectorType) {
         Point2D center = getCenter(boundsInCommonAncestor);
         Point2D startCenter = getCenter(startBounds);
@@ -275,6 +275,14 @@ public class LabeledEdge extends Group {
 
     protected ConnectorType getEndConnector() {
         return endConnector;
+    }
+
+    protected Bounds getStartBounds() {
+        return startBounds;
+    }
+
+    protected Bounds getEndBounds() {
+        return endBounds;
     }
 
     protected CubicCurve getCurve() {
