@@ -2,8 +2,8 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Can be used to display the relation between two nodes.
  *
- * @author mwieland
+ * @author mtrentini
  */
 public class LabeledEdge extends Group {
 
@@ -112,14 +112,18 @@ public class LabeledEdge extends Group {
      *
      * @param labelText text
      */
-    private void drawLabel(String labelText) {
-        Binding xProperty = Bindings.createDoubleBinding(() -> {
-            double centerX = (curve.getControlX1() + curve.getControlX2()) / 2;
-            double labelWidth = (label.getWidth() / 2);
-            return centerX - labelWidth;
+    protected void drawLabel(String labelText) {
+        DoubleBinding xProperty = Bindings.createDoubleBinding(() -> {
+            if (label.getWidth() > 0) {
+                double centerX = (curve.getControlX1()
+                        + curve.getControlX2()) / 2;
+                double labelCenter = (label.getWidth() / 2);
+                return centerX - labelCenter;
+            }
+            return 0.0;
         }, curve.startXProperty(), curve.endXProperty());
 
-        Binding yProperty = Bindings.createDoubleBinding(() -> {
+        DoubleBinding yProperty = Bindings.createDoubleBinding(() -> {
             double centerY = (curve.getControlY1() + curve.getControlY2()) / 2;
             return centerY - LABEL_MARGIN;
         }, curve.startYProperty(), curve.endYProperty());
@@ -150,7 +154,7 @@ public class LabeledEdge extends Group {
             curve.setEndX(endCenter.getX());
             curve.setEndY(endCenter.getY());
 
-            setControlPoints(curve,
+            setControlPoints(
                     new Point2D(curve.getStartX(), curve.getStartY()),
                     new Point2D(curve.getEndX(), curve.getEndY()));
 
@@ -252,36 +256,29 @@ public class LabeledEdge extends Group {
     /**
      * Sets the control points of the curve
      *
-     * @param cubicCurve             curve to adapt curvature on
      * @param startIntersectionPoint calculated intersection point
      * @param endIntersectionPoint   calculated intersection point
      */
-    // needs curve as an input parameter, so the curvature can be adapted in
-    // subclasses
-    protected void setControlPoints(CubicCurve cubicCurve, Point2D
-            startIntersectionPoint, Point2D endIntersectionPoint) {
+    protected void setControlPoints(Point2D startIntersectionPoint,
+                                    Point2D endIntersectionPoint) {
         // straight line
         Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
-        cubicCurve.setControlX1(mid.getX());
-        cubicCurve.setControlY1(mid.getY());
-        cubicCurve.setControlX2(mid.getX());
-        cubicCurve.setControlY2(mid.getY());
+        curve.setControlX1(mid.getX());
+        curve.setControlY1(mid.getY());
+        curve.setControlX2(mid.getX());
+        curve.setControlY2(mid.getY());
     }
 
-    public Bounds getStartBounds() {
-        return startBounds;
-    }
-
-    public Bounds getEndBounds() {
-        return endBounds;
-    }
-
-    public ConnectorType getStartConnector() {
+    protected ConnectorType getStartConnector() {
         return startConnector;
     }
 
-    public ConnectorType getEndConnector() {
+    protected ConnectorType getEndConnector() {
         return endConnector;
+    }
+
+    protected CubicCurve getCurve() {
+        return curve;
     }
 
     /**

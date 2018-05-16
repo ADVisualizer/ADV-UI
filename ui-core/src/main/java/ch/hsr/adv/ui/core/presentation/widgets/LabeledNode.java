@@ -128,5 +128,4 @@ public class LabeledNode extends Region {
         layoutInArea(label, insetLeft, insetTop, contentWidth, contentHeight,
                 getBaselineOffset(), HPos.CENTER, VPos.CENTER);
     }
-
 }

@@ -74,15 +74,13 @@ public class GraphLayouter implements Layouter {
         });
     }
 
-    //TODO: change ConnectorType if more than one edge between two vertices
     private void createRelations() {
         Set<Integer> edgeHashes = new HashSet<>();
 
         relations.forEach(r -> {
             LabeledNode source = vertices.get(r.getSourceElementId());
             LabeledNode target = vertices.get(r.getTargetElementId());
-            boolean combinationNotExists = edgeHashes.add(
-                    source.hashCode() + target.hashCode());
+
 
             ADVStyle style = r.getStyle();
             if (style == null) {
@@ -93,7 +91,9 @@ public class GraphLayouter implements Layouter {
                 type = LabeledEdge.DirectionType.UNIDIRECTIONAL;
             }
 
-            // does an edge already exists
+            // does an edge already exist
+            boolean combinationNotExists = edgeHashes.add(
+                    source.hashCode() + target.hashCode());
             LabeledEdge edge;
             String label = "";
             if (r.getLabel() != null) {
