@@ -115,10 +115,10 @@ public class LabeledEdge extends Group {
     protected void drawLabel(String labelText) {
         DoubleBinding xProperty = Bindings.createDoubleBinding(() -> {
             if (label.getWidth() > 0) {
-                double centerX = (curve.getControlX1() + curve
-                        .getControlX2()) / 2;
-                double labelWidth = (label.getWidth() / 2);
-                return centerX - labelWidth;
+                double centerX = (curve.getControlX1()
+                        + curve.getControlX2()) / 2;
+                double labelCenter = (label.getWidth() / 2);
+                return centerX - labelCenter;
             }
             return 0.0;
         }, curve.startXProperty(), curve.endXProperty());
@@ -259,9 +259,8 @@ public class LabeledEdge extends Group {
      * @param startIntersectionPoint calculated intersection point
      * @param endIntersectionPoint   calculated intersection point
      */
-    protected void setControlPoints(Point2D
-                                            startIntersectionPoint, Point2D
-                                            endIntersectionPoint) {
+    protected void setControlPoints(Point2D startIntersectionPoint,
+                                    Point2D endIntersectionPoint) {
         // straight line
         Point2D mid = startIntersectionPoint.midpoint(endIntersectionPoint);
         curve.setControlX1(mid.getX());
@@ -270,18 +269,15 @@ public class LabeledEdge extends Group {
         curve.setControlY2(mid.getY());
     }
 
-    // should be public, so modules can subclass to build their own edge
-    public ConnectorType getStartConnector() {
+    protected ConnectorType getStartConnector() {
         return startConnector;
     }
 
-    // should be public, so modules can subclass to build their own edge
-    public ConnectorType getEndConnector() {
+    protected ConnectorType getEndConnector() {
         return endConnector;
     }
 
-    // should be public, so modules can subclass to build their own edge
-    public CubicCurve getCurve() {
+    protected CubicCurve getCurve() {
         return curve;
     }
 
