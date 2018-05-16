@@ -100,17 +100,27 @@ public class GraphLayouter implements Layouter {
                 label = r.getLabel().toString();
             }
             if (combinationNotExists) {
-                edge = new LabeledEdge(
-                        label,
-                        source, ConnectorType.DIRECT,
-                        target, ConnectorType.DIRECT,
-                        style, type);
+                if (source.equals(target)) {
+                    edge = new SelfReferenceEdge(label, source, ConnectorType
+                            .RIGHT, ConnectorType.BOTTOM, style, type);
+                } else {
+                    edge = new LabeledEdge(
+                            label,
+                            source, ConnectorType.DIRECT,
+                            target, ConnectorType.DIRECT,
+                            style, type);
+                }
             } else {
-                edge = new CurvedLabeledEdge(
-                        label,
-                        source, ConnectorType.DIRECT,
-                        target, ConnectorType.DIRECT,
-                        style, type);
+                if (source.equals(target)) {
+                    edge = new SelfReferenceEdge(label, source, ConnectorType
+                            .LEFT, ConnectorType.TOP, style, type);
+                } else {
+                    edge = new CurvedLabeledEdge(
+                            label,
+                            source, ConnectorType.DIRECT,
+                            target, ConnectorType.DIRECT,
+                            style, type);
+                }
             }
 
             scalePane.addChildren(edge);
