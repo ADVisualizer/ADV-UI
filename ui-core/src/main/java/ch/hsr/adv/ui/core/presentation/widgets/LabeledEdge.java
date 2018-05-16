@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Can be used to display the relation between two nodes.
  *
- * @author mwieland
+ * @author mtrentini
  */
 public class LabeledEdge extends Group {
 

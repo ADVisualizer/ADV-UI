@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Curved Labeled Edge
+ *
+ * @author mtrentini
  */
 public class CurvedLabeledEdge extends LabeledEdge {
 
