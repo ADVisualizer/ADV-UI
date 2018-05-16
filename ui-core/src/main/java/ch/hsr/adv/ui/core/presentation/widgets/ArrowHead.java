@@ -19,7 +19,8 @@ import java.util.Arrays;
  */
 public class ArrowHead extends Polygon {
     // Defines the shape of the arrow head
-    private static final double[] SHAPE = new double[] {0, 0, 2.5, 7.5, -2.5, 7.5};
+    private static final double[] SHAPE = new double[] {
+            0, 0, 2.5, 7.5, -2.5, 7.5};
 
     private Rotate rotation;
     private float pos;

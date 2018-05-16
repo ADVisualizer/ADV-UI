@@ -176,8 +176,15 @@ public class LabeledEdge extends Group {
         }
     }
 
+    /**
+     * Returns intersection point for the corresponding connector of an edge
+     *
+     * @param boundsInCommonAncestor anchestor bounds
+     * @param connectorType          connector
+     * @return x/y coordinates
+     */
     protected Point2D getConnectorPoint(Bounds boundsInCommonAncestor,
-                                      ConnectorType connectorType) {
+                                        ConnectorType connectorType) {
         Point2D center = getCenter(boundsInCommonAncestor);
         Point2D startCenter = getCenter(startBounds);
         Point2D endCenter = getCenter(endBounds);
