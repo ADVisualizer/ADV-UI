@@ -13,7 +13,7 @@ public class TestLayouter implements Layouter {
 
     private final Pane testPane = new Pane();
     private final LayoutedSnapshot testLayoutedSnapshot =
-            new LayoutedSnapshot(1, testPane, dividers);
+            new LayoutedSnapshot(1, testPane, null);
 
     @Override
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
