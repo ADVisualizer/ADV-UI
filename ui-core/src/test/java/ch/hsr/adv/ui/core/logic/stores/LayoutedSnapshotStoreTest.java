@@ -25,9 +25,9 @@ public class LayoutedSnapshotStoreTest {
 
     @Before
     public void setUp() {
-        layoutedSnapshot1 = new LayoutedSnapshot(1, pane);
+        layoutedSnapshot1 = new LayoutedSnapshot(1, pane, dividers);
         layoutedSnapshot1.setSnapshotDescription("Snapshot 1");
-        layoutedSnapshot2 = new LayoutedSnapshot(2, pane);
+        layoutedSnapshot2 = new LayoutedSnapshot(2, pane, dividers);
         layoutedSnapshot2.setSnapshotDescription("Snapshot 2");
     }
 

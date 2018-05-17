@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import javax.inject.Inject;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Holds state for the {@link ch.hsr.adv.ui.core.presentation.SessionView}.
@@ -40,6 +43,7 @@ class StateViewModel {
             SimpleStringProperty();
     private final StringProperty maxIndexStringProperty = new
             SimpleStringProperty();
+    private final List<DoubleProperty> dividerPositions = new ArrayList<>();
     private final StepButtonState stepButtonState;
     private int currentSnapshotIndex;
     private int maxSnapshotIndex;
@@ -67,6 +71,11 @@ class StateViewModel {
         this.availableSnapshotPanes
                 .addAll(layoutedSnapshotStore.getAllPanes(sessionId));
         this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
+
+        layoutedSnapshotStore.getAll(sessionId)
+                .forEach(snapshot ->
+                        bindDividerPositions(snapshot.getDividers()));
+
 
         String snapshotDescription = layoutedSnapshotStore
                 .getAll(sessionId).get(0)
@@ -96,7 +105,6 @@ class StateViewModel {
                 }
             }
         });
-
     }
 
     private void updateStepButtonDisabilities() {
@@ -194,6 +202,17 @@ class StateViewModel {
         return sessionId;
     }
 
+    private void bindDividerPositions(List<Divider> dividers) {
+        if (dividerPositions.isEmpty()) {
+            dividers.forEach(d -> dividerPositions
+                    .add(new SimpleDoubleProperty(d.getPosition()))
+            );
+        }
+        for (int i = 0; i < dividers.size(); i++) {
+            dividers.get(i).positionProperty()
+                    .bindBidirectional(dividerPositions.get(i));
+        }
+    }
 
     /**
      * Change listener if a new snapshot was added to the snapshot store
@@ -204,9 +223,11 @@ class StateViewModel {
         @Override
         public void propertyChange(PropertyChangeEvent event) {
             Platform.runLater(() -> {
-                availableSnapshotPanes.clear();
-                availableSnapshotPanes.addAll(layoutedSnapshotStore
-                        .getAllPanes(session.getSessionId()));
+                LayoutedSnapshot newSnapshot = (LayoutedSnapshot) event
+                        .getNewValue();
+                Region newPane = newSnapshot.getPane();
+                availableSnapshotPanes.add(newPane);
+                bindDividerPositions(newSnapshot.getDividers());
                 updateProgress();
                 updateStepButtonDisabilities();
             });

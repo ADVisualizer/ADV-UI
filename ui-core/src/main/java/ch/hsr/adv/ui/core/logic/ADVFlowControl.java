@@ -12,6 +12,7 @@ import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import org.slf4j.Logger;
@@ -122,9 +123,10 @@ public class ADVFlowControl implements FlowControl {
             });
 
             // wrap in split pane
-            Region parent = coreLayouter.layout(panes);
+            List<SplitPane.Divider> dividers = new ArrayList<>();
+            Region parent = coreLayouter.layout(panes, dividers);
             LayoutedSnapshot layoutedSnapshot =
-                    new LayoutedSnapshot(snapshot.getSnapshotId(), parent);
+                    new LayoutedSnapshot(snapshot.getSnapshotId(), parent, dividers);
             layoutedSnapshot
                     .setSnapshotDescription(snapshot.getSnapshotDescription());
 
