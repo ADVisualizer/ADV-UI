@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.core.logic.mocks;
 
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 

@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;

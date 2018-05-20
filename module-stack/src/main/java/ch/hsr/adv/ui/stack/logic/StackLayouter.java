@@ -1,10 +1,10 @@
 package ch.hsr.adv.ui.stack.logic;
 
 import ch.hsr.adv.commons.core.logic.domain.Module;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.stack.logic.ConstantsStack;
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import ch.hsr.adv.ui.stack.logic.domain.StackElement;
