@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.graph.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.domain.ADVElement;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.graph.logic.domain.GraphElement;

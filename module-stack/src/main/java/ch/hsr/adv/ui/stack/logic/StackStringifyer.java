@@ -1,9 +1,9 @@
 package ch.hsr.adv.ui.stack.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.stack.logic.ConstantsStack;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
-import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

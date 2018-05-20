@@ -1,5 +1,8 @@
 package ch.hsr.adv.ui.core.logic.domain;
 
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
+import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,13 +1,13 @@
 package ch.hsr.adv.ui.array.logic.domain;
 
+import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultLineStyle;
-import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
 
 /**
  * Relation between two {@link ArrayElement}s
  */
-public class ArrayRelation implements ADVRelation {
+public class ArrayRelation implements ADVRelation<String> {
 
     private long sourceElementId;
     private long targetElementId;
@@ -61,5 +61,10 @@ public class ArrayRelation implements ADVRelation {
     @Override
     public boolean isDirected() {
         return true;
+    }
+
+    @Override
+    public void setDirected(boolean b) {
+        throw new UnsupportedOperationException();
     }
 }

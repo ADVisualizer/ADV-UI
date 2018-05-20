@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.graph.logic.domain;
 
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.ADVElement;
 
 /**
  * Object adapter. Maps an ADVVertex to an ADVElement.
@@ -14,7 +14,7 @@ public class GraphElement implements ADVElement<String> {
     private int fixedPosY;
 
     @Override
-    public long getElementId() {
+    public long getId() {
         return id;
     }
 

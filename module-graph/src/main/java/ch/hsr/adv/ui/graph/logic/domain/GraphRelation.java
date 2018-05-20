@@ -1,13 +1,13 @@
 package ch.hsr.adv.ui.graph.logic.domain;
 
 
+import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
 
 /**
  * Object adapter. Maps an ADVEdge to an ADVRelation.
  */
-public class GraphRelation implements ADVRelation {
+public class GraphRelation implements ADVRelation<String> {
     private long sourceElementId;
     private long targetElementId;
     private ADVStyle style;

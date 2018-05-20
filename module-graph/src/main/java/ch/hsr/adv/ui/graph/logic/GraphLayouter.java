@@ -1,14 +1,14 @@
 package ch.hsr.adv.ui.graph.logic;
 
 
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
+import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
+import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultLineStyle;
 import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.ADVElement;
-import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
-import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.presentation.widgets.*;
 import com.google.inject.Singleton;
@@ -69,7 +69,7 @@ public class GraphLayouter implements Layouter {
                 vertex.setX(e.getFixedPosX());
                 vertex.setY(e.getFixedPosY());
             } //TODO: else use layouting algorithm
-            vertices.put(e.getElementId(), vertex);
+            vertices.put(e.getId(), vertex);
             scalePane.addChildren(vertex);
         });
     }

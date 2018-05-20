@@ -1,13 +1,13 @@
 package ch.hsr.adv.ui.stack.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
+import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.commons.stack.logic.ConstantsStack;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
-import ch.hsr.adv.ui.core.logic.domain.ADVElement;
-import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.stack.logic.domain.StackElement;

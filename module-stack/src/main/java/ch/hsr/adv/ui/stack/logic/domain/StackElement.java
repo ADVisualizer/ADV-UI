@@ -1,9 +1,9 @@
 package ch.hsr.adv.ui.stack.logic.domain;
 
 
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
-import ch.hsr.adv.ui.core.logic.domain.ADVElement;
 
 /**
  * Represents one item in a Stack
@@ -17,7 +17,7 @@ public class StackElement implements ADVElement<String> {
     private ADVStyle style = new ADVDefaultStyle();
 
     @Override
-    public long getElementId() {
+    public long getId() {
         return id;
     }
 
