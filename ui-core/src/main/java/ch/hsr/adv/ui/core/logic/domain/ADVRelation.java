@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.logic.domain;
 
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 
 /**
  * Represents a relation between to {@link ADVElement}

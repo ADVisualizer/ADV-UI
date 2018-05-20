@@ -1,5 +1,7 @@
 package ch.hsr.adv.ui.graph.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
@@ -8,8 +10,6 @@ import ch.hsr.adv.ui.core.logic.domain.ADVElement;
 import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.ui.core.logic.util.ADVParseException;
 import ch.hsr.adv.ui.graph.logic.domain.GraphElement;
 import ch.hsr.adv.ui.graph.logic.domain.GraphRelation;

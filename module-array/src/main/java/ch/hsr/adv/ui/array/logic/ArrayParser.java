@@ -1,6 +1,8 @@
 package ch.hsr.adv.ui.array.logic;
 
 import ch.hsr.adv.commons.array.logic.ConstantsArray;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
@@ -8,8 +10,6 @@ import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVValueStyle;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;

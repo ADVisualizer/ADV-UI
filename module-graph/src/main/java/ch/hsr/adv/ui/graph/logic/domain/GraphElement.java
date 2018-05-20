@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.graph.logic.domain;
 
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 
 /**
  * Object adapter. Maps an ADVVertex to an ADVElement.

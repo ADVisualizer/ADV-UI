@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.array.logic.domain;
 
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.ui.core.logic.domain.ADVElement;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 
 /**
  * Represents one Item in a Array
