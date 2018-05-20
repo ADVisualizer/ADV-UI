@@ -23,11 +23,13 @@ public class CoreLayouter {
     /**
      * Wraps child panes in a SplitPane
      *
-     * @param panes child panes of the module-specific layouter
+     * @param dividers split pane dividers
+     * @param panes    child panes of the module-specific layouter
      * @return split pane
      */
-    public Region layout(List<Pane> panes, List<SplitPane.Divider>
-            dividers) {
+    public Region layout(List<Pane> panes,
+                         List<SplitPane.Divider> dividers) {
+
         Queue<Pane> remainingPanes = new LinkedList<>(panes);
         SplitPane parentPane = new SplitPane();
         parentPane.setOrientation(Orientation.VERTICAL);

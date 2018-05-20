@@ -125,8 +125,8 @@ public class ADVFlowControl implements FlowControl {
             // wrap in split pane
             List<SplitPane.Divider> dividers = new ArrayList<>();
             Region parent = coreLayouter.layout(panes, dividers);
-            LayoutedSnapshot layoutedSnapshot =
-                    new LayoutedSnapshot(snapshot.getSnapshotId(), parent, dividers);
+            LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
+                    snapshot.getSnapshotId(), parent, dividers);
             layoutedSnapshot
                     .setSnapshotDescription(snapshot.getSnapshotDescription());
 

@@ -72,10 +72,8 @@ class StateViewModel {
                 .addAll(layoutedSnapshotStore.getAllPanes(sessionId));
         this.currentSnapshotPaneProperty.set(availableSnapshotPanes.get(0));
 
-        layoutedSnapshotStore.getAll(sessionId)
-                .forEach(snapshot ->
-                        bindDividerPositions(snapshot.getDividers()));
-
+        layoutedSnapshotStore.getAll(sessionId).forEach(snapshot ->
+                bindDividerPositions(snapshot.getDividers()));
 
         String snapshotDescription = layoutedSnapshotStore
                 .getAll(sessionId).get(0)
@@ -202,15 +200,26 @@ class StateViewModel {
         return sessionId;
     }
 
+    /**
+     * Binds the split pane divider-position to a global property (for each
+     * divider), so the position is remains the same while stepping through
+     * multiple snapshots.
+     *
+     * @param dividers split pane  divider
+     */
     private void bindDividerPositions(List<Divider> dividers) {
-        if (dividerPositions.isEmpty()) {
-            dividers.forEach(d -> dividerPositions
-                    .add(new SimpleDoubleProperty(d.getPosition()))
-            );
-        }
         for (int i = 0; i < dividers.size(); i++) {
-            dividers.get(i).positionProperty()
-                    .bindBidirectional(dividerPositions.get(i));
+            double dividerPosition = dividers.get(i).getPosition();
+            DoubleProperty positionProp = dividers.get(i).positionProperty();
+            try {
+                DoubleProperty storedPosition = dividerPositions.get(i);
+                storedPosition.bindBidirectional(positionProp);
+            } catch (IndexOutOfBoundsException e) {
+                // no position stored already
+                DoubleProperty prop = new SimpleDoubleProperty(dividerPosition);
+                dividerPositions.add(prop);
+                positionProp.bindBidirectional(prop);
+            }
         }
     }
 
