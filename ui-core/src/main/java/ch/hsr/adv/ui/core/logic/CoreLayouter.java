@@ -5,6 +5,8 @@ import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,14 +17,19 @@ import java.util.Queue;
  */
 @Singleton
 public class CoreLayouter {
+    private static final Logger logger = LoggerFactory.getLogger(
+            CoreLayouter.class);
 
     /**
      * Wraps child panes in a SplitPane
      *
-     * @param panes child panes of the module-specific layouter
+     * @param dividers split pane dividers
+     * @param panes    child panes of the module-specific layouter
      * @return split pane
      */
-    public Region layout(List<Pane> panes) {
+    public Region layout(List<Pane> panes,
+                         List<SplitPane.Divider> dividers) {
+
         Queue<Pane> remainingPanes = new LinkedList<>(panes);
         SplitPane parentPane = new SplitPane();
         parentPane.setOrientation(Orientation.VERTICAL);
@@ -46,8 +53,9 @@ public class CoreLayouter {
                     rowPane.getItems().add(remainingPanes.poll());
                 }
             }
+            dividers.addAll(rowPane.getDividers());
         }
-
+        dividers.addAll(parentPane.getDividers());
         return parentPane;
     }
 

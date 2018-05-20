@@ -13,21 +13,22 @@ import static org.junit.Assert.*;
 @RunWith(JukitoRunner.class)
 public class LayoutedSnapshotStoreTest {
     private static final long sessionId = 123456;
-    //don't inject these. we need two different instances of each obj
 
     @Inject
     private LayoutedSnapshotStore sut;
 
     @Inject
     private Pane pane;
+
+    //don't inject these. we need two different instances
     private LayoutedSnapshot layoutedSnapshot1;
     private LayoutedSnapshot layoutedSnapshot2;
 
     @Before
     public void setUp() {
-        layoutedSnapshot1 = new LayoutedSnapshot(1, pane);
+        layoutedSnapshot1 = new LayoutedSnapshot(1, pane, null);
         layoutedSnapshot1.setSnapshotDescription("Snapshot 1");
-        layoutedSnapshot2 = new LayoutedSnapshot(2, pane);
+        layoutedSnapshot2 = new LayoutedSnapshot(2, pane, null);
         layoutedSnapshot2.setSnapshotDescription("Snapshot 2");
     }
 

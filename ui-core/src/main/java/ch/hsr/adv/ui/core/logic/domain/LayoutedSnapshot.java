@@ -1,7 +1,9 @@
 package ch.hsr.adv.ui.core.logic.domain;
 
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Region;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -16,12 +18,15 @@ public class LayoutedSnapshot {
 
     private final long snapshotId;
     private final Region pane;
+    private final List<SplitPane.Divider> dividers;
 
     private String snapshotDescription;
 
-    public LayoutedSnapshot(long snapshotId, Region pane) {
+    public LayoutedSnapshot(long snapshotId, Region pane, List<SplitPane
+            .Divider> dividers) {
         this.snapshotId = snapshotId;
         this.pane = pane;
+        this.dividers = dividers;
     }
 
     public long getSnapshotId() {
@@ -38,6 +43,10 @@ public class LayoutedSnapshot {
 
     public Region getPane() {
         return pane;
+    }
+
+    public List<SplitPane.Divider> getDividers() {
+        return dividers;
     }
 
     @Override
