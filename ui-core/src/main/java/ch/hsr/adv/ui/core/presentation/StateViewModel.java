@@ -201,9 +201,8 @@ class StateViewModel {
     }
 
     /**
-     * Binds the split pane divider-position to a global property (for each
-     * divider), so the position is remains the same while stepping through
-     * multiple snapshots.
+     * Binds the split pane divider-positions to master properties, so the
+     * position remains the same while stepping through multiple snapshots.
      *
      * @param dividers split pane  divider
      */
