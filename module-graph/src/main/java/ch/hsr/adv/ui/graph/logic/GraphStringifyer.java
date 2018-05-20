@@ -1,10 +1,10 @@
 package ch.hsr.adv.ui.graph.logic;
 
+import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
 import ch.hsr.adv.ui.core.logic.domain.Module;
 import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Serializes a graph session to json
  */
 @Singleton
-@Module(ModuleConstants.MODULE_NAME)
+@Module(ConstantsGraph.MODULE_NAME)
 public class GraphStringifyer implements Stringifyer {
 
     private static final Logger logger = LoggerFactory
