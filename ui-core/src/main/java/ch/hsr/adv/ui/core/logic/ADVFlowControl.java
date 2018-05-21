@@ -8,7 +8,7 @@ import ch.hsr.adv.ui.core.logic.events.ADVEvent;
 import ch.hsr.adv.ui.core.logic.events.EventManager;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStore;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

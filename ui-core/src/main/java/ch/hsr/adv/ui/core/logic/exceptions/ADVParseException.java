@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.core.logic.util;
+package ch.hsr.adv.ui.core.logic.exceptions;
 
 /**
  * To be thrown for any exception to do with parsing of a session, snapshot etc.

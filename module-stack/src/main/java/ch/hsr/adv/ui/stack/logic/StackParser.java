@@ -9,7 +9,7 @@ import ch.hsr.adv.commons.stack.logic.ConstantsStack;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import ch.hsr.adv.ui.stack.logic.domain.StackElement;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

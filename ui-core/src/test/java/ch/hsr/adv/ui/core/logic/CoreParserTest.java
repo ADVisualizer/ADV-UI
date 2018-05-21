@@ -3,7 +3,7 @@ package ch.hsr.adv.ui.core.logic;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.mocks.GuiceTestModule;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.jukito.UseModules;

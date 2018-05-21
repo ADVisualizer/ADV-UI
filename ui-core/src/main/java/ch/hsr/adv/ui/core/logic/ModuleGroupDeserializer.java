@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.logic;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.gson.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

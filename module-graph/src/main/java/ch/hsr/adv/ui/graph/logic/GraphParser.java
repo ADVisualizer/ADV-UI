@@ -10,7 +10,7 @@ import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import ch.hsr.adv.ui.graph.logic.domain.GraphElement;
 import ch.hsr.adv.ui.graph.logic.domain.GraphRelation;
 import com.google.gson.Gson;
