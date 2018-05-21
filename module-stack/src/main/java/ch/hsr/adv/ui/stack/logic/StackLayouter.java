@@ -3,6 +3,7 @@ package ch.hsr.adv.ui.stack.logic;
 import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.commons.stack.logic.ConstantsStack;
 import ch.hsr.adv.commons.stack.logic.domain.StackElement;
 import ch.hsr.adv.ui.core.logic.Layouter;
@@ -54,6 +55,9 @@ public class StackLayouter implements Layouter {
         moduleGroup.getElements().forEach(e -> {
             StackElement element = (StackElement) e;
             ADVStyle style = element.getStyle();
+            if (style == null) {
+                style = new ADVDefaultStyle();
+            }
 
             LabeledNode node = new LabeledNode(element.getContent(), style);
 
