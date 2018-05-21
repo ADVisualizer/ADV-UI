@@ -36,7 +36,7 @@ public class ModuleGroupDeserializer implements JsonDeserializer<ModuleGroup> {
      * @param typeOfT module group type
      * @param context deserialization context
      * @return parsed module group
-     * @throws JsonParseException gson exception
+     * @throws JsonParseException gson exceptions
      */
     @Override
     public ModuleGroup deserialize(JsonElement json, Type typeOfT,
