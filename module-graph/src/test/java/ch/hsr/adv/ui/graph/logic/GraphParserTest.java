@@ -2,9 +2,9 @@ package ch.hsr.adv.ui.graph.logic;
 
 import ch.hsr.adv.commons.core.logic.domain.ADVElement;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.graph.logic.domain.GraphElement;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
-import ch.hsr.adv.ui.graph.logic.domain.GraphElement;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
