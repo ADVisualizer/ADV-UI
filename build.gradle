@@ -28,6 +28,9 @@ allprojects {
         jcenter()
         mavenLocal()
         mavenCentral()
+        maven {
+            url  "https://dl.bintray.com/adv/adv"
+        }
     }
 
     sourceCompatibility = 1.9
@@ -73,7 +76,7 @@ subprojects {
 
     // common dependencies
     dependencies {
-        compile 'ch.hsr.adv:adv-commons:0.1'
+        compile 'ch.hsr.adv:adv-commons:0.2'
 
         //only use slf4j implementation (e.g. logback) in core
         compile "org.slf4j:slf4j-api:1+"
