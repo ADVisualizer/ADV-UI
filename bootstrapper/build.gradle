@@ -11,4 +11,5 @@ dependencies {
     compile project(':module-array')
     compile project(':module-stack')
     compile project(':module-graph')
+    compile project(':module-queue')
 }

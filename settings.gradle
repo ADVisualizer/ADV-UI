@@ -13,4 +13,5 @@ include 'ui-core'
 include 'module-array'
 include 'module-stack'
 include 'module-graph'
+include 'module-queue'
 
