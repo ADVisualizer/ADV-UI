@@ -1,5 +1,7 @@
 package ch.hsr.adv.ui.core.logic.domain;
 
+import ch.hsr.adv.commons.core.logic.domain.Snapshot;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

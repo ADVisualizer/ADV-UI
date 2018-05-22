@@ -1,16 +1,16 @@
 package ch.hsr.adv.ui.graph.logic;
 
 
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
+import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
+import ch.hsr.adv.commons.core.logic.domain.Module;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultLineStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
+import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.ADVElement;
-import ch.hsr.adv.ui.core.logic.domain.ADVRelation;
-import ch.hsr.adv.ui.core.logic.domain.Module;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.*;
-import ch.hsr.adv.ui.graph.logic.domain.ModuleConstants;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import java.util.*;
  * Creates JavaFX Nodes for the graph elements and adds them to a pane
  */
 @Singleton
-@Module(ModuleConstants.MODULE_NAME)
+@Module(ConstantsGraph.MODULE_NAME)
 public class GraphLayouter implements Layouter {
 
     private static final Logger logger = LoggerFactory.getLogger(
@@ -69,7 +69,7 @@ public class GraphLayouter implements Layouter {
                 vertex.setX(e.getFixedPosX());
                 vertex.setY(e.getFixedPosY());
             } //TODO: else use layouting algorithm
-            vertices.put(e.getElementId(), vertex);
+            vertices.put(e.getId(), vertex);
             scalePane.addChildren(vertex);
         });
     }

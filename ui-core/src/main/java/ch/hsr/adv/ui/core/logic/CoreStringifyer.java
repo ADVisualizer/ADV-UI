@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.domain.Session;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

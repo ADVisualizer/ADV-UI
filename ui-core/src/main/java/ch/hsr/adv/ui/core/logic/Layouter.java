@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import javafx.scene.layout.Pane;
 
 import java.util.List;

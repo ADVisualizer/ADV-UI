@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import org.jukito.JukitoModule;

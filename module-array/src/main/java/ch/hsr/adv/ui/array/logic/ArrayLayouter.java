@@ -1,9 +1,9 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.hsr.adv.ui.array.logic.domain.ModuleConstants;
+import ch.hsr.adv.commons.array.logic.ConstantsArray;
+import ch.hsr.adv.commons.core.logic.domain.Module;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.Module;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
@@ -16,7 +16,7 @@ import java.util.List;
  * Positions the ArrayElements on the Pane
  */
 @Singleton
-@Module(ModuleConstants.MODULE_NAME)
+@Module(ConstantsArray.MODULE_NAME)
 public class ArrayLayouter implements Layouter {
 
     private static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";

@@ -1,7 +1,11 @@
 package ch.hsr.adv.ui.core.service;
 
+import ch.hsr.adv.commons.core.access.ADVRequest;
+import ch.hsr.adv.commons.core.access.ADVResponse;
+import ch.hsr.adv.commons.core.access.ProtocolCommand;
 import ch.hsr.adv.ui.core.logic.FlowControl;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
+import com.google.gson.Gson;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +24,7 @@ public class ADVConnection {
             .getLogger(ADVConnection.class);
 
     private final Socket socket;
-    private final GsonProvider gsonProvider;
+    private final Gson gson;
     private final FlowControl flowControl;
     private BufferedReader reader;
     private PrintWriter writer;
@@ -30,7 +34,7 @@ public class ADVConnection {
                          @Assisted Socket socket) {
         this.socket = socket;
         this.flowControl = flowControl;
-        this.gsonProvider = gsonProvider;
+        this.gson = gsonProvider.getMinifier().create();
     }
 
     /**
@@ -59,7 +63,7 @@ public class ADVConnection {
 
             try {
                 logger.debug("Parse incoming request");
-                ADVRequest request = gsonProvider.getMinifier().create()
+                ADVRequest request = gson
                         .fromJson(sessionJSON, ADVRequest.class);
 
                 if (request.getCommand().equals(ProtocolCommand.END)) {
@@ -71,7 +75,8 @@ public class ADVConnection {
                 logger.debug("Acknowledge received json");
                 ADVResponse response = new ADVResponse(ProtocolCommand
                         .ACKNOWLEDGE);
-                writer.println(response.toJson());
+                String json = gson.toJson(response);
+                writer.println(json);
 
                 logger.debug("Process json: \n {}", request.getJson());
                 flowControl.load(request.getJson());
@@ -81,7 +86,9 @@ public class ADVConnection {
 
                 ADVResponse exceptionResponse = new ADVResponse(
                         ProtocolCommand.EXCEPTION, getStacktraceString(e));
-                writer.println(exceptionResponse.toJson());
+                String json = gson.toJson(exceptionResponse);
+
+                writer.println(json);
             }
         }
     }

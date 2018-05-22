@@ -1,8 +1,9 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.array.logic.domain.ArrayElement;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
@@ -45,6 +46,9 @@ public class ArrayDefaultLayouter {
         moduleGroup.getElements().forEach(e -> {
             ArrayElement element = (ArrayElement) e;
             ADVStyle style = element.getStyle();
+            if (style == null) {
+                style = new ADVDefaultStyle();
+            }
 
             LabeledNode valueNode = new LabeledNode(element
                     .getContent(), style);

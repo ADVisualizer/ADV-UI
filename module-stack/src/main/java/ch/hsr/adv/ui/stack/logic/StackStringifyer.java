@@ -1,10 +1,10 @@
 package ch.hsr.adv.ui.stack.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.Module;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.stack.logic.ConstantsStack;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
-import ch.hsr.adv.ui.core.logic.domain.Module;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.stack.logic.domain.ModuleConstants;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Generates a json representation of a stack session.
  */
 @Singleton
-@Module(ModuleConstants.MODULE_NAME)
+@Module(ConstantsStack.MODULE_NAME)
 public class StackStringifyer implements Stringifyer {
 
     private static final Logger logger = LoggerFactory

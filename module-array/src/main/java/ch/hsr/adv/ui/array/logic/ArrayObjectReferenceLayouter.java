@@ -1,9 +1,10 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.logic.domain.styles.presets.ADVDefaultLineStyle;
+import ch.hsr.adv.commons.array.logic.domain.ArrayElement;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultLineStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
@@ -57,6 +58,9 @@ public class ArrayObjectReferenceLayouter {
         moduleGroup.getElements().forEach(e -> {
             ArrayElement element = (ArrayElement) e;
             ADVStyle style = element.getStyle();
+            if (style == null) {
+                style = new ADVDefaultStyle();
+            }
 
             LabeledNode referenceNode;
             if (element.getContent() != null) {

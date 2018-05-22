@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.presentation.widgets;
 
 
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import javafx.beans.Observable;
 import javafx.geometry.HPos;

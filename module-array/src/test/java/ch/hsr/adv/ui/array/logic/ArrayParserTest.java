@@ -1,10 +1,10 @@
 package ch.hsr.adv.ui.array.logic;
 
-import ch.hsr.adv.ui.array.logic.domain.ArrayElement;
+import ch.hsr.adv.commons.array.logic.domain.ArrayElement;
+import ch.hsr.adv.commons.core.logic.domain.ADVElement;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.domain.ADVElement;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -56,18 +55,5 @@ public class ArrayParserTest {
         assertEquals(ArrayElement.class, element.getClass());
         ArrayElement arrayElement = (ArrayElement) element;
         assertEquals("1", arrayElement.getContent());
-    }
-
-    @Test
-    public void parsePositionTest() throws ADVParseException {
-        // WHEN
-        ModuleGroup actual = sut.parse(jsonElement);
-        List<ADVElement> elements1 = actual.getElements();
-        int posX = elements1.get(0).getFixedPosX();
-        int posY = elements1.get(0).getFixedPosY();
-
-        // THEN
-        assertEquals(10, posX);
-        assertEquals(0, posY);
     }
 }

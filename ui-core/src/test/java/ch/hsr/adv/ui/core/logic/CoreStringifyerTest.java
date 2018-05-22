@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.Snapshot;
 import ch.hsr.adv.ui.core.logic.domain.Session;
-import ch.hsr.adv.ui.core.logic.domain.Snapshot;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
@@ -20,8 +20,7 @@ public class CoreStringifyerTest {
     @Test
     public void stringifySessionTest() {
         // GIVEN
-        ModuleGroup moduleGroup = new ModuleGroup();
-        moduleGroup.setModuleName("test");
+        ModuleGroup moduleGroup = new ModuleGroup("test");
 
         Snapshot snapshot = new Snapshot();
         snapshot.getModuleGroups().add(moduleGroup);

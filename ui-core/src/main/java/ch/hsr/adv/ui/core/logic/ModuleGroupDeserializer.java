@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.util.ADVParseException;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.gson.*;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -36,7 +36,7 @@ public class ModuleGroupDeserializer implements JsonDeserializer<ModuleGroup> {
      * @param typeOfT module group type
      * @param context deserialization context
      * @return parsed module group
-     * @throws JsonParseException gson exception
+     * @throws JsonParseException gson exceptions
      */
     @Override
     public ModuleGroup deserialize(JsonElement json, Type typeOfT,

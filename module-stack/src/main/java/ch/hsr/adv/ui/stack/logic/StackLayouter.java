@@ -1,13 +1,14 @@
 package ch.hsr.adv.ui.stack.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.Module;
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
+import ch.hsr.adv.commons.stack.logic.ConstantsStack;
+import ch.hsr.adv.commons.stack.logic.domain.StackElement;
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.logic.domain.Module;
-import ch.hsr.adv.ui.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
-import ch.hsr.adv.ui.stack.logic.domain.ModuleConstants;
-import ch.hsr.adv.ui.stack.logic.domain.StackElement;
 import com.google.inject.Singleton;
 import javafx.geometry.Insets;
 import javafx.scene.layout.Pane;
@@ -19,7 +20,7 @@ import java.util.List;
  * Positions the StackElements on the Pane
  */
 @Singleton
-@Module(ModuleConstants.MODULE_NAME)
+@Module(ConstantsStack.MODULE_NAME)
 public class StackLayouter implements Layouter {
 
     private static final int SPACING = 2;
@@ -54,6 +55,9 @@ public class StackLayouter implements Layouter {
         moduleGroup.getElements().forEach(e -> {
             StackElement element = (StackElement) e;
             ADVStyle style = element.getStyle();
+            if (style == null) {
+                style = new ADVDefaultStyle();
+            }
 
             LabeledNode node = new LabeledNode(element.getContent(), style);
 

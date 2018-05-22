@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.presentation.widgets;
 
-import ch.hsr.adv.ui.core.logic.domain.styles.ADVStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import org.slf4j.Logger;
