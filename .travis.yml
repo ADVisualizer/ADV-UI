@@ -1,30 +1,39 @@
 dist: trusty
 language: java
-dist: trusty
 jdk:
   - oraclejdk9
 
 # Cache gradle
 before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 
 cache:
   directories:
   - "$HOME/.gradle/caches/"
   - "$HOME/.gradle/wrapper/"
 
+before_install:
+  - chmod +x gradlew
+
+# Deploy master commits to bintray
+before_deploy:
+  - ./gradlew generatePomFileForMavenCustomPublication
+
+# https://docs.travis-ci.com/user/deployment/bintray
+deploy:
+  provider: bintray
+  on:
+    all_branches: true
+  file: ./bintray.json
+  user: mwieland
+  key:
+    secure: a7k2mhQsYoAPQdcclSnx/WX8Qyf33h6fUeiItIYvvNl4wVo6HMSPjr6pxV+qvHFb2/HKPyJIw13iyBQ+IP9o3ByIYR0JnMOiTGB7HEd5k90vngkej5u45RzLxu60gSz6nQt/S4WE076oVRY2sewyWVSvnxlk9LjQbgYT+fOQlWeWBya/z270lAnj5swegalmCBLVXZ1NkB6xZCTFq9Wmuu51l2w1zsYVODBejTNccCt2Vhbeu7X3Q+LHkI6x6yB/R5axWuGB2qB9zNbvxFET4Tr/MtK/B0OtIZRdobLFp5bDertyAOEjg8C0PgqiuHGVeHkCCZggBu0+a0zunuh0C7DTv5UmQEeb3OgRhrmH5eAlj07Am1bYkaAqhawSKshAwg95CkXyfsHgnOxfP0ULmnG4Fny9ltuENMiee/kfoXPM+oRWaFGTnZ4yJP1OUKpPRT+11L3D8ZKsOXScjiAp2JBfasgUM0Sjc/hsdUi/f3LOtN78EQCT6TyFT/Z8XQLcnPS78SnvRuiKLSHYg2fITt+NcIFJU3C/tZo3sllzcT8GO23z3b+/OaEtYj6oANIpwsU3kd5RZiKu4uCqBIp8IcXf1qYeMCVETEHtpwzbJhrOekDmZUyfWLxOgcNRcu0eG/qEMGIMWNe8YZXpr0urEW82z8SYEQFX5C+ojSi+py8=
+  skip_cleanup: true
+  passphrase: GPG_PASSPHRASE
+
+# Configure mail notifications
 notifications:
   email:
     on_success: never
     on_failure: always
-
-# Automatic Github deploy of the adv-ui jar for tagged commits
-deploy:
-  provider: releases
-  api_key:
-    secure: VQX5SUA4TLTfTnjN/nYRfNcXTxnksk3ghFwQBFCC7z6Cqnm5va7XuMe4k+PP49gYdjEhzTUt94Xadipxm8blwqz3bCMHtOhgFNn3cVp+Jv0OXGXcCtffs6NcJbhStTtZR6mJ8d6YYCMF/Rq9ocWu1De/QG/YSg0XlQn9qJzQy2c5PlXjeZh226j6lbGJM2cKL0hvD/wVGwmUHbE32C9qBNUUjuOBsKxWztT6cbNQrwH4ZEFu5VIPxZE1pyhjqYt2LOujjtj4o97WJQSpqIjbSMCkfYJZh2QCg9qPM8tdeR1LBKwjHvaiWhqRuMgCZFn9iJtytnvV8sK3SZAgHQ0A9+vcmRqCJ4MSSI1V4DkHnFlanvV27fFdM0neSydzZJWzhH2q9ChoaN2hevBfcFr5z3yuLYLQap03VqoAwsKL4+UPgtsVpEVAnoHWu6sVGuhF4viPlHgMzMqNHYTUmZtZgHyuSvP6eHbZvBMhV4XysOiKxHy8IAKMoLgOeDO08Rq3HS+Ss6Vrem8AUlZepzRd6l+Jf291yZdf+rxvwqBdaBcIVSnRlFM6jY8Pr1zH0vLoesx07bGRlxDbx1TXnkAJ1o+YcEyqd1GYsMYtBdu9inEiU2gtYbDW0WTHWw4dM0dDZUPzi0ejyDiMOhnpLJO3BUdDkevy8MDnqfBpibIfmpo=
-  file: "build/libs/adv-ui-0.3.jar"
-  skip_cleanup: true
-  on:
-    tags: true

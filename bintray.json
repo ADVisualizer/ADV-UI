@@ -1,0 +1,21 @@
+{
+  "package": {
+    "name": "adv-ui",
+    "repo": "adv",
+    "subject": "adv",
+    "vcs_url": "https://github.com/ADVisualizer/ADV-UI",
+    "licenses": [
+      "AGPL-V3"
+    ]
+  },
+  "version": {
+    "name": "0.3",
+    "released": "2018-05-22",
+    "gpgSign": false
+  },
+  "files":
+  [
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "/ch/hsr/adv/adv-ui/0.3/$1"}
+  ],
+  "publish": true
+}
