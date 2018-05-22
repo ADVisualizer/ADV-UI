@@ -1,0 +1,20 @@
+{
+  "moduleName": "queue",
+  "elements": [
+    {
+      "id": 0,
+      "fixedPosX": 0,
+      "fixedPosY": 0,
+      "content": "1"
+    },
+    {
+      "id": 1,
+      "style": {},
+      "fixedPosX": 0,
+      "fixedPosY": 0,
+      "content": "2"
+    }
+  ],
+  "relations": [
+  ]
+}
