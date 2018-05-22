@@ -1,14 +1,14 @@
 package ch.hsr.adv.ui.core.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.commons.core.logic.domain.Snapshot;
 import ch.hsr.adv.ui.core.access.DatastoreAccess;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
-import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.events.ADVEvent;
 import ch.hsr.adv.ui.core.logic.events.EventManager;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStore;
-import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

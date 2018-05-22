@@ -14,10 +14,10 @@ public interface Parser {
 
     /**
      * Parses the given json into a
-     * {@link ch.hsr.adv.ui.core.logic.domain.Session}
+     * {@link ch.hsr.adv.commons.core.logic.domain.Session}
      *
      * @param json json to parse
-     * @return parsed {@link ch.hsr.adv.ui.core.logic.domain.Session}
+     * @return parsed {@link ch.hsr.adv.commons.core.logic.domain.Session}
      * @throws ADVParseException if anything goes wrong with parsing the
      *                           session
      */

@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.logic.stores;
 
+import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.domain.Session;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;

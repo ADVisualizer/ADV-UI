@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.presentation;
 
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.commons.core.logic.domain.Session;
 import com.google.inject.Singleton;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;

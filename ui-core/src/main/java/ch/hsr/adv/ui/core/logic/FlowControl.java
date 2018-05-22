@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.commons.core.logic.domain.Session;
 
 import java.io.File;
 

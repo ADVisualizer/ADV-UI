@@ -12,7 +12,7 @@ plugins {
 }
 
 group = 'ch.hsr.adv'
-version = '0.1'
+version = '0.3'
 
 /****************************************
  * instructions for all projects

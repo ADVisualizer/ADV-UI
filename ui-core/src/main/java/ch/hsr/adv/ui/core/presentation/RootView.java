@@ -1,6 +1,6 @@
 package ch.hsr.adv.ui.core.presentation;
 
-import ch.hsr.adv.ui.core.logic.domain.Session;
+import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.presentation.util.I18n;
 import ch.hsr.adv.ui.core.presentation.util.ResourceLocator;
 import ch.hsr.adv.ui.core.presentation.util.TabPaneDetacher;

@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.presentation;
 
+import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
-import ch.hsr.adv.ui.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.logic.events.ADVEvent;
 import ch.hsr.adv.ui.core.logic.events.EventManager;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
