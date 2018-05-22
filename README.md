@@ -7,3 +7,18 @@
 
 ## ADV-UI
 UI Container of the ADV application
+
+### Maven
+````xml
+<dependency>
+  <groupId>ch.hsr.adv</groupId>
+  <artifactId>adv-ui</artifactId>
+  <version>0.3</version>
+  <type>pom</type>
+</dependency>
+````
+
+### Gradle
+````groovy
+compile 'ch.hsr.adv:adv-ui:0.3'
+````
