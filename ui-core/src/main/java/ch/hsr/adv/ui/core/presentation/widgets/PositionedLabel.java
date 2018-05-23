@@ -2,6 +2,9 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.CubicCurve;
 
 public class PositionedLabel extends Label {
@@ -10,27 +13,25 @@ public class PositionedLabel extends Label {
     private CubicCurve curve;
 
     /**
-     * @param label text of the label
      * @param curve cubic curve
      */
-    public PositionedLabel(String label, CubicCurve curve) {
+    public PositionedLabel(CubicCurve curve) {
         this.curve = curve;
-
-        setText(label);
-
-        update();
     }
 
     /**
      * Recomputes the angle and position of the arrow
      */
     public void update() {
-        setTextFill(curve.getStroke());
+        Color textColor = (Color)curve.getStroke();
+        Color invertedColor = textColor.invert();
+        textColor = textColor.interpolate(invertedColor, 0.5);
+        setTextFill(textColor);
 
         Point2D orientation = computePosition();
 
         setTranslateX(orientation.getX() - getWidth() / 2);
-        setTranslateY(orientation.getY());
+        setTranslateY(orientation.getY()- getHeight() / 2);
     }
 
     /**

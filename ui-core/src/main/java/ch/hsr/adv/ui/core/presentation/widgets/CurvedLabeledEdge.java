@@ -20,7 +20,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
             CurvedLabeledEdge.class);
 
     private static final double CURVATURE_FACTOR = 0.2;
-    private Point2D anchorPoint = Point2D.ZERO;
+    private static final double LABEL_FACTOR = 0.1;
+    private Point2D anchorPoint;
 
     public CurvedLabeledEdge(String labelText,
                              LabeledNode startNode,
@@ -51,15 +52,28 @@ public class CurvedLabeledEdge extends LabeledEdge {
         Label label = getLabel();
         DoubleBinding xProperty = Bindings
                 .createDoubleBinding(() -> {
-                    double labelCenter = (label.getWidth() / 2);
-                    return anchorPoint.getX() - labelCenter;
-                }, curve.controlX1Property(), curve.controlX2Property());
+                    if (anchorPoint != null && label.getWidth() != 0) {
+                        double labelCenter = (label.getWidth() / 2);
+                        //double labelCenter = 0;
+                        if (labelCenter == 0) {
+                            throw new IllegalArgumentException("");
+                        }
+                        return anchorPoint.getX() - labelCenter;
+                    }
+                    return 0.0;
+                }, curve.controlX1Property(), curve.controlX2Property(), label
+                        .widthProperty());
 
         DoubleBinding yProperty = Bindings
                 .createDoubleBinding(() -> {
-                    double labelCenter = (label.getHeight() / 2);
-                    return anchorPoint.getY() - labelCenter;
-                }, curve.controlY1Property(), curve.controlY2Property());
+                    if (anchorPoint != null && label.getHeight() != 0) {
+                        double labelCenter = (label.getHeight() / 2);
+                        //double labelCenter = 0;
+                        return anchorPoint.getY() - labelCenter;
+                    }
+                    return 0.0;
+                }, curve.controlY1Property(), curve.controlY2Property(), label
+                        .heightProperty());
 
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);
@@ -78,6 +92,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
         // scale distance
         Point2D distanceVector = createDistanceVector(startIntersectionPoint,
                 endIntersectionPoint, CURVATURE_FACTOR);
+        Point2D labelVector = createDistanceVector(startIntersectionPoint,
+                endIntersectionPoint, LABEL_FACTOR);
 
         // create
         BiConnectionType biConnectionType = BiConnectionType.valueOf(
@@ -91,6 +107,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
             case TOPBOTTOM:
                 createOneControlPoint(x - distanceVector
                         .getX(), y - distanceVector.getY());
+                anchorPoint = new Point2D(x - labelVector
+                        .getX(), y - labelVector.getY());
                 break;
             case TOPTOP:
             case RIGHTRIGHT:
@@ -99,6 +117,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
             default:
                 createOneControlPoint(x + distanceVector
                         .getX(), y + distanceVector.getY());
+                anchorPoint = new Point2D(x + labelVector
+                        .getX(), y + labelVector.getY());
         }
 
     }
@@ -141,7 +161,6 @@ public class CurvedLabeledEdge extends LabeledEdge {
      * @param y coordinate for the control points
      */
     protected void createOneControlPoint(double x, double y) {
-        this.anchorPoint = new Point2D(x, y);
         createTwoControlPoints(x, y, x, y);
     }
 
