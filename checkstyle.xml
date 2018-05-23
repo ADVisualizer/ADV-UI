@@ -73,6 +73,11 @@
             <property name="ignoreOverriddenMethods" value="true"/>
         </module>
 
+        <!-- Checks for class design -->
+        <module name="VisibilityModifier">
+            <property name="protectedAllowed" value="true"/>
+        </module>
+
         <!-- Checks for Naming Conventions. -->
         <module name="JavadocType"/>
         <module name="LocalFinalVariableName"/>
@@ -128,7 +133,6 @@
         <!-- Checks for class design -->
         <module name="FinalClass"/>
         <module name="InterfaceIsType"/>
-        <module name="VisibilityModifier"/>
 
         <!-- Miscellaneous other checks. -->
         <module name="ArrayTypeStyle"/>
