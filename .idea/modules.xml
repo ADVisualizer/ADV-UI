@@ -17,8 +17,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-queue/module-queue.iml" filepath="$PROJECT_DIR$/.idea/modules/module-queue/module-queue.iml" group="module-queue" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-queue.iml" filepath="$PROJECT_DIR$/.idea/modules/module-queue.iml" group="module-queue" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-queue/module-queue_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-queue/module-queue_main.iml" group="module-queue" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-queue/module-queue_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-queue/module-queue_main.iml" group="module-queue" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-queue/module-queue_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-queue/module-queue_test.iml" group="module-queue" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-queue/module-queue_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-queue/module-queue_test.iml" group="module-queue" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack.iml" group="module-stack" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack_main.iml" group="module-stack" />
