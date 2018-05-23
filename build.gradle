@@ -1,14 +1,6 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
-    }
-}
-
 plugins {
     id 'com.github.spotbugs' version '1.6.0'
+    id "com.jfrog.bintray" version "1.8.0"
 }
 
 group = 'ch.hsr.adv'
@@ -18,18 +10,20 @@ version = '0.3'
  * instructions for all projects
  ****************************************/
 allprojects {
-    apply plugin: 'idea'
     apply plugin: 'java'
+    apply plugin: 'idea'
     apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'jacoco'
-    apply plugin: 'com.bmuschko.nexus'
+    apply plugin: 'checkstyle'
+    apply plugin: 'com.github.spotbugs'
 
     repositories {
         jcenter()
         mavenLocal()
         mavenCentral()
         maven {
-            url  "https://dl.bintray.com/adv/adv"
+            url "https://dl.bintray.com/adv/adv"
         }
     }
 
@@ -41,8 +35,6 @@ allprojects {
  * instructions for each sub project
  ****************************************/
 subprojects {
-    apply plugin: 'checkstyle'
-    apply plugin: 'com.github.spotbugs'
 
     checkstyle {
         ignoreFailures = false
@@ -66,7 +58,6 @@ subprojects {
         excludeFilter = file("$project.rootDir/excludeFilter.xml")
     }
 
-    // To generate an HTML report instead of XML
     tasks.withType(com.github.spotbugs.SpotBugsTask) {
         reports {
             xml.enabled = false
@@ -78,13 +69,12 @@ subprojects {
     dependencies {
         compile 'ch.hsr.adv:adv-commons:0.2'
 
-        //only use slf4j implementation (e.g. logback) in core
+        // only use slf4j implementation (e.g. logback) in core
         compile "org.slf4j:slf4j-api:1+"
         compile 'de.jensd:shichimifx:1.0.5'
         compile group: 'com.google.inject', name: 'guice', version: '4+'
         compile group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: '4+'
         compile group: 'com.google.code.gson', name: 'gson', version: '2+'
-
 
         testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
@@ -107,14 +97,32 @@ dependencies {
 
 jar {
     dependsOn configurations.childJars
+    exclude('**/logback.xml')
     from { configurations.childJars.collect { zipTree(it) } }
-    exclude("**/logback.xml")
     manifest {
         attributes 'Main-Class': 'ch.hsr.adv.ui.bootstrapper.Bootstrapper'
     }
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+
+/****************************************
+ * Test coverage upload
+ ****************************************/
 task jacocoRootReport(type: JacocoReport) {
 
     dependsOn = subprojects.test
@@ -144,56 +152,90 @@ task jacocoRootReport(type: JacocoReport) {
 
 check.finalizedBy(jacocoRootReport)
 
-
 /****************************************
- * Nexus deployment (needed for Maven Central)
+ * Bintray deployment (needed for Maven Central)
  ****************************************/
-modifyPom {
-    project {
-        name 'Algorithm & Data Structure Visualizer'
-        description 'JavaFX UI component which visualizes your algorithm and data structures'
-        url 'https://github.com/ADVisualizer'
-        inceptionYear '2018'
+bintray {
+    user = System.getenv('BINTRAY_USER') // bintray username (not organisation)
+    key = System.getenv('BINTRAY_KEY')   // api-key
+    override = true
+    publish = true
+    filesSpec {
+        from 'build/libs'
+        into '.'
+    }
 
-        scm {
-            url 'https://github.com/ADVisualizer/ADV-UI'
-            connection 'https://git@github.com/ADVisualizer/ADV-UI.git'
-            developerConnection 'scm:git:https://github.com/ADVisualizer/ADV-UI.git'
+    publications = ['MavenCustom']
+    pkg {
+        repo = 'adv'
+        name = 'adv-ui'
+        userOrg = 'adv'
+        licenses = ['AGPL-V3']
+        websiteUrl = 'https://github.com/ADVisualizer/ADV-UI'
+        issueTrackerUrl = 'https://github.com/ADVisualizer/ADV-UI/issues'
+        vcsUrl = 'https://github.com/ADVisualizer/ADV-UI.git'
+        githubRepo = 'ADVisualizer/ADV-UI'
+    }
+}
+
+// Create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name 'GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0'
+            url 'https://www.gnu.org/licenses/agpl.txt'
+            distribution 'repo'
         }
-
-        licenses {
-            license {
-                name 'GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0'
-                url 'https://www.gnu.org/licenses/agpl.txt'
-                distribution 'repo'
-            }
+    }
+    developers {
+        developer {
+            id 'mwieland'
+            name 'Michael Wieland'
+            email 'mwieland@hsr.ch'
         }
+        developer {
+            id 'mtrentini'
+            name 'Muriele Trentini'
+            email 'mtrentin@hsr.ch'
+        }
+    }
 
-        developers {
-            developer {
-                id 'mwieland'
-                name 'Michael Wieland'
-                email 'mwieland@hsr.ch'
+    scm {
+        url 'https://github.com/ADVisualizer/ADV-UI'
+        connection 'https://git@github.com/ADVisualizer/ADV-UI.git'
+        developerConnection 'scm:git:https://github.com/ADVisualizer/ADV-UI.git'
+    }
+}
+
+// Create the publication with the pom configuration:
+publishing {
+    publications {
+        MavenCustom(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
             }
-            developer {
-                id 'mtrentini'
-                name 'Murièle Trentini'
-                email 'mtrentin@hsr.ch'
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            groupId project.group
+            artifactId project.name
+            version project.version
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'ADV UI Project')
+                root.appendNode('name', 'ADV UI')
+                root.appendNode('url', 'https://github.com/ADVisualizer/ADV-UI')
+                root.children().last() + pomConfig
             }
         }
     }
 }
 
-extraArchive {
-    sources = true
-    tests = false
-    javadoc = true
-}
-
-nexus {
-    sign = true
-    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+model {
+    tasks.generatePomFileForMavenCustomPublication {
+        destination = file("$buildDir/libs/${project.name}-${project.version}.pom")
+    }
 }
 
 
