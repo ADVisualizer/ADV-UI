@@ -7,8 +7,6 @@ import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.commons.queue.logic.ConstantsQueue;
 import ch.hsr.adv.commons.queue.logic.domain.QueueElement;
-import ch.hsr.adv.commons.stack.logic.ConstantsStack;
-import ch.hsr.adv.commons.stack.logic.domain.StackElement;
 import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;

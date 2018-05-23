@@ -119,38 +119,27 @@ artifacts {
     archives javadocJar
 }
 
-
 /****************************************
- * Test coverage upload
+ * Aggregate code coverage for Codecov coverage upload
  ****************************************/
-task jacocoRootReport(type: JacocoReport) {
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
-    dependsOn = subprojects.test
-
-    description = 'Generates an aggregate report from all subprojects'
-
-    doFirst {
-        executionData = files(executionData.findAll {
-            it.exists()
-        })
+    subprojects.each {
+        sourceSets it.sourceSets.main
     }
 
-    additionalSourceDirs = files(subprojects.sourceSets.main.allSource.srcDirs)
-    sourceDirectories = files(subprojects.sourceSets.main.allSource.srcDirs)
-    classDirectories = files(subprojects.sourceSets.main.output)
-    executionData = files(subprojects.jacocoTestReport.executionData)
     reports {
-        html.enabled = true
-        xml.enabled = true
-        csv.enabled = false
-    }
-
-    onlyIf = {
-        true
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
     }
 }
 
-check.finalizedBy(jacocoRootReport)
+codeCoverageReport.dependsOn {
+    subprojects*.test
+}
 
 /****************************************
  * Bintray deployment (needed for Maven Central)
