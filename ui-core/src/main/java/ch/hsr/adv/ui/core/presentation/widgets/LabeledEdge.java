@@ -37,7 +37,7 @@ public class LabeledEdge extends Group {
     private final LabeledNode endNode;
     private final ConnectorType endConnector;
     private final CubicCurve curve = new CubicCurve();
-    private final PositionedLabel label = new PositionedLabel(curve);
+    private final Label label = new Label();
     private final ADVStyle style;
     private final DirectionType directionType;
     private final ArrowHead startArrowHead;
@@ -94,7 +94,7 @@ public class LabeledEdge extends Group {
 
     private void initializeComponent(String labelText) {
         applyStyle(labelText);
-        //drawLabel();
+        drawLabel();
 
         getChildren().addAll(curve, label);
     }
@@ -133,7 +133,6 @@ public class LabeledEdge extends Group {
 
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);
-
     }
 
     /**
@@ -173,8 +172,6 @@ public class LabeledEdge extends Group {
                     logger.warn("Unsupported direction type: {}",
                             directionType);
             }
-
-            label.update();
         }
     }
 

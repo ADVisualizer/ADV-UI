@@ -20,7 +20,7 @@ public class CurvedLabeledEdge extends LabeledEdge {
             CurvedLabeledEdge.class);
 
     private static final double CURVATURE_FACTOR = 0.2;
-    private static final double LABEL_FACTOR = 0.1;
+    private static final double LABEL_FACTOR = 0.25;
     private Point2D anchorPoint;
 
     public CurvedLabeledEdge(String labelText,
@@ -54,10 +54,6 @@ public class CurvedLabeledEdge extends LabeledEdge {
                 .createDoubleBinding(() -> {
                     if (anchorPoint != null && label.getWidth() != 0) {
                         double labelCenter = (label.getWidth() / 2);
-                        //double labelCenter = 0;
-                        if (labelCenter == 0) {
-                            throw new IllegalArgumentException("");
-                        }
                         return anchorPoint.getX() - labelCenter;
                     }
                     return 0.0;
@@ -68,7 +64,6 @@ public class CurvedLabeledEdge extends LabeledEdge {
                 .createDoubleBinding(() -> {
                     if (anchorPoint != null && label.getHeight() != 0) {
                         double labelCenter = (label.getHeight() / 2);
-                        //double labelCenter = 0;
                         return anchorPoint.getY() - labelCenter;
                     }
                     return 0.0;
