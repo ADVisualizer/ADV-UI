@@ -68,6 +68,7 @@ subprojects {
     dependencies {
         // put common dependencies in core -> all submodules need the core anyway
 
+        // put common test dependencies here
         testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
         testCompile 'org.hamcrest:hamcrest-library:1+'
