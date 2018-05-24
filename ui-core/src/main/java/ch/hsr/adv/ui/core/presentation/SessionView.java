@@ -60,6 +60,8 @@ public class SessionView {
     @FXML
     private Label descriptionLabel;
     @FXML
+    private Label descriptionLabelNumber;
+    @FXML
     private TextArea snapshotDescription;
 
     @Inject
@@ -151,6 +153,7 @@ public class SessionView {
                 .bind(I18n.createStringBinding("title.speed"));
         descriptionLabel.textProperty()
                 .bind(I18n.createStringBinding("title.description"));
+        descriptionLabelNumber.textProperty().bind(currentIndex.textProperty());
         snapshotDescription.promptTextProperty()
                 .bind(I18n.createStringBinding("placeholder.description"));
     }
