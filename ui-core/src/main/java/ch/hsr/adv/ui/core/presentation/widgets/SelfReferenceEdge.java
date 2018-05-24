@@ -1,8 +1,12 @@
 package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.scene.control.Label;
+import javafx.scene.shape.CubicCurve;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +49,37 @@ public class SelfReferenceEdge extends CurvedLabeledEdge {
         }
         return super.getConnectorPoint(boundsInCommonAncestor, connectorType);
     }
+
+    @Override
+    protected void drawLabel() {
+        CubicCurve curve = getCurve();
+        Label label = getLabel();
+        DoubleBinding xProperty = Bindings
+                .createDoubleBinding(() -> {
+                    if (label.getWidth() != 0) {
+                        double labelCenter = (label.getWidth() / 2);
+                        return (curve.getControlX1() + curve
+                                .getControlX2()) / 2 - labelCenter;
+                    }
+                    return 0.0;
+                }, curve.controlX1Property(), curve.controlX2Property(), label
+                        .widthProperty());
+
+        DoubleBinding yProperty = Bindings
+                .createDoubleBinding(() -> {
+                    if (label.getHeight() != 0) {
+                        double labelCenter = (label.getHeight() / 2);
+                        return (curve.getControlY1() + curve
+                                .getControlY2()) / 2 - labelCenter;
+                    }
+                    return 0.0;
+                }, curve.controlY1Property(), curve.controlY2Property(), label
+                        .heightProperty());
+
+        label.layoutXProperty().bind(xProperty);
+        label.layoutYProperty().bind(yProperty);
+    }
+
 
     @Override
     protected void setControlPoints(Point2D startIntersectionPoint,

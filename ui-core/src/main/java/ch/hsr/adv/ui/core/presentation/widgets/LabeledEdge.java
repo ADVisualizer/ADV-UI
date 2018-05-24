@@ -95,13 +95,18 @@ public class LabeledEdge extends Group {
     }
 
     private void initializeComponent(String labelText) {
-        applyStyle();
-        drawLabel(labelText);
+        applyStyle(labelText);
+        drawLabel();
 
         getChildren().addAll(curve, label);
     }
 
-    private void applyStyle() {
+    private void applyStyle(String labelText) {
+        label.setText(labelText);
+        label.setTextFill(StyleConverter.getColorFromHexValue(
+                style.getFillColor()));
+        label.setFont(new Font(LABEL_FONT_SIZE));
+
         curve.setStrokeWidth(style.getStrokeThickness());
         curve.setStroke(StyleConverter
                 .getColorFromHexValue(style.getStrokeColor()));
@@ -113,10 +118,8 @@ public class LabeledEdge extends Group {
 
     /**
      * Draws a centered label
-     *
-     * @param labelText text
      */
-    protected void drawLabel(String labelText) {
+    protected void drawLabel() {
         DoubleBinding xProperty = Bindings.createDoubleBinding(() -> {
             if (label.getWidth() > 0) {
                 double centerX = (curve.getControlX1()
@@ -132,10 +135,6 @@ public class LabeledEdge extends Group {
             return centerY - LABEL_MARGIN;
         }, curve.startYProperty(), curve.endYProperty());
 
-        label.setText(labelText);
-        label.setTextFill(StyleConverter.getColorFromHexValue(
-                style.getFillColor()));
-        label.setFont(new Font(LABEL_FONT_SIZE));
         label.layoutXProperty().bind(xProperty);
         label.layoutYProperty().bind(yProperty);
     }
@@ -298,6 +297,9 @@ public class LabeledEdge extends Group {
 
     protected CubicCurve getCurve() {
         return curve;
+    }
+    protected Label getLabel() {
+        return label;
     }
 
     /**

@@ -6,8 +6,8 @@ import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
 import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultElementStyle;
-
+import ch.hsr.adv.commons.core.logic.domain.styles.presets
+        .ADVDefaultElementStyle;
 import ch.hsr.adv.commons.core.logic.domain.styles.presets
         .ADVDefaultRelationStyle;
 import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
