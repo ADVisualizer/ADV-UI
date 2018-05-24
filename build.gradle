@@ -65,17 +65,10 @@ subprojects {
         }
     }
 
-    // common dependencies
     dependencies {
-        compile 'ch.hsr.adv:adv-commons:0.3'
+        // put common dependencies in core -> all submodules need the core anyway
 
-        // only use slf4j implementation (e.g. logback) in core
-        compile "org.slf4j:slf4j-api:1+"
-        compile 'de.jensd:shichimifx:1.0.5'
-        compile group: 'com.google.inject', name: 'guice', version: '4+'
-        compile group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: '4+'
-        compile group: 'com.google.code.gson', name: 'gson', version: '2+'
-
+        // put common test dependencies here
         testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
         testCompile 'org.hamcrest:hamcrest-library:1+'
@@ -130,10 +123,10 @@ task codeCoverageReport(type: JacocoReport) {
     }
 
     reports {
-        xml.enabled true
-        xml.destination "${buildDir}/reports/jacoco/report.xml"
-        html.enabled false
-        csv.enabled false
+        xml.enabled = true
+        xml.setDestination(file("${buildDir}/reports/jacoco/report.xml"))
+        html.enabled = false
+        csv.enabled = false
     }
 }
 

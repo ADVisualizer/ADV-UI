@@ -2,4 +2,8 @@ dependencies {
     compile 'de.jensd:fontawesomefx-fontawesome:4+'
     compile 'de.jensd:fontawesomefx-commons:9+'
     compile 'org.controlsfx:controlsfx:9+'
+    compile 'de.jensd:shichimifx:1.0.5'
+
+    // common dependencies
+    compile('ch.hsr.adv:adv-commons:0.3')
 }
