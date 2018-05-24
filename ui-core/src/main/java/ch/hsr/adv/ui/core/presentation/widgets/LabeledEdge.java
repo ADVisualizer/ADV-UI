@@ -98,8 +98,6 @@ public class LabeledEdge extends Group {
         applyStyle();
         drawLabel(labelText);
 
-        ADVDefaultRelationStyleTEST t = new ADVDefaultRelationStyleTEST();
-
         getChildren().addAll(curve, label);
     }
 
