@@ -6,8 +6,10 @@ import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
 import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultLineStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets
+        .ADVDefaultElementStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets
+        .ADVDefaultRelationStyle;
 import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.presentation.widgets.*;
@@ -61,7 +63,7 @@ public class GraphLayouter implements Layouter {
             String label = e.getContent().toString();
             ADVStyle style = e.getStyle();
             if (style == null) {
-                style = new ADVDefaultStyle();
+                style = new ADVDefaultElementStyle();
             }
             LabeledNode vertex = new LabeledNode(label, style, true);
 
@@ -84,7 +86,7 @@ public class GraphLayouter implements Layouter {
 
             ADVStyle style = r.getStyle();
             if (style == null) {
-                style = new ADVDefaultLineStyle();
+                style = new ADVDefaultRelationStyle();
             }
             LabeledEdge.DirectionType type = LabeledEdge.DirectionType.NONE;
             if (r.isDirected()) {

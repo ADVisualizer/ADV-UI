@@ -2,7 +2,7 @@ package ch.hsr.adv.ui.array.logic.domain;
 
 import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultLineStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultRelationStyle;
 
 /**
  * Relation between two
@@ -16,7 +16,7 @@ public class ArrayRelation implements ADVRelation<String> {
     private ADVStyle style;
 
     public ArrayRelation() {
-        this.style = new ADVDefaultLineStyle();
+        this.style = new ADVDefaultRelationStyle();
     }
 
     @Override

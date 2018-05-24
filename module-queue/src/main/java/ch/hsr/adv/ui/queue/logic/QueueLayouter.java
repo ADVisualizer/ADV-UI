@@ -3,7 +3,7 @@ package ch.hsr.adv.ui.queue.logic;
 import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultElementStyle;
 import ch.hsr.adv.commons.queue.logic.ConstantsQueue;
 import ch.hsr.adv.commons.queue.logic.domain.QueueElement;
 import ch.hsr.adv.ui.core.logic.Layouter;
@@ -67,7 +67,7 @@ public class QueueLayouter implements Layouter {
             QueueElement element = (QueueElement) e;
             ADVStyle style = element.getStyle();
             if (style == null) {
-                style = new ADVDefaultStyle();
+                style = new ADVDefaultElementStyle();
             }
 
             LabeledNode node = new LabeledNode(element.getContent(), style);

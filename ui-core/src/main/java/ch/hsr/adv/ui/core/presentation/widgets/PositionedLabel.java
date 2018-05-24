@@ -2,11 +2,13 @@ package ch.hsr.adv.ui.core.presentation.widgets;
 
 import javafx.geometry.Point2D;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderStroke;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.CubicCurve;
 
+/**
+ * Label, which is positioned at the perfect center of a bezier
+ * curve.
+ */
 public class PositionedLabel extends Label {
     // relative position of the label on the curve
     private static final float POS = 0.5f;
@@ -23,7 +25,7 @@ public class PositionedLabel extends Label {
      * Recomputes the angle and position of the arrow
      */
     public void update() {
-        Color textColor = (Color)curve.getStroke();
+        Color textColor = (Color) curve.getStroke();
         Color invertedColor = textColor.invert();
         textColor = textColor.interpolate(invertedColor, 0.5);
         setTextFill(textColor);
@@ -31,11 +33,11 @@ public class PositionedLabel extends Label {
         Point2D orientation = computePosition();
 
         setTranslateX(orientation.getX() - getWidth() / 2);
-        setTranslateY(orientation.getY()- getHeight() / 2);
+        setTranslateY(orientation.getY() - getHeight() / 2);
     }
 
     /**
-     * Computes the x/y coordinates of the arrow head on the cubic curve.
+     * Computes the x/y coordinates of the label on the cubic curve.
      * <p>
      * The relative position must be in the range between 0 and 1!
      * 0 = start
