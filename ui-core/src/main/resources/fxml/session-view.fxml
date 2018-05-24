@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane fx:controller="ch.hsr.adv.ui.core.presentation.SessionView" stylesheets="@../css/session-view.css"
-             xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+            xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <ToolBar nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER">
 
@@ -61,7 +61,7 @@
 
                 <StackPane>
                     <ProgressBar fx:id="stepProgressBar" prefHeight="30" prefWidth="200" progress="0.0"/>
-                    <HBox spacing="5" alignment="CENTER" >
+                    <HBox spacing="5" alignment="CENTER">
                         <Label fx:id="currentIndex"/>
                         <Label>/</Label>
                         <Label fx:id="maxIndex"/>
@@ -81,7 +81,16 @@
             </padding>
             <VBox AnchorPane.bottomAnchor="0.0"
                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-                <Label fx:id="descriptionLabel"/>
+                <HBox>
+                    <Label fx:id="descriptionLabel"/>
+                    <Label>
+                        <padding>
+                            <Insets left="5.0"/>
+                        </padding>
+                        #
+                    </Label>
+                    <Label fx:id="descriptionLabelNumber"/>
+                </HBox>
                 <TextArea fx:id="snapshotDescription" prefHeight="80.0"/>
             </VBox>
         </AnchorPane>
