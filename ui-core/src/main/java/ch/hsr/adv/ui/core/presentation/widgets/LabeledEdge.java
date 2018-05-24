@@ -1,7 +1,6 @@
 package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVTestElementStyle;
 import ch.hsr.adv.ui.core.presentation.util.StyleConverter;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
@@ -96,8 +95,6 @@ public class LabeledEdge extends Group {
     private void initializeComponent(String labelText) {
         applyStyle();
         drawLabel(labelText);
-
-        ADVTestElementStyle s = new ADVTestElementStyle();
 
         getChildren().addAll(curve, label);
     }
