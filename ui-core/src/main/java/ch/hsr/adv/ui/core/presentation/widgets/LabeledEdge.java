@@ -103,7 +103,9 @@ public class LabeledEdge extends Group {
         curve.setStrokeWidth(style.getStrokeThickness());
         curve.setStroke(StyleConverter
                 .getColorFromHexValue(style.getStrokeColor()));
-        curve.setFill(Color.TRANSPARENT);
+        curve.getStrokeDashArray().addAll(StyleConverter.getStrokeStyle(
+                style.getStrokeStyle()).getDashArray());
+        curve.setFill(Color.TRANSPARENT); // area of the bezier curve
         curve.setStrokeType(StrokeType.CENTERED);
     }
 

@@ -3,7 +3,7 @@ package ch.hsr.adv.ui.array.logic;
 import ch.hsr.adv.commons.array.logic.domain.ArrayElement;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultElementStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import com.google.inject.Singleton;
@@ -47,7 +47,7 @@ public class ArrayDefaultLayouter {
             ArrayElement element = (ArrayElement) e;
             ADVStyle style = element.getStyle();
             if (style == null) {
-                style = new ADVDefaultStyle();
+                style = new ADVDefaultElementStyle();
             }
 
             LabeledNode valueNode = new LabeledNode(element

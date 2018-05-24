@@ -19,12 +19,12 @@ allprojects {
     apply plugin: 'com.github.spotbugs'
 
     repositories {
-        jcenter()
         mavenLocal()
-        mavenCentral()
         maven {
             url "https://dl.bintray.com/adv/adv"
         }
+        jcenter()
+        mavenCentral()
     }
 
     sourceCompatibility = 1.9
@@ -151,7 +151,7 @@ bintray {
     publish = true
     filesSpec {
         from 'build/libs'
-        into '.'
+        into "/ch/hsr/adv/adv-ui/${project.version}/"
     }
 
     publications = ['MavenCustom']
