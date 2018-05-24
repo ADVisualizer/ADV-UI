@@ -45,6 +45,9 @@ public class ArrowHead extends Polygon {
 
         Arrays.stream(SHAPE).forEach(p -> getPoints().add(p));
 
+        // slightly shift arrow, according to line thickness
+        SHAPE[1] = -2 * curve.getStrokeWidth();
+
         update();
     }
 
