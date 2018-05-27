@@ -10,6 +10,12 @@
     {
       "id": 7,
       "content": "B",
+      "style": {
+        "fillColor": 13888729,
+        "strokeColor": 7324547,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
       "fixedPosX": 140,
       "fixedPosY": 50
     },
