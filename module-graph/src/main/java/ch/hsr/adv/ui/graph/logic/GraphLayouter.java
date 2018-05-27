@@ -60,7 +60,10 @@ public class GraphLayouter implements Layouter {
 
     private void createElements() {
         elements.forEach(e -> {
-            String label = e.getContent().toString();
+            String label = "";
+            if (e.getContent() != null) {
+                label = e.getContent().toString();
+            }
             ADVStyle style = e.getStyle();
             if (style == null) {
                 style = new ADVDefaultElementStyle();

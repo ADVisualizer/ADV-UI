@@ -27,7 +27,6 @@
     },
     {
       "id": 9,
-      "content": "D",
       "fixedPosX": 100,
       "fixedPosY": 150
     },
@@ -42,6 +41,12 @@
     {
       "sourceElementId": 6,
       "targetElementId": 7,
+      "style": {
+        "fillColor": 14006715,
+        "strokeColor": 12148586,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
       "isDirected": false
     },
     {
@@ -60,6 +65,7 @@
       "isDirected": true
     },
     {
+      "label": "0",
       "sourceElementId": 10,
       "targetElementId": 7,
       "isDirected": false
