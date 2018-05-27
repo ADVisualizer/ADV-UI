@@ -5,11 +5,8 @@ import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
-import javafx.collections.ObservableList;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,18 +16,20 @@ import org.testfx.framework.junit.ApplicationTest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 
 @RunWith(JukitoRunner.class)
 public class ArrayLayouterTest extends ApplicationTest {
+    private static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";
     @Inject
     private FileDatastoreAccess reader;
     @Inject
     private ArrayParser testParser;
     @Inject
     private ArrayLayouter sut;
-
     private ModuleGroup moduleGroup;
 
     @Before
@@ -43,16 +42,32 @@ public class ArrayLayouterTest extends ApplicationTest {
     }
 
     @Test
-    public void layoutTest() {
+    public void layoutDefaultTest(ArrayDefaultLayouter mockDefaultLayouter) {
         // WHEN
-        Pane actual = sut
-                .layout(moduleGroup, null);
-        
+        Pane actual = sut.layout(moduleGroup, null);
+
         // THEN
-        ObservableList<Node> children = actual.getChildren();
-        Group group = (Group) children.get(0);
-        HBox hbox = (HBox) group.getChildren().get(0);
-        int arrayElementCount = hbox.getChildren().size();
-        assertEquals(2, arrayElementCount);
+        verify(mockDefaultLayouter).layout(moduleGroup);
+    }
+
+    @Test
+    public void layoutObjectReferenceTest(ArrayObjectReferenceLayouter
+                                                  mockObjectReferenceLayouter) {
+        // WHEN
+        List<String> flags = new ArrayList<>();
+        flags.add(SHOW_OBJECT_RELATIONS);
+        Pane actual = sut.layout(moduleGroup, flags);
+
+        // THEN
+        verify(mockObjectReferenceLayouter).layout(moduleGroup);
+    }
+
+    public static class Module extends JukitoModule {
+        @Override
+        protected void configureTest() {
+            forceMock(ArrayDefaultLayouter.class);
+            forceMock(ArrayObjectReferenceLayouter.class);
+
+        }
     }
 }

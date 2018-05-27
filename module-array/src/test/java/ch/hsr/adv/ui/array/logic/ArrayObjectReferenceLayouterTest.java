@@ -22,13 +22,13 @@ import java.net.URL;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
-public class ArrayDefaultLayouterTest {
+public class ArrayObjectReferenceLayouterTest {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
     private ArrayParser testParser;
     @Inject
-    private ArrayDefaultLayouter sut;
+    private ArrayObjectReferenceLayouter sut;
 
     private ModuleGroup moduleGroup;
 
@@ -49,8 +49,8 @@ public class ArrayDefaultLayouterTest {
         // THEN
         ObservableList<Node> children = actual.getChildren();
         Group group = (Group) children.get(0);
-        HBox hbox = (HBox) group.getChildren().get(0);
-        int arrayElementCount = hbox.getChildren().size();
-        assertEquals(2, arrayElementCount);
+        ObservableList<Node> elements = group.getChildren();
+        assertEquals(3, elements.size());
     }
+
 }
