@@ -41,17 +41,17 @@
     {
       "sourceElementId": 6,
       "targetElementId": 8,
-      "isDirected": false
+      "isDirected": true
     },
     {
-      "sourceElementId": 8,
-      "targetElementId": 7,
+      "sourceElementId": 6,
+      "targetElementId": 8,
       "isDirected": false
     },
     {
       "sourceElementId": 10,
-      "targetElementId": 9,
-      "isDirected": false
+      "targetElementId": 10,
+      "isDirected": true
     },
     {
       "sourceElementId": 10,
