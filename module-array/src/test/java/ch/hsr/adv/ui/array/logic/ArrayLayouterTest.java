@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 
 @RunWith(JukitoRunner.class)
@@ -44,7 +45,7 @@ public class ArrayLayouterTest extends ApplicationTest {
     @Test
     public void layoutDefaultTest(ArrayDefaultLayouter mockDefaultLayouter) {
         // WHEN
-        Pane actual = sut.layout(moduleGroup, null);
+        sut.layout(moduleGroup, null);
 
         // THEN
         verify(mockDefaultLayouter).layout(moduleGroup);
@@ -56,7 +57,7 @@ public class ArrayLayouterTest extends ApplicationTest {
         // WHEN
         List<String> flags = new ArrayList<>();
         flags.add(SHOW_OBJECT_RELATIONS);
-        Pane actual = sut.layout(moduleGroup, flags);
+        sut.layout(moduleGroup, flags);
 
         // THEN
         verify(mockObjectReferenceLayouter).layout(moduleGroup);
