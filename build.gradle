@@ -78,10 +78,6 @@ subprojects {
         testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.8-alpha")
 
     }
-
-    test {
-        jvmArgs "-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
-    }
 }
 
 /****************************************

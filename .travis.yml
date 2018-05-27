@@ -11,10 +11,6 @@ notifications:
 
 matrix:
   include:
-    # Headed Linux
-    - os: linux
-      dist: trusty
-      jdk: oraclejdk9
     # Headless Linux
     - os: linux
       dist: trusty

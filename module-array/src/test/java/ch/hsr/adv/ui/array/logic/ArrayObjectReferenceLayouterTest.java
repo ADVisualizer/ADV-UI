@@ -14,6 +14,7 @@ import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.testfx.api.FxRobot;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import java.net.URL;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
-public class ArrayObjectReferenceLayouterTest {
+public class ArrayObjectReferenceLayouterTest extends FxRobot {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
