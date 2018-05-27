@@ -15,15 +15,17 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
-public class ArrayDefaultLayouterTest extends FxRobot {
+public class ArrayDefaultLayouterTest {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
@@ -34,7 +36,8 @@ public class ArrayDefaultLayouterTest extends FxRobot {
     private ModuleGroup moduleGroup;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, TimeoutException {
+        FxToolkit.registerPrimaryStage();
         URL url = getClass().getClassLoader().getResource("module-group.json");
         String json = reader.read(new File(url.getPath()));
 
