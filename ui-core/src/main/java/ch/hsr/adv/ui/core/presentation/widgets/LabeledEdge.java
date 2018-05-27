@@ -143,7 +143,8 @@ public class LabeledEdge extends Group {
     public void update() {
         startBounds = getRelativeBounds(startNode, getParent());
         endBounds = getRelativeBounds(endNode, getParent());
-        if (startBounds.getHeight() != 0 && startBounds.getWidth() != 0
+        if (startBounds != null && endBounds != null
+                && startBounds.getHeight() != 0 && startBounds.getWidth() != 0
                 && endBounds.getWidth() != 0 && endBounds.getHeight() != 0) {
 
             Point2D startCenter = getConnectorPoint(startBounds,
@@ -296,6 +297,7 @@ public class LabeledEdge extends Group {
     protected CubicCurve getCurve() {
         return curve;
     }
+
     protected Label getLabel() {
         return label;
     }
