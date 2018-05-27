@@ -8,22 +8,22 @@ import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testfx.api.FxRobot;
+import org.testfx.api.FxToolkit;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
-public class ArrayObjectReferenceLayouterTest extends FxRobot {
+public class ArrayObjectReferenceLayouterTest {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
@@ -34,7 +34,8 @@ public class ArrayObjectReferenceLayouterTest extends FxRobot {
     private ModuleGroup moduleGroup;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, TimeoutException {
+        FxToolkit.registerPrimaryStage();
         URL url = getClass().getClassLoader().getResource("module-group.json");
         String json = reader.read(new File(url.getPath()));
 
@@ -51,7 +52,7 @@ public class ArrayObjectReferenceLayouterTest extends FxRobot {
         ObservableList<Node> children = actual.getChildren();
         Group group = (Group) children.get(0);
         ObservableList<Node> elements = group.getChildren();
-        assertEquals(3, elements.size());
+        assertEquals(2, elements.size());
     }
 
 }
