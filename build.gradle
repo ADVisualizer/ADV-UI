@@ -72,6 +72,11 @@ subprojects {
         testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
         testCompile 'org.hamcrest:hamcrest-library:1+'
+        // ui testing fframeworks
+        testCompile "org.testfx:openjfx-monocle:jdk-9+181"
+        testCompile(group: "org.testfx", name: "testfx-core", version: "4.0.8-alpha")
+        testCompile(group: "org.testfx", name: "testfx-junit", version: "4.0.8-alpha")
+
     }
 }
 
