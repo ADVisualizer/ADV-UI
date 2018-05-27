@@ -32,6 +32,17 @@ public class RootView {
     private static final Logger logger = LoggerFactory.getLogger(RootView
             .class);
 
+    private static final KeyCodeCombination SHORTCUT_SAVE_SESSION = new
+            KeyCodeCombination(KeyCode.S, KeyCombination.SHORTCUT_DOWN);
+    private static final KeyCodeCombination SHORTCUT_LOAD_SESSION = new
+            KeyCodeCombination(KeyCode.O, KeyCombination.SHORTCUT_DOWN);
+    private static final KeyCodeCombination SHORTCUT_CLOSE_SESSION = new
+            KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN);
+    private static final KeyCodeCombination SHORTCUT_CLOSE_ALL = new
+            KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN,
+            KeyCombination.SHIFT_DOWN);
+
+
     private final FileChooser fileChooser = new FileChooser();
     private final RootViewModel rootViewModel;
     private final ResourceLocator resourceLocator;
@@ -237,26 +248,15 @@ public class RootView {
                 logger.debug("Setting key shortcuts.");
                 ObservableMap<KeyCombination, Runnable> accelerators =
                         saveActiveSessionButton.getScene().getAccelerators();
-                accelerators.put(
-                        new KeyCodeCombination(KeyCode.S, KeyCombination
-                                .SHORTCUT_DOWN),
-                        () -> saveActiveSessionButton.fire()
-                );
-                accelerators.put(
-                        new KeyCodeCombination(KeyCode.O, KeyCombination
-                                .SHORTCUT_DOWN),
-                        () -> loadSessionButton.fire()
-                );
-                accelerators.put(
-                        new KeyCodeCombination(KeyCode.W, KeyCombination
-                                .SHORTCUT_DOWN),
-                        () -> closeActiveSessionButton.fire()
-                );
-                accelerators.put(
-                        new KeyCodeCombination(KeyCode.W, KeyCombination
-                                .SHORTCUT_DOWN, KeyCombination.SHIFT_DOWN),
-                        () -> closeAllSessionsButton.fire()
-                );
+
+                accelerators.put(SHORTCUT_SAVE_SESSION, () ->
+                        saveActiveSessionButton.fire());
+                accelerators.put(SHORTCUT_LOAD_SESSION, () ->
+                        loadSessionButton.fire());
+                accelerators.put(SHORTCUT_CLOSE_SESSION, () ->
+                        closeActiveSessionButton.fire());
+                accelerators.put(SHORTCUT_CLOSE_ALL, () ->
+                        closeAllSessionsButton.fire());
             }
         });
 
@@ -278,16 +278,20 @@ public class RootView {
     }
 
     private void setToolTips() {
-        loadSessionButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-bar.load_session"));
-        closeAllSessionsButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-bar.close_all"));
-        saveActiveSessionButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-bar.save_session"));
-        closeActiveSessionButton.setTooltip(I18n
-                .tooltipForKey("tooltip.session-bar.close_active"));
-        english.setTooltip(I18n
-                .tooltipForKey("tooltip.session-bar.english"));
+        loadSessionButton.setTooltip(
+                I18n.tooltipForKey("tooltip.session-bar.load_session",
+                        SHORTCUT_LOAD_SESSION.getDisplayText()));
+        closeAllSessionsButton.setTooltip(
+                I18n.tooltipForKey("tooltip.session-bar.close_all",
+                        SHORTCUT_CLOSE_ALL.getDisplayText()));
+        saveActiveSessionButton.setTooltip(
+                I18n.tooltipForKey("tooltip.session-bar.save_session",
+                        SHORTCUT_SAVE_SESSION.getDisplayText()));
+        closeActiveSessionButton.setTooltip(
+                I18n.tooltipForKey("tooltip.session-bar.close_active",
+                        SHORTCUT_CLOSE_SESSION.getDisplayText()));
+
+        english.setTooltip(I18n.tooltipForKey("tooltip.session-bar.english"));
         german.setTooltip(I18n.tooltipForKey("tooltip.session-bar.german"));
     }
 
