@@ -2,10 +2,9 @@ package ch.hsr.adv.ui.core.logic;
 
 import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.access.DatastoreAccess;
-import ch.hsr.adv.ui.core.logic.ADVFlowControl;
 import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
 import ch.hsr.adv.ui.core.logic.events.EventManager;
-import ch.hsr.adv.ui.core.logic.mocks.TestSession;
+import ch.hsr.adv.ui.core.logic.mocks.TestSessionProvider;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStore;
 import com.google.inject.Inject;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.verify;
 public class ADVFlowControlMockedTest {
 
     @Inject
-    private TestSession testSession;
+    private TestSessionProvider testSessionProvider;
     @Inject
     private SessionStore testSessionStore;
     @Inject
@@ -41,7 +40,7 @@ public class ADVFlowControlMockedTest {
 
     @Before
     public void setUp() {
-        Session session = testSession.getSession();
+        Session session = testSessionProvider.getSession();
         session.getSnapshots().forEach(s -> {
             LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(1, new Pane
                     (), new ArrayList<>());
@@ -55,7 +54,7 @@ public class ADVFlowControlMockedTest {
     public void saveSessionTest(EventManager eventManagerMock, DatastoreAccess accessMock) throws
             IOException {
         // WHEN
-        sut.save(testSession.getSession(), null);
+        sut.save(testSessionProvider.getSession(), null);
 
         // THEN
         verify(eventManagerMock, atLeast(1)).fire(any(), any(), any());

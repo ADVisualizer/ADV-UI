@@ -11,12 +11,12 @@ import java.io.IOException;
 import java.net.URL;
 
 @Singleton
-public class TestSession {
+public class TestSessionProvider {
 
     private Session session;
 
     @Inject
-    public TestSession(FileDatastoreAccess reader, Gson gson)
+    public TestSessionProvider(FileDatastoreAccess reader, Gson gson)
             throws IOException {
 
         URL url = getClass().getClassLoader().getResource("session1.json");

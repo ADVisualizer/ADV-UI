@@ -2,18 +2,14 @@ package ch.hsr.adv.ui.core.logic;
 
 import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
-import ch.hsr.adv.ui.core.logic.events.EventManager;
 import ch.hsr.adv.ui.core.logic.mocks.GuiceTestModule;
 import ch.hsr.adv.ui.core.logic.mocks.TestLayouter;
-import ch.hsr.adv.ui.core.logic.mocks.TestParser;
-import ch.hsr.adv.ui.core.logic.mocks.TestSession;
+import ch.hsr.adv.ui.core.logic.mocks.TestSessionProvider;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStoreTest;
 import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
-import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
 import org.junit.Test;
@@ -36,7 +32,7 @@ import static org.mockito.Mockito.verify;
 public class ADVFlowControlTest {
 
     @Inject
-    private TestSession testSession;
+    private TestSessionProvider testSessionProvider;
     @Inject
     private TestLayouter testLayouter;
     @Inject
@@ -59,9 +55,9 @@ public class ADVFlowControlTest {
 
         // THEN
         List<Session> sessions = testSessionStore.getAll();
-        assertTrue(sessions.contains(testSession.getSession()));
+        assertTrue(sessions.contains(testSessionProvider.getSession()));
         assertTrue(layoutedSnapshotStore.contains(
-                testSession.getSession().getSessionId(),
+                testSessionProvider.getSession().getSessionId(),
                 testLayouter.getLayoutedSnapshotTest().getSnapshotId()));
     }
 
@@ -80,7 +76,7 @@ public class ADVFlowControlTest {
         // THEN
         assertEquals(1, testSessionStore.getAll().size());
         assertEquals(2, layoutedSnapshotStore.getAll(
-                testSession.getSession().getSessionId()).size());
+                testSessionProvider.getSession().getSessionId()).size());
     }
 
 }
