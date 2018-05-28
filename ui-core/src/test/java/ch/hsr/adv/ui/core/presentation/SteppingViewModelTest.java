@@ -47,8 +47,8 @@ public class SteppingViewModelTest {
                 1, new Pane(), new ArrayList<>());
         snapshots.add(layoutedSnapshot);
 
-        doReturn(snapshots).when(layoutedSnapshotStoreMock).getAll(0);
-        doReturn(true).when(stateViewModelMock).isAllowedIndex(0);
+        when(layoutedSnapshotStoreMock.getAll(0)).thenReturn(snapshots);
+        when(stateViewModelMock.isAllowedIndex(0)).thenReturn(true);
     }
 
     @Test
