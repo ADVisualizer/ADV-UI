@@ -70,6 +70,17 @@ public final class I18n {
     }
 
     /**
+     * creates a String Binding to a localized String that is computed by
+     * calling the given func
+     *
+     * @param func function called on every change
+     * @return StringBinding
+     */
+    public static StringBinding createStringBinding(Callable<String> func) {
+        return Bindings.createStringBinding(func, LOCALE);
+    }
+
+    /**
      * Returns the supported Locales.
      *
      * @return List of Locale objects.
@@ -107,6 +118,18 @@ public final class I18n {
         ResourceBundle bundle = ResourceBundle
                 .getBundle("bundles.ADVBundle", getLocale());
         return MessageFormat.format(bundle.getString(key), args);
+    }
+
+    /**
+     * creates a bound Label whose value is computed on language change.
+     *
+     * @param func the function to compute the value
+     * @return Label
+     */
+    public static Label labelForValue(Callable<String> func) {
+        Label label = new Label();
+        label.textProperty().bind(createStringBinding(func));
+        return label;
     }
 
     /**
