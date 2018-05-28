@@ -7,6 +7,7 @@ import javafx.beans.Observable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -83,6 +84,8 @@ public class LabeledNode extends Region {
         // font
         label.setTextFill(StyleConverter.getLabelColor(fillColor));
 
+        // min width
+        label.setMinWidth(Control.USE_PREF_SIZE);
     }
 
     private CornerRadii cornerRadius() {
