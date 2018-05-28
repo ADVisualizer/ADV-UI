@@ -176,12 +176,20 @@ public class SessionView {
                  Boolean oldValue, Boolean newValue) -> {
                     if (newValue) {
                         replayButton.setGraphic(pauseIcon);
-                        replayButton.setTooltip(I18n
-                                .tooltipForKey("tooltip.snapshot-bar.pause"));
+                        replayButton
+                                .setTooltip(I18n
+                                        .tooltipForKey("tooltip.snapshot-bar"
+                                                        + ".pause",
+                                                SHORTCUT_REPLAY
+                                                        .getDisplayText()));
                     } else {
                         replayButton.setGraphic(playIcon);
-                        replayButton.setTooltip(I18n
-                                .tooltipForKey("tooltip.snapshot-bar.play"));
+                        replayButton
+                                .setTooltip(I18n
+                                        .tooltipForKey("tooltip.snapshot-bar"
+                                                        + ".play",
+                                                SHORTCUT_REPLAY
+                                                        .getDisplayText()));
                     }
                 });
     }
