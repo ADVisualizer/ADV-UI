@@ -6,6 +6,9 @@ notifications:
     on_success: never
     on_failure: always
 
+# Use fast containers
+sudo: false
+
 matrix:
   include:
    # Headed Linux
