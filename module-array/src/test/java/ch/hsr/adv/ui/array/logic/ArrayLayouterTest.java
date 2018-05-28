@@ -5,24 +5,25 @@ import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
+import javafx.scene.layout.Pane;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testfx.api.FxToolkit;
+import org.testfx.framework.junit.ApplicationTest;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 
 @RunWith(JukitoRunner.class)
-public class ArrayLayouterTest {
+public class ArrayLayouterTest extends ApplicationTest {
     private static final String SHOW_OBJECT_RELATIONS = "SHOW_OBJECT_RELATIONS";
     @Inject
     private FileDatastoreAccess reader;
@@ -33,8 +34,7 @@ public class ArrayLayouterTest {
     private ModuleGroup moduleGroup;
 
     @Before
-    public void setUp() throws IOException, TimeoutException {
-        FxToolkit.registerPrimaryStage();
+    public void setUp() throws IOException {
         URL url = getClass().getClassLoader().getResource("module-group.json");
         String json = reader.read(new File(url.getPath()));
 
