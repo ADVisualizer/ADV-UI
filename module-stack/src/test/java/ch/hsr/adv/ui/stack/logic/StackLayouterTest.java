@@ -58,6 +58,5 @@ public class StackLayouterTest {
         VBox vBox = (VBox) group.getChildren().get(0);
         int arrayElementCount = vBox.getChildren().size();
         assertEquals(2, arrayElementCount);
-        assertTrue(false);
     }
 }
