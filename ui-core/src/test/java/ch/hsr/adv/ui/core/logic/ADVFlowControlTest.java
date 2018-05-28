@@ -2,15 +2,18 @@ package ch.hsr.adv.ui.core.logic;
 
 import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
+import ch.hsr.adv.ui.core.logic.domain.LayoutedSnapshot;
+import ch.hsr.adv.ui.core.logic.events.EventManager;
 import ch.hsr.adv.ui.core.logic.mocks.GuiceTestModule;
 import ch.hsr.adv.ui.core.logic.mocks.TestLayouter;
+import ch.hsr.adv.ui.core.logic.mocks.TestParser;
 import ch.hsr.adv.ui.core.logic.mocks.TestSession;
-import ch.hsr.adv.ui.core.logic.mocks.TestStringifyer;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStoreTest;
 import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
+import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
 import org.junit.Test;
@@ -21,8 +24,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 /**
  * Rather an integration test for the whole flow control load
@@ -35,8 +39,6 @@ public class ADVFlowControlTest {
     private TestSession testSession;
     @Inject
     private TestLayouter testLayouter;
-    @Inject
-    private TestStringifyer stringifyer;
     @Inject
     private SessionStore testSessionStore;
     @Inject
@@ -80,4 +82,5 @@ public class ADVFlowControlTest {
         assertEquals(2, layoutedSnapshotStore.getAll(
                 testSession.getSession().getSessionId()).size());
     }
+
 }
