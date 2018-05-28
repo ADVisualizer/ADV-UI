@@ -81,15 +81,18 @@ public class SteppingViewModel {
     private void fireEvent(ADVEvent event, int oldIndex, int newIndex) {
         logger.debug(layoutedSnapshotStore + "");
         logger.debug(stateViewModel + "");
-        LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore
-                .getAll(stateViewModel.getSessionId())
-                .get(oldIndex);
+        if (stateViewModel.isAllowedIndex(oldIndex) && stateViewModel
+                .isAllowedIndex(newIndex)) {
+            LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore
+                    .getAll(stateViewModel.getSessionId())
+                    .get(oldIndex);
 
-        LayoutedSnapshot newLayoutedSnapshot = layoutedSnapshotStore
-                .getAll(stateViewModel.getSessionId())
-                .get(newIndex);
+            LayoutedSnapshot newLayoutedSnapshot = layoutedSnapshotStore
+                    .getAll(stateViewModel.getSessionId())
+                    .get(newIndex);
 
-        eventManager.fire(event, oldLayoutedSnapshot, newLayoutedSnapshot);
+            eventManager.fire(event, oldLayoutedSnapshot, newLayoutedSnapshot);
+        }
     }
 
 }

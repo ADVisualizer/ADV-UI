@@ -39,4 +39,18 @@ public class CoreParserTest {
         assertNotNull(session);
         assertEquals(2, session.getSnapshots().size());
     }
+
+    @Test(expected = ADVParseException.class)
+    public void parseSessionFailTest(FileDatastoreAccess reader)
+            throws IOException, ADVParseException {
+
+        // GIVEN
+        URL url = getClass().getClassLoader().getResource("session2.json");
+        String json = reader.read(new File(url.getPath()));
+
+        // WHEN
+        sut.parse(json);
+
+        // EXCEPTION
+    }
 }

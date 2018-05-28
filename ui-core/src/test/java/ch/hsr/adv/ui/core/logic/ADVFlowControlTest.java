@@ -4,8 +4,7 @@ import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.logic.mocks.GuiceTestModule;
 import ch.hsr.adv.ui.core.logic.mocks.TestLayouter;
-import ch.hsr.adv.ui.core.logic.mocks.TestSession;
-import ch.hsr.adv.ui.core.logic.mocks.TestStringifyer;
+import ch.hsr.adv.ui.core.logic.mocks.TestSessionProvider;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStoreTest;
@@ -21,8 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 /**
  * Rather an integration test for the whole flow control load
@@ -32,11 +32,9 @@ import static org.junit.Assert.assertTrue;
 public class ADVFlowControlTest {
 
     @Inject
-    private TestSession testSession;
+    private TestSessionProvider testSessionProvider;
     @Inject
     private TestLayouter testLayouter;
-    @Inject
-    private TestStringifyer stringifyer;
     @Inject
     private SessionStore testSessionStore;
     @Inject
@@ -57,9 +55,9 @@ public class ADVFlowControlTest {
 
         // THEN
         List<Session> sessions = testSessionStore.getAll();
-        assertTrue(sessions.contains(testSession.getSession()));
+        assertTrue(sessions.contains(testSessionProvider.getSession()));
         assertTrue(layoutedSnapshotStore.contains(
-                testSession.getSession().getSessionId(),
+                testSessionProvider.getSession().getSessionId(),
                 testLayouter.getLayoutedSnapshotTest().getSnapshotId()));
     }
 
@@ -78,6 +76,7 @@ public class ADVFlowControlTest {
         // THEN
         assertEquals(1, testSessionStore.getAll().size());
         assertEquals(2, layoutedSnapshotStore.getAll(
-                testSession.getSession().getSessionId()).size());
+                testSessionProvider.getSession().getSessionId()).size());
     }
+
 }

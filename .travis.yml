@@ -1,7 +1,11 @@
-dist: trusty
+# Use fast containers
+sudo: false
+
 language: java
-jdk:
-  - oraclejdk9
+dist: trusty
+jdk: oraclejdk9
+env:
+  - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
 
 # Configure mail notifications
 notifications:
@@ -9,16 +13,25 @@ notifications:
     on_success: never
     on_failure: always
 
-# Update permission for gradle wrapper
+install: true
+
 before_install:
+# Update permission for gradle wrapper
   - chmod +x gradlew
+# for headless testing
+  - if [[ "${TRAVIS_OS_NAME}" == linux ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
+
+install:
+  - ./gradlew assemble
 
 # Run code coverage report
 script:
   - ./gradlew check
   - ./gradlew codeCoverageReport
 
-cache: false
+cache:
+  directories:
+    - $HOME/.gradle/wrapper/
 
 # Upload test coverage to codecov
 after_success:

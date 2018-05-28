@@ -51,11 +51,14 @@ public class StackParserTest {
     public void parseADVElementToStackElementTest() throws ADVParseException {
         // WHEN
         ModuleGroup actual = sut.parse(jsonElement);
-        ADVElement element = actual.getElements().get(0);
+        ADVElement element1 = actual.getElements().get(0);
+        ADVElement element2 = actual.getElements().get(1);
 
         // THEN
-        assertEquals(StackElement.class, element.getClass());
-        StackElement stackElement = (StackElement) element;
-        assertEquals("1", stackElement.getContent());
+        assertEquals(StackElement.class, element1.getClass());
+        StackElement stackElement1 = (StackElement) element1;
+        assertEquals(null, stackElement1.getContent());
+        StackElement stackElement2 = (StackElement) element2;
+        assertEquals("2", stackElement2.getContent());
     }
 }

@@ -54,17 +54,7 @@ public class ArrayDefaultLayouter {
             LabeledNode valueNode = new LabeledNode(element
                     .getContent(), style);
 
-            if (element.getFixedPosX() > 0 && element.getFixedPosY() > 0) {
-
-                valueNode.setY(element.getFixedPosY());
-                valueNode.setX(element.getFixedPosX());
-
-                // add fixed positioned elements directly on the scale pane
-                // because the hbox would ignore the fixed position.
-                scalePane.addChildren(valueNode);
-            } else {
-                valueContainer.getChildren().add(valueNode);
-            }
+            valueContainer.getChildren().add(valueNode);
         });
     }
 }

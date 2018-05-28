@@ -43,7 +43,13 @@ subprojects {
         testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
         testCompile 'org.hamcrest:hamcrest-library:1+'
+        // ui testing frameworks
+        testCompile "org.testfx:openjfx-monocle:jdk-9+181"
+        testCompile "org.testfx:testfx-core:4.0.8-alpha"
+        testCompile "org.testfx:testfx-junit:4.0.8-alpha"
+
     }
+
 
     checkstyle {
         ignoreFailures = false

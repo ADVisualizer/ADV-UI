@@ -29,7 +29,7 @@ public class CoreLayouter {
      */
     public Region layout(List<Pane> panes,
                          List<SplitPane.Divider> dividers) {
-
+        logger.debug("Creating grid layout for all active modules...");
         Queue<Pane> remainingPanes = new LinkedList<>(panes);
         SplitPane parentPane = new SplitPane();
         parentPane.setOrientation(Orientation.VERTICAL);

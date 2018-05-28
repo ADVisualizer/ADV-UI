@@ -4,14 +4,18 @@
     {
       "id": 0,
       "fixedPosX": 0,
-      "fixedPosY": 0,
-      "content": "1"
+      "fixedPosY": 0
     },
     {
       "id": 1,
-      "style": {},
       "fixedPosX": 0,
       "fixedPosY": 0,
+      "style": {
+        "fillColor": 13888729,
+        "strokeColor": 7324547,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
       "content": "2"
     }
   ],

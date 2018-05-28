@@ -2,8 +2,11 @@ package ch.hsr.adv.ui.core.presentation.util;
 
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.Locale;
 
 import static org.junit.Assert.assertTrue;
 
@@ -16,6 +19,11 @@ public class ReplaySliderStringConverterTest {
 
     @Inject
     ReplaySliderStringConverter sut;
+
+    @Before
+    public void setUp() throws Exception {
+        I18n.setLocale(Locale.UK);
+    }
 
     @Test
     public void slowTest() {

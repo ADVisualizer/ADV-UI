@@ -10,6 +10,12 @@
     {
       "id": 7,
       "content": "B",
+      "style": {
+        "fillColor": 13888729,
+        "strokeColor": 7324547,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
       "fixedPosX": 140,
       "fixedPosY": 50
     },
@@ -21,7 +27,6 @@
     },
     {
       "id": 9,
-      "content": "D",
       "fixedPosX": 100,
       "fixedPosY": 150
     },
@@ -36,7 +41,18 @@
     {
       "sourceElementId": 6,
       "targetElementId": 7,
+      "style": {
+        "fillColor": 14006715,
+        "strokeColor": 12148586,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
       "isDirected": false
+    },
+    {
+      "sourceElementId": 6,
+      "targetElementId": 8,
+      "isDirected": true
     },
     {
       "sourceElementId": 6,
@@ -44,16 +60,12 @@
       "isDirected": false
     },
     {
-      "sourceElementId": 8,
-      "targetElementId": 7,
-      "isDirected": false
-    },
-    {
       "sourceElementId": 10,
-      "targetElementId": 9,
-      "isDirected": false
+      "targetElementId": 10,
+      "isDirected": true
     },
     {
+      "label": "0",
       "sourceElementId": 10,
       "targetElementId": 7,
       "isDirected": false

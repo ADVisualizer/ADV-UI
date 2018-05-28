@@ -49,11 +49,14 @@ public class ArrayParserTest {
     public void parseADVElementToArrayElementTest() throws ADVParseException {
         // WHEN
         ModuleGroup actual = sut.parse(jsonElement);
-        ADVElement element = actual.getElements().get(0);
+        ADVElement element1 = actual.getElements().get(0);
+        ADVElement element2 = actual.getElements().get(1);
 
         // THEN
-        assertEquals(ArrayElement.class, element.getClass());
-        ArrayElement arrayElement = (ArrayElement) element;
-        assertEquals("1", arrayElement.getContent());
+        assertEquals(ArrayElement.class, element1.getClass());
+        ArrayElement arrayElement1 = (ArrayElement) element1;
+        assertEquals(null, arrayElement1.getContent());
+        ArrayElement arrayElement2 = (ArrayElement) element2;
+        assertEquals("2", arrayElement2.getContent());
     }
 }
