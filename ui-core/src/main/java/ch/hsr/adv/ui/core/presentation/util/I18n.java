@@ -11,13 +11,11 @@ import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.util.Duration;
 
 import java.text.MessageFormat;
 import java.util.*;
-import java.util.concurrent.Callable;
 
 /**
  * I18N utility class
