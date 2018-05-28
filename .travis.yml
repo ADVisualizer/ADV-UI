@@ -1,27 +1,17 @@
+# Use fast containers
+sudo: false
+
 language: java
+dist: trusty
+jdk: oraclejdk9
+env:
+  - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
 
 # Configure mail notifications
 notifications:
   email:
     on_success: never
     on_failure: always
-
-# Use fast containers
-sudo: false
-
-matrix:
-  include:
-   # Headed Linux
-    - os: linux
-      dist: trusty
-      jdk: oraclejdk9
-
-    # Headless Linux
-    - os: linux
-      dist: trusty
-      jdk: oraclejdk9
-      env:
-        - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
 
 install: true
 
@@ -39,7 +29,9 @@ script:
   - ./gradlew check
   - ./gradlew codeCoverageReport
 
-cache: false
+cache:
+  directories:
+    - $HOME/.gradle/wrapper/
 
 # Upload test coverage to codecov
 after_success:
