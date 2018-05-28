@@ -25,9 +25,16 @@ import javax.inject.Inject;
  */
 public class SessionView {
 
-    private static final double NO_MARGIN_ANCHOR = 0.0;
     private static final Logger logger = LoggerFactory.getLogger(SessionView
             .class);
+
+    private static final KeyCodeCombination SHORTCUT_REPLAY = new
+            KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN);
+    private static final KeyCodeCombination SHORTCUT_REPLAY_CANCEL = new
+            KeyCodeCombination(KeyCode.ESCAPE);
+
+    private static final double NO_MARGIN_ANCHOR = 0.0;
+
     private final FontAwesomeIconView pauseIcon;
     private final FontAwesomeIconView playIcon;
     private final SteppingViewModel steppingViewModel;
@@ -142,10 +149,12 @@ public class SessionView {
                 .tooltipForKey("tooltip.snapshot-bar.step_forward"));
         stepLastButton.setTooltip(I18n
                 .tooltipForKey("tooltip.snapshot-bar.step_last"));
-        cancelReplayButton
-                .setTooltip(I18n.tooltipForKey("tooltip.snapshot-bar.cancel"));
+        cancelReplayButton.setTooltip(I18n
+                .tooltipForKey("tooltip.snapshot-bar.cancel",
+                        SHORTCUT_REPLAY_CANCEL.getName()));
         replayButton
-                .setTooltip(I18n.tooltipForKey("tooltip.snapshot-bar.play"));
+                .setTooltip(I18n.tooltipForKey("tooltip.snapshot-bar.play",
+                        SHORTCUT_REPLAY.getDisplayText()));
     }
 
     private void bindI18nStrings() {
@@ -167,12 +176,20 @@ public class SessionView {
                  Boolean oldValue, Boolean newValue) -> {
                     if (newValue) {
                         replayButton.setGraphic(pauseIcon);
-                        replayButton.setTooltip(I18n
-                                .tooltipForKey("tooltip.snapshot-bar.pause"));
+                        replayButton
+                                .setTooltip(I18n
+                                        .tooltipForKey("tooltip.snapshot-bar"
+                                                        + ".pause",
+                                                SHORTCUT_REPLAY
+                                                        .getDisplayText()));
                     } else {
                         replayButton.setGraphic(playIcon);
-                        replayButton.setTooltip(I18n
-                                .tooltipForKey("tooltip.snapshot-bar.play"));
+                        replayButton
+                                .setTooltip(I18n
+                                        .tooltipForKey("tooltip.snapshot-bar"
+                                                        + ".play",
+                                                SHORTCUT_REPLAY
+                                                        .getDisplayText()));
                     }
                 });
     }
@@ -194,15 +211,9 @@ public class SessionView {
                 logger.debug("Setting key shortcuts.");
                 ObservableMap<KeyCombination, Runnable> accelerators =
                         replayButton.getScene().getAccelerators();
-                accelerators.put(
-                        new KeyCodeCombination(KeyCode.R, KeyCombination
-                                .SHORTCUT_DOWN),
-                        () -> replayButton.fire()
-                );
-                accelerators.put(
-                        new KeyCodeCombination(KeyCode.ESCAPE),
-                        () -> cancelReplayButton.fire()
-                );
+                accelerators.put(SHORTCUT_REPLAY, () -> replayButton.fire());
+                accelerators.put(SHORTCUT_REPLAY_CANCEL,
+                        () -> cancelReplayButton.fire());
             }
         });
     }
