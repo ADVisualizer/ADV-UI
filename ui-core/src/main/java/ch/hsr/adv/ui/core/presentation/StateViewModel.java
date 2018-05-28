@@ -232,7 +232,7 @@ class StateViewModel {
      * protection)
      */
     public boolean isAllowedIndex(int index) {
-        return index >= 0 && index < maxSnapshotIndex;
+        return index >= 0 && index <= maxSnapshotIndex;
     }
 
     /**

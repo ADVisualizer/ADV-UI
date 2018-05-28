@@ -30,7 +30,7 @@ public class SteppingViewModelTest {
 
     @Before
     public void setUp(RootViewModel rootViewModel,
-                      StateViewModel stateViewModel,
+                      StateViewModel stateViewModelMock,
                       LayoutedSnapshotStore layoutedSnapshotStoreMock,
                       EventManager eventManagerMock)
             throws Exception {
@@ -40,7 +40,7 @@ public class SteppingViewModelTest {
                 .set(testSessionProvider.getSession());
 
         sut = new SteppingViewModel(layoutedSnapshotStoreMock,
-                eventManagerMock, stateViewModel);
+                eventManagerMock, stateViewModelMock);
 
         List<LayoutedSnapshot> snapshots = new ArrayList<>();
         LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
@@ -48,6 +48,7 @@ public class SteppingViewModelTest {
         snapshots.add(layoutedSnapshot);
 
         doReturn(snapshots).when(layoutedSnapshotStoreMock).getAll(0);
+        doReturn(true).when(stateViewModelMock).isAllowedIndex(0);
     }
 
     @Test
@@ -56,6 +57,7 @@ public class SteppingViewModelTest {
             StateViewModel stateViewModelMock) {
         // WHEN
         sut.navigateSnapshot(Navigate.FIRST);
+
 
         // THEN
         verify(stateViewModelMock).setCurrentSnapshotIndex(0);
