@@ -9,7 +9,6 @@ import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.jukito.JukitoRunner;
@@ -24,6 +23,7 @@ import java.net.URL;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
 public class StackLayouterTest {
@@ -58,5 +58,6 @@ public class StackLayouterTest {
         VBox vBox = (VBox) group.getChildren().get(0);
         int arrayElementCount = vBox.getChildren().size();
         assertEquals(2, arrayElementCount);
+        assertTrue(false);
     }
 }
