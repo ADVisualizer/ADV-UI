@@ -1,7 +1,4 @@
-dist: trusty
 language: java
-jdk:
-  - oraclejdk9
 
 # Configure mail notifications
 notifications:
@@ -11,17 +8,17 @@ notifications:
 
 matrix:
   include:
+   # Headed Linux
+    - os: linux
+      dist: trusty
+      jdk: oraclejdk9
+
     # Headless Linux
     - os: linux
       dist: trusty
       jdk: oraclejdk9
       env:
         - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
-
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
 
 install: true
 
@@ -32,12 +29,9 @@ before_install:
   - if [[ "${TRAVIS_OS_NAME}" == linux ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
 
 
-
-
-
 # Run code coverage report
 script:
-  - ./gradlew check
+  - ./gradlew build
   - ./gradlew codeCoverageReport
 
 cache: false
