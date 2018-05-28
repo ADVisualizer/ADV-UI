@@ -222,6 +222,19 @@ class StateViewModel {
         }
     }
 
+    public ObservableList<Region> getAvailableSnapshotPanes() {
+        return availableSnapshotPanes;
+    }
+
+    /**
+     * @param index to be tested
+     * @return whether the input index is allowed (index out of bounds
+     * protection)
+     */
+    public boolean isAllowedIndex(int index) {
+        return index >= 0 && index < maxSnapshotIndex;
+    }
+
     /**
      * Change listener if a new snapshot was added to the snapshot store
      */
