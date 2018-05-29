@@ -1,11 +1,11 @@
-package ch.hsr.adv.ui.array.logic;
+package ch.hsr.adv.ui.array.presentation;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.ui.array.logic.ArrayParser;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
-import javafx.scene.layout.Pane;
 import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -19,7 +19,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
 
 @RunWith(JukitoRunner.class)

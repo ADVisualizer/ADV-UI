@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.queue.logic;
+package ch.hsr.adv.ui.graph.presentation;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
@@ -6,13 +6,13 @@ import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import ch.hsr.adv.ui.core.presentation.widgets.CurvedLabeledEdge;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import ch.hsr.adv.ui.core.presentation.widgets.SelfReferenceEdge;
+import ch.hsr.adv.ui.graph.logic.GraphParser;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -27,15 +27,16 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 @RunWith(JukitoRunner.class)
-public class QueueLayouterTest {
+public class GraphLayouterTest {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
-    private QueueParser testParser;
+    private GraphParser testParser;
     @Inject
-    private QueueLayouter sut;
+    private GraphLayouter sut;
 
     private ModuleGroup moduleGroup;
 
@@ -56,10 +57,28 @@ public class QueueLayouterTest {
         Pane actual = sut.layout(moduleGroup, null);
 
         // THEN
+        // layouter build 10 elements in total
         ObservableList<Node> children = actual.getChildren();
         Group group = (Group) children.get(0);
-        HBox hbox = (HBox) group.getChildren().get(0);
-        int arrayElementCount = hbox.getChildren().size();
-        assertEquals(2, arrayElementCount);
+        int graphElementCount = group.getChildren().size();
+        assertEquals(10, graphElementCount);
+
+        // layouter build 5 nodes
+        List<Node> graphNodes = group.getChildren().stream()
+                .filter(e -> e instanceof LabeledNode)
+                .collect(Collectors.toList());
+        assertEquals(5, graphNodes.size());
+
+        // layouter build 1 self reference edge
+        List<Node> graphEdgesSelf = group.getChildren().stream()
+                .filter(e -> e instanceof SelfReferenceEdge)
+                .collect(Collectors.toList());
+        assertEquals(1, graphEdgesSelf.size());
+
+        // layouter build 1 curved edge
+        List<Node> graphEdgesCurved = group.getChildren().stream()
+                .filter(e -> e instanceof CurvedLabeledEdge)
+                .collect(Collectors.toList());
+        assertEquals(2, graphEdgesCurved.size());
     }
 }

@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.array.logic;
+package ch.hsr.adv.ui.array.presentation;
 
 import ch.hsr.adv.commons.array.logic.domain.ArrayElement;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;

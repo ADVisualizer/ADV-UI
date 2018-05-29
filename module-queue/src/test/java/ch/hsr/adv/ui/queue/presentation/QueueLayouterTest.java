@@ -1,7 +1,9 @@
-package ch.hsr.adv.ui.array.logic;
+package ch.hsr.adv.ui.queue.presentation;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
+import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
+import ch.hsr.adv.ui.queue.logic.QueueParser;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
@@ -14,7 +16,6 @@ import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 
 import java.io.File;
@@ -23,20 +24,20 @@ import java.net.URL;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
-
 @RunWith(JukitoRunner.class)
-public class ArrayDefaultLayouterTest {
+public class QueueLayouterTest {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
-    private ArrayParser testParser;
+    private QueueParser testParser;
     @Inject
-    private ArrayDefaultLayouter sut;
+    private QueueLayouter sut;
 
     private ModuleGroup moduleGroup;
 
     @Before
-    public void setUp() throws IOException, TimeoutException {
+    public void setUp() throws IOException, TimeoutException,
+            ADVParseException {
         FxToolkit.registerPrimaryStage();
         URL url = getClass().getClassLoader().getResource("module-group.json");
         String json = reader.read(new File(url.getPath()));
@@ -48,7 +49,7 @@ public class ArrayDefaultLayouterTest {
     @Test
     public void layoutTest() {
         // WHEN
-        Pane actual = sut.layout(moduleGroup);
+        Pane actual = sut.layout(moduleGroup, null);
 
         // THEN
         ObservableList<Node> children = actual.getChildren();

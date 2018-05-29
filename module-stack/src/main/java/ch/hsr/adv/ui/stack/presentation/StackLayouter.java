@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.stack.logic;
+package ch.hsr.adv.ui.stack.presentation;
 
 import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;

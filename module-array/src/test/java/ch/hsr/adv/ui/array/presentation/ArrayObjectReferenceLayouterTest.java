@@ -1,8 +1,8 @@
-package ch.hsr.adv.ui.stack.logic;
+package ch.hsr.adv.ui.array.presentation;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.ui.array.logic.ArrayParser;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,22 +22,20 @@ import java.net.URL;
 import java.util.concurrent.TimeoutException;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
-public class StackLayouterTest {
+public class ArrayObjectReferenceLayouterTest {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
-    private StackParser testParser;
+    private ArrayParser testParser;
     @Inject
-    private StackLayouter sut;
+    private ArrayObjectReferenceLayouter sut;
 
     private ModuleGroup moduleGroup;
 
     @Before
-    public void setUp() throws IOException, TimeoutException,
-            ADVParseException {
+    public void setUp() throws IOException, TimeoutException {
         FxToolkit.registerPrimaryStage();
         URL url = getClass().getClassLoader().getResource("module-group.json");
         String json = reader.read(new File(url.getPath()));
@@ -50,13 +47,13 @@ public class StackLayouterTest {
     @Test
     public void layoutTest() {
         // WHEN
-        Pane actual = sut.layout(moduleGroup, null);
+        Pane actual = sut.layout(moduleGroup);
 
         // THEN
         ObservableList<Node> children = actual.getChildren();
         Group group = (Group) children.get(0);
-        VBox vBox = (VBox) group.getChildren().get(0);
-        int arrayElementCount = vBox.getChildren().size();
-        assertEquals(2, arrayElementCount);
+        ObservableList<Node> elements = group.getChildren();
+        assertEquals(2, elements.size());
     }
+
 }

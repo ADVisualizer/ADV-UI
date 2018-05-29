@@ -1,6 +1,7 @@
-package ch.hsr.adv.ui.array.logic;
+package ch.hsr.adv.ui.array.presentation;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.ui.array.logic.ArrayParser;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -8,6 +9,7 @@ import com.google.inject.Inject;
 import javafx.collections.ObservableList;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -23,13 +25,13 @@ import java.util.concurrent.TimeoutException;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
-public class ArrayObjectReferenceLayouterTest {
+public class ArrayDefaultLayouterTest {
     @Inject
     private FileDatastoreAccess reader;
     @Inject
     private ArrayParser testParser;
     @Inject
-    private ArrayObjectReferenceLayouter sut;
+    private ArrayDefaultLayouter sut;
 
     private ModuleGroup moduleGroup;
 
@@ -51,8 +53,8 @@ public class ArrayObjectReferenceLayouterTest {
         // THEN
         ObservableList<Node> children = actual.getChildren();
         Group group = (Group) children.get(0);
-        ObservableList<Node> elements = group.getChildren();
-        assertEquals(2, elements.size());
+        HBox hbox = (HBox) group.getChildren().get(0);
+        int arrayElementCount = hbox.getChildren().size();
+        assertEquals(2, arrayElementCount);
     }
-
 }

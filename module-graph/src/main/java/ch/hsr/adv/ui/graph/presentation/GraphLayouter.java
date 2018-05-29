@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.graph.logic;
+package ch.hsr.adv.ui.graph.presentation;
 
 
 import ch.hsr.adv.commons.core.logic.domain.ADVElement;
