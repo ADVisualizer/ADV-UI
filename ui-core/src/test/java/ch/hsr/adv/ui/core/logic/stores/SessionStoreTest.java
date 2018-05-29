@@ -13,6 +13,7 @@ import java.io.File;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(JukitoRunner.class)
 public class SessionStoreTest {
@@ -107,7 +108,7 @@ public class SessionStoreTest {
 
         // THEN
         assertEquals(0, sut.getAll().size());
-        assertEquals(null, sut.getCurrent());
+        assertNull(sut.getCurrent());
     }
 
 }

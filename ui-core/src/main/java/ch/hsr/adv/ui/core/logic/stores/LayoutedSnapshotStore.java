@@ -44,12 +44,9 @@ public class LayoutedSnapshotStore {
      */
     public void add(long sessionId, LayoutedSnapshot layoutedSnapshot) {
 
-        List<LayoutedSnapshot> layoutedSnapshotList =
-                snapshotMap.get(sessionId);
-        if (layoutedSnapshotList == null) {
-            layoutedSnapshotList = new ArrayList<>();
-            snapshotMap.put(sessionId, layoutedSnapshotList);
-        }
+        List<LayoutedSnapshot> layoutedSnapshotList = snapshotMap
+                .computeIfAbsent(sessionId, k -> new ArrayList<>());
+
         if (!layoutedSnapshotList.contains(layoutedSnapshot)) {
             layoutedSnapshotList.add(layoutedSnapshot);
         }

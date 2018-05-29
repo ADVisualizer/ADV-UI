@@ -94,7 +94,7 @@ public class TabPaneDetacher {
         for (int i = 0; i < tabPane.getTabs().size(); i++) {
             tapTransferMap.put(i, tabPane.getTabs().get(i));
         }
-        tabPane.getTabs().stream().forEach(t -> {
+        tabPane.getTabs().forEach(t -> {
             t.setClosable(false);
         });
         tabPane.setOnDragDetected(

@@ -6,6 +6,7 @@ import javafx.scene.paint.Paint;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class StyleConverterTest {
 
@@ -24,7 +25,7 @@ public class StyleConverterTest {
         BorderStrokeStyle style = StyleConverter.getStrokeStyle("stroked");
 
         // THEN
-        assertEquals(null, style);
+        assertNull(style);
     }
 
     @Test

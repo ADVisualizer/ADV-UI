@@ -5,5 +5,5 @@ package ch.hsr.adv.ui.core.presentation;
  */
 enum Navigate {
 
-    FORWARD, BACKWARD, FIRST, LAST;
+    FORWARD, BACKWARD, FIRST, LAST
 }

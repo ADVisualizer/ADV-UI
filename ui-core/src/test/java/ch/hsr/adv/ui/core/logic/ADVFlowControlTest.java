@@ -21,8 +21,6 @@ import java.net.URL;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 
 /**
  * Rather an integration test for the whole flow control load

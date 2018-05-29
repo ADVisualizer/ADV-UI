@@ -17,8 +17,7 @@ import org.testfx.api.FxToolkit;
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -77,7 +76,7 @@ public class RootViewModelTest {
         // THEN
         verify(layoutedSnapshotStoreMock).deleteAll(newSession.getSessionId());
         verify(sessionStoreMock).delete(newSession.getSessionId());
-        assertFalse(newSession.equals(sut.getCurrentSessionProperty().get()));
+        assertNotEquals(newSession, sut.getCurrentSessionProperty().get());
     }
 
     @Test

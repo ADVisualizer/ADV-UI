@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(JukitoRunner.class)
 public class ArrayParserTest {
@@ -55,7 +56,7 @@ public class ArrayParserTest {
         // THEN
         assertEquals(ArrayElement.class, element1.getClass());
         ArrayElement arrayElement1 = (ArrayElement) element1;
-        assertEquals(null, arrayElement1.getContent());
+        assertNull(arrayElement1.getContent());
         ArrayElement arrayElement2 = (ArrayElement) element2;
         assertEquals("2", arrayElement2.getContent());
     }

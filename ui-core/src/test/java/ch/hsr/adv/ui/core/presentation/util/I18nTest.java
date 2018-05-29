@@ -1,6 +1,5 @@
 package ch.hsr.adv.ui.core.presentation.util;
 
-import com.google.inject.Inject;
 import javafx.beans.binding.StringBinding;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
