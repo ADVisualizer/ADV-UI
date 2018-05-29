@@ -73,7 +73,7 @@ public class GraphLayouter implements Layouter {
             if (e.getFixedPosX() != 0 || e.getFixedPosY() != 0) {
                 vertex.setX(e.getFixedPosX());
                 vertex.setY(e.getFixedPosY());
-            } //TODO: else use layouting algorithm
+            }
             vertices.put(e.getId(), vertex);
             scalePane.addChildren(vertex);
         });

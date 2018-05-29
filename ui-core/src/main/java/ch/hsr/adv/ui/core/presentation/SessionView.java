@@ -118,7 +118,7 @@ public class SessionView {
         replaySpeedSlider.setValue(2);
 
         replaySpeedSlider.setLabelFormatter(replaySliderStringConverter);
-        //TODO: manage to change strings when changing language
+
         I18n.localeProperty().addListener((e, o, n) -> replaySpeedSlider
                 .setLabelFormatter(new ReplaySliderStringConverter()));
 
