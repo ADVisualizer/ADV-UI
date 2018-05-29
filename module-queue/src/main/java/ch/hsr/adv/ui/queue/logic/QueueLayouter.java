@@ -29,12 +29,11 @@ public class QueueLayouter implements Layouter {
 
     private static final int SPACING = 2;
     private static final int PADDING = 2;
-    private static final int MIN_WIDTH = 35;
-    private static final int MIN_HEIGHT = 25;
+    private static final int MIN_WIDTH = 25;
+    private static final int MIN_HEIGHT = 35;
     private static final String BORDER_STYLE =
             "-fx-border-color: black transparent;"
                     + "-fx-border-width: 2;";
-    private static final double ANCHOR = 0.0;
 
     /**
      * Layouts a queue snapshot if it is not already layouted
