@@ -42,7 +42,6 @@ public class RootView {
             KeyCodeCombination(KeyCode.W, KeyCombination.SHORTCUT_DOWN,
             KeyCombination.SHIFT_DOWN);
 
-
     private final FileChooser fileChooser = new FileChooser();
     private final RootViewModel rootViewModel;
     private final ResourceLocator resourceLocator;
@@ -128,20 +127,16 @@ public class RootView {
     }
 
     private void handleNotifications() {
-
-        notificationBar.textProperty().bind(
-                rootViewModel.getNotificationMessageProperty());
-
-        rootViewModel.getNotificationMessageProperty()
-                .addListener((o, old, newValue) -> {
-                    if (newValue.isEmpty()) {
-                        notificationBar.getStyleClass()
-                                .remove("active-notification");
-                    } else {
-                        notificationBar.getStyleClass()
-                                .add("active-notification");
-                    }
-                });
+        notificationBar.textProperty().bind(rootViewModel.
+                getNotificationMessageProperty());
+        notificationBar.textProperty().addListener((o, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                notificationBar.getStyleClass()
+                        .removeAll("active-notification");
+            } else {
+                notificationBar.getStyleClass().add("active-notification");
+            }
+        });
     }
 
     /**
