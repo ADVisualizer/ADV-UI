@@ -32,6 +32,16 @@ public class SessionView {
             KeyCodeCombination(KeyCode.R, KeyCombination.SHORTCUT_DOWN);
     private static final KeyCodeCombination SHORTCUT_REPLAY_CANCEL = new
             KeyCodeCombination(KeyCode.ESCAPE);
+    private static final KeyCodeCombination SHORTCUT_STEP_FIRST = new
+            KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHORTCUT_DOWN,
+            KeyCombination.SHIFT_DOWN);
+    private static final KeyCodeCombination SHORTCUT_STEP_BACKWARD = new
+            KeyCodeCombination(KeyCode.LEFT, KeyCombination.SHORTCUT_DOWN);
+    private static final KeyCodeCombination SHORTCUT_STEP_FORWARD = new
+            KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHORTCUT_DOWN);
+    private static final KeyCodeCombination SHORTCUT_STEP_LAST = new
+            KeyCodeCombination(KeyCode.RIGHT, KeyCombination.SHORTCUT_DOWN,
+            KeyCombination.SHIFT_DOWN);
 
     private static final double NO_MARGIN_ANCHOR = 0.0;
 
@@ -142,13 +152,17 @@ public class SessionView {
 
     private void setTooltips() {
         stepFirstButton.setTooltip(I18n
-                .tooltipForKey("tooltip.snapshot-bar.step_first"));
+                .tooltipForKey("tooltip.snapshot-bar.step_first",
+                        SHORTCUT_STEP_FIRST.getDisplayText()));
         stepBackwardButton.setTooltip(I18n
-                .tooltipForKey("tooltip.snapshot-bar.step_backward"));
+                .tooltipForKey("tooltip.snapshot-bar.step_backward",
+                        SHORTCUT_STEP_BACKWARD.getDisplayText()));
         stepForwardButton.setTooltip(I18n
-                .tooltipForKey("tooltip.snapshot-bar.step_forward"));
+                .tooltipForKey("tooltip.snapshot-bar.step_forward",
+                        SHORTCUT_STEP_FORWARD.getDisplayText()));
         stepLastButton.setTooltip(I18n
-                .tooltipForKey("tooltip.snapshot-bar.step_last"));
+                .tooltipForKey("tooltip.snapshot-bar.step_last",
+                        SHORTCUT_STEP_LAST.getDisplayText()));
         cancelReplayButton.setTooltip(I18n
                 .tooltipForKey("tooltip.snapshot-bar.cancel",
                         SHORTCUT_REPLAY_CANCEL.getName()));
@@ -214,6 +228,14 @@ public class SessionView {
                 accelerators.put(SHORTCUT_REPLAY, () -> replayButton.fire());
                 accelerators.put(SHORTCUT_REPLAY_CANCEL,
                         () -> cancelReplayButton.fire());
+                accelerators.put(SHORTCUT_STEP_FIRST,
+                        () -> stepFirstButton.fire());
+                accelerators.put(SHORTCUT_STEP_BACKWARD,
+                        () -> stepBackwardButton.fire());
+                accelerators.put(SHORTCUT_STEP_FORWARD,
+                        () -> stepForwardButton.fire());
+                accelerators.put(SHORTCUT_STEP_LAST,
+                        () -> stepLastButton.fire());
             }
         });
     }
