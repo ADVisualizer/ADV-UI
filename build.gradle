@@ -131,9 +131,6 @@ artifacts {
     archives javadocJar
 }
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('deployment.properties').newDataInputStream())
-
 /****************************************
  * Aggregate code coverage for Codecov coverage upload
  ****************************************/
@@ -159,6 +156,12 @@ codeCoverageReport.dependsOn {
 /****************************************
  * Bintray deployment (needed for Maven Central)
  ****************************************/
+Properties properties = new Properties()
+File deploymentProp = project.rootProject.file('deployment.properties')
+if (deploymentProp.exists()) {
+    properties.load(deploymentProp.newDataInputStream())
+}
+
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
