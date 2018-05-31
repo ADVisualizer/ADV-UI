@@ -2,6 +2,7 @@
 log/
 build/
 sign-key/
+deployment.properties
 **/.idea/workspace.xml
 **/.idea/tasks.xml
 

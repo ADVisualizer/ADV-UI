@@ -156,9 +156,15 @@ codeCoverageReport.dependsOn {
 /****************************************
  * Bintray deployment (needed for Maven Central)
  ****************************************/
+Properties properties = new Properties()
+File deploymentProp = project.rootProject.file('deployment.properties')
+if (deploymentProp.exists()) {
+    properties.load(deploymentProp.newDataInputStream())
+}
+
 bintray {
-    user = System.getenv('BINTRAY_USER') // bintray username (not organisation)
-    key = System.getenv('BINTRAY_KEY')   // api-key
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
     override = true
     publish = true
     filesSpec {
@@ -176,6 +182,18 @@ bintray {
         issueTrackerUrl = 'https://github.com/ADVisualizer/ADV-UI/issues'
         vcsUrl = 'https://github.com/ADVisualizer/ADV-UI.git'
         githubRepo = 'ADVisualizer/ADV-UI'
+        version {
+            gpg {
+                sign = true
+                passphrase = properties.getProperty("bintray.gpg.password")
+            }
+            mavenCentralSync {
+                user = properties.getProperty("bintray.oss.user")
+                password = properties.getProperty("bintray.oss.password")
+                sync = true //[Default: true] Determines whether to sync the version to Maven Central.
+                close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+            }
+        }
     }
 }
 
