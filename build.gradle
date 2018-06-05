@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'ch.hsr.adv'
-version = '0.3'
+version = '1.0'
 
 /****************************************
  * instructions for all projects
@@ -144,7 +144,7 @@ task codeCoverageReport(type: JacocoReport) {
     reports {
         xml.enabled = true
         xml.setDestination(file("${buildDir}/reports/jacoco/report.xml"))
-        html.enabled = false
+        html.enabled = true
         csv.enabled = false
     }
 }
