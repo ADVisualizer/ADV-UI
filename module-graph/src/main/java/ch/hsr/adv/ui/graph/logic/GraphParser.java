@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.graph.logic;
 
+import ch.hsr.adv.commons.core.access.GsonProvider;
 import ch.hsr.adv.commons.core.logic.domain.ADVElement;
 import ch.hsr.adv.commons.core.logic.domain.ADVRelation;
 import ch.hsr.adv.commons.core.logic.domain.Module;
@@ -9,7 +10,6 @@ import ch.hsr.adv.commons.core.logic.domain.styles.ADVValueStyle;
 import ch.hsr.adv.commons.graph.logic.ConstantsGraph;
 import ch.hsr.adv.commons.graph.logic.domain.GraphElement;
 import ch.hsr.adv.commons.graph.logic.domain.GraphRelation;
-import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;

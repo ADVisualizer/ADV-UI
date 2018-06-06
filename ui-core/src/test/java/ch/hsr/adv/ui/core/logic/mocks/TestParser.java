@@ -1,7 +1,7 @@
 package ch.hsr.adv.ui.core.logic.mocks;
 
+import ch.hsr.adv.commons.core.access.GsonProvider;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
-import ch.hsr.adv.ui.core.logic.GsonProvider;
 import ch.hsr.adv.ui.core.logic.Parser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
