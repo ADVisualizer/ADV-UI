@@ -37,10 +37,9 @@ public class GraphLayouter implements Layouter {
     private List<ADVElement> elements;
 
     /**
-     * Layout the graph module group
+     * Layouts the graph module group
      *
      * @param moduleGroup to be layouted
-     * @param flags       optional flags on session level
      * @return layouted pane
      */
     @Override

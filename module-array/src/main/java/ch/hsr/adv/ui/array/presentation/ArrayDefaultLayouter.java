@@ -13,7 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
- * Default array layouter
+ * Creates an JavaFX array representation in the look of a primitive array.
  */
 @Singleton
 public class ArrayDefaultLayouter {
@@ -22,7 +22,7 @@ public class ArrayDefaultLayouter {
     private HBox valueContainer;
 
     /**
-     * Layouts a default array
+     * Layouts an array to look like a primitive array.
      *
      * @param moduleGroup moduleGroup to layout
      * @return layouted pane

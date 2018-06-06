@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Serializes a graph session to json
+ * Serializes a graph ModuleGroup to json
  */
 @Singleton
 @Module(ConstantsGraph.MODULE_NAME)
@@ -30,7 +30,7 @@ public class GraphStringifyer implements Stringifyer {
     }
 
     /**
-     * Builds a json string from an graph module group.
+     * Builds a json string from a graph module group.
      *
      * @param moduleGroup the moduleGroup to be transmitted
      * @return json string representation of the session

@@ -21,7 +21,7 @@ import javafx.scene.shape.Polygon;
 import java.util.List;
 
 /**
- * Positions the StackElements on the Pane
+ * Creates JavaFX Nodes for the queue elements and adds them to a pane
  */
 @Singleton
 @Module(ConstantsQueue.MODULE_NAME)
@@ -36,10 +36,10 @@ public class QueueLayouter implements Layouter {
                     + "-fx-border-width: 2;";
 
     /**
-     * Layouts a queue snapshot if it is not already layouted
+     * Layouts a queue module group
      *
      * @param moduleGroup to be layouted
-     * @return layouted snapshot
+     * @return layouted pane
      */
     @Override
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {

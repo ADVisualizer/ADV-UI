@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * Positions the ArrayElements on the Pane
+ * Creates and positions ArrayElements on a JavaFX Pane
  */
 @Singleton
 @Module(ConstantsArray.MODULE_NAME)
@@ -35,9 +35,10 @@ public class ArrayLayouter implements Layouter {
     }
 
     /**
-     * Layouts an Array module group if it is not already layouted
+     * Delegates the layout of an array to the correct array layouter.
      *
      * @param moduleGroup to be layouted
+     * @param flags to switch between primitive array and object references
      * @return layouted snapshot
      */
     @Override

@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Parses a json of a stack session to a Session object.
+ * Parses a json representation of a queue to a ModuleGroup.
  */
 @Singleton
 @Module(ConstantsQueue.MODULE_NAME)
@@ -31,7 +31,7 @@ public class QueueParser implements Parser {
     private final Gson gson;
 
     /**
-     * Registers Stack specific types to the GsonBuilder
+     * Registers queue specific types to the GsonBuilder
      *
      * @param gsonProvider preconfigured gson builder
      */

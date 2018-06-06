@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Parses a json of an array session to a Session object.
+ * Parses a json representation of an array to a ModuleGroup.
  */
 @Singleton
 @Module(ConstantsArray.MODULE_NAME)
@@ -30,6 +30,11 @@ public class ArrayParser implements Parser {
 
     private final Gson gson;
 
+    /**
+     * Registers array specific types to the GsonBuilder
+     *
+     * @param gsonProvider preconfigured gson builder
+     */
     @Inject
     public ArrayParser(GsonProvider gsonProvider) {
         GsonBuilder builder = gsonProvider.getMinifier();

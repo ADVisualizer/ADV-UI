@@ -3,7 +3,8 @@ package ch.hsr.adv.ui.stack.presentation;
 import ch.hsr.adv.commons.core.logic.domain.Module;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultElementStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets
+        .ADVDefaultElementStyle;
 import ch.hsr.adv.commons.stack.logic.ConstantsStack;
 import ch.hsr.adv.commons.stack.logic.domain.StackElement;
 import ch.hsr.adv.ui.core.logic.Layouter;
@@ -17,7 +18,7 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 /**
- * Positions the StackElements on the Pane
+ * Creates JavaFX Nodes for the stack elements and adds them to a pane
  */
 @Singleton
 @Module(ConstantsStack.MODULE_NAME)
@@ -32,10 +33,10 @@ public class StackLayouter implements Layouter {
             + "-fx-border-width: 2;";
 
     /**
-     * Layouts a Stack snapshot if it is not already layouted
+     * Layouts a stack module group
      *
      * @param moduleGroup to be layouted
-     * @return layouted snapshot
+     * @return layouted pane
      */
     @Override
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {

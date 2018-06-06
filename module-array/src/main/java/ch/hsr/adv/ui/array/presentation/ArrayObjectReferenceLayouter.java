@@ -18,7 +18,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
- * Positions the array objects inclusive the references on the Pane
+ * Creates an JavaFX array representation in the look of an object array with
+ * object references.
  */
 @Singleton
 public class ArrayObjectReferenceLayouter {
@@ -29,7 +30,7 @@ public class ArrayObjectReferenceLayouter {
     private HBox referenceContainer;
 
     /**
-     * Layout array object reference
+     * Layouts an array with object references
      *
      * @param moduleGroup moduleGroup to layout
      * @return layouted pane

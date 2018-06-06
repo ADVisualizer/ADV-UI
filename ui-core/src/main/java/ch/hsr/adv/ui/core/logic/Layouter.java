@@ -21,7 +21,7 @@ public interface Layouter {
      * them on a pane, which will be displayed in the session view.
      *
      * @param moduleGroup to be layouted
-     * @param flags       optional flags to influence the placement
+     * @param flags       optional flags to influence the layout
      * @return a pane containing the module group's javafx representation
      */
     Pane layout(ModuleGroup moduleGroup, List<String> flags);

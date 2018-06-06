@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Parses a json of an graph session to a Session object.
+ * Parses a json representation of a graph to a ModuleGroup.
  */
 @Singleton
 @Module(ConstantsGraph.MODULE_NAME)
@@ -32,7 +32,11 @@ public class GraphParser implements Parser {
             .class);
     private final Gson gson;
 
-
+    /**
+     * Registers graph specific types to the GsonBuilder
+     *
+     * @param gsonProvider preconfigured gson builder
+     */
     @Inject
     public GraphParser(GsonProvider gsonProvider) {
         GsonBuilder builder = gsonProvider.getMinifier();
