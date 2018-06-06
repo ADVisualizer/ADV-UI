@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
+import ch.hsr.adv.commons.core.access.GsonProvider;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

@@ -2,9 +2,9 @@ package ch.hsr.adv.ui.core.service;
 
 import ch.hsr.adv.commons.core.access.ADVRequest;
 import ch.hsr.adv.commons.core.access.ADVResponse;
+import ch.hsr.adv.commons.core.access.GsonProvider;
 import ch.hsr.adv.commons.core.access.ProtocolCommand;
 import ch.hsr.adv.ui.core.logic.FlowControl;
-import ch.hsr.adv.ui.core.logic.GsonProvider;
 import com.google.gson.Gson;
 import com.google.inject.assistedinject.Assisted;
 import org.slf4j.Logger;
