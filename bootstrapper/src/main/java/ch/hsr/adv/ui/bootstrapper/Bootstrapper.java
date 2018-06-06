@@ -10,8 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Entry point into the ADV UI application. Initiates Guice to bootstrap the 
- * core with the modules.
+ * Entry point into the ADV UI application.
+ * Initiates Guice to bootstrap the core with the modules.
  *
  * @author mwieland
  */
