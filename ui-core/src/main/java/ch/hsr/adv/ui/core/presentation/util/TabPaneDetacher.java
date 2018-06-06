@@ -94,9 +94,8 @@ public class TabPaneDetacher {
         for (int i = 0; i < tabPane.getTabs().size(); i++) {
             tapTransferMap.put(i, tabPane.getTabs().get(i));
         }
-        tabPane.getTabs().forEach(t -> {
-            t.setClosable(false);
-        });
+        tabPane.getTabs().forEach(t -> t.setClosable(false));
+
         tabPane.setOnDragDetected(
                 (MouseEvent event) -> {
                     if (event.getSource() instanceof TabPane) {
@@ -181,9 +180,8 @@ public class TabPaneDetacher {
             }
             tabPane.getSelectionModel().select(tab);
         });
-        stage.setOnShown((WindowEvent t) -> {
-            tab.getTabPane().getTabs().remove(tab);
-        });
+        stage.setOnShown((WindowEvent t)
+                -> tab.getTabPane().getTabs().remove(tab));
         createdStages.add(stage);
         stage.show();
     }

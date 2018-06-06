@@ -33,7 +33,7 @@ public class SessionReplay extends TimerTask {
     public SessionReplay(@Assisted StateViewModel stateViewModel,
                          @Assisted SteppingViewModel steppingViewModel,
                          EventManager eventManager) {
-        logger.debug("Initialize RessionReplay");
+        logger.debug("Initialize SessionReplay");
         this.stateViewModel = stateViewModel;
         this.steppingViewModel = steppingViewModel;
         this.eventManager = eventManager;

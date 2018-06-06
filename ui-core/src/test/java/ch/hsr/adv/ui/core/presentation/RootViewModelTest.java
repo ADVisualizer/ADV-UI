@@ -97,7 +97,7 @@ public class RootViewModelTest {
         verify(layoutedSnapshotStoreMock, times(2))
                 .deleteAll(newSession.getSessionId());
         verify(sessionStoreMock, times(2)).delete(newSession.getSessionId());
-        assertFalse(newSession.equals(sut.getCurrentSessionProperty().get()));
+        assertNotEquals(newSession, sut.getCurrentSessionProperty().get());
     }
 
     public static class Module extends JukitoModule {

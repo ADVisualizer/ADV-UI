@@ -58,7 +58,7 @@ public class LabeledNode extends Region {
      * Redraw the background and borderstroke with rounded corners depending
      * on the size of the node.
      *
-     * @param observable
+     * @param observable observable
      */
     private void updateRoundedCorner(Observable observable) {
         // background

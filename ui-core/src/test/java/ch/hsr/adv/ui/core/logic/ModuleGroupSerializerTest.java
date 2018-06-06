@@ -6,7 +6,6 @@ import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import static org.mockito.ArgumentMatchers.any;

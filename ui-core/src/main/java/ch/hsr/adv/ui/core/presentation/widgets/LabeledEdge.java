@@ -181,7 +181,7 @@ public class LabeledEdge extends Group {
     /**
      * Returns intersection point for the corresponding connector of an edge
      *
-     * @param boundsInCommonAncestor anchestor bounds
+     * @param boundsInCommonAncestor ancestor bounds
      * @param connectorType          connector
      * @return x/y coordinates
      */
