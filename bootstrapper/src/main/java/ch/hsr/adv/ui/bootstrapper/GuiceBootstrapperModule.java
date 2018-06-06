@@ -25,7 +25,7 @@ public class GuiceBootstrapperModule extends AbstractModule {
     private static final String PACKAGE = "ch.hsr.adv.ui";
 
     /**
-     * Find ADV services annotated with {@link Module} and add them to the DI
+     * Finds ADV services annotated with {@link Module} and adds them to the DI
      * container.
      */
     @Override
