@@ -10,8 +10,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Listens for incoming snapshot transmissions and routes it to the correct
- * module parser.
+ * Listens for incoming connections. Blocks the socket during the whole
+ * processing of the sent data.
  *
  * @author mtrentini
  */
@@ -44,9 +44,8 @@ public class SocketServer extends Thread {
     }
 
     /**
-     * Accepts socket connections, acknowledges incoming snapshots and routes
-     * the data to the corresponding parser.
-     * Receiving the 'END' tag results in accepting new socket connections.
+     * Accepts socket connections. Listens for new connection after the
+     * completion of the data processing.
      */
     @Override
     public void run() {
@@ -71,7 +70,7 @@ public class SocketServer extends Thread {
     }
 
     /**
-     * Set alternative port on which SocketServer should listen.
+     * Sets alternative port on which SocketServer should listen.
      *
      * @param port the port number to listen on
      */
@@ -83,7 +82,7 @@ public class SocketServer extends Thread {
     }
 
     /**
-     * Set alternative host on which SocketServer should listen.
+     * Sets alternative host on which SocketServer should run.
      *
      * @param host the host
      */

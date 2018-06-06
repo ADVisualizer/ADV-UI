@@ -6,21 +6,23 @@ import javafx.scene.layout.Pane;
 import java.util.List;
 
 /**
- * Builds JavaFX Elements from business objects contained in a snapshot.
+ * Builds JavaFX Elements from business objects contained in a module group.
  * Places and orients these elements on a JavaFX Pane.
  * <p>
  * Abstraction Interface of the strategy pattern. Every Module supplies a
  * concrete strategy to be used.
+ *
+ * @author mtrentini
  */
 public interface Layouter {
 
     /**
-     * Layouts the snapshot. Builds necessary JavaFX Elements and places them
-     * on a pane, which will be displayed in the session view.
+     * Layouts the module group. Builds necessary JavaFX Elements and places
+     * them on a pane, which will be displayed in the session view.
      *
      * @param moduleGroup to be layouted
-     * @param flags       optional flags on session level
-     * @return a wrapper containing a layouted JavaFX Pane and the snapshot
+     * @param flags       optional flags to influence the placement
+     * @return a pane containing the module group's javafx representation
      */
     Pane layout(ModuleGroup moduleGroup, List<String> flags);
 }

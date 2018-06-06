@@ -7,7 +7,9 @@ import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 /**
- * Serializes the an ADV Session
+ * Serializes an ADV Session
+ *
+ * @author mwieland
  */
 public class CoreStringifyer {
 

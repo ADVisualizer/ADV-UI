@@ -9,15 +9,17 @@ import com.google.gson.JsonElement;
  * <p>
  * Abstraction Interface of the strategy pattern. Every Module supplies a
  * concrete strategy to be used.
+ *
+ * @author mwieland
  */
 public interface Parser {
 
     /**
      * Parses the given json into a
-     * {@link ch.hsr.adv.commons.core.logic.domain.Session}
+     * {@link ModuleGroup}
      *
      * @param json json to parse
-     * @return parsed {@link ch.hsr.adv.commons.core.logic.domain.Session}
+     * @return parsed {@link ModuleGroup}
      * @throws ADVParseException if anything goes wrong with parsing the
      *                           session
      */

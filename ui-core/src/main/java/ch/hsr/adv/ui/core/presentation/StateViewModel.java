@@ -22,6 +22,8 @@ import java.util.List;
 
 /**
  * Holds state for the {@link ch.hsr.adv.ui.core.presentation.SessionView}.
+ *
+ * @author mtrentini
  */
 class StateViewModel {
 
@@ -121,7 +123,7 @@ class StateViewModel {
 
 
     /**
-     * updates State after a step
+     * Updates the state after a navigation step
      */
     void handleNavigationStep() {
         updateProgress();
@@ -236,7 +238,8 @@ class StateViewModel {
     }
 
     /**
-     * Change listener if a new snapshot was added to the snapshot store
+     * Listens for new snapshots in the {@link LayoutedSnapshotStore}. Adds
+     * new Panes to the list and updates all necessary properties.
      */
     private class SnapshotPropertyChangeListener implements
             PropertyChangeListener {

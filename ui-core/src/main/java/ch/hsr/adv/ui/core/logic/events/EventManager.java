@@ -10,10 +10,10 @@ import java.util.List;
 
 /**
  * This class is responsible for the event dispatching of all ADVEvents
- * It uses the {@link java.beans.PropertyChangeSupport} internally.
+ * It uses Java's PropertyChangeSupport internally.
  * <p>
- * Modules can register {@link java.beans.PropertyChangeListener} to listen
- * for specific Events which are called by the ADV framework.
+ * Modules can register PropertyChangeListeners to listen
+ * for specific Events which are fired by the ADV framework.
  *
  * @author mwieland
  */
@@ -30,8 +30,13 @@ public class EventManager {
      * Registers a listener for a specific event
      * <p>
      * If filter arguments are provided, they are added to the event handle.
-     * This can be handy if you want narrow the context of event. (e.g. only
-     * listen for added snapshots in the session with id XY)
+     * This can be handy to narrow the context of an event (e.g. only
+     * listen for added snapshots in the session with id XY).
+     * <p>
+     * usage example:
+     * <code>
+     *     subscribe(listener, ADVEvent.SESSION_REMOVED, sessionId + "")
+     * </code>
      *
      * @param listener   listener
      * @param event      ADV event handle
@@ -47,8 +52,13 @@ public class EventManager {
      * Registers a listener for multiple events
      * <p>
      * If filter arguments are provided, they are added to the event handle.
-     * This can be handy if you want to narrow the context of an event. (e.g.
-     * only listen for added snapshots in the session with id XY)
+     * This can be handy to narrow the context of an event (e.g.
+     * only listen for added snapshots in the session with id XY).
+     * <p>
+     * usage example:
+     * <code>
+     *     subscribe(listener, eventlist, sessionId + "")
+     * </code>
      *
      * @param listener   listener
      * @param events     ADV events handle
@@ -63,8 +73,13 @@ public class EventManager {
      * Removes the listener for a specific event
      * <p>
      * If filter arguments are provided, they are added to the event handle.
-     * This can be handy if you want narrow the context of event. (e.g. only
-     * listen for added snapshots in the session with id XY)
+     * This can be handy to narrow the context of an event (e.g. only
+     * listen for added snapshots in the session with id XY).
+     * <p>
+     * usage example:
+     * <code>
+     *     unsubscribe(listener, ADVEvent.SESSION_REMOVED, sessionId + "")
+     * </code>
      *
      * @param listener   listener
      * @param event      ADV event handle
@@ -78,6 +93,11 @@ public class EventManager {
 
     /**
      * Removes the listener for multiple events
+     * <p>
+     * usage example:
+     * <code>
+     *     unsubscribe(listener, eventlist, sessionId + "")
+     * </code>
      *
      * @param listener   listener
      * @param events     ADV events
@@ -93,8 +113,13 @@ public class EventManager {
      * value to all subscribers.
      * <p>
      * If filter arguments are provided, they are added to the event handle.
-     * This can be handy if you want narrow the context of event. (e.g. only
-     * listen for added snapshots in the session with id XY)
+     * This can be handy to narrow the context of an event (e.g. only
+     * listen for added snapshots in the session with id XY).
+     * <p>
+     * usage example:
+     * <code>
+     *     unsubscribe(ADVEvent.SESSION_REMOVED, session, null, sessionId + "")
+     * </code>
      *
      * @param event      event handle
      * @param oldVal     value before change

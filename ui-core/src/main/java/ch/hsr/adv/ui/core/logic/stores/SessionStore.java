@@ -18,8 +18,10 @@ import java.util.stream.Collectors;
 
 
 /**
- * Holds all active sessions. Fires change event, if new session is added or
- * a session is removed.
+ * Holds all active sessions. Fires a change event, if a new session is added or
+ * an existing session is removed.
+ *
+ * @author mtrentini, mwieland
  */
 @Singleton
 public class SessionStore {
@@ -38,12 +40,12 @@ public class SessionStore {
     }
 
     /**
-     * Add specified session to the store and set it as current session. If the
-     * session already exists:
-     * either merge its snapshots with existing session (for sessions
+     * Adds specified session to the store and sets it as the current session.
+     * If the session already exists:
+     * either merges its snapshots with existing session (for sessions
      * received over the socket)
      * or
-     * ignore it (for sessions loaded via the ui)
+     * ignores it (for sessions loaded via the ui)
      *
      * @param newSession the session to add
      */
@@ -65,10 +67,11 @@ public class SessionStore {
     }
 
     /**
-     * Merges the new session into the existing session.
+     * Merges the new session into the existing session. The new session will
+     * not be stored itself.
      *
-     * @param existing   master
-     * @param newSession slave
+     * @param existing   existing session (will be kept in the store)
+     * @param newSession new session (will not itself be stored in the store)
      */
     private void mergeSession(Session existing, Session newSession) {
         logger.debug("Merge session {}", existing.getSessionId());
@@ -101,21 +104,16 @@ public class SessionStore {
     }
 
     /**
-     * Retuns the session with the given session
+     * Returns the session with the given id
      *
      * @param sessionId session id
-     * @return session or null
+     * @return existing session or null
      */
     public Session get(long sessionId) {
         return sessions.get(sessionId);
     }
 
-    /**
-     * Returns the current session
-     *
-     * @return currentSession
-     */
-    public Session getCurrent() {
+    public Session getCurrentSession() {
         return currentSession;
     }
 
@@ -123,7 +121,7 @@ public class SessionStore {
      * Sets the current session to the session with the specified id. Fires a
      * change event to inform listeners of the change.
      *
-     * @param sessionId of the current session
+     * @param sessionId of the new current session
      */
     public void setCurrent(long sessionId) {
         logger.debug("New session {} added to SessionStore", sessionId);
@@ -133,7 +131,7 @@ public class SessionStore {
     }
 
     /**
-     * Delete the specified session and fire changeEvent.
+     * Deletes the specified session and fires a changeEvent.
      *
      * @param id to be deleted
      */
@@ -150,7 +148,7 @@ public class SessionStore {
     }
 
     /**
-     * Clear all sessions
+     * Clears all sessions
      */
     public void clear() {
         this.sessions.clear();
@@ -160,7 +158,7 @@ public class SessionStore {
      * Checks whether the session store contains the given id
      *
      * @param sessionId session id
-     * @return true if the session is in the store
+     * @return true if the session exists in the store
      */
     public boolean contains(long sessionId) {
         return this.sessions.containsKey(sessionId);

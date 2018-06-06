@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
  * </code>
  *
  * @param <T> type
+ * @author mtrentini
  */
 public class InterfaceAdapter<T> implements JsonDeserializer<T> {
 

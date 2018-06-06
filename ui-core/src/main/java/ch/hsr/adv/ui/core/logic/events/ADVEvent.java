@@ -3,7 +3,7 @@ package ch.hsr.adv.ui.core.logic.events;
 /**
  * An ADVEvent within the framework.
  *
- * All module can subscribe for these events.
+ * All modules can subscribe to these events via the {@link EventManager}.
  */
 public enum ADVEvent {
     STEP_FIRST,

@@ -55,8 +55,8 @@ public final class I18n {
     }
 
     /**
-     * creates a String binding to a localized String for the given message
-     * bundle key
+     * Creates a String binding to a localized String for the given message
+     * bundle key.
      *
      * @param key  key
      * @param args optional arguments for the binding
@@ -92,7 +92,7 @@ public final class I18n {
     }
 
     /**
-     * gets the string with the given key from the resource bundle for the
+     * Gets the string with the given key from the resource bundle for the
      * current LOCALE and uses it as first argument
      * to MessageFormat.format, passing in the optional args and returning
      * the result.
@@ -108,7 +108,7 @@ public final class I18n {
     }
 
     /**
-     * creates a bound Button for the given resourcebundle key
+     * Creates a bound Button for the given resourcebundle key.
      *
      * @param key  ResourceBundle key
      * @param args optional arguments for the message
@@ -121,7 +121,7 @@ public final class I18n {
     }
 
     /**
-     * creates a bound Tooltip for the given resourcebundle key
+     * Creates a bound Tooltip for the given resourcebundle key.
      *
      * @param key  ResourceBundle key
      * @param args optional arguments for the message
@@ -140,7 +140,7 @@ public final class I18n {
     }
 
     /**
-     * Sets the current locale and updates the corresponding property
+     * Sets the current locale and updates the corresponding property.
      *
      * @param locale to be set
      */

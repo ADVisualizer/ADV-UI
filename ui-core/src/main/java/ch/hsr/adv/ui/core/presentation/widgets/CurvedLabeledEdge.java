@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Curved Labeled Edge
+ * A nicely curved edge between two nodes.
  *
  * @author mtrentini
  */
@@ -46,6 +46,9 @@ public class CurvedLabeledEdge extends LabeledEdge {
                 endNode, endConnector, style, directionType);
     }
 
+    /**
+     * Positions the label on the middle of the curve
+     */
     @Override
     protected void drawLabel() {
         CubicCurve curve = getCurve();
@@ -74,6 +77,14 @@ public class CurvedLabeledEdge extends LabeledEdge {
         label.layoutYProperty().bind(yProperty);
     }
 
+    /**
+     * Sets both control points to the same point in the middle of the start
+     * and end points. Calculates a small offset to create a visually
+     * pleasing curvature.
+     *
+     * @param startIntersectionPoint calculated intersection point
+     * @param endIntersectionPoint   calculated intersection point
+     */
     @Override
     protected void setControlPoints(Point2D startIntersectionPoint,
                                     Point2D endIntersectionPoint) {
@@ -149,8 +160,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
     }
 
     /**
-     * Sets the same x and y coordinates for both control points of the curve
-     * . This leads to a smoother curve.
+     * Sets the same x and y coordinates for both control points of the curve.
+     * This leads to a smoother curve.
      *
      * @param x coordinate for the control points
      * @param y coordinate for the control points

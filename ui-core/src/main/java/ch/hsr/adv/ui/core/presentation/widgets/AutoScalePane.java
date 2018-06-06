@@ -10,7 +10,7 @@ import javafx.scene.layout.Pane;
 
 /**
  * Auto-scales its content according to the available space of the Pane.
- * The content is always centered
+ * The content is always centered.
  *
  * @author mwieland
  */
@@ -39,6 +39,9 @@ public class AutoScalePane extends Pane {
         requestLayout();
     }
 
+    /**
+     * Centers and scales the content of the pane
+     */
     @Override
     protected void layoutChildren() {
 

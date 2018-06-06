@@ -8,12 +8,16 @@ import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 /**
- * The Core Layouter wraps the panes of the module layouter in a SplitPane.
+ * The Core Layouter arranges the panes created by the module layouters in a
+ * grid formation using SplitPanes.
+ *
+ * @author mtrentini
  */
 @Singleton
 public class CoreLayouter {
@@ -21,15 +25,22 @@ public class CoreLayouter {
             CoreLayouter.class);
 
     /**
-     * Wraps child panes in a SplitPane
+     * Arranges child panes in a grid formation. All created SplitPane
+     * Dividers will be stored in the supplied list. The dividers of all
+     * snapshots in a session are bound together so that the user can
+     * rearrange them for a session.
      *
-     * @param dividers split pane dividers
+     * @param dividers empty list to store split pane dividers
      * @param panes    child panes of the module-specific layouter
      * @return split pane
      */
     public Region layout(List<Pane> panes,
                          List<SplitPane.Divider> dividers) {
         logger.debug("Creating grid layout for all active modules...");
+        if (!dividers.isEmpty()) {
+            logger.error("Expecting an empty list of diveders. Correcting...");
+            dividers.clear();
+        }
         Queue<Pane> remainingPanes = new LinkedList<>(panes);
         SplitPane parentPane = new SplitPane();
         parentPane.setOrientation(Orientation.VERTICAL);

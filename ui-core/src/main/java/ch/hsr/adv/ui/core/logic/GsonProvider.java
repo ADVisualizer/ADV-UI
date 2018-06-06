@@ -6,7 +6,9 @@ import com.google.inject.Singleton;
 import java.lang.reflect.Modifier;
 
 /**
- * Provides preconfigured GsonBuilder
+ * Provides preconfigured GsonBuilders
+ *
+ * @author mtrentini
  */
 @Singleton
 public class GsonProvider {
@@ -19,7 +21,7 @@ public class GsonProvider {
         this.prettifyer.setPrettyPrinting();
         this.prettifyer.excludeFieldsWithModifiers(Modifier.TRANSIENT);
 
-        // transient and static fields are excluded by default. we only want
+        // transient and static fields are excluded by default. We only want
         // transient fields to be excluded. That's why we exclude them
         // explicitly!
         this.minifier = new GsonBuilder();
@@ -27,16 +29,16 @@ public class GsonProvider {
     }
 
     /**
-     * Get a pretty-printing json serializer to write to the data store.
+     * Gets a json serializer to write a minfied json to the data store.
      *
-     * @return a pretty-printing json serializer
+     * @return a json serializer
      */
     public GsonBuilder getMinifier() {
         return minifier;
     }
 
     /**
-     * Get a pretty-printing json serializer to create a json representation
+     * Gets a pretty-printing json serializer to create a json representation
      * of an object.
      *
      * @return a pretty-printing json serializer

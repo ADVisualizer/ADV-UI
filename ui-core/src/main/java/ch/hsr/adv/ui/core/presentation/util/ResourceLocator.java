@@ -14,7 +14,7 @@ import java.net.URL;
 
 /**
  * Contains all static resources (FXML, Images, CSS) and provides loadFXML
- * methods
+ * methods.
  *
  * @author mwieland
  */
@@ -28,7 +28,7 @@ public class ResourceLocator {
     private Injector injector;
 
     /**
-     * Returns the relative path to the resources
+     * Returns the relative path to the resources.
      *
      * @param resource resource
      * @return url
@@ -39,7 +39,7 @@ public class ResourceLocator {
     }
 
     /**
-     * Returns the resource as stream
+     * Returns the resource as a stream.
      *
      * @param resource resource
      * @return inputstream

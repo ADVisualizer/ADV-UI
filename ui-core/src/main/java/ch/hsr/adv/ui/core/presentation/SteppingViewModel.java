@@ -12,6 +12,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Handles stepping logic for the
  * {@link ch.hsr.adv.ui.core.presentation.SessionView}.
+ *
+ * @author mtrentini
  */
 public class SteppingViewModel {
     private static final Logger logger = LoggerFactory
@@ -32,7 +34,7 @@ public class SteppingViewModel {
 
 
     /**
-     * Navigate through a session by stepping forward, backward or to the
+     * Navigates through a session by stepping forward, backward or to the
      * first or last snapshot.
      *
      * @param navigate direction to navigate

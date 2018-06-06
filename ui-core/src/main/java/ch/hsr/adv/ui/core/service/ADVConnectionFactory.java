@@ -4,6 +4,8 @@ import java.net.Socket;
 
 /**
  * Guice interface for assisted inject
+ *
+ * @author mwieland
  */
 public interface ADVConnectionFactory {
 

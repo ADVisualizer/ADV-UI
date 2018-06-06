@@ -10,6 +10,8 @@ import java.util.Timer;
 /**
  * Handles replay logic for the
  * {@link ch.hsr.adv.ui.core.presentation.SessionView}.
+ *
+ * @author mtrentini
  */
 public class ReplayViewModel {
 
@@ -35,7 +37,7 @@ public class ReplayViewModel {
     }
 
     /**
-     * Stop the current replay and stay at the current snapshot
+     * Stops the current replay and stays at the current snapshot
      */
     void pauseReplay() {
         stateViewModel.getReplayingProperty().set(false);
@@ -46,7 +48,7 @@ public class ReplayViewModel {
     }
 
     /**
-     * Start replaying the snapshots of this session.
+     * Starts replaying the snapshots of this session.
      */
     void replay() {
         logger.info("Replaying current session...");
@@ -64,7 +66,7 @@ public class ReplayViewModel {
     }
 
     /**
-     * Cancel the running replay and step to the first snapshot.
+     * Cancels the running replay and steps to the first snapshot.
      */
     void cancelReplay() {
         pauseReplay();

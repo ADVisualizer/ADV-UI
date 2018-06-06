@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
  * Rather an integration test for the whole flow control load
  */
 @RunWith(JukitoRunner.class)
-public class ADVFlowControlMockedTest {
+public class FlowControlMockedTest {
 
     @Inject
     private TestSessionProvider testSessionProvider;
@@ -36,7 +36,7 @@ public class ADVFlowControlMockedTest {
     private LayoutedSnapshotStore layoutedSnapshotStore;
 
     @Inject
-    private ADVFlowControl sut;
+    private FlowControl sut;
 
     @Before
     public void setUp() {

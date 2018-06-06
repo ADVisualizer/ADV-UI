@@ -83,7 +83,7 @@ public class TabPaneDetacher {
     }
 
     /**
-     * Make all added {@link Tab}s of the given {@link TabPane} detachable.
+     * Makes all added {@link Tab}s of the given {@link TabPane} detachable.
      *
      * @param pane The {@link TabPane} to take over.
      * @return The current TabPaneDetacher instance.

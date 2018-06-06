@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 
 /**
- * Holds all layouted snapshots on a Pane mapped to their sessionId. Fires
- * change event, if new snapshot arrives.
+ * Holds layoutedSnapshots mapped to their sessionId. Fires a
+ * change event, if a new snapshot is added.
  *
  * @author mtrentini
  */
@@ -56,7 +56,7 @@ public class LayoutedSnapshotStore {
     }
 
     /**
-     * Returns all Snapshots for the given session id
+     * Returns all snapshots for the given session id
      *
      * @param sessionId session id
      * @return List of stored Snapshots
@@ -66,6 +66,8 @@ public class LayoutedSnapshotStore {
     }
 
     /**
+     * Checks whether the specified snapshot is already present in the store.
+     *
      * @param sessionId  of the snapshot
      * @param snapshotId to check
      * @return true if the specified snapshot is already stored
@@ -80,8 +82,10 @@ public class LayoutedSnapshotStore {
     }
 
     /**
+     * Filters all panes of a session from the stored layouted snapshots.
+     *
      * @param sessionId of the snapshots
-     * @return a list of all the Panes of a session
+     * @return a list of all the panes of a session
      */
     public List<Region> getAllPanes(long sessionId) {
         return snapshotMap.get(sessionId).stream()
@@ -89,7 +93,7 @@ public class LayoutedSnapshotStore {
     }
 
     /**
-     * Delete all snapshots belonging to the specified sessionId
+     * Deletes all snapshots belonging to the specified sessionId
      *
      * @param sessionId of the deleted session
      */

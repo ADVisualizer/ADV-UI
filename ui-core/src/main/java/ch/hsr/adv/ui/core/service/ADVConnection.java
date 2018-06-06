@@ -16,7 +16,9 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
 /**
- * A incoming connection from the ADV Lib
+ * An incoming connection from the ADV Lib
+ *
+ * @author mwieland
  */
 public class ADVConnection {
 
@@ -38,7 +40,7 @@ public class ADVConnection {
     }
 
     /**
-     * Processes the incomming connection
+     * Processes the incoming connection
      *
      * @throws IOException r/w exception
      */

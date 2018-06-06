@@ -57,7 +57,7 @@ public class SessionStoreTest {
 
         // THEN
         assertEquals(1, sut.getAll().size());
-        assertEquals(session1, sut.getCurrent());
+        assertEquals(session1, sut.getCurrentSession());
         assertEquals(session1, sut.getAll().get(0));
     }
 
@@ -69,7 +69,7 @@ public class SessionStoreTest {
 
         // THEN
         assertEquals(2, sut.getAll().size());
-        assertEquals(session2_1, sut.getCurrent());
+        assertEquals(session2_1, sut.getCurrentSession());
     }
 
     @Test
@@ -80,8 +80,8 @@ public class SessionStoreTest {
 
         // THEN
         assertEquals(1, sut.getAll().size());
-        assertEquals(session2_1, sut.getCurrent());
-        assertEquals(2, sut.getCurrent().getSnapshots().size());
+        assertEquals(session2_1, sut.getCurrentSession());
+        assertEquals(2, sut.getCurrentSession().getSnapshots().size());
     }
 
     @Test
@@ -92,8 +92,8 @@ public class SessionStoreTest {
 
         // THEN
         assertEquals(1, sut.getAll().size());
-        assertEquals(session1, sut.getCurrent());
-        assertEquals(session1.getSnapshots(), sut.getCurrent().getSnapshots());
+        assertEquals(session1, sut.getCurrentSession());
+        assertEquals(session1.getSnapshots(), sut.getCurrentSession().getSnapshots());
     }
 
     @Test
@@ -101,14 +101,14 @@ public class SessionStoreTest {
         // GIVEN
         sut.add(session1);
         assertEquals(1, sut.getAll().size());
-        assertEquals(session1, sut.getCurrent());
+        assertEquals(session1, sut.getCurrentSession());
 
         // WHEN
         sut.delete(session1.getSessionId());
 
         // THEN
         assertEquals(0, sut.getAll().size());
-        assertNull(sut.getCurrent());
+        assertNull(sut.getCurrentSession());
     }
 
 }

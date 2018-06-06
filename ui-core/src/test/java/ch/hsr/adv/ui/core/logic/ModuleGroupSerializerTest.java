@@ -6,9 +6,12 @@ import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.isNull;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,7 +30,7 @@ public class ModuleGroupSerializerTest {
     @Test
     public void defaultStringifyerTest(ModuleGroup moduleGroupMock) {
         // GIVEN
-        when(serviceProviderMock.getStringifyer(any())).thenReturn(null);
+        doReturn(defaultStringifyerMock).when(serviceProviderMock).getStringifyer(isNull());
 
         // WHEN
         sut.serialize(moduleGroupMock, null, null);

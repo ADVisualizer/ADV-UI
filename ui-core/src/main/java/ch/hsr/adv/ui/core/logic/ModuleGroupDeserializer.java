@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Type;
 
 /**
- * Custom deserializer which delegates deserialization to the module specific
- * parser.
+ * Custom Gson deserializer which delegates deserialization to the module
+ * specific parser.
  *
  * @author mwieland
  */
@@ -30,7 +30,7 @@ public class ModuleGroupDeserializer implements JsonDeserializer<ModuleGroup> {
     }
 
     /**
-     * Deserializes the module group with the module parser.
+     * Deserializes the module group json with the module parser.
      *
      * @param json    module group json
      * @param typeOfT module group type

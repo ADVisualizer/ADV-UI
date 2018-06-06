@@ -26,6 +26,8 @@ import java.util.Locale;
 
 /**
  * Main UI View
+ *
+ * @author mtrentini, mwieland
  */
 public class RootView {
 
@@ -291,7 +293,7 @@ public class RootView {
     }
 
     /**
-     * Event handler for clear all sessions
+     * Event handler to clear all sessions
      */
     @FXML
     protected void handleClearAllSessionsClicked() {
@@ -299,7 +301,7 @@ public class RootView {
     }
 
     /**
-     * Event handler for load session action
+     * Event handler to load a session
      */
     @FXML
     protected void handleLoadSessionClicked() {
@@ -313,7 +315,7 @@ public class RootView {
     }
 
     /**
-     * Event handler for save session action
+     * Event handler to save a session
      */
     @FXML
     protected void handleSaveSessionClicked() {
@@ -342,7 +344,7 @@ public class RootView {
     }
 
     /**
-     * Event handler for remove session action
+     * Event handler to remove a session
      */
     @FXML
     protected void handleRemoveSessionClicked() {

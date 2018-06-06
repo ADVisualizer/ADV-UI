@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Datastore interface to store sessions
+ * Persists sessions in a data store.
  */
 public interface DatastoreAccess {
 
     /**
-     * Read the file from the datastore.
+     * Read the file from the data store.
      *
      * @param file to be read
-     * @return a string representation of the red file
+     * @return a string representation of the read file
      * @throws IOException exception
      */
     String read(File file) throws IOException;

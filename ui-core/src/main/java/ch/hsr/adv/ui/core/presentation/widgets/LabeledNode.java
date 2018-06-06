@@ -35,7 +35,7 @@ public class LabeledNode extends Region {
     }
 
     /**
-     * Create a LabeledNode with rounded corners
+     * Creates a LabeledNode with rounded corners
      *
      * @param labelText     to be used
      * @param style         adv style
@@ -54,6 +54,12 @@ public class LabeledNode extends Region {
         getChildren().addAll(label);
     }
 
+    /**
+     * Redraw the background and borderstroke with rounded corners depending
+     * on the size of the node.
+     *
+     * @param observable
+     */
     private void updateRoundedCorner(Observable observable) {
         // background
         Background background = new Background(new BackgroundFill(fillColor,
@@ -88,6 +94,11 @@ public class LabeledNode extends Region {
         label.setMinWidth(Control.USE_PREF_SIZE);
     }
 
+    /**
+     * Calculates nicely rounded corners depending on the size of the node.
+     *
+     * @return the calculated corner radii
+     */
     private CornerRadii cornerRadius() {
         if (isRoundedDown) {
             double radius = getBoundsInParent().getWidth() / 2;
@@ -96,7 +107,6 @@ public class LabeledNode extends Region {
             return CornerRadii.EMPTY;
         }
     }
-
 
     /**
      * Sets the X property
@@ -116,6 +126,9 @@ public class LabeledNode extends Region {
         this.layoutYProperty().set(y);
     }
 
+    /**
+     * Centers the label on the node
+     */
     @Override
     protected void layoutChildren() {
         final double nodeWidth = getWidth();

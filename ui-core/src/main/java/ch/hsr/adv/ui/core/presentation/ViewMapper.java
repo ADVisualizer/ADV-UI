@@ -75,7 +75,7 @@ public class ViewMapper {
     }
 
     /**
-     * Get associated stage to this session
+     * Gets associated stage to this session
      *
      * @param session to query for
      * @return the associated stage or null if no stage is present
@@ -85,7 +85,7 @@ public class ViewMapper {
     }
 
     /**
-     * Get associated Tab to this session
+     * Gets associated Tab to this session
      *
      * @param session to query for
      * @return the associated Tab or null if no tab is present
@@ -95,7 +95,7 @@ public class ViewMapper {
     }
 
     /**
-     * Get associated Session to this Tab
+     * Gets associated Session to this Tab
      *
      * @param tab to query for
      * @return the associated Session or null if no session is present

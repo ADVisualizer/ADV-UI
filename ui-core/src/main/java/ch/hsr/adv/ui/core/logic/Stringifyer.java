@@ -7,8 +7,9 @@ import com.google.gson.JsonElement;
 /**
  * JSON Serializer
  * <p>
- * Abstraction Interface of the strategy pattern. Every Module supplies a
- * concrete strategy to be used.
+ * Abstraction Interface of the strategy pattern. Every Module can supplies a
+ * concrete strategy to be used. Otherwise the {@link DefaultStringifyer}
+ * will be used.
  */
 public interface Stringifyer {
 
@@ -16,7 +17,7 @@ public interface Stringifyer {
      * Serializes the given module group to JSON
      *
      * @param moduleGroup {@link ModuleGroup}
-     * to stringify
+     *                    to stringify
      * @return json string
      */
     JsonElement stringify(ModuleGroup moduleGroup);

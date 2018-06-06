@@ -10,7 +10,7 @@ import com.google.inject.Singleton;
 import java.lang.reflect.Type;
 
 /**
- * Custom serializer which delegates serialization to the module specific
+ * Custom gson serializer which delegates serialization to the module specific
  * stringifier.
  *
  * @author mwieland
@@ -19,19 +19,15 @@ import java.lang.reflect.Type;
 public class ModuleGroupSerializer implements JsonSerializer<ModuleGroup> {
 
     private final ServiceProvider serviceProvider;
-    private final DefaultStringifyer defaultStringifyer;
 
 
     @Inject
-    public ModuleGroupSerializer(ServiceProvider serviceProvider,
-                                 DefaultStringifyer defaultStringifyer) {
+    public ModuleGroupSerializer(ServiceProvider serviceProvider) {
         this.serviceProvider = serviceProvider;
-        this.defaultStringifyer = defaultStringifyer;
     }
 
     /**
-     * Serializes the module group with the correct module stringifyer.
-     * If no module-specific stringifyer is available, the default is used.
+     * Serializes the module group with the module stringifyer.
      *
      * @param moduleGroup module group
      * @param typeOfSrc   module group type
@@ -45,10 +41,6 @@ public class ModuleGroupSerializer implements JsonSerializer<ModuleGroup> {
         String moduleName = moduleGroup.getModuleName();
         Stringifyer moduleStringifyer = serviceProvider
                 .getStringifyer(moduleName);
-        if (moduleStringifyer != null) {
-            return moduleStringifyer.stringify(moduleGroup);
-        } else {
-            return defaultStringifyer.stringify(moduleGroup);
-        }
+        return moduleStringifyer.stringify(moduleGroup);
     }
 }

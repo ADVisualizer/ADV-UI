@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 import java.util.HashMap;
 
 /**
- * Creates JavaFX BorderStrokeStyle Enums from Strings.
+ * Mapps JavaFX BorderStrokeStyle Enums to their String representations.
  *
  * @author mtrentini
  */
@@ -48,13 +48,12 @@ public class StyleConverter {
     }
 
     /**
-     * Return either black or white depending on the brightness of the input
+     * Returns either black or white depending on the brightness of the input
      * color.
      *
-     * @param color
-     *          reference color
+     * @param color reference color
      * @return either black or white depending on the brightness of the input
-     *         color
+     * color
      */
     public static Color getLabelColor(Color color) {
         double brightness = color.getBrightness();

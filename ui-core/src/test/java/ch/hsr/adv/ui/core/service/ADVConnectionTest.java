@@ -1,6 +1,5 @@
 package ch.hsr.adv.ui.core.service;
 
-import ch.hsr.adv.ui.core.logic.ADVFlowControl;
 import ch.hsr.adv.ui.core.logic.FlowControl;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
@@ -75,7 +74,7 @@ public class ADVConnectionTest {
             install(new FactoryModuleBuilder()
                     .build(ADVConnectionFactory.class));
             bind(FlowControl.class)
-                    .toInstance(Mockito.mock(ADVFlowControl.class));
+                    .toInstance(Mockito.mock(FlowControl.class));
         }
     }
 }

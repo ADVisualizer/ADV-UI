@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
  */
 @RunWith(JukitoRunner.class)
 @UseModules( {GuiceCoreModule.class, GuiceTestModule.class})
-public class ADVFlowControlTest {
+public class FlowControlTest {
 
     @Inject
     private TestSessionProvider testSessionProvider;
@@ -39,7 +39,7 @@ public class ADVFlowControlTest {
     private LayoutedSnapshotStore layoutedSnapshotStore;
 
     @Inject
-    private ADVFlowControl sut;
+    private FlowControl sut;
 
     @Test
     public void processTest(FileDatastoreAccess reader) throws IOException {

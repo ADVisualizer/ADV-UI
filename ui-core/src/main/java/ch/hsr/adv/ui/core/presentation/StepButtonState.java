@@ -5,6 +5,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * Helper class to hold button state for {@link StateViewModel}
+ *
+ * @author mtrentini
  */
 class StepButtonState {
 
@@ -18,7 +20,7 @@ class StepButtonState {
             SimpleBooleanProperty();
 
     /**
-     * updates step button properties. Disables buttons if argument is true.
+     * Updates step button properties. Disables buttons if argument is true.
      *
      * @param first    first button property
      * @param backward backward button property

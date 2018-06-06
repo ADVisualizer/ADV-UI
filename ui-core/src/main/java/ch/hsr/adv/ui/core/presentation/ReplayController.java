@@ -8,6 +8,8 @@ import javax.inject.Singleton;
 
 /**
  * Controller for the replay of the snapshot navigation
+ *
+ * @author mtrentini
  */
 @Singleton
 class ReplayController {

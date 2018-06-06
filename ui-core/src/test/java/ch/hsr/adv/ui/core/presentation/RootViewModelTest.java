@@ -105,6 +105,7 @@ public class RootViewModelTest {
         protected void configureTest() {
             forceMock(LayoutedSnapshotStore.class);
             forceMock(SessionStore.class);
+            forceMock(FlowControl.class);
 
         }
     }

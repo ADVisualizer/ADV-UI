@@ -65,7 +65,7 @@ public class SessionReplay extends TimerTask {
     }
 
     /**
-     * Cancel current thread and reset UI button states
+     * Cancels the current thread and resets UI button states
      *
      * @return returns true if it prevents one or more scheduled executions from
      * taking place.
@@ -84,7 +84,7 @@ public class SessionReplay extends TimerTask {
     }
 
     /**
-     * Listen for deleted session
+     * Listens for the deletion of its associated session.
      */
     private class DeleteSessionChangeListener implements
             PropertyChangeListener {

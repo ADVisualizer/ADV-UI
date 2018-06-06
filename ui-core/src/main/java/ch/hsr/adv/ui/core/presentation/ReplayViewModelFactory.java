@@ -3,6 +3,8 @@ package ch.hsr.adv.ui.core.presentation;
 /**
  * Guice factory interface for
  * {@link ReplayViewModel}
+ *
+ * @author mwieland
  */
 public interface ReplayViewModelFactory {
 

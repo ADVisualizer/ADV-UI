@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Wraps the JavaFX Pane and the displayed information of the
- * snapshot.
+ * Wraps the visually important information and representation of a snapshot
  * <p>
- * This class only exists, so we don't mix JavaFX Code with business
- * Domain objects, in order to keep the ability to easily replace the UI
- * framework.
+ * The purpose of this class is not to interfuse business domain objects with
+ * JavaFX dependencies.
  */
 public class LayoutedSnapshot {
 

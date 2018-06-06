@@ -39,4 +39,15 @@ private List<SplitPane.Divider> dividers  =new ArrayList<>();
         assertEquals(2, dividers.size());
         assertTrue(actual instanceof SplitPane);
     }
+
+    @Test
+    public void layoutNonEmptyListTest() {
+        // WHEN
+        dividers.add(new SplitPane.Divider());
+        Region actual = sut.layout(panes, dividers);
+
+        // THEN
+        assertEquals(2, dividers.size());
+        assertTrue(actual instanceof SplitPane);
+    }
 }

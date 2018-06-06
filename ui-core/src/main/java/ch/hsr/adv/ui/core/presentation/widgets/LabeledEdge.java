@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
- * Generic component for an labeled edge with optional arrows.
+ * Generic component for a labeled edge with optional arrows.
  * <p>
  * Can be used to display the relation between two nodes.
  *
@@ -138,7 +138,7 @@ public class LabeledEdge extends Group {
     }
 
     /**
-     * Manually update the position of this edge
+     * Manually updates the position of this edge
      */
     public void update() {
         startBounds = getRelativeBounds(startNode, getParent());

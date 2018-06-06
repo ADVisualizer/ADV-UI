@@ -28,6 +28,8 @@ import java.util.List;
 /**
  * Handles presentation logic for the {@link RootView}. Delegates tasks to
  * the business logic layer.
+ *
+ * @author mtrentini, mwieland
  */
 @Singleton
 class RootViewModel {
@@ -90,7 +92,7 @@ class RootViewModel {
     }
 
     /**
-     * Delegates removing current session to the business logic
+     * Delegates removing the current session to the business logic
      */
     void removeCurrentSession() {
         Session current = currentSessionProperty.get();
@@ -123,7 +125,7 @@ class RootViewModel {
     }
 
     /**
-     * Delegates removing sessions to the business logic
+     * Delegates removing all sessions to the business logic
      */
     void clearAllSessions() {
         List<Session> sessionsToRemove = new ArrayList<>(availableSessions);
@@ -132,7 +134,7 @@ class RootViewModel {
     }
 
     /**
-     * Delegates saving sessions to the access layer
+     * Delegates saving the current session to the access layer
      *
      * @param file to be saved to
      */
@@ -142,7 +144,7 @@ class RootViewModel {
     }
 
     /**
-     * Loads a existing session from filesystem.
+     * Loads an existing session from the data store.
      *
      * @param file file to open
      */
@@ -182,7 +184,7 @@ class RootViewModel {
     }
 
     /**
-     * Update ui if session store has changed.
+     * Updates ui if session store has changed.
      */
     private class SessionStoreListener implements PropertyChangeListener {
 

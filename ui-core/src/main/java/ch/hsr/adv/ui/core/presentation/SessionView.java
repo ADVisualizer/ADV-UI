@@ -22,6 +22,8 @@ import javax.inject.Inject;
 /**
  * The JavaFX Controller class for session-view.fxml. Initializes the view
  * and holds bindings to the {@link StateViewModel}.
+ *
+ * @author mtrentini, mwieland
  */
 public class SessionView {
 
@@ -276,7 +278,7 @@ public class SessionView {
     }
 
     /**
-     * Event handler for the step button clicked action
+     * Event handler to navigate through snapshots
      *
      * @param e event
      */
