@@ -8,7 +8,6 @@ import javafx.scene.layout.Region;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -38,7 +37,7 @@ public class CoreLayouter {
                          List<SplitPane.Divider> dividers) {
         logger.debug("Creating grid layout for all active modules...");
         if (!dividers.isEmpty()) {
-            logger.error("Expecting an empty list of diveders. Correcting...");
+            logger.info("Expecting an empty list of dividers. Correcting...");
             dividers.clear();
         }
         Queue<Pane> remainingPanes = new LinkedList<>(panes);

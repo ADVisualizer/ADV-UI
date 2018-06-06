@@ -7,7 +7,7 @@ import com.google.gson.JsonElement;
 /**
  * JSON Serializer
  * <p>
- * Abstraction Interface of the strategy pattern. Every Module can supplies a
+ * Abstraction Interface of the strategy pattern. Every Module can supply a
  * concrete strategy to be used. Otherwise the {@link DefaultStringifyer}
  * will be used.
  */
