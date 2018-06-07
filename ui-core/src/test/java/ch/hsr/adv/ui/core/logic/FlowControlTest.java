@@ -8,6 +8,7 @@ import ch.hsr.adv.ui.core.logic.mocks.TestSessionProvider;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStore;
 import ch.hsr.adv.ui.core.logic.stores.SessionStoreTest;
+import ch.hsr.adv.ui.core.presentation.mocks.GuicePresentationTestModule;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.jukito.UseModules;
@@ -23,10 +24,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Rather an integration test for the whole flow control load
+ * Integration test for the whole flow control load
  */
 @RunWith(JukitoRunner.class)
-@UseModules( {GuiceTestModule.class})
+@UseModules( {GuiceTestModule.class, GuicePresentationTestModule.class})
 public class FlowControlTest {
 
     @Inject

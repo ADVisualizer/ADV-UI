@@ -38,14 +38,5 @@ public class GuiceTestModule extends AbstractModule {
         layouterMapBinder.addBinding(MODULE_NAME).to(TestLayouter.class);
         parserMapBinder.addBinding(MODULE_NAME).to(TestParser.class);
         stringifyerMapBinder.addBinding(MODULE_NAME).to(TestStringifyer.class);
-
-        install(new FactoryModuleBuilder().build(ADVConnectionFactory.class));
-        install(new FactoryModuleBuilder().build(SessionReplayFactory.class));
-        install(new FactoryModuleBuilder().build(ReplayViewModelFactory.class));
-        install(new FactoryModuleBuilder().build(
-                SteppingViewModelFactory.class));
-
-        // -------- Access Layer -------- //
-        bind(DatastoreAccess.class).to(FileDatastoreAccess.class);
     }
 }
