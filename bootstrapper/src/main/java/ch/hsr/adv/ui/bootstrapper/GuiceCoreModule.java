@@ -1,8 +1,11 @@
-package ch.hsr.adv.ui.core.presentation;
+package ch.hsr.adv.ui.bootstrapper;
 
 
 import ch.hsr.adv.ui.core.access.DatastoreAccess;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
+import ch.hsr.adv.ui.core.presentation.ReplayViewModelFactory;
+import ch.hsr.adv.ui.core.presentation.SessionReplayFactory;
+import ch.hsr.adv.ui.core.presentation.SteppingViewModelFactory;
 import ch.hsr.adv.ui.core.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;

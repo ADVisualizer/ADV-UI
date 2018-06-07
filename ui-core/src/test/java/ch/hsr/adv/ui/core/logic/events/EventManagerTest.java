@@ -1,9 +1,8 @@
 package ch.hsr.adv.ui.core.logic.events;
 
-import ch.hsr.adv.ui.core.presentation.GuiceCoreModule;
 import com.google.inject.Inject;
+import org.jukito.JukitoModule;
 import org.jukito.JukitoRunner;
-import org.jukito.UseModules;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -17,7 +16,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 @RunWith(JukitoRunner.class)
-@UseModules({GuiceCoreModule.class})
 public class EventManagerTest {
 
     @Inject
@@ -108,7 +106,8 @@ public class EventManagerTest {
         // GIVEN
         long sessionIdListened = 42;
         long sessionIdIgnored = 123789;
-        sut.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED, sessionIdListened+"");
+        sut.subscribe(listenerTest, ADVEvent.SNAPSHOT_ADDED,
+                sessionIdListened + "");
 
         // WHEN
         sut.fire(ADVEvent.SNAPSHOT_ADDED, null, null,
@@ -116,5 +115,13 @@ public class EventManagerTest {
 
         // THEN
         Mockito.verify(listenerTest, never()).propertyChange(any());
+    }
+
+    public static class Module extends JukitoModule {
+
+        @Override
+        protected void configureTest() {
+
+        }
     }
 }
