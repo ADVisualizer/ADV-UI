@@ -103,8 +103,8 @@ public class FlowControl {
      * Delegates layouting of new snapshots to the module layouter.
      *
      * @param session containing snapshots to be layouted
-     * @return true, if the input session contains any snapshots, that have
-     * not yet been layouted. Return false only if the input session
+     * @return false, if the input session contains any snapshots, that have
+     * not yet been layouted. Return true only if the input session
      * is a duplicated session, i.e. contains no new snapshots
      */
     private boolean layoutSession(Session session) {
