@@ -10,7 +10,7 @@ The Algorithm & Data Structure Visualizer (ADV) helps students to understand the
 
 
 ## ADV-UI
-The ADV-UI is a JavaFX application which is responsible for visualizing the classes of the ADV Lib.
+The ADV-UI is a JavaFX application responsible for visualizing the classes of the ADV Lib.
 If the UI-JAR can be found on the classpath, the application is automatically started by the ADV-Lib. 
 Otherwise the JAR must be started manually.
 
