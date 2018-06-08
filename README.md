@@ -10,7 +10,9 @@
 
 
 ## ADV-UI
-UI Container of the ADV application
+UI Container of the ADV application.
+
+ADV can visualize data structures and algorithms you programmed yourself, thereby helping you to understand complex processes.
 
 ### Maven
 ````xml
@@ -25,4 +27,13 @@ UI Container of the ADV application
 ### Gradle
 ````groovy
 compile 'ch.hsr.adv:adv-ui:0.3'
+````
+
+### Start
+````bash
+java -jar /path/to/adv-ui-<version>.jar
+````
+With optional arguments:
+````bash
+java -jar /path/to/adv-ui-<version>.jar --host=192.168.1.765 --port=4566
 ````
