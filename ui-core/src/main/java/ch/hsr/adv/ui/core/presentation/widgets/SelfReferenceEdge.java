@@ -180,7 +180,7 @@ public class SelfReferenceEdge extends CurvedLabeledEdge {
                 createTwoControlPoints(x1, y1, x2, y2);
                 break;
             default:
-                logger.error("No recognizable ConnectorTypes found.");
+                logger.warn("No recognizable ConnectorTypes found.");
         }
     }
 }
