@@ -1,0 +1,74 @@
+{
+  "moduleName": "graph",
+  "elements": [
+    {
+      "id": 6,
+      "content": "A",
+      "fixedPosX": 60,
+      "fixedPosY": 50
+    },
+    {
+      "id": 7,
+      "content": "B",
+      "style": {
+        "fillColor": 13888729,
+        "strokeColor": 7324547,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
+      "fixedPosX": 140,
+      "fixedPosY": 50
+    },
+    {
+      "id": 8,
+      "content": "C",
+      "fixedPosX": 180,
+      "fixedPosY": 100
+    },
+    {
+      "id": 9,
+      "fixedPosX": 100,
+      "fixedPosY": 150
+    },
+    {
+      "id": 10,
+      "content": "E",
+      "fixedPosX": 20,
+      "fixedPosY": 100
+    }
+  ],
+  "relations": [
+    {
+      "sourceElementId": 6,
+      "targetElementId": 7,
+      "style": {
+        "fillColor": 14006715,
+        "strokeColor": 12148586,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
+      "isDirected": false
+    },
+    {
+      "sourceElementId": 6,
+      "targetElementId": 8,
+      "isDirected": true
+    },
+    {
+      "sourceElementId": 6,
+      "targetElementId": 8,
+      "isDirected": false
+    },
+    {
+      "sourceElementId": 10,
+      "targetElementId": 10,
+      "isDirected": true
+    },
+    {
+      "label": "0",
+      "sourceElementId": 10,
+      "targetElementId": 7,
+      "isDirected": false
+    }
+  ]
+}

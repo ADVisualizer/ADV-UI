@@ -1,0 +1,28 @@
+* {
+    -blue-darkest: #0f2c3d;
+    -grey-light: #ced8e0;
+    -grey-lightest: #f4f5f5;
+    -accent: #0886FF;
+}
+
+.root {
+    -fx-base: white;
+    -fx-background: white;
+    -fx-color: white;
+    -fx-text-background-color: -blue-darkest;
+    -fx-control-inner-background: white;
+    -fx-control-inner-background-alt: white;
+}
+
+/**
+ * Icon Buttons
+ */
+.button {
+    -fx-background-color: transparent;
+    -fx-border-color: none;
+}
+
+.button:focused {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}

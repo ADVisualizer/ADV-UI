@@ -24,12 +24,18 @@
       <module name="module-_test" target="1.9" />
       <module name="module-array_main" target="1.9" />
       <module name="module-array_test" target="1.9" />
+      <module name="module-graph_main" target="1.9" />
+      <module name="module-graph_test" target="1.9" />
       <module name="module-name_main" target="1.9" />
       <module name="module-name_test" target="1.9" />
+      <module name="module-queue_main" target="1.9" />
+      <module name="module-queue_test" target="1.9" />
       <module name="module-recursion_main" target="1.9" />
       <module name="module-recursion_test" target="1.9" />
       <module name="module-sort_main" target="1.9" />
       <module name="module-sort_test" target="1.9" />
+      <module name="module-stack_main" target="1.9" />
+      <module name="module-stack_test" target="1.9" />
       <module name="module_main" target="1.9" />
       <module name="module_test" target="1.9" />
       <module name="ui-core_main" target="1.9" />

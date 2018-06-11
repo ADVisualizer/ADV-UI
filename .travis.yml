@@ -1,25 +1,54 @@
-dist: trusty
+# Use fast containers
+sudo: false
+
 language: java
 dist: trusty
-jdk:
-  - oraclejdk9
+jdk: oraclejdk9
+env:
+  - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
 
-# Cache gradle
-before_cache:
-- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+# Configure mail notifications
+notifications:
+  email:
+    on_success: never
+    on_failure: always
+
+install: true
+
+before_install:
+# Update permission for gradle wrapper
+  - chmod +x gradlew
+# for headless testing
+  - if [[ "${TRAVIS_OS_NAME}" == linux ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
+
+install:
+  - ./gradlew assemble
+
+# Run code coverage report
+script:
+  - ./gradlew check
+  - ./gradlew codeCoverageReport
 
 cache:
   directories:
-  - "$HOME/.gradle/caches/"
-  - "$HOME/.gradle/wrapper/"
+    - $HOME/.gradle/wrapper/
 
-# Automatic Github deploy of the adv-ui jar for tagged commits
+# Upload test coverage to codecov
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+# Generate project object model (POM)
+before_deploy:
+  - ./gradlew generatePomFileForMavenCustomPublication
+
+# Deploy artefact to bintray (https://docs.travis-ci.com/user/deployment/bintray)
 deploy:
-  provider: releases
-  api_key:
-    secure: VQX5SUA4TLTfTnjN/nYRfNcXTxnksk3ghFwQBFCC7z6Cqnm5va7XuMe4k+PP49gYdjEhzTUt94Xadipxm8blwqz3bCMHtOhgFNn3cVp+Jv0OXGXcCtffs6NcJbhStTtZR6mJ8d6YYCMF/Rq9ocWu1De/QG/YSg0XlQn9qJzQy2c5PlXjeZh226j6lbGJM2cKL0hvD/wVGwmUHbE32C9qBNUUjuOBsKxWztT6cbNQrwH4ZEFu5VIPxZE1pyhjqYt2LOujjtj4o97WJQSpqIjbSMCkfYJZh2QCg9qPM8tdeR1LBKwjHvaiWhqRuMgCZFn9iJtytnvV8sK3SZAgHQ0A9+vcmRqCJ4MSSI1V4DkHnFlanvV27fFdM0neSydzZJWzhH2q9ChoaN2hevBfcFr5z3yuLYLQap03VqoAwsKL4+UPgtsVpEVAnoHWu6sVGuhF4viPlHgMzMqNHYTUmZtZgHyuSvP6eHbZvBMhV4XysOiKxHy8IAKMoLgOeDO08Rq3HS+Ss6Vrem8AUlZepzRd6l+Jf291yZdf+rxvwqBdaBcIVSnRlFM6jY8Pr1zH0vLoesx07bGRlxDbx1TXnkAJ1o+YcEyqd1GYsMYtBdu9inEiU2gtYbDW0WTHWw4dM0dDZUPzi0ejyDiMOhnpLJO3BUdDkevy8MDnqfBpibIfmpo=
-  file: "build/libs/adv-ui-0.2.jar"
-  skip_cleanup: true
+  provider: bintray
   on:
-    tags: true
+    all_branches: true
+  file: ./bintray.json
+  user: mwieland
+  key:
+    secure: N/9uOVFj7NQOuP0cathx/IK/jYxij9yLpZ75fwyB5qvDNc1z7pZ2k5saYouBTMmhG7czkFCzdTJ8U8bbZHT4ZgMlhc2meHm1zpIAw/F8nHVaE1DxHqt+4SymQoANps/vOM2lyHmYUF2LA26A4Xni/dY0UVQ7xPVUYNMgLyrAtA66PvPA/xWEnExo6IGOZSQicPHAp+2YDL865igpFTYCvTwpoT/UlVL8xYp4MDr5/02WHLHLmobcIl/mspYKwT7zrhYGM4ONtcrZaq5kQpJjXQP/bCygGIufjGtOQOYnR5wAo7pwV4mZwP6UIzIERBGksI3l9qk2V5Ft50xbEaD6JsltMxM00//D1rs8tuAQNwVUTZigCcpue3FCzn9WNAllXQbjHsvdr+mFkGYIH7/4pwXd+pt1DF4e0Kqq/YEO46aIV2cen0LT3h74ZFHM93kwMxb2cOBRYVMK8hm9qwqmeWqNUIRXJeREAIy2qGA610i9B/+zFMOHv9B6A99kqDLAm7LE912oi0wfpzUetbVMa/d0bnO+qU/QrpbZmTl8xs3YWOMw4aieDVQC+Ub22Hb39av6dujADYKi1CcB57mQbqJ3nWuvRHcBBQPqXRq990W2Hr2H0id/UCDd3dZ+kgdJKqvFg61mQfCkqTQrL2ANlwge2CDKvPbD95YC3iECt2w=
+  skip_cleanup: true
+  passphrase: GPG_PASSPHRASE
