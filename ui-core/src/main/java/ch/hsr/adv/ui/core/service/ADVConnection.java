@@ -64,7 +64,7 @@ public class ADVConnection {
         while ((sessionJSON = reader.readLine()) != null) {
 
             try {
-                logger.debug("Parse incoming request");
+                logger.info("Parse incoming request");
                 ADVRequest request = gson
                         .fromJson(sessionJSON, ADVRequest.class);
 
@@ -74,7 +74,7 @@ public class ADVConnection {
                 }
 
 
-                logger.debug("Acknowledge received json");
+                logger.info("Acknowledge received json");
                 ADVResponse response = new ADVResponse(ProtocolCommand
                         .ACKNOWLEDGE);
                 String json = gson.toJson(response);

@@ -68,7 +68,7 @@ public class GuiceBootstrapperModule extends AbstractModule {
                     stringifyerMapBinder.addBinding(moduleNameKey)
                             .to(stringifyer);
                 } else {
-                    logger.debug("No fitting type found. Type was: {}", clazz);
+                    logger.error("Module annotation error: No fitting type found. Type was: {}", clazz);
                 }
             }
         });

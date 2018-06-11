@@ -35,7 +35,7 @@ public class CoreLayouter {
      */
     public Region layout(List<Pane> panes,
                          List<SplitPane.Divider> dividers) {
-        logger.debug("Creating grid layout for all active modules...");
+        logger.info("Creating grid layout for all active modules...");
         if (!dividers.isEmpty()) {
             logger.info("Expecting an empty list of dividers. Correcting...");
             dividers.clear();

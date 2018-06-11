@@ -74,7 +74,7 @@ public class SessionStore {
      * @param newSession new session (will not itself be stored in the store)
      */
     private void mergeSession(Session existing, Session newSession) {
-        logger.debug("Merge session {}", existing.getSessionId());
+        logger.info("Merge session {}", existing.getSessionId());
 
         Map<Long, Snapshot> existingSnapshots = existing.getSnapshots()
                 .stream().collect(Collectors.toMap(Snapshot::getSnapshotId,
@@ -85,12 +85,12 @@ public class SessionStore {
                     .getSnapshotId());
             if (existingSnapshot == null) {
                 existing.getSnapshots().add(newSnapshot);
-                logger.debug("Add snapshot {} to session {}",
+                logger.info("Add snapshot {} to session {}",
                         newSnapshot.getSnapshotId(), existing.getSessionId());
             }
         });
 
-        logger.debug("Successfully merged new snapshots of session {} into "
+        logger.info("Successfully merged new snapshots of session {} into "
                 + "existing session", existing.getSessionId());
     }
 
@@ -124,7 +124,7 @@ public class SessionStore {
      * @param sessionId of the new current session
      */
     public void setCurrent(long sessionId) {
-        logger.debug("New session {} added to SessionStore", sessionId);
+        logger.info("New session {} added to SessionStore", sessionId);
         this.currentSession = sessions.get(sessionId);
         eventManager.fire(ADVEvent.CURRENT_SESSION_CHANGED, null,
                 currentSession);

@@ -62,7 +62,7 @@ public class ADVApplication extends Application {
      */
     private void retrieveCLIParams() {
         Map<String, String> params = getParameters().getNamed();
-        params.forEach((k, v) -> logger.debug("Found param: {} -> {}", k, v));
+        params.forEach((k, v) -> logger.info("Found param: {} -> {}", k, v));
         String port = params.get("port");
         if (port != null) {
             socketServer.setPort(Integer.parseInt(port));

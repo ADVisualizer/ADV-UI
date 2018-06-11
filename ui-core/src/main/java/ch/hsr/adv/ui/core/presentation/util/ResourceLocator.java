@@ -63,7 +63,7 @@ public class ResourceLocator {
         try {
             return loader.load();
         } catch (IOException e) {
-            logger.debug("Cannot loadFXML resource {}", resource, e);
+            logger.error("Cannot loadFXML resource {}", resource, e);
             return null;
         }
     }

@@ -81,8 +81,6 @@ public class SteppingViewModel {
 
 
     private void fireEvent(ADVEvent event, int oldIndex, int newIndex) {
-        logger.debug(layoutedSnapshotStore + "");
-        logger.debug(stateViewModel + "");
         if (stateViewModel.isAllowedIndex(oldIndex) && stateViewModel
                 .isAllowedIndex(newIndex)) {
             LayoutedSnapshot oldLayoutedSnapshot = layoutedSnapshotStore

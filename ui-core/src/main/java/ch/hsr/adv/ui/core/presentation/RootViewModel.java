@@ -170,7 +170,7 @@ class RootViewModel {
                     try {
                         Thread.sleep(NOTIFICATION_FADE_DELAY);
                     } catch (InterruptedException e) {
-                        logger.error("Notification reset task failed");
+                        logger.error("Notification reset task failed", e);
                     }
                     return null;
                 }
@@ -190,7 +190,7 @@ class RootViewModel {
 
         @Override
         public void propertyChange(final PropertyChangeEvent event) {
-            logger.debug("SessionStore has updated: Session was added. "
+            logger.info("SessionStore has updated: Session was added. "
                     + "Update ListView");
             Platform.runLater(() -> {
                 // current needs to be set first! Otherwise NullPointer when
