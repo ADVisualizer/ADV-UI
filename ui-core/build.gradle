@@ -5,5 +5,5 @@ dependencies {
     compile 'de.jensd:shichimifx:1.0.5'
 
     // common dependencies
-    compile('ch.hsr.adv:adv-commons:1.0')
+    compile('ch.hsr.adv:adv-commons:1.1')
 }

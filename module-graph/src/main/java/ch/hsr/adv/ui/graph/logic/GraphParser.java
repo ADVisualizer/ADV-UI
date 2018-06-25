@@ -41,11 +41,11 @@ public class GraphParser implements Parser {
     public GraphParser(GsonProvider gsonProvider) {
         GsonBuilder builder = gsonProvider.getMinifier();
         builder.registerTypeAdapter(ADVElement.class, new
-                InterfaceAdapter(GraphElement.class));
+                InterfaceAdapter<>(GraphElement.class));
         builder.registerTypeAdapter(ADVRelation.class, new
-                InterfaceAdapter(GraphRelation.class));
+                InterfaceAdapter<>(GraphRelation.class));
         builder.registerTypeAdapter(ADVStyle.class, new
-                InterfaceAdapter(ADVValueStyle.class));
+                InterfaceAdapter<>(ADVValueStyle.class));
         gson = builder.create();
     }
 

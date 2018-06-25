@@ -48,7 +48,7 @@ public class QueueParserTest {
     public void parseADVElementToStackElementTest() throws ADVParseException {
         // WHEN
         ModuleGroup actual = sut.parse(jsonElement);
-        ADVElement element = actual.getElements().get(0);
+        ADVElement<?> element = actual.getElements().get(0);
 
         // THEN
         assertEquals(QueueElement.class, element.getClass());

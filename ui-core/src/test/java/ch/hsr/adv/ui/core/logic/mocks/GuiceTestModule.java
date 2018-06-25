@@ -1,17 +1,10 @@
 package ch.hsr.adv.ui.core.logic.mocks;
 
-import ch.hsr.adv.ui.core.access.DatastoreAccess;
-import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.logic.CoreLayouter;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.logic.Parser;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
-import ch.hsr.adv.ui.core.presentation.ReplayViewModelFactory;
-import ch.hsr.adv.ui.core.presentation.SessionReplayFactory;
-import ch.hsr.adv.ui.core.presentation.SteppingViewModelFactory;
-import ch.hsr.adv.ui.core.service.ADVConnectionFactory;
 import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
 import com.google.inject.multibindings.MapBinder;
 import org.mockito.Mockito;
 
