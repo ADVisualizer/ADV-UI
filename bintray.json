@@ -9,14 +9,14 @@
     ]
   },
   "version": {
-    "name": "1.1",
-    "released": "2018-06-25",
+    "name": "1.0",
+    "released": "2018-06-30",
     "gpgSign": false
   },
   "files": [
     {
       "includePattern": "build/libs/(.*)",
-      "uploadPattern": "/ch/hsr/adv/adv-ui/1.1/$1",
+      "uploadPattern": "/ch/hsr/adv/adv-ui/1.0/$1",
       "matrixParams": {
         "override": 1
       }

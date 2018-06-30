@@ -23,6 +23,11 @@ import java.util.*;
 
 /**
  * Creates JavaFX Nodes for the graph elements and adds them to a pane
+ * <p>
+ * This class suppresses rawtype warnings, because Gson does not support
+ * generic wildcards. See
+ * <a href="https://github.com/ADVisualizer/ADV-Lib/issues/31">Issue 31</a>
+ * for more details.
  */
 @Singleton
 @Module(ConstantsGraph.MODULE_NAME)
