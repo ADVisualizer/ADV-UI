@@ -65,7 +65,8 @@ public class GraphParserTest {
     public void parsePositionTest() throws ADVParseException {
         // WHEN
         ModuleGroup actual = sut.parse(jsonElement);
-        List<ADVElement<?>> elements = actual.getElements();
+        @SuppressWarnings("rawtypes")
+        List<ADVElement> elements = actual.getElements();
         int posX = elements.get(0).getFixedPosX();
         int posY = elements.get(0).getFixedPosY();
         assertEquals(60, posX);

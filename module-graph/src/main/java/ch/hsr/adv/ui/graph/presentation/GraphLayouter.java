@@ -33,8 +33,10 @@ public class GraphLayouter implements Layouter {
 
     private Map<Long, LabeledNode> vertices;
     private AutoScalePane scalePane;
-    private List<ADVRelation<?>> relations;
-    private List<ADVElement<?>> elements;
+    @SuppressWarnings("rawtypes")
+    private List<ADVRelation> relations;
+    @SuppressWarnings("rawtypes")
+    private List<ADVElement> elements;
 
     /**
      * Layouts the graph module group
