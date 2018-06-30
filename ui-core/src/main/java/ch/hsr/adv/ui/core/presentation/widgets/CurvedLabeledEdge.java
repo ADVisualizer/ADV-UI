@@ -233,13 +233,13 @@ public class CurvedLabeledEdge extends LabeledEdge {
             }
         }
 
-		public ConnectorType getStart() {
-			return start;
-		}
+        public ConnectorType getStart() {
+            return start;
+        }
 
-		public ConnectorType getEnd() {
-			return end;
-		}
+        public ConnectorType getEnd() {
+            return end;
+        }
     }
 
 }
