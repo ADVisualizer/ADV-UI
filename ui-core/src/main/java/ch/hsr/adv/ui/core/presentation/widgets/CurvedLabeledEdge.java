@@ -209,8 +209,8 @@ public class CurvedLabeledEdge extends LabeledEdge {
         RIGHTTOP(ConnectorType.RIGHT, ConnectorType.TOP),
         DEFAULT(null, null);
 
-        private ConnectorType start;
-        private ConnectorType end;
+        private final ConnectorType start;
+        private final ConnectorType end;
 
         BiConnectionType(ConnectorType start, ConnectorType end) {
             this.start = start;
@@ -231,6 +231,14 @@ public class CurvedLabeledEdge extends LabeledEdge {
             } catch (IllegalArgumentException e) {
                 return DEFAULT;
             }
+        }
+
+        public ConnectorType getStart() {
+            return start;
+        }
+
+        public ConnectorType getEnd() {
+            return end;
         }
     }
 

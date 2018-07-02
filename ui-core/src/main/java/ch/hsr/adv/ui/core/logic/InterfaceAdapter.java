@@ -19,9 +19,9 @@ import java.lang.reflect.Type;
  */
 public class InterfaceAdapter<T> implements JsonDeserializer<T> {
 
-    private final Class className;
+    private final Class<T> className;
 
-    public InterfaceAdapter(Class className) {
+    public InterfaceAdapter(Class<T> className) {
         this.className = className;
     }
 

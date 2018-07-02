@@ -39,9 +39,9 @@ public class QueueParser implements Parser {
     public QueueParser(GsonProvider gsonProvider) {
         GsonBuilder builder = gsonProvider.getMinifier();
         builder.registerTypeAdapter(ADVElement.class, new
-                InterfaceAdapter(QueueElement.class));
+                InterfaceAdapter<>(QueueElement.class));
         builder.registerTypeAdapter(ADVStyle.class, new
-                InterfaceAdapter(ADVValueStyle.class));
+                InterfaceAdapter<>(ADVValueStyle.class));
         gson = builder.create();
     }
 
