@@ -53,22 +53,26 @@ public class GuiceBootstrapperModule extends AbstractModule {
             for (Class<?> clazz : instance.getInterfaces()) {
 
                 if (Layouter.class.isAssignableFrom(clazz)) {
+                    @SuppressWarnings("unchecked")
                     Class<? extends Layouter> layouter =
                             (Class<? extends Layouter>) instance;
                     layouterMapBinder.addBinding(moduleNameKey).to(layouter);
 
                 } else if (Parser.class.isAssignableFrom(clazz)) {
+                    @SuppressWarnings("unchecked")
                     Class<? extends Parser> parser =
                             (Class<? extends Parser>) instance;
                     parserMapBinder.addBinding(moduleNameKey).to(parser);
 
                 } else if (Stringifyer.class.isAssignableFrom(clazz)) {
+                    @SuppressWarnings("unchecked")
                     Class<? extends Stringifyer> stringifyer =
                             (Class<? extends Stringifyer>) instance;
                     stringifyerMapBinder.addBinding(moduleNameKey)
                             .to(stringifyer);
                 } else {
-                    logger.error("Module annotation error: No fitting type found. Type was: {}", clazz);
+                    logger.error("Module annotation error: No fitting type "
+                            + "found. Type was: {}", clazz);
                 }
             }
         });

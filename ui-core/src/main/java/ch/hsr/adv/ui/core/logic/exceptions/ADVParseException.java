@@ -5,6 +5,8 @@ package ch.hsr.adv.ui.core.logic.exceptions;
  */
 public class ADVParseException extends Exception {
 
+    private static final long serialVersionUID = 1L;
+
     public ADVParseException(String message) {
         super(message);
     }

@@ -6,8 +6,6 @@ import ch.hsr.adv.ui.core.logic.events.EventManager;
 import ch.hsr.adv.ui.core.logic.stores.LayoutedSnapshotStore;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handles stepping logic for the
@@ -16,8 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author mtrentini
  */
 public class SteppingViewModel {
-    private static final Logger logger = LoggerFactory
-            .getLogger(SteppingViewModel.class);
+
     private final EventManager eventManager;
     private final LayoutedSnapshotStore layoutedSnapshotStore;
     private StateViewModel stateViewModel;
