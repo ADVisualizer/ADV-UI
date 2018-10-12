@@ -12,7 +12,6 @@ import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
-import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -50,7 +49,7 @@ public class TreeBinaryTreeParser implements Parser {
     }
 
     @Override
-    public ModuleGroup parse(JsonElement json) throws ADVParseException {
+    public ModuleGroup parse(JsonElement json) {
         logger.debug("Parsing json: \n {}", json);
         return gson.fromJson(json, ModuleGroup.class);
     }

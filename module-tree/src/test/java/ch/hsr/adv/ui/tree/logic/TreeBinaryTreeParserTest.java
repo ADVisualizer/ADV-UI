@@ -5,7 +5,6 @@ import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.logic.exceptions.ADVParseException;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
@@ -48,42 +47,42 @@ public class TreeBinaryTreeParserTest {
     }
 
     @Test
-    public void parseModuleNameTest() throws ADVParseException {
+    public void parseModuleNameTest() {
         ModuleGroup actual = sut.parse(jsonElement);
 
         assertEquals("tree-binary", actual.getModuleName());
     }
 
     @Test
-    public void parseElementsTest() throws ADVParseException {
+    public void parseElementsTest() {
         ModuleGroup actual = sut.parse(jsonElement);
 
         assertEquals(6, actual.getElements().size());
     }
 
     @Test
-    public void parseRelationsTest() throws ADVParseException {
+    public void parseRelationsTest() {
         ModuleGroup actual = sut.parse(jsonElement);
 
         assertEquals(5, actual.getRelations().size());
     }
 
     @Test
-    public void parseElementTypeTest() throws ADVParseException {
+    public void parseElementTypeTest() {
         ModuleGroup actual = sut.parse(jsonElement);
 
         assertTrue(actual.getElements().get(2) instanceof TreeNodeElement);
     }
 
     @Test
-    public void parseRelationTypeTest() throws ADVParseException {
+    public void parseRelationTypeTest() {
         ModuleGroup actual = sut.parse(jsonElement);
 
         assertTrue(actual.getRelations().get(1) instanceof TreeNodeRelation);
     }
 
     @Test
-    public void parseADVStyleTest() throws ADVParseException {
+    public void parseADVStyleTest() {
         ModuleGroup actual = sut.parse(jsonElement);
 
         ADVStyle parsedStyle = actual.getElements().get(3).getStyle();
