@@ -14,6 +14,8 @@
       <module name="module-queue_test" target="1.10" />
       <module name="module-stack_main" target="1.10" />
       <module name="module-stack_test" target="1.10" />
+      <module name="module-tree_main" target="1.10" />
+      <module name="module-tree_test" target="1.10" />
       <module name="ui-core_main" target="1.10" />
       <module name="ui-core_test" target="1.10" />
     </bytecodeTargetLevel>

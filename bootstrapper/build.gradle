@@ -12,4 +12,5 @@ dependencies {
     compile project(':module-stack')
     compile project(':module-graph')
     compile project(':module-queue')
+    compile project(':module-tree')
 }
