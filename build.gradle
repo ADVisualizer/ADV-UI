@@ -1,5 +1,5 @@
 plugins {
-    id 'com.github.spotbugs' version '1.6.0'
+    id 'com.github.spotbugs' version '1.6.3'
     id "com.jfrog.bintray" version "1.8.0"
 }
 
@@ -27,8 +27,8 @@ allprojects {
         mavenCentral()
     }
 
-    sourceCompatibility = 1.9
-    targetCompatibility = 1.9
+    sourceCompatibility = 1.10
+    targetCompatibility = 1.10
 }
 
 /****************************************
@@ -42,6 +42,7 @@ subprojects {
         // put common test dependencies here
         testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
+        testCompile 'org.mockito:mockito-core:2+'
         testCompile 'org.hamcrest:hamcrest-library:1+'
         // ui testing frameworks
         testCompile "org.testfx:openjfx-monocle:jdk-9+181"
@@ -58,6 +59,10 @@ subprojects {
         checkstyleTest.enabled = false
     }
 
+    jacoco {
+        toolVersion = "0.8.2"
+    }
+    
     jacocoTestReport {
         additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
         sourceDirectories = files(sourceSets.main.allSource.srcDirs)
