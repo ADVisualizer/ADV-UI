@@ -3,7 +3,6 @@ package ch.hsr.adv.ui.tree.presentation;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import ch.hsr.adv.ui.tree.domain.BinaryTreeLabeledNodeHolder;
 import ch.hsr.adv.ui.tree.logic.TreeBinaryTreeParser;
 import ch.hsr.adv.ui.tree.logic.TreeBinaryTreeParserTest;
@@ -37,6 +36,8 @@ public class TreeBinaryTreeLayouterTest {
 
     private static final long ROOT_ID = 1L;
     private static final double DOUBLE_ACCURACY = 0.00001;
+    private static final int NODE_DISTANCE_HORIZONTAL = 50;
+    private static final int NODE_DISTANCE_VERTICAL = 75;
 
     @Inject
     private TreeBinaryTreeParser testParser;
@@ -126,18 +127,28 @@ public class TreeBinaryTreeLayouterTest {
                 e -> e instanceof IndexedNode);
 
         assertEquals(0, treeNodes.get(0).getLayoutX(), DOUBLE_ACCURACY);
-        assertEquals(-100, treeNodes.get(1).getLayoutX(), DOUBLE_ACCURACY);
-        assertEquals(-50, treeNodes.get(2).getLayoutX(), DOUBLE_ACCURACY);
-        assertEquals(100, treeNodes.get(3).getLayoutX(), DOUBLE_ACCURACY);
-        assertEquals(50, treeNodes.get(4).getLayoutX(), DOUBLE_ACCURACY);
-        assertEquals(150, treeNodes.get(5).getLayoutX(), DOUBLE_ACCURACY);
+        assertEquals(-2 * NODE_DISTANCE_HORIZONTAL, treeNodes.get(1)
+                .getLayoutX(), DOUBLE_ACCURACY);
+        assertEquals(-NODE_DISTANCE_HORIZONTAL, treeNodes.get(2)
+                .getLayoutX(), DOUBLE_ACCURACY);
+        assertEquals(2 * NODE_DISTANCE_HORIZONTAL, treeNodes.get(3)
+                .getLayoutX(), DOUBLE_ACCURACY);
+        assertEquals(NODE_DISTANCE_HORIZONTAL, treeNodes.get(4)
+                .getLayoutX(), DOUBLE_ACCURACY);
+        assertEquals(3 * NODE_DISTANCE_HORIZONTAL, treeNodes.get(5)
+                .getLayoutX(), DOUBLE_ACCURACY);
 
         assertEquals(0, treeNodes.get(0).getLayoutY(), DOUBLE_ACCURACY);
-        assertEquals(50, treeNodes.get(1).getLayoutY(), DOUBLE_ACCURACY);
-        assertEquals(100, treeNodes.get(2).getLayoutY(), DOUBLE_ACCURACY);
-        assertEquals(50, treeNodes.get(3).getLayoutY(), DOUBLE_ACCURACY);
-        assertEquals(100, treeNodes.get(4).getLayoutY(), DOUBLE_ACCURACY);
-        assertEquals(100, treeNodes.get(5).getLayoutY(), DOUBLE_ACCURACY);
+        assertEquals(NODE_DISTANCE_VERTICAL, treeNodes.get(1)
+                .getLayoutY(), DOUBLE_ACCURACY);
+        assertEquals(2 * NODE_DISTANCE_VERTICAL, treeNodes.get(2)
+                .getLayoutY(), DOUBLE_ACCURACY);
+        assertEquals(NODE_DISTANCE_VERTICAL, treeNodes.get(3)
+                .getLayoutY(), DOUBLE_ACCURACY);
+        assertEquals(2 * NODE_DISTANCE_VERTICAL, treeNodes.get(4)
+                .getLayoutY(), DOUBLE_ACCURACY);
+        assertEquals(2 * NODE_DISTANCE_VERTICAL, treeNodes.get(5)
+                .getLayoutY(), DOUBLE_ACCURACY);
     }
 
     @Test

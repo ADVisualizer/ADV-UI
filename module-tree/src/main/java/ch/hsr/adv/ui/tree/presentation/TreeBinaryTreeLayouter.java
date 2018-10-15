@@ -45,7 +45,7 @@ public class TreeBinaryTreeLayouter implements Layouter {
     private static final int ROOT_POSITION_X = 0;
     private static final int ROOT_POSITION_Y = 0;
     private static final int NODE_DISTANCE_HORIZONTAL = 50;
-    private static final int NODE_DISTANCE_VERTICAL = 50;
+    private static final int NODE_DISTANCE_VERTICAL = 75;
     private AutoScalePane scalePane;
     private Map<Long, BinaryTreeLabeledNodeHolder> nodes;
     private boolean showIndex;
