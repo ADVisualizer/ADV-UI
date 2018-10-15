@@ -1,21 +1,21 @@
 package ch.hsr.adv.ui.tree.domain;
 
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 
 /**
- * Holds labeled tree node and the references to the children
+ * Holds indexed labeled tree node and the references to the children
  */
 public class BinaryTreeLabeledNodeHolder {
-    private LabeledNode labeledNode;
+    private IndexedNode indexedNode;
     private BinaryTreeLabeledNodeHolder leftNode;
     private BinaryTreeLabeledNodeHolder rightNode;
 
-    public BinaryTreeLabeledNodeHolder(LabeledNode labeledEdge) {
-        this.labeledNode = labeledEdge;
+    public BinaryTreeLabeledNodeHolder(IndexedNode indexedNode) {
+        this.indexedNode = indexedNode;
     }
 
-    public LabeledNode getNode() {
-        return labeledNode;
+    public IndexedNode getNode() {
+        return indexedNode;
     }
 
     public BinaryTreeLabeledNodeHolder getLeftNode() {

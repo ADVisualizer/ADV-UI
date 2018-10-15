@@ -7,6 +7,7 @@ import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import ch.hsr.adv.ui.tree.domain.BinaryTreeLabeledNodeHolder;
 import ch.hsr.adv.ui.tree.logic.TreeBinaryTreeParser;
 import ch.hsr.adv.ui.tree.logic.TreeBinaryTreeParserTest;
+import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
@@ -114,7 +115,7 @@ public class TreeBinaryTreeLayouterTest {
         Pane actual = layoutTree();
 
         assertEquals(6,
-                getChildren(actual, e -> e instanceof LabeledNode).size());
+                getChildren(actual, e -> e instanceof IndexedNode).size());
     }
 
     @Test
@@ -122,7 +123,7 @@ public class TreeBinaryTreeLayouterTest {
         Pane actual = layoutTree();
 
         List<Node> treeNodes = getChildren(actual,
-                e -> e instanceof LabeledNode);
+                e -> e instanceof IndexedNode);
 
         assertEquals(0, treeNodes.get(0).getLayoutX(), DOUBLE_ACCURACY);
         assertEquals(-100, treeNodes.get(1).getLayoutX(), DOUBLE_ACCURACY);

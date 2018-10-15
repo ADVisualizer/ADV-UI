@@ -14,8 +14,8 @@ import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import ch.hsr.adv.ui.tree.domain.BinaryTreeLabeledNodeHolder;
+import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -38,7 +38,6 @@ import java.util.TreeMap;
 @Module(ConstantsTree.MODULE_NAME_BINARY_TREE)
 public class TreeBinaryTreeLayouter implements Layouter {
 
-
     private static final Logger logger = LoggerFactory.getLogger(
             TreeBinaryTreeLayouter.class);
 
@@ -49,10 +48,16 @@ public class TreeBinaryTreeLayouter implements Layouter {
     private static final int NODE_DISTANCE_VERTICAL = 50;
     private AutoScalePane scalePane;
     private Map<Long, BinaryTreeLabeledNodeHolder> nodes;
+    private boolean showIndex;
 
     @Override
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         logger.info("Layouting graph snapshot...");
+
+        if (flags != null && flags.contains(ConstantsTree.SHOW_ARRAY_INDICES)) {
+            showIndex = true;
+        }
+
         scalePane = new AutoScalePane();
         nodes = new TreeMap<>();
         putElementsToMap(moduleGroup);
@@ -71,10 +76,10 @@ public class TreeBinaryTreeLayouter implements Layouter {
         if (holder != null) {
             int height = getTreeHeight(id);
             int offset = (int) Math.pow(2, height - 1);
-            LabeledNode labeledNode = holder.getNode();
-            labeledNode.setX(xPos);
-            labeledNode.setY(yPos);
-            scalePane.addChildren(labeledNode);
+            IndexedNode indexedNode = holder.getNode();
+            indexedNode.setX(xPos);
+            indexedNode.setY(yPos);
+            scalePane.addChildren(indexedNode);
             addNodesToPane(leftChildId,
                     xPos - NODE_DISTANCE_HORIZONTAL * offset,
                     yPos + NODE_DISTANCE_VERTICAL);
@@ -89,15 +94,19 @@ public class TreeBinaryTreeLayouter implements Layouter {
         for (ADVRelation rel : moduleGroup.getRelations()) {
             TreeNodeRelation relation = (TreeNodeRelation) rel;
             ADVStyle relationStyle = rel.getStyle();
+
             if (relationStyle == null) {
                 relationStyle = new ADVDefaultRelationStyle();
             }
+
             LabeledEdge labeledRelation = new LabeledEdge(
                     relation.getLabel(),
-                    nodes.get(relation.getSourceElementId()).getNode(),
-                    ConnectorType.DIRECT,
-                    nodes.get(relation.getTargetElementId()).getNode(),
-                    ConnectorType.DIRECT,
+                    nodes.get(relation.getSourceElementId()).getNode()
+                            .getLabeledNode(),
+                    ConnectorType.BOTTOM,
+                    nodes.get(relation.getTargetElementId()).getNode()
+                            .getLabeledNode(),
+                    ConnectorType.TOP,
                     relationStyle);
             scalePane.addChildren(labeledRelation);
         }
@@ -111,10 +120,10 @@ public class TreeBinaryTreeLayouter implements Layouter {
             if (nodeStyle == null) {
                 nodeStyle = new ADVDefaultElementStyle();
             }
-            LabeledNode labeledNode = new LabeledNode(node.getContent(),
-                    nodeStyle, true);
+            IndexedNode indexedNode = new IndexedNode(node.getId(),
+                    node.getContent(), nodeStyle, true, showIndex);
             nodes.put(node.getId(),
-                    new BinaryTreeLabeledNodeHolder(labeledNode));
+                    new BinaryTreeLabeledNodeHolder(indexedNode));
         }
     }
 
