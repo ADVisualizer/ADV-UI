@@ -10,11 +10,11 @@
       "content": "B"
     },
     {
-      "id": 3,
+      "id": 5,
       "content": "D"
     },
     {
-      "id": 4,
+      "id": 3,
       "style": {
         "fillColor": 13888729,
         "strokeColor": 7324547,
@@ -24,11 +24,11 @@
       "content": "C"
     },
     {
-      "id": 5,
+      "id": 6,
       "content": "E"
     },
     {
-      "id": 6,
+      "id": 7,
       "content": "F"
     }
   ],
@@ -45,19 +45,19 @@
     },
     {
       "sourceElementId": 2,
-      "targetElementId": 3
-    },
-    {
-      "sourceElementId": 1,
-      "targetElementId": 4
-    },
-    {
-      "sourceElementId": 4,
       "targetElementId": 5
     },
     {
-      "sourceElementId": 4,
+      "sourceElementId": 1,
+      "targetElementId": 3
+    },
+    {
+      "sourceElementId": 3,
       "targetElementId": 6
+    },
+    {
+      "sourceElementId": 3,
+      "targetElementId": 7
     }
   ]
 }
