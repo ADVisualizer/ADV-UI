@@ -4,6 +4,8 @@
  ****************************************/
 rootProject.name = 'adv-ui'
 
+enableFeaturePreview('STABLE_PUBLISHING')
+
 //-- gradle submodules --//
 // ADV Core
 include 'bootstrapper'
