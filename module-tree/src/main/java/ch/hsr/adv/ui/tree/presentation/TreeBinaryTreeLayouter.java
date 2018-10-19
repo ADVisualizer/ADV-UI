@@ -54,9 +54,8 @@ public class TreeBinaryTreeLayouter implements Layouter {
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         logger.info("Layouting graph snapshot...");
 
-        if (flags != null && flags.contains(ConstantsTree.SHOW_ARRAY_INDICES)) {
-            showIndex = true;
-        }
+        showIndex = flags != null
+                && flags.contains(ConstantsTree.SHOW_ARRAY_INDICES);
 
         scalePane = new AutoScalePane();
         nodes = new TreeMap<>();
@@ -143,7 +142,7 @@ public class TreeBinaryTreeLayouter implements Layouter {
      * @param id node-id
      * @return height of tree for node
      */
-    protected int getTreeHeight(long id) {
+    int getTreeHeight(long id) {
         BinaryTreeLabeledNodeHolder root = nodes.get(id);
         if (root == null) {
             return -1;
@@ -160,7 +159,7 @@ public class TreeBinaryTreeLayouter implements Layouter {
      *
      * @return map with all holders and their node-id
      */
-    protected Map<Long, BinaryTreeLabeledNodeHolder> getNodes() {
+    Map<Long, BinaryTreeLabeledNodeHolder> getNodes() {
         return nodes;
     }
 }

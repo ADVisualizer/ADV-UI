@@ -17,8 +17,6 @@ public class IndexedNode extends Region {
     private final LabeledNode labeledNode;
 
     private Label indexLabel;
-    private int nodeLabelX;
-    private int nodeLabelY;
     private boolean showIndex;
 
     public IndexedNode(long index, String labelText, ADVStyle style,
@@ -26,6 +24,8 @@ public class IndexedNode extends Region {
         this.showIndex = showIndex;
 
         labeledNode = new LabeledNode(labelText, style, isRoundedDown);
+        labeledNode.setX(0);
+        labeledNode.setY(0);
         getChildren().add(labeledNode);
 
         indexLabel = new Label();
@@ -34,24 +34,13 @@ public class IndexedNode extends Region {
         getChildren().add(indexLabel);
     }
 
-    private void setPosition() {
-        if (showIndex) {
-            layoutXProperty().set(nodeLabelX
-                    - (indexLabel.getWidth() + INDEX_LABEL_DISTANCE));
-        } else {
-            layoutXProperty().set(nodeLabelX);
-        }
-        layoutYProperty().set(nodeLabelY);
-    }
-
     /**
      * Sets the X property of the labeled node
      *
      * @param x x coordinate
      */
     public void setX(int x) {
-        nodeLabelX = x;
-        setPosition();
+        layoutXProperty().set(x);
     }
 
     /**
@@ -60,8 +49,7 @@ public class IndexedNode extends Region {
      * @param y y coordinate
      */
     public void setY(int y) {
-        nodeLabelY = y;
-        setPosition();
+        layoutYProperty().set(y);
     }
 
     public LabeledNode getLabeledNode() {
@@ -80,18 +68,13 @@ public class IndexedNode extends Region {
             final double insetBottom = getInsets().getBottom();
 
             final double contentHeight = (nodeHeight - insetTop - insetBottom);
+            double leftPos = insetLeft
+                    + labeledNode.getWidth() + INDEX_LABEL_DISTANCE;
 
-            layoutInArea(indexLabel, insetLeft, insetTop,
+            layoutInArea(indexLabel, leftPos, insetTop,
                     indexLabel.getWidth(), contentHeight,
-                    getBaselineOffset(), HPos.CENTER, VPos.CENTER);
-
-            labeledNode
-                    .setX((int) (indexLabel.getWidth() + INDEX_LABEL_DISTANCE));
-        } else {
-            labeledNode.setX(0);
+                    getBaselineOffset(), HPos.LEFT, VPos.CENTER);
         }
-        labeledNode.setY(0);
-        setPosition();
 
         super.layoutChildren();
     }
