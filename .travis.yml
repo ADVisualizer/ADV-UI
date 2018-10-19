@@ -3,7 +3,7 @@ sudo: false
 
 language: java
 dist: trusty
-jdk: oraclejdk10
+jdk: openjdk10
 env:
   - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k -Dtestfx.setup.timeout=2500"
 
