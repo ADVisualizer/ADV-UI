@@ -16,6 +16,8 @@ public class IndexedNode extends Region {
 
     private final LabeledNode labeledNode;
 
+    private int centerX;
+    private int centerY;
     private Label indexLabel;
     private boolean showIndex;
 
@@ -35,21 +37,23 @@ public class IndexedNode extends Region {
     }
 
     /**
-     * Sets the X property of the labeled node
+     * Sets the X property of the center of the labeled node
      *
      * @param x x coordinate
      */
-    public void setX(int x) {
-        layoutXProperty().set(x);
+    public void setCenterX(int x) {
+        centerX = x;
+        layoutXProperty().set(centerX - labeledNode.getWidth() / 2);
     }
 
     /**
-     * Sets the y property of the labeled node
+     * Sets the y property of the center of the labeled node
      *
      * @param y y coordinate
      */
-    public void setY(int y) {
-        layoutYProperty().set(y);
+    public void setCenterY(int y) {
+        centerY = y;
+        layoutYProperty().set(centerY - labeledNode.getHeight() / 2);
     }
 
     public LabeledNode getLabeledNode() {
@@ -75,6 +79,9 @@ public class IndexedNode extends Region {
                     indexLabel.getWidth(), contentHeight,
                     getBaselineOffset(), HPos.LEFT, VPos.CENTER);
         }
+
+        setCenterX(centerX);
+        setCenterY(centerY);
 
         super.layoutChildren();
     }

@@ -14,7 +14,8 @@ import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
-import ch.hsr.adv.ui.tree.domain.BinaryTreeLabeledNodeHolder;
+import ch.hsr.adv.ui.tree.domain.WalkerNode;
+import ch.hsr.adv.ui.tree.logic.WalkerTreeAlgorithm;
 import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
@@ -42,12 +43,12 @@ public class TreeBinaryTreeLayouter implements Layouter {
             TreeBinaryTreeLayouter.class);
 
     private static final long ROOT_ID = 1L;
-    private static final int ROOT_POSITION_X = 0;
-    private static final int ROOT_POSITION_Y = 0;
-    private static final int NODE_DISTANCE_HORIZONTAL = 50;
-    private static final int NODE_DISTANCE_VERTICAL = 75;
+    private static final int CHILD_OFFSET = 50;
+    private static final int VERTEX_DISTANCE_HORIZONTAL = 75;
+    private static final int VERTEX_DISTANCE_VERTICAL = 75;
+    private static final int INDEX_WIDTH = 25;
     private AutoScalePane scalePane;
-    private Map<Long, BinaryTreeLabeledNodeHolder> nodes;
+    private Map<Long, WalkerNode> nodes;
     private boolean showIndex;
 
     @Override
@@ -59,32 +60,71 @@ public class TreeBinaryTreeLayouter implements Layouter {
 
         scalePane = new AutoScalePane();
         nodes = new TreeMap<>();
-        putElementsToMap(moduleGroup);
-        setNodeChildren();
-        addNodesToPane(ROOT_ID, ROOT_POSITION_X, ROOT_POSITION_Y);
+        translateModuleGroupToTree(moduleGroup);
+        int horizontalDistance = VERTEX_DISTANCE_HORIZONTAL;
+        if (showIndex) {
+            horizontalDistance += INDEX_WIDTH;
+        }
+        adjustBinaryTreeNodePositions();
+        WalkerTreeAlgorithm positionAlgorithm = new WalkerTreeAlgorithm(
+                getRoot(), horizontalDistance, VERTEX_DISTANCE_VERTICAL);
+        positionAlgorithm.positionNodes();
+        addVerticesToPane();
         addRelationsToPane(moduleGroup);
         return scalePane;
     }
 
-    private void addNodesToPane(long id, int xPos, int yPos) {
-        long leftChildId = 2 * id;
-        long rightChildId = leftChildId + 1;
+    private void adjustBinaryTreeNodePositions() {
+        for (WalkerNode node : nodes.values()) {
+            if (node.getLeftChild() != null && node.getRightChild() == null) {
+                node.addMod(-CHILD_OFFSET);
+            }
+            if (node.getRightChild() != null && node.getLeftChild() == null) {
+                node.addMod(CHILD_OFFSET);
+            }
+        }
+    }
 
-        BinaryTreeLabeledNodeHolder holder = nodes.get(id);
+    @SuppressWarnings("rawtypes")
+    private void translateModuleGroupToTree(ModuleGroup moduleGroup) {
+        for (ADVElement element : moduleGroup.getElements()) {
+            TreeNodeElement node = (TreeNodeElement) element;
+            ADVStyle nodeStyle = node.getStyle();
+            if (nodeStyle == null) {
+                nodeStyle = new ADVDefaultElementStyle();
+            }
+            IndexedNode indexedNode = new IndexedNode(node.getId(),
+                    node.getContent(), nodeStyle, true,
+                    showIndex);
+            nodes.put(node.getId(),
+                    new WalkerNode(indexedNode));
+        }
+        setNodeChildren();
+    }
 
-        if (holder != null) {
-            int height = getTreeHeight(id);
-            int offset = (int) Math.pow(2, height - 1);
-            IndexedNode indexedNode = holder.getNode();
-            indexedNode.setX(xPos);
-            indexedNode.setY(yPos);
-            scalePane.addChildren(indexedNode);
-            addNodesToPane(leftChildId,
-                    xPos - NODE_DISTANCE_HORIZONTAL * offset,
-                    yPos + NODE_DISTANCE_VERTICAL);
-            addNodesToPane(rightChildId,
-                    xPos + NODE_DISTANCE_HORIZONTAL * offset,
-                    yPos + NODE_DISTANCE_VERTICAL);
+    private void setNodeChildren() {
+        for (Entry<Long, WalkerNode> entry
+                : nodes.entrySet()) {
+            long leftChildId = 2 * entry.getKey();
+            long rightChildId = leftChildId + 1;
+            if (nodes.containsKey(leftChildId)) {
+                nodes.get(leftChildId).setParent(entry.getValue());
+                entry.getValue().setLeftChild(nodes.get(leftChildId));
+            }
+            if (nodes.containsKey(rightChildId)) {
+                nodes.get(rightChildId).setParent(entry.getValue());
+                entry.getValue().setRightChild(nodes.get(rightChildId));
+            }
+        }
+    }
+
+    private WalkerNode getRoot() {
+        return nodes.get(ROOT_ID);
+    }
+
+    private void addVerticesToPane() {
+        for (WalkerNode vertex : nodes.values()) {
+            scalePane.addChildren(vertex.getIndexedNode());
         }
     }
 
@@ -111,31 +151,6 @@ public class TreeBinaryTreeLayouter implements Layouter {
         }
     }
 
-    @SuppressWarnings("rawtypes")
-    private void putElementsToMap(ModuleGroup moduleGroup) {
-        for (ADVElement element : moduleGroup.getElements()) {
-            TreeNodeElement node = (TreeNodeElement) element;
-            ADVStyle nodeStyle = node.getStyle();
-            if (nodeStyle == null) {
-                nodeStyle = new ADVDefaultElementStyle();
-            }
-            IndexedNode indexedNode = new IndexedNode(node.getId(),
-                    node.getContent(), nodeStyle, true, showIndex);
-            nodes.put(node.getId(),
-                    new BinaryTreeLabeledNodeHolder(indexedNode));
-        }
-    }
-
-    private void setNodeChildren() {
-        for (Entry<Long, BinaryTreeLabeledNodeHolder> entry : nodes
-                .entrySet()) {
-            long leftChildId = 2 * entry.getKey();
-            long rightChildId = leftChildId + 1;
-            entry.getValue().setLeftNode(nodes.get(leftChildId));
-            entry.getValue().setRightNode(nodes.get(rightChildId));
-        }
-    }
-
     /**
      * Returns the height of the tree for a given node
      *
@@ -143,7 +158,7 @@ public class TreeBinaryTreeLayouter implements Layouter {
      * @return height of tree for node
      */
     int getTreeHeight(long id) {
-        BinaryTreeLabeledNodeHolder root = nodes.get(id);
+        WalkerNode root = nodes.get(id);
         if (root == null) {
             return -1;
         }
@@ -159,7 +174,7 @@ public class TreeBinaryTreeLayouter implements Layouter {
      *
      * @return map with all holders and their node-id
      */
-    Map<Long, BinaryTreeLabeledNodeHolder> getNodes() {
+    Map<Long, WalkerNode> getNodes() {
         return nodes;
     }
 }
