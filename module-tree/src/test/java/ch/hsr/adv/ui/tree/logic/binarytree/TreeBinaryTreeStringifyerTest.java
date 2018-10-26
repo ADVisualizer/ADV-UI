@@ -1,4 +1,4 @@
-package ch.hsr.adv.ui.tree.logic;
+package ch.hsr.adv.ui.tree.logic.binarytree;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultElementStyle;
@@ -6,6 +6,8 @@ import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultRelationSty
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.tree.domain.BinaryTreeTestNode;
+import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParser;
+import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeStringifyer;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
@@ -35,7 +37,7 @@ public class TreeBinaryTreeStringifyerTest {
                 + "-root", new ADVDefaultElementStyle(), childNode, null);
 
         TreeNodeElement root = new TreeNodeElement(rootNode, 1);
-        TreeNodeElement child = new TreeNodeElement(rootNode, 2);
+        TreeNodeElement child = new TreeNodeElement(childNode, 2);
 
         TreeNodeRelation relation = new TreeNodeRelation(1, 2,
                 new ADVDefaultRelationStyle());

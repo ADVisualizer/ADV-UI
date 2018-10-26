@@ -4,8 +4,8 @@ import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.WalkerNode;
-import ch.hsr.adv.ui.tree.logic.TreeBinaryTreeParser;
-import ch.hsr.adv.ui.tree.logic.TreeBinaryTreeParserTest;
+import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParser;
+import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParserTest;
 import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -48,7 +48,7 @@ public class TreeBinaryTreeLayouterTest {
             TimeoutException {
         FxToolkit.registerPrimaryStage();
         URL url = TreeBinaryTreeParserTest.class.getClassLoader()
-                .getResource("module-group.json");
+                .getResource("binary-tree-module-group.json");
 
         if (url == null) {
             throw new FileNotFoundException();
