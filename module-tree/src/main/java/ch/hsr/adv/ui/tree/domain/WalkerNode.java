@@ -1,7 +1,5 @@
 package ch.hsr.adv.ui.tree.domain;
 
-import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +8,8 @@ import java.util.List;
  */
 public class WalkerNode {
 
-    private IndexedNode indexedNode;
+    private double centerX;
+    private double centerY;
     private WalkerNode leftChild;
     private WalkerNode rightChild;
 
@@ -23,13 +22,24 @@ public class WalkerNode {
     private WalkerNode ancestor;
     private int childNumber;
 
-    public WalkerNode(IndexedNode indexedNode) {
-        this.indexedNode = indexedNode;
+    public WalkerNode() {
         childNumber = -1;
     }
 
-    public IndexedNode getIndexedNode() {
-        return indexedNode;
+    public double getCenterX() {
+        return centerX;
+    }
+
+    public void setCenterX(double centerX) {
+        this.centerX = centerX;
+    }
+
+    public double getCenterY() {
+        return centerY;
+    }
+
+    public void setCenterY(double centerY) {
+        this.centerY = centerY;
     }
 
     public double getMod() {
@@ -106,10 +116,6 @@ public class WalkerNode {
         this.childNumber = childNumber;
     }
 
-    public IndexedNode getNode() {
-        return indexedNode;
-    }
-
     public WalkerNode getLeftChild() {
         return leftChild;
     }
@@ -152,16 +158,5 @@ public class WalkerNode {
 
     public void setParent(WalkerNode parent) {
         this.parent = parent;
-    }
-
-    /**
-     * sets the center position of the indexed node
-     *
-     * @param x horizontal position
-     * @param y vertical position
-     */
-    public void setCenterPosition(int x, int y) {
-        indexedNode.setCenterX(x);
-        indexedNode.setCenterY(y);
     }
 }

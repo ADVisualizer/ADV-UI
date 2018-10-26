@@ -44,6 +44,7 @@ public class TreeBinaryTreeLayouter implements Layouter {
     private static final int INDEX_WIDTH = 25;
     private AutoScalePane scalePane;
     private Map<Long, WalkerNode> nodes;
+    private Map<Long, IndexedNode> indexedNodes;
     private boolean showIndex;
 
     @Override
@@ -55,6 +56,7 @@ public class TreeBinaryTreeLayouter implements Layouter {
 
         scalePane = new AutoScalePane();
         nodes = new TreeMap<>();
+        indexedNodes = new TreeMap<>();
         translateModuleGroupToTree(moduleGroup);
         int horizontalDistance = VERTEX_DISTANCE_HORIZONTAL;
         if (showIndex) {
@@ -90,8 +92,8 @@ public class TreeBinaryTreeLayouter implements Layouter {
             IndexedNode indexedNode = new IndexedNode(node.getId(),
                     node.getContent(), nodeStyle, true,
                     showIndex);
-            nodes.put(node.getId(),
-                    new WalkerNode(indexedNode));
+            indexedNodes.put(node.getId(), indexedNode);
+            nodes.put(node.getId(), new WalkerNode());
         }
         setNodeChildren();
     }
@@ -117,8 +119,11 @@ public class TreeBinaryTreeLayouter implements Layouter {
     }
 
     private void addVerticesToPane() {
-        for (WalkerNode vertex : nodes.values()) {
-            scalePane.addChildren(vertex.getIndexedNode());
+        for (Entry<Long, WalkerNode> entry : nodes.entrySet()) {
+            IndexedNode indexedNode = indexedNodes.get(entry.getKey());
+            indexedNode.setCenterX((int) entry.getValue().getCenterX());
+            indexedNode.setCenterY((int) entry.getValue().getCenterY());
+            scalePane.addChildren(indexedNode);
         }
     }
 
@@ -133,10 +138,10 @@ public class TreeBinaryTreeLayouter implements Layouter {
 
             LabeledEdge labeledRelation = new LabeledEdge(
                     relation.getLabel(),
-                    nodes.get(relation.getSourceElementId()).getNode()
+                    indexedNodes.get(relation.getSourceElementId())
                             .getLabeledNode(),
                     ConnectorType.BOTTOM,
-                    nodes.get(relation.getTargetElementId()).getNode()
+                    indexedNodes.get(relation.getTargetElementId())
                             .getLabeledNode(),
                     ConnectorType.TOP,
                     relationStyle);

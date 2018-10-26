@@ -86,7 +86,8 @@ public class WalkerTreeAlgorithm {
     private void secondWalk(WalkerNode vertex, double modSum, int depth,
                             double y) {
         double x = vertex.getPreliminary() + modSum;
-        vertex.setCenterPosition((int) x, (int) y);
+        vertex.setCenterX(x);
+        vertex.setCenterY(y);
 
         if (!vertex.isLeaf()) {
             double nextDepthStart = y + verticalDistance;
