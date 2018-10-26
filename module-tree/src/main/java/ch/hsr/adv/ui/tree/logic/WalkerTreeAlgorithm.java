@@ -264,7 +264,8 @@ public class WalkerTreeAlgorithm {
         return getNextChild.apply(v);
     }
 
-    private List<WalkerNode> getVertexChildrenReversed(WalkerNode vertex) {
+    private List<? extends WalkerNode> getVertexChildrenReversed(
+            WalkerNode vertex) {
         return Lists.reverse(vertex.getChildren());
     }
 }

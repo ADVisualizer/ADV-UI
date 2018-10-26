@@ -3,7 +3,7 @@ package ch.hsr.adv.ui.tree.presentation;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
-import ch.hsr.adv.ui.tree.domain.WalkerNode;
+import ch.hsr.adv.ui.tree.domain.BinaryWalkerNode;
 import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParser;
 import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParserTest;
 import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
@@ -61,7 +61,7 @@ public class TreeBinaryTreeLayouterTest {
         moduleGroup = testParser.parse(jsonElement);
     }
 
-    private Map<Long, WalkerNode> buildTree() {
+    private Map<Long, BinaryWalkerNode> buildTree() {
         layoutTree();
         return sut.getNodes();
     }
@@ -79,14 +79,14 @@ public class TreeBinaryTreeLayouterTest {
 
     @Test
     public void buildTreeContainsRootTest() {
-        Map<Long, WalkerNode> actual = buildTree();
+        Map<Long, BinaryWalkerNode> actual = buildTree();
 
         assertTrue(actual.containsKey(ROOT_ID));
     }
 
     @Test
     public void buildTreeNodeBHasNoLeftChildTest() {
-        Map<Long, WalkerNode> actual = buildTree();
+        Map<Long, BinaryWalkerNode> actual = buildTree();
 
         assertNotNull(actual.get(2L).getRightChild());
         assertNull(actual.get(2L).getLeftChild());
