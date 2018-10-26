@@ -78,14 +78,14 @@ public class TreeBinaryTreeLayouterTest {
     }
 
     @Test
-    public void testBuildTreeContainsRoot() {
+    public void buildTreeContainsRootTest() {
         Map<Long, WalkerNode> actual = buildTree();
 
         assertTrue(actual.containsKey(ROOT_ID));
     }
 
     @Test
-    public void testBuildTreeNodeBHasNoLeftChild() {
+    public void buildTreeNodeBHasNoLeftChildTest() {
         Map<Long, WalkerNode> actual = buildTree();
 
         assertNotNull(actual.get(2L).getRightChild());
@@ -93,7 +93,7 @@ public class TreeBinaryTreeLayouterTest {
     }
 
     @Test
-    public void testLayoutTreeContainsAllNodes() {
+    public void layoutTreeContainsAllNodesTest() {
         Pane actual = layoutTree();
 
         assertEquals(6,
@@ -101,7 +101,7 @@ public class TreeBinaryTreeLayouterTest {
     }
 
     @Test
-    public void testLayoutTreeContainsAllRelations() {
+    public void layoutTreeContainsAllRelationsTest() {
         Pane actual = layoutTree();
 
         assertEquals(5,
