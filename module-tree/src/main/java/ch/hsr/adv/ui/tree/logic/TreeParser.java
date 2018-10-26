@@ -10,7 +10,6 @@ import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.logic.InterfaceAdapter;
 import ch.hsr.adv.ui.core.logic.Parser;
-import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
 public abstract class TreeParser implements Parser {
 
     private static final Logger logger = LoggerFactory
-            .getLogger(TreeBinaryTreeParser.class);
+            .getLogger(TreeParser.class);
     private final Gson gson;
 
     /**

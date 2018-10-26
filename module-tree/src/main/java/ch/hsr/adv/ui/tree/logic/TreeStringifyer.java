@@ -3,7 +3,6 @@ package ch.hsr.adv.ui.tree.logic;
 import ch.hsr.adv.commons.core.access.GsonProvider;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.logic.Stringifyer;
-import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeStringifyer;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import org.slf4j.Logger;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public abstract class TreeStringifyer implements Stringifyer {
 
     private static final Logger logger = LoggerFactory
-            .getLogger(TreeBinaryTreeStringifyer.class);
+            .getLogger(TreeStringifyer.class);
 
     private final Gson gson;
 
