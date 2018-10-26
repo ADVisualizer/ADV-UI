@@ -4,6 +4,7 @@ import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import com.google.common.collect.Lists;
 
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Layouts a tree according to the Reingold-Tilford Algorithm which was improved
@@ -248,12 +249,8 @@ public class WalkerTreeAlgorithm {
      * @param vertex vertex v
      * @return the successor of the vertex on this contour
      */
-    private WalkerNode nextLeft(
-            WalkerNode vertex) {
-        if (vertex.isLeaf()) {
-            return vertex.getThread();
-        }
-        return vertex.getChildren().get(0);
+    private WalkerNode nextLeft(WalkerNode vertex) {
+        return next(vertex, v -> v.getChildren().get(0));
     }
 
     /**
@@ -262,12 +259,17 @@ public class WalkerTreeAlgorithm {
      * @param vertex vertex v
      * @return the successor of the vertex on this contour
      */
-    private WalkerNode nextRight(
-            WalkerNode vertex) {
+    private WalkerNode nextRight(WalkerNode vertex) {
+        return next(vertex,
+                v -> v.getChildren().get(vertex.getChildren().size() - 1));
+    }
+
+    private WalkerNode next(WalkerNode vertex,
+                            Function<WalkerNode, WalkerNode> getNextChild) {
         if (vertex.isLeaf()) {
             return vertex.getThread();
         }
-        return vertex.getChildren().get(vertex.getChildren().size() - 1);
+        return getNextChild.apply(vertex);
     }
 
     private List<WalkerNode> getVertexChildrenReversed(
