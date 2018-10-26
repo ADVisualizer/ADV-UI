@@ -29,11 +29,6 @@ import java.util.TreeMap;
 
 /**
  * Creates JavaFX Nodes for the tree elements and adds them to a pane
- * <p>
- * This class suppresses rawtype warnings, because Gson does not support
- * generic wildcards. See
- * <a href="https://github.com/ADVisualizer/ADV-Lib/issues/31">Issue 31</a>
- * for more details.
  */
 @Singleton
 @Module(ConstantsTree.MODULE_NAME_BINARY_TREE)
@@ -85,9 +80,8 @@ public class TreeBinaryTreeLayouter implements Layouter {
         }
     }
 
-    @SuppressWarnings("rawtypes")
     private void translateModuleGroupToTree(ModuleGroup moduleGroup) {
-        for (ADVElement element : moduleGroup.getElements()) {
+        for (ADVElement<?> element : moduleGroup.getElements()) {
             TreeNodeElement node = (TreeNodeElement) element;
             ADVStyle nodeStyle = node.getStyle();
             if (nodeStyle == null) {
@@ -128,9 +122,8 @@ public class TreeBinaryTreeLayouter implements Layouter {
         }
     }
 
-    @SuppressWarnings("rawtypes")
     private void addRelationsToPane(ModuleGroup moduleGroup) {
-        for (ADVRelation rel : moduleGroup.getRelations()) {
+        for (ADVRelation<?> rel : moduleGroup.getRelations()) {
             TreeNodeRelation relation = (TreeNodeRelation) rel;
             ADVStyle relationStyle = rel.getStyle();
 
