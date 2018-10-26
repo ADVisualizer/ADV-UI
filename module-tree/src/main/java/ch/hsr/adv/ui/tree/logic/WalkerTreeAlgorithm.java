@@ -8,7 +8,7 @@ import java.util.function.Function;
 
 /**
  * Layouts a tree according to the Reingold-Tilford Algorithm which was improved
- * by Walker et al. to accomodate for n-ary trees and by Buchheim et al. to
+ * by Walker et al. to accommodate for n-ary trees and by Buchheim et al. to
  * still run in linear time.
  */
 public class WalkerTreeAlgorithm {
@@ -36,37 +36,36 @@ public class WalkerTreeAlgorithm {
      * Bottom-up traversal of the tree. The position of each node is
      * preliminary.
      *
-     * @param vertex vertex v
+     * @param v vertex v
      */
-    private void firstWalk(WalkerNode vertex, WalkerNode leftSibling) {
-        if (vertex.isLeaf()) {
+    private void firstWalk(WalkerNode v, WalkerNode leftSibling) {
+        if (v.isLeaf()) {
             if (leftSibling != null) {
-                vertex.addPreliminary(horizontalDistance);
+                v.addPreliminary(horizontalDistance);
             }
         } else {
-            WalkerNode defaultAncestor = vertex.getChildren()
-                    .get(0);
+            WalkerNode defaultAncestor = v.getChildren().get(0);
             WalkerNode previousChild = null;
             int childNumber = 0;
-            for (WalkerNode child : vertex.getChildren()) {
+            for (WalkerNode child : v.getChildren()) {
                 child.setChildNumber(++childNumber);
                 firstWalk(child, previousChild);
                 defaultAncestor = apportion(child, defaultAncestor,
-                        previousChild, vertex);
+                        previousChild, v);
                 previousChild = child;
             }
-            executeShifts(vertex);
-            double midpoint = (vertex.getChildren().get(0).getPreliminary()
-                    + vertex.getChildren().get(vertex.getChildren().size() - 1)
+            executeShifts(v);
+            double midpoint = (v.getChildren().get(0).getPreliminary()
+                    + v.getChildren().get(v.getChildren().size() - 1)
                     .getPreliminary()) / 2.0;
 
             if (leftSibling != null) {
                 double preliminary = leftSibling.getPreliminary()
                         + horizontalDistance;
-                vertex.setPreliminary(preliminary);
-                vertex.setMod(preliminary - midpoint);
+                v.setPreliminary(preliminary);
+                v.setMod(preliminary - midpoint);
             } else {
-                vertex.setPreliminary(midpoint);
+                v.setPreliminary(midpoint);
             }
         }
     }
@@ -78,21 +77,20 @@ public class WalkerTreeAlgorithm {
      * aggregated modifier given by the sum of all modifiers on the path from
      * the parent of the vertex to the root.
      *
-     * @param vertex vertex v
+     * @param v      vertex v
      * @param modSum current modSum
      * @param depth  depth of the vertex
-     * @param y      vertical position of vertex
+     * @param y      vertical position of v
      */
-    private void secondWalk(WalkerNode vertex, double modSum, int depth,
-                            double y) {
-        double x = vertex.getPreliminary() + modSum;
-        vertex.setCenterX(x);
-        vertex.setCenterY(y);
+    private void secondWalk(WalkerNode v, double modSum, int depth, double y) {
+        double x = v.getPreliminary() + modSum;
+        v.setCenterX(x);
+        v.setCenterY(y);
 
-        if (!vertex.isLeaf()) {
+        if (!v.isLeaf()) {
             double nextDepthStart = y + verticalDistance;
-            double nextModSum = modSum + vertex.getMod();
-            for (WalkerNode child : vertex.getChildren()) {
+            double nextModSum = modSum + v.getMod();
+            for (WalkerNode child : v.getChildren()) {
                 secondWalk(child, nextModSum, depth + 1, nextDepthStart);
             }
         }
@@ -120,22 +118,22 @@ public class WalkerTreeAlgorithm {
      * associated modSum variables are used to summing up the modifiers along
      * the corresponding contour.
      *
-     * @param vertex          vertex v
+     * @param v               vertex v
      * @param defaultAncestor default ancestor
      * @param leftSibling     left sibling of vertex
-     * @param parentOfVertex  parent of the vertex
+     * @param parentOfV       parent of vertex v
      * @return the (possibly changed) default ancestor
      */
-    private WalkerNode apportion(WalkerNode vertex, WalkerNode defaultAncestor,
+    private WalkerNode apportion(WalkerNode v, WalkerNode defaultAncestor,
                                  WalkerNode leftSibling,
-                                 WalkerNode parentOfVertex) {
+                                 WalkerNode parentOfV) {
         if (leftSibling == null) {
             return defaultAncestor;
         }
-        WalkerNode outsideRightVertex = vertex;
-        WalkerNode insideRightVertex = vertex;
+        WalkerNode outsideRightVertex = v;
+        WalkerNode insideRightVertex = v;
         WalkerNode insideLeftVertex = leftSibling;
-        WalkerNode outsideLeftVertex = parentOfVertex.getChildren().get(0);
+        WalkerNode outsideLeftVertex = parentOfV.getChildren().get(0);
 
         double outsideRightModSum = outsideRightVertex.getMod();
         double insideRightModSum = insideRightVertex.getMod();
@@ -150,14 +148,14 @@ public class WalkerTreeAlgorithm {
             insideRightVertex = nextLeft;
             outsideLeftVertex = nextLeft(outsideLeftVertex);
             outsideRightVertex = nextRight(outsideRightVertex);
-            outsideRightVertex.setAncestor(vertex);
+            outsideRightVertex.setAncestor(v);
             double currentShift = calculateCurrentShift(insideRightVertex,
                     insideLeftVertex, insideRightModSum, insideLeftModSum);
 
             if (currentShift > 0) {
-                WalkerNode ancestor = ancestor(insideLeftVertex, parentOfVertex,
+                WalkerNode ancestor = ancestor(insideLeftVertex, parentOfV,
                         defaultAncestor);
-                moveSubtree(ancestor, vertex, currentShift);
+                moveSubtree(ancestor, v, currentShift);
                 insideRightModSum += currentShift;
                 outsideRightModSum += currentShift;
             }
@@ -178,7 +176,7 @@ public class WalkerTreeAlgorithm {
         if (nextLeft != null && nextLeft(outsideLeftVertex) == null) {
             outsideLeftVertex.setThread(nextLeft);
             outsideLeftVertex.addMod(insideRightModSum - outsideLeftModSum);
-            defaultAncestor = vertex;
+            defaultAncestor = v;
         }
         return defaultAncestor;
     }
@@ -198,26 +196,22 @@ public class WalkerTreeAlgorithm {
      * vertex, only its mod and preliminary x-coordinate are adjusted by the
      * amount of shifting.
      *
-     * @param vertex vertex v
+     * @param v vertex v
      */
-    private void executeShifts(WalkerNode vertex) {
+    private void executeShifts(WalkerNode v) {
         double currentShift = 0;
         double currentChange = 0;
-        for (WalkerNode child
-                : getVertexChildrenReversed(vertex)) {
-            currentChange += child.getChange();
-            child.setPreliminary(child.getPreliminary() + currentShift);
-            child.setMod(child.getMod() + currentShift);
-            currentShift += child.getShift() + currentChange;
+        for (WalkerNode w : getVertexChildrenReversed(v)) {
+            currentChange += w.getChange();
+            w.setPreliminary(w.getPreliminary() + currentShift);
+            w.setMod(w.getMod() + currentShift);
+            currentShift += w.getShift() + currentChange;
         }
     }
 
-    private WalkerNode ancestor(
-            WalkerNode insideLeftVertex,
-            WalkerNode parent,
-            WalkerNode defaultAncestor) {
-        WalkerNode ancestorVertex = insideLeftVertex
-                .getAncestor();
+    private WalkerNode ancestor(WalkerNode insideLeftVertex, WalkerNode parent,
+                                WalkerNode defaultAncestor) {
+        WalkerNode ancestorVertex = insideLeftVertex.getAncestor();
         if (isChildOfParent(ancestorVertex, parent)) {
             return ancestorVertex;
         } else {
@@ -225,56 +219,52 @@ public class WalkerTreeAlgorithm {
         }
     }
 
-    private boolean isChildOfParent(WalkerNode child,
-                                    WalkerNode parent) {
+    private boolean isChildOfParent(WalkerNode child, WalkerNode parent) {
         if (child == null) {
             return false;
         }
         return child.getParent().equals(parent);
     }
 
-    private void moveSubtree(WalkerNode v1,
-                             WalkerNode v2,
-                             double currentShift) {
-        int subtrees = v2.getChildNumber() - v1.getChildNumber();
-        v2.setChange(v2.getChange() - currentShift / subtrees);
-        v2.setShift(v2.getShift() + currentShift);
-        v1.setChange(v1.getChange() + currentShift / subtrees);
-        v2.setPreliminary(v2.getPreliminary() + currentShift);
-        v2.setMod(v2.getMod() + currentShift);
+    private void moveSubtree(WalkerNode v, WalkerNode w, double currentShift) {
+        int subtrees = w.getChildNumber() - v.getChildNumber();
+        w.setChange(w.getChange() - currentShift / subtrees);
+        w.setShift(w.getShift() + currentShift);
+        v.setChange(v.getChange() + currentShift / subtrees);
+        w.setPreliminary(w.getPreliminary() + currentShift);
+        w.setMod(w.getMod() + currentShift);
     }
 
     /**
      * Used to traverse the left contour of a subtree.
      *
-     * @param vertex vertex v
+     * @param v vertex v
      * @return the successor of the vertex on this contour
      */
-    private WalkerNode nextLeft(WalkerNode vertex) {
-        return next(vertex, v -> v.getChildren().get(0));
+    private WalkerNode nextLeft(WalkerNode v) {
+        return next(v, vertex -> vertex.getChildren().get(0));
     }
 
     /**
      * Used to traverse the right contour of a subtree.
      *
-     * @param vertex vertex v
+     * @param v vertex v
      * @return the successor of the vertex on this contour
      */
-    private WalkerNode nextRight(WalkerNode vertex) {
-        return next(vertex,
-                v -> v.getChildren().get(vertex.getChildren().size() - 1));
+    private WalkerNode nextRight(WalkerNode v) {
+        return next(v,
+                vertex -> vertex.getChildren().get(v.getChildren().size() - 1));
     }
 
-    private WalkerNode next(WalkerNode vertex,
+    private WalkerNode next(WalkerNode v,
                             Function<WalkerNode, WalkerNode> getNextChild) {
-        if (vertex.isLeaf()) {
-            return vertex.getThread();
+        if (v.isLeaf()) {
+            return v.getThread();
         }
-        return getNextChild.apply(vertex);
+        return getNextChild.apply(v);
     }
 
-    private List<WalkerNode> getVertexChildrenReversed(
-            WalkerNode vertex) {
+    private List<WalkerNode> getVertexChildrenReversed(WalkerNode vertex) {
         return Lists.reverse(vertex.getChildren());
     }
 }
