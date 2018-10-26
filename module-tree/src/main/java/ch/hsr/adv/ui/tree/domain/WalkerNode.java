@@ -1,28 +1,25 @@
 package ch.hsr.adv.ui.tree.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Holds indexed labeled tree node and the references to the children
+ * Contains the common variables for a vertex in the WalkerTreeAlgorithm
  */
-public class WalkerNode {
+public abstract class WalkerNode {
 
     private double centerX;
     private double centerY;
-    private WalkerNode leftChild;
-    private WalkerNode rightChild;
 
+    private int childNumber;
     private double mod;
-    private WalkerNode thread;
     private double preliminary;
     private double change;
     private double shift;
+    private WalkerNode thread;
     private WalkerNode parent;
     private WalkerNode ancestor;
-    private int childNumber;
 
-    public WalkerNode() {
+    WalkerNode() {
         childNumber = -1;
     }
 
@@ -42,6 +39,14 @@ public class WalkerNode {
         this.centerY = centerY;
     }
 
+    public int getChildNumber() {
+        return childNumber;
+    }
+
+    public void setChildNumber(int childNumber) {
+        this.childNumber = childNumber;
+    }
+
     public double getMod() {
         return mod;
     }
@@ -57,14 +62,6 @@ public class WalkerNode {
      */
     public void addMod(double value) {
         mod += value;
-    }
-
-    public WalkerNode getThread() {
-        return thread;
-    }
-
-    public void setThread(WalkerNode thread) {
-        this.thread = thread;
     }
 
     public double getPreliminary() {
@@ -100,56 +97,12 @@ public class WalkerNode {
         this.shift = shift;
     }
 
-    public WalkerNode getAncestor() {
-        return ancestor;
+    public WalkerNode getThread() {
+        return thread;
     }
 
-    public void setAncestor(WalkerNode ancestor) {
-        this.ancestor = ancestor;
-    }
-
-    public int getChildNumber() {
-        return childNumber;
-    }
-
-    public void setChildNumber(int childNumber) {
-        this.childNumber = childNumber;
-    }
-
-    public WalkerNode getLeftChild() {
-        return leftChild;
-    }
-
-    public WalkerNode getRightChild() {
-        return rightChild;
-    }
-
-    public void setLeftChild(WalkerNode leftChild) {
-        this.leftChild = leftChild;
-    }
-
-    public void setRightChild(WalkerNode rightChild) {
-        this.rightChild = rightChild;
-    }
-
-    public boolean isLeaf() {
-        return getLeftChild() == null && getRightChild() == null;
-    }
-
-    /**
-     * returns a list with all children that are not null
-     *
-     * @return list with children
-     */
-    public List<WalkerNode> getChildren() {
-        ArrayList<WalkerNode> children = new ArrayList<>();
-        if (leftChild != null) {
-            children.add(leftChild);
-        }
-        if (rightChild != null) {
-            children.add(rightChild);
-        }
-        return children;
+    public void setThread(WalkerNode thread) {
+        this.thread = thread;
     }
 
     public WalkerNode getParent() {
@@ -159,4 +112,22 @@ public class WalkerNode {
     public void setParent(WalkerNode parent) {
         this.parent = parent;
     }
+
+    public WalkerNode getAncestor() {
+        return ancestor;
+    }
+
+    public void setAncestor(WalkerNode ancestor) {
+        this.ancestor = ancestor;
+    }
+
+    /**
+     * @return true if vertex is a leaf-node
+     */
+    public abstract boolean isLeaf();
+
+    /**
+     * @return list of the children of the node
+     */
+    public abstract List<? extends WalkerNode> getChildren();
 }
