@@ -145,24 +145,6 @@ public class TreeBinaryTreeLayouter implements Layouter {
     }
 
     /**
-     * Returns the height of the tree for a given node
-     *
-     * @param id node-id
-     * @return height of tree for node
-     */
-    int getTreeHeight(long id) {
-        WalkerNode root = nodes.get(id);
-        if (root == null) {
-            return -1;
-        }
-
-        long leftChildId = 2 * id;
-        long rightChildId = leftChildId + 1;
-        return 1 + Math.max(getTreeHeight(leftChildId),
-                getTreeHeight(rightChildId));
-    }
-
-    /**
      * Returns all node-holders
      *
      * @return map with all holders and their node-id

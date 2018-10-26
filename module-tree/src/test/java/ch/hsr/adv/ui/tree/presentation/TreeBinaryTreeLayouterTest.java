@@ -93,22 +93,6 @@ public class TreeBinaryTreeLayouterTest {
     }
 
     @Test
-    public void testTreeHeightForRoot() {
-        buildTree();
-        int actual = sut.getTreeHeight(ROOT_ID);
-
-        assertEquals(2, actual);
-    }
-
-    @Test
-    public void testTreeHeightForLeaf() {
-        buildTree();
-        int actual = sut.getTreeHeight(6L);
-
-        assertEquals(0, actual);
-    }
-
-    @Test
     public void testLayoutTreeContainsAllNodes() {
         Pane actual = layoutTree();
 
