@@ -7,7 +7,6 @@ import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParserTest;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 
@@ -30,7 +29,7 @@ public class TreeParserTestBase {
     public TreeParserTestBase(FileDatastoreAccess reader, TreeParser sut,
                               String recourse) throws IOException {
         this.sut = sut;
-        URL url = TreeBinaryTreeParserTest.class.getClassLoader()
+        URL url = TreeParserTestBase.class.getClassLoader()
                 .getResource(recourse);
         if (url == null) {
             throw new FileNotFoundException();
