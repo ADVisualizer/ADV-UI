@@ -1,0 +1,79 @@
+{
+  "moduleName": "tree-collection",
+  "elements": [
+    {
+      "id": 1,
+      "content": "A"
+    },
+    {
+      "id": 2,
+      "content": "B"
+    },
+    {
+      "id": 3,
+      "content": "C"
+    },
+    {
+      "id": 4,
+      "content": "D"
+    },
+    {
+      "id": 5,
+      "content": "E"
+    },
+    {
+      "id": 6,
+      "content": "F"
+    },
+    {
+      "id": 7,
+      "style": {
+        "fillColor": 13888729,
+        "strokeColor": 7324547,
+        "strokeStyle": "dashed",
+        "strokeThickness": 4
+      },
+      "content": "G"
+    },
+    {
+      "id": 8,
+      "content": "H"
+    },
+    {
+      "id": 9,
+      "content": "I"
+    }
+  ],
+  "relations": [
+    {
+      "sourceElementId": 2,
+      "targetElementId": 3
+    },
+    {
+      "sourceElementId": 2,
+      "targetElementId": 4
+    },
+    {
+      "sourceElementId": 2,
+      "targetElementId": 5
+    },
+    {
+      "sourceElementId": 6,
+      "targetElementId": 7,
+      "style": {
+        "fillColor": 14006715,
+        "strokeColor": 12148586,
+        "strokeStyle": "dotted",
+        "strokeThickness": 3
+      }
+    },
+    {
+      "sourceElementId": 7,
+      "targetElementId": 8
+    },
+    {
+      "sourceElementId": 7,
+      "targetElementId": 9
+    }
+  ]
+}
