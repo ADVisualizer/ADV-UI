@@ -24,8 +24,9 @@ import java.util.TreeMap;
  * Contains general fields and methods for layouting trees
  */
 abstract class TreeLayouterBase {
-    private static final long ROOT_ID = 1L;
+    private static final long DEFAULT_ROOT_ID = 1L;
     private static final boolean ROUNDED_CORNER_STYLE = true;
+    private static final double TREE_DISTANCE_FACTOR = 1.0;
     private static final int VERTEX_DISTANCE_HORIZONTAL = 75;
     private static final int VERTEX_DISTANCE_VERTICAL = 75;
     private static final int INDEX_WIDTH = 25;
@@ -65,8 +66,45 @@ abstract class TreeLayouterBase {
      */
     void positionNodes() {
         WalkerTreeAlgorithm algorithm = new WalkerTreeAlgorithm(
-                nodes.get(ROOT_ID));
+                nodes.get(DEFAULT_ROOT_ID));
         algorithm.positionNodes();
+    }
+
+    /**
+     * Positions multiple trees using the WalkerTreeAlgorithm
+     *
+     * @param roots roots of the trees
+     */
+    void positionNodes(List<WalkerNode> roots) {
+        List<WalkerTreeAlgorithm> trees = new ArrayList<>();
+        for (WalkerNode root : roots) {
+            WalkerTreeAlgorithm algorithm = new WalkerTreeAlgorithm(root);
+            algorithm.positionNodes();
+            trees.add(algorithm);
+        }
+        positionTrees(trees);
+    }
+
+    private void positionTrees(List<WalkerTreeAlgorithm> trees) {
+        if (trees.size() <= 0) {
+            return;
+        }
+        double moveDistance = trees.get(0).getHorizontalBounds()
+                .getRightBound();
+        for (int i = 1; i < trees.size(); i++) {
+            WalkerTreeAlgorithm tree = trees.get(i);
+            moveDistance += -tree.getHorizontalBounds().getLeftBound()
+                    + TREE_DISTANCE_FACTOR;
+            moveNodeHorizontally(tree.getRoot(), moveDistance);
+            moveDistance += tree.getHorizontalBounds().getRightBound();
+        }
+    }
+
+    private void moveNodeHorizontally(WalkerNode node, double distance) {
+        node.setCenterX(node.getCenterX() + distance);
+        for (WalkerNode child : node.getChildren()) {
+            moveNodeHorizontally(child, distance);
+        }
     }
 
     /**
