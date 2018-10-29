@@ -4,6 +4,7 @@ import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.GeneralWalkerNode;
+import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.generaltree.TreeGeneralTreeParser;
 import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 import com.google.gson.Gson;
@@ -33,7 +34,9 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(JukitoRunner.class)
 public class TreeGeneralTreeLayouterTest {
+
     private static final long ROOT_ID = 1L;
+    private static final double DOUBLE_ACCURACY = 0.00001;
 
     @Inject
     private TreeGeneralTreeParser testParser;
@@ -60,7 +63,7 @@ public class TreeGeneralTreeLayouterTest {
         moduleGroup = testParser.parse(jsonElement);
     }
 
-    private Map<Long, GeneralWalkerNode> buildTree() {
+    private Map<Long, WalkerNode> buildTree() {
         layoutTree();
         return sut.getNodes();
     }
@@ -77,16 +80,17 @@ public class TreeGeneralTreeLayouterTest {
     }
 
     @Test
-    public void buildTreeContainsRootTest() {
-        Map<Long, GeneralWalkerNode> actual = buildTree();
+    public void layoutTreeContainsRootTest() {
+        Map<Long, WalkerNode> actual = buildTree();
 
         assertTrue(actual.containsKey(ROOT_ID));
     }
 
     @Test
-    public void buildTreeNodeDHas4ChildrenTest() {
-        final long nodeDIndex = 6;
-        GeneralWalkerNode actual = buildTree().get(nodeDIndex);
+    public void layoutTreeNodeDHas4ChildrenTest() {
+        final long nodeDIndex = 6L;
+        GeneralWalkerNode actual = (GeneralWalkerNode) buildTree()
+                .get(nodeDIndex);
 
         assertEquals(4, actual.getChildren().size());
     }
@@ -105,5 +109,14 @@ public class TreeGeneralTreeLayouterTest {
 
         assertEquals(9,
                 getChildren(actual, e -> e instanceof LabeledEdge).size());
+    }
+
+    @Test
+    public void layoutTreePositionsVerticesCorrectTest() {
+        final long nodeIIndex = 9L;
+        WalkerNode actual = buildTree().get(nodeIIndex);
+
+        assertEquals(2.0, actual.getCenterX(), DOUBLE_ACCURACY);
+        assertEquals(2.0, actual.getCenterY(), DOUBLE_ACCURACY);
     }
 }

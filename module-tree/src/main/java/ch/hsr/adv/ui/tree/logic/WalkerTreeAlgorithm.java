@@ -13,15 +13,13 @@ import java.util.function.Function;
  */
 public class WalkerTreeAlgorithm {
 
-    private final int verticalDistance;
-    private final int horizontalDistance;
+    private static final double VERTICAL_DISTANCE = 1.0;
+    public static final double HORIZONTAL_DISTANCE = 1.0;
+
     private WalkerNode root;
 
-    public WalkerTreeAlgorithm(WalkerNode root, int horizontalDistance,
-                               int verticalDistance) {
+    public WalkerTreeAlgorithm(WalkerNode root) {
         this.root = root;
-        this.horizontalDistance = horizontalDistance;
-        this.verticalDistance = verticalDistance;
     }
 
     /**
@@ -42,7 +40,7 @@ public class WalkerTreeAlgorithm {
         if (v.isLeaf()) {
             if (leftSibling != null) {
                 v.setPreliminary(leftSibling.getPreliminary()
-                        + horizontalDistance);
+                        + HORIZONTAL_DISTANCE);
             }
         } else {
             WalkerNode defaultAncestor = v.getChildren().get(0);
@@ -62,7 +60,7 @@ public class WalkerTreeAlgorithm {
 
             if (leftSibling != null) {
                 double preliminary = leftSibling.getPreliminary()
-                        + horizontalDistance;
+                        + HORIZONTAL_DISTANCE;
                 v.setPreliminary(preliminary);
                 v.setMod(preliminary - midpoint);
             } else {
@@ -89,7 +87,7 @@ public class WalkerTreeAlgorithm {
         v.setCenterY(y);
 
         if (!v.isLeaf()) {
-            double nextDepthStart = y + verticalDistance;
+            double nextDepthStart = y + VERTICAL_DISTANCE;
             double nextModSum = modSum + v.getMod();
             for (WalkerNode child : v.getChildren()) {
                 secondWalk(child, nextModSum, depth + 1, nextDepthStart);
@@ -188,7 +186,7 @@ public class WalkerTreeAlgorithm {
                                          double insideLeftModSum) {
         return (insideLeftVertex.getPreliminary() + insideLeftModSum)
                 - (insideRightVertex.getPreliminary() + insideRightModSum)
-                + horizontalDistance;
+                + HORIZONTAL_DISTANCE;
     }
 
     /**
