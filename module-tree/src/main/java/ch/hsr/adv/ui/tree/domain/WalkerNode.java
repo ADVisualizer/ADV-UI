@@ -72,15 +72,6 @@ public abstract class WalkerNode {
         this.preliminary = preliminary;
     }
 
-    /**
-     * adds value to current preliminary
-     *
-     * @param value value to add
-     */
-    public void addPreliminary(double value) {
-        preliminary += value;
-    }
-
     public double getChange() {
         return change;
     }

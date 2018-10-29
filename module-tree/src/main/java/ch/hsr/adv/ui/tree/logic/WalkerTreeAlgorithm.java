@@ -41,7 +41,8 @@ public class WalkerTreeAlgorithm {
     private void firstWalk(WalkerNode v, WalkerNode leftSibling) {
         if (v.isLeaf()) {
             if (leftSibling != null) {
-                v.addPreliminary(horizontalDistance);
+                v.setPreliminary(leftSibling.getPreliminary()
+                        + horizontalDistance);
             }
         } else {
             WalkerNode defaultAncestor = v.getChildren().get(0);
