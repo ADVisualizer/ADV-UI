@@ -8,6 +8,7 @@ import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultElementStyl
 import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultRelationStyle;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
+import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
@@ -23,7 +24,7 @@ import java.util.TreeMap;
 /**
  * Contains general fields and methods for layouting trees
  */
-abstract class TreeLayouterBase {
+abstract class TreeLayouterBase implements Layouter {
     private static final long DEFAULT_ROOT_ID = 1L;
     private static final boolean ROUNDED_CORNER_STYLE = true;
     private static final double TREE_DISTANCE_FACTOR = 1.0;
