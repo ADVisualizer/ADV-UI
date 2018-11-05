@@ -6,8 +6,6 @@ import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultRelationSty
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.tree.domain.GeneralTreeTestNode;
-import ch.hsr.adv.ui.tree.logic.generaltree.TreeGeneralTreeParser;
-import ch.hsr.adv.ui.tree.logic.generaltree.TreeGeneralTreeStringifyer;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;

@@ -2,7 +2,6 @@ package ch.hsr.adv.ui.tree.logic.generaltree;
 
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.tree.logic.TreeParserTestBase;
-import ch.hsr.adv.ui.tree.logic.generaltree.TreeGeneralTreeParser;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
