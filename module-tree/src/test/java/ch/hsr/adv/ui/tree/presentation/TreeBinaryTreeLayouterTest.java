@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNull;
 @RunWith(JukitoRunner.class)
 public class TreeBinaryTreeLayouterTest {
 
-    private TreeLayouterTestBase base;
+    private TreeLayouterTestBase<BinaryWalkerNode> base;
 
     @Inject
     private TreeBinaryTreeParser testParser;
@@ -28,7 +28,7 @@ public class TreeBinaryTreeLayouterTest {
     @Before
     public void setUp(FileDatastoreAccess reader) throws IOException,
             TimeoutException {
-        base = new TreeLayouterTestBase(sut, testParser, reader,
+        base = new TreeLayouterTestBase<>(sut, testParser, reader,
                 "binary-tree-module-group.json");
     }
 

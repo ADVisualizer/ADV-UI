@@ -1,9 +1,7 @@
 package ch.hsr.adv.ui.tree.presentation;
 
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.GeneralWalkerNode;
-import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.generaltree.TreeGeneralTreeParser;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
@@ -19,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JukitoRunner.class)
 public class TreeGeneralTreeLayouterTest {
 
-    private TreeLayouterTestBase base;
+    private TreeLayouterTestBase<GeneralWalkerNode> base;
 
     @Inject
     private TreeGeneralTreeParser testParser;
@@ -29,7 +27,7 @@ public class TreeGeneralTreeLayouterTest {
     @Before
     public void setUp(FileDatastoreAccess reader) throws IOException,
             TimeoutException {
-        base = new TreeLayouterTestBase(sut, testParser, reader,
+        base = new TreeLayouterTestBase<>(sut, testParser, reader,
                 "general-tree-module-group.json");
     }
 

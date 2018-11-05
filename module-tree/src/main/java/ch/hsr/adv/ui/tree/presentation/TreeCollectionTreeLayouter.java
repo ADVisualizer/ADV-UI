@@ -20,8 +20,8 @@ import java.util.List;
  */
 @Singleton
 @Module(ConstantsTree.MODULE_NAME_COLLECTION_TREE)
-public class TreeCollectionTreeLayouter extends TreeLayouterBase
-        implements Layouter {
+public class TreeCollectionTreeLayouter
+        extends TreeLayouterBase<GeneralWalkerNode> implements Layouter {
 
     private static final Logger logger = LoggerFactory.getLogger(
             TreeCollectionTreeLayouter.class);
@@ -39,9 +39,9 @@ public class TreeCollectionTreeLayouter extends TreeLayouterBase
     @Override
     void setNodeChildren() {
         for (TreeNodeRelation relation : getRelations()) {
-            GeneralWalkerNode parent = (GeneralWalkerNode) getNodes()
+            GeneralWalkerNode parent = getNodes()
                     .get(relation.getSourceElementId());
-            GeneralWalkerNode child = (GeneralWalkerNode) getNodes()
+            GeneralWalkerNode child = getNodes()
                     .get(relation.getTargetElementId());
             child.setParent(parent);
             parent.addChild(child);
@@ -49,7 +49,7 @@ public class TreeCollectionTreeLayouter extends TreeLayouterBase
     }
 
     @Override
-    WalkerNode createWalkerNode() {
+    GeneralWalkerNode createWalkerNode() {
         return new GeneralWalkerNode();
     }
 

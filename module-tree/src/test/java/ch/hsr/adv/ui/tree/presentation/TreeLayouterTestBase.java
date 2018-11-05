@@ -26,14 +26,14 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-class TreeLayouterTestBase {
+class TreeLayouterTestBase<T extends WalkerNode> {
 
     private static final double DOUBLE_ACCURACY = 0.00001;
 
     private ModuleGroup moduleGroup;
-    private TreeLayouterBase sut;
+    private TreeLayouterBase<T> sut;
 
-    TreeLayouterTestBase(TreeLayouterBase sut, TreeParser parser,
+    TreeLayouterTestBase(TreeLayouterBase<T> sut, TreeParser parser,
                          FileDatastoreAccess reader, String resource)
             throws TimeoutException, IOException {
 
@@ -56,7 +56,7 @@ class TreeLayouterTestBase {
         return sut.layout(moduleGroup, null);
     }
 
-    Map<Long, WalkerNode> getNodes() {
+    Map<Long, T> getNodes() {
         return sut.getNodes();
     }
 
@@ -68,7 +68,7 @@ class TreeLayouterTestBase {
 
     void assertTreeContainsNode(Long nodeId) {
         layoutTree();
-        Map<Long, WalkerNode> actual = getNodes();
+        Map<Long, T> actual = getNodes();
 
         assertTrue(actual.containsKey(nodeId));
     }
