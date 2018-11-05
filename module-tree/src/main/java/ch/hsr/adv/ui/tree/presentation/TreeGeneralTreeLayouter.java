@@ -6,7 +6,6 @@ import ch.hsr.adv.commons.tree.logic.ConstantsTree;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.tree.domain.GeneralWalkerNode;
-import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -19,7 +18,7 @@ import java.util.List;
  */
 @Singleton
 @Module(ConstantsTree.MODULE_NAME_GENERAL_TREE)
-public class TreeGeneralTreeLayouter extends TreeLayouterBase
+public class TreeGeneralTreeLayouter extends TreeLayouterBase<GeneralWalkerNode>
         implements Layouter {
 
     private static final Logger logger = LoggerFactory.getLogger(
@@ -37,9 +36,9 @@ public class TreeGeneralTreeLayouter extends TreeLayouterBase
     @Override
     void setNodeChildren() {
         for (TreeNodeRelation relation : getRelations()) {
-            GeneralWalkerNode parent = (GeneralWalkerNode) getNodes()
+            GeneralWalkerNode parent = getNodes()
                     .get(relation.getSourceElementId());
-            GeneralWalkerNode child = (GeneralWalkerNode) getNodes()
+            GeneralWalkerNode child = getNodes()
                     .get(relation.getTargetElementId());
             child.setParent(parent);
             parent.addChild(child);
@@ -47,7 +46,7 @@ public class TreeGeneralTreeLayouter extends TreeLayouterBase
     }
 
     @Override
-    WalkerNode createWalkerNode() {
+    GeneralWalkerNode createWalkerNode() {
         return new GeneralWalkerNode();
     }
 }

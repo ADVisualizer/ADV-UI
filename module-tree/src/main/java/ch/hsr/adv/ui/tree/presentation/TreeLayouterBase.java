@@ -22,19 +22,21 @@ import java.util.TreeMap;
 
 /**
  * Contains general fields and methods for layouting trees
+ *
+ * @param <T> type of WalkerNode
  */
-abstract class TreeLayouterBase {
+abstract class TreeLayouterBase<T extends WalkerNode> {
     private static final long ROOT_ID = 1L;
     private static final boolean ROUNDED_CORNER_STYLE = true;
     private static final int VERTEX_DISTANCE_HORIZONTAL = 75;
     private static final int VERTEX_DISTANCE_VERTICAL = 75;
     private static final int INDEX_WIDTH = 25;
 
-    private Map<Long, WalkerNode> nodes;
+    private Map<Long, T> nodes;
     private List<TreeNodeElement> elements;
     private List<TreeNodeRelation> relations;
 
-    Map<Long, WalkerNode> getNodes() {
+    Map<Long, T> getNodes() {
         return nodes;
     }
 
@@ -93,7 +95,7 @@ abstract class TreeLayouterBase {
      *
      * @return WalkerNode for the specific tree-type
      */
-    abstract WalkerNode createWalkerNode();
+    abstract T createWalkerNode();
 
     private void translateModuleGroupToTree() {
         for (TreeNodeElement element : elements) {
@@ -120,7 +122,7 @@ abstract class TreeLayouterBase {
     private void addVerticesToPane(AutoScalePane pane,
                                    Map<Long, IndexedNode> indexedNodes,
                                    boolean showIndex) {
-        for (Map.Entry<Long, WalkerNode> entry : nodes.entrySet()) {
+        for (Map.Entry<Long, T> entry : nodes.entrySet()) {
             IndexedNode indexedNode = indexedNodes.get(entry.getKey());
             WalkerNode node = entry.getValue();
 

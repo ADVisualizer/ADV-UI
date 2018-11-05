@@ -4,7 +4,6 @@ import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.BinaryWalkerNode;
-import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParser;
 import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParserTest;
 import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
@@ -63,7 +62,7 @@ public class TreeBinaryTreeLayouterTest {
         moduleGroup = testParser.parse(jsonElement);
     }
 
-    private Map<Long, WalkerNode> buildTree() {
+    private Map<Long, BinaryWalkerNode> buildTree() {
         layoutTree();
         return sut.getNodes();
     }
@@ -81,7 +80,7 @@ public class TreeBinaryTreeLayouterTest {
 
     @Test
     public void layoutTreeContainsRootTest() {
-        Map<Long, WalkerNode> actual = buildTree();
+        Map<Long, BinaryWalkerNode> actual = buildTree();
 
         assertTrue(actual.containsKey(ROOT_ID));
     }
@@ -89,8 +88,7 @@ public class TreeBinaryTreeLayouterTest {
     @Test
     public void layoutTreeNodeBHasNoLeftChildTest() {
         final long nodeBIndex = 2L;
-        BinaryWalkerNode actual =
-                (BinaryWalkerNode) buildTree().get(nodeBIndex);
+        BinaryWalkerNode actual = buildTree().get(nodeBIndex);
 
         assertNotNull(actual.getRightChild());
         assertNull(actual.getLeftChild());
@@ -115,7 +113,7 @@ public class TreeBinaryTreeLayouterTest {
     @Test
     public void layoutTreePositionsVerticesCorrectTest() {
         final long nodeDIndex = 5L;
-        WalkerNode actual = buildTree().get(nodeDIndex);
+        BinaryWalkerNode actual = buildTree().get(nodeDIndex);
 
         assertEquals(-0.5, actual.getCenterX(), DOUBLE_ACCURACY);
         assertEquals(2.0, actual.getCenterY(), DOUBLE_ACCURACY);

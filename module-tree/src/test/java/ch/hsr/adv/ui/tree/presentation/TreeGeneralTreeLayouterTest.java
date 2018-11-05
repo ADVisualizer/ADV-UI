@@ -4,7 +4,6 @@ import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.GeneralWalkerNode;
-import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.generaltree.TreeGeneralTreeParser;
 import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 import com.google.gson.Gson;
@@ -63,7 +62,7 @@ public class TreeGeneralTreeLayouterTest {
         moduleGroup = testParser.parse(jsonElement);
     }
 
-    private Map<Long, WalkerNode> buildTree() {
+    private Map<Long, GeneralWalkerNode> buildTree() {
         layoutTree();
         return sut.getNodes();
     }
@@ -81,7 +80,7 @@ public class TreeGeneralTreeLayouterTest {
 
     @Test
     public void layoutTreeContainsRootTest() {
-        Map<Long, WalkerNode> actual = buildTree();
+        Map<Long, GeneralWalkerNode> actual = buildTree();
 
         assertTrue(actual.containsKey(ROOT_ID));
     }
@@ -89,8 +88,7 @@ public class TreeGeneralTreeLayouterTest {
     @Test
     public void layoutTreeNodeDHas4ChildrenTest() {
         final long nodeDIndex = 6L;
-        GeneralWalkerNode actual = (GeneralWalkerNode) buildTree()
-                .get(nodeDIndex);
+        GeneralWalkerNode actual = buildTree().get(nodeDIndex);
 
         assertEquals(4, actual.getChildren().size());
     }
@@ -114,7 +112,7 @@ public class TreeGeneralTreeLayouterTest {
     @Test
     public void layoutTreePositionsVerticesCorrectTest() {
         final long nodeIIndex = 9L;
-        WalkerNode actual = buildTree().get(nodeIIndex);
+        GeneralWalkerNode actual = buildTree().get(nodeIIndex);
 
         assertEquals(2.0, actual.getCenterX(), DOUBLE_ACCURACY);
         assertEquals(2.0, actual.getCenterY(), DOUBLE_ACCURACY);
