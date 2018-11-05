@@ -1,8 +1,8 @@
 package ch.hsr.adv.ui.tree.presentation;
 
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
-import ch.hsr.adv.ui.tree.domain.BinaryWalkerNode;
-import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParser;
+import ch.hsr.adv.ui.tree.domain.WalkerNode;
+import ch.hsr.adv.ui.tree.logic.collectiontree.TreeCollectionTreeParser;
 import com.google.inject.Inject;
 import org.jukito.JukitoRunner;
 import org.junit.Before;
@@ -12,65 +12,67 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(JukitoRunner.class)
-public class TreeBinaryTreeLayouterTest {
+public class TreeCollectionTreeLayouterTest {
 
     private TreeLayouterTestBase base;
 
     @Inject
-    private TreeBinaryTreeParser testParser;
+    private TreeCollectionTreeParser testParser;
     @Inject
-    private TreeBinaryTreeLayouter sut;
+    private TreeCollectionTreeLayouter sut;
 
     @Before
     public void setUp(FileDatastoreAccess reader) throws IOException,
             TimeoutException {
         base = new TreeLayouterTestBase(sut, testParser, reader,
-                "binary-tree-module-group.json");
+                "collection-tree-module-group.json");
     }
 
     @Test
-    public void layoutTreeContainsRootTest() {
-        final long rootId = 1L;
-        base.assertTreeContainsNode(rootId);
+    public void layoutTreeContainsAllRootsTest() {
+        final long root1Index = 1L;
+        final long root2Index = 2L;
+        final long root3Index = 6L;
+        base.assertTreeContainsNode(root1Index);
+        base.assertTreeContainsNode(root2Index);
+        base.assertTreeContainsNode(root3Index);
     }
 
     @Test
-    public void layoutTreeNodeBHasNoLeftChildTest() {
-        final long nodeBIndex = 2L;
+    public void layoutTreeRootAHasNoChildren() {
+        final long rootAIndex = 1L;
         base.layoutTree();
-        BinaryWalkerNode nodeB = base.getNodes().get(nodeBIndex);
 
-        assertNotNull(nodeB.getRightChild());
-        assertNull(nodeB.getLeftChild());
+        WalkerNode rootA = base.getNodes().get(rootAIndex);
+        assertEquals(0, rootA.getChildren().size());
     }
 
     @Test
     public void layoutTreeContainsAllNodesTest() {
-        final int expectedNodes = 6;
+        final int expectedNodes = 9;
         base.assertTreeContainsAllNodes(expectedNodes);
     }
 
     @Test
     public void layoutTreePaneContainsAllNodesTest() {
-        final int expectedNodes = 6;
+        final int expectedNodes = 9;
         base.assertPaneContainsAllNodes(expectedNodes);
     }
 
     @Test
     public void layoutTreePaneContainsAllRelationsTest() {
-        final int expectedRelations = 5;
+        final int expectedRelations = 6;
         base.assertPaneContainsAllRelations(expectedRelations);
     }
 
     @Test
     public void layoutTreePositionsVerticesCorrectTest() {
         final long nodeIndex = 5L;
-        final double expectedX = -0.5;
-        final double expectedY = 2.0;
+        final double expectedX = 3.0;
+        final double expectedY = 1.0;
         base.assertNodePositionedCorrect(nodeIndex, expectedX, expectedY);
     }
 }

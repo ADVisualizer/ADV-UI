@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.tree.logic;
 
+import ch.hsr.adv.ui.tree.domain.HorizontalTreeBounds;
 import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import com.google.common.collect.Lists;
 
@@ -17,9 +18,19 @@ public class WalkerTreeAlgorithm {
     public static final double HORIZONTAL_DISTANCE = 1.0;
 
     private WalkerNode root;
+    private HorizontalTreeBounds horizontalBounds;
 
     public WalkerTreeAlgorithm(WalkerNode root) {
         this.root = root;
+        horizontalBounds = new HorizontalTreeBounds(0.0, 0.0);
+    }
+
+    public HorizontalTreeBounds getHorizontalBounds() {
+        return horizontalBounds;
+    }
+
+    public WalkerNode getRoot() {
+        return root;
     }
 
     /**
@@ -85,6 +96,7 @@ public class WalkerTreeAlgorithm {
         double x = v.getPreliminary() + modSum;
         v.setCenterX(x);
         v.setCenterY(y);
+        horizontalBounds.update(x);
 
         if (!v.isLeaf()) {
             double nextDepthStart = y + VERTICAL_DISTANCE;
