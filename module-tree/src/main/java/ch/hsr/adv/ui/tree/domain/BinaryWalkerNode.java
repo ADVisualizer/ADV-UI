@@ -10,6 +10,15 @@ public class BinaryWalkerNode extends WalkerNode {
 
     private BinaryWalkerNode leftChild;
     private BinaryWalkerNode rightChild;
+    private boolean dummy;
+
+    public BinaryWalkerNode() {
+        dummy = false;
+    }
+
+    public BinaryWalkerNode(boolean dummy) {
+        this.dummy = dummy;
+    }
 
     public BinaryWalkerNode getLeftChild() {
         return leftChild;
@@ -25,6 +34,10 @@ public class BinaryWalkerNode extends WalkerNode {
 
     public void setRightChild(BinaryWalkerNode rightChild) {
         this.rightChild = rightChild;
+    }
+
+    public boolean isDummy() {
+        return dummy;
     }
 
     @Override

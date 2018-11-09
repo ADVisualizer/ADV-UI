@@ -5,7 +5,6 @@ import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.tree.logic.ConstantsTree;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.tree.domain.BinaryWalkerNode;
-import ch.hsr.adv.ui.tree.logic.WalkerTreeAlgorithm;
 import com.google.inject.Singleton;
 import javafx.scene.layout.Pane;
 import org.slf4j.Logger;
@@ -26,9 +25,6 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
     private static final Logger logger = LoggerFactory.getLogger(
             TreeBinaryTreeLayouter.class);
 
-    private static final double CHILD_OFFSET =
-            WalkerTreeAlgorithm.HORIZONTAL_DISTANCE / 2;
-
     @Override
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
         logger.info("Layouting binary-tree snapshot...");
@@ -37,18 +33,32 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
                 && flags.contains(ConstantsTree.SHOW_ARRAY_INDICES);
 
         initializeLayouting(moduleGroup);
-        adjustBinaryTreeNodePositions();
+        insertDummyNodes();
         positionNodes();
+        removeDummyNodes();
         return generatePane(showIndex);
     }
 
-    private void adjustBinaryTreeNodePositions() {
+    private void insertDummyNodes() {
         for (BinaryWalkerNode node : getNodes().values()) {
-            if (node.getLeftChild() != null && node.getRightChild() == null) {
-                node.addMod(-CHILD_OFFSET);
+            if (node.getLeftChild() == null && node.getRightChild() != null) {
+                node.setLeftChild(new BinaryWalkerNode(true));
             }
-            if (node.getRightChild() != null && node.getLeftChild() == null) {
-                node.addMod(CHILD_OFFSET);
+            if (node.getLeftChild() != null && node.getRightChild() == null) {
+                node.setRightChild(new BinaryWalkerNode(true));
+            }
+        }
+    }
+
+    private void removeDummyNodes() {
+        for (BinaryWalkerNode node : getNodes().values()) {
+            if (node.getLeftChild() != null
+                    && node.getLeftChild().isDummy()) {
+                node.setLeftChild(null);
+            }
+            if (node.getRightChild() != null
+                    && node.getRightChild().isDummy()) {
+                node.setRightChild(null);
             }
         }
     }

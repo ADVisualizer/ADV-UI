@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class WalkerTreeAlgorithm {
 
     private static final double VERTICAL_DISTANCE = 1.0;
-    public static final double HORIZONTAL_DISTANCE = 1.0;
+    private static final double HORIZONTAL_DISTANCE = 1.0;
 
     private WalkerNode root;
     private HorizontalTreeBounds horizontalBounds;

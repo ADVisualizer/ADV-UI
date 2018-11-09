@@ -39,13 +39,13 @@ public class TreeBinaryTreeLayouterTest {
     }
 
     @Test
-    public void layoutTreeNodeBHasNoLeftChildTest() {
-        final long nodeBIndex = 2L;
+    public void layoutTreeNodeCHasNoRightChildTest() {
+        final long nodeCIndex = 3L;
         base.layoutTree();
-        BinaryWalkerNode nodeB = base.getNodes().get(nodeBIndex);
+        BinaryWalkerNode nodeC = base.getNodes().get(nodeCIndex);
 
-        assertNotNull(nodeB.getRightChild());
-        assertNull(nodeB.getLeftChild());
+        assertNull(nodeC.getRightChild());
+        assertNotNull(nodeC.getLeftChild());
     }
 
     @Test
@@ -68,8 +68,8 @@ public class TreeBinaryTreeLayouterTest {
 
     @Test
     public void layoutTreePositionsVerticesCorrectTest() {
-        final long nodeIndex = 5L;
-        final double expectedX = -0.5;
+        final long nodeIndex = 6L;
+        final double expectedX = 0.5;
         final double expectedY = 2.0;
         base.assertNodePositionedCorrect(nodeIndex, expectedX, expectedY);
     }

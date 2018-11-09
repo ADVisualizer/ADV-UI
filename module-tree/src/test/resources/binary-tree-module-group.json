@@ -10,7 +10,7 @@
       "content": "B"
     },
     {
-      "id": 5,
+      "id": 4,
       "content": "D"
     },
     {
@@ -24,11 +24,11 @@
       "content": "C"
     },
     {
-      "id": 6,
+      "id": 5,
       "content": "E"
     },
     {
-      "id": 7,
+      "id": 6,
       "content": "F"
     }
   ],
@@ -45,6 +45,10 @@
     },
     {
       "sourceElementId": 2,
+      "targetElementId": 4
+    },
+    {
+      "sourceElementId": 2,
       "targetElementId": 5
     },
     {
@@ -54,10 +58,6 @@
     {
       "sourceElementId": 3,
       "targetElementId": 6
-    },
-    {
-      "sourceElementId": 3,
-      "targetElementId": 7
     }
   ]
 }
