@@ -20,6 +20,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack.iml" group="module-stack" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack_main.iml" group="module-stack" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-stack/module-stack_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-stack/module-stack_test.iml" group="module-stack" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-tree/module-tree.iml" filepath="$PROJECT_DIR$/.idea/modules/module-tree/module-tree.iml" group="module-tree" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-tree/module-tree_main.iml" filepath="$PROJECT_DIR$/.idea/modules/module-tree/module-tree_main.iml" group="module-tree" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/module-tree/module-tree_test.iml" filepath="$PROJECT_DIR$/.idea/modules/module-tree/module-tree_test.iml" group="module-tree" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core.iml" group="ui-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core_main.iml" group="ui-core" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ui-core/ui-core_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ui-core/ui-core_test.iml" group="ui-core" />

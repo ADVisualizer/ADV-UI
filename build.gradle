@@ -1,10 +1,10 @@
 plugins {
-    id 'com.github.spotbugs' version '1.6.0'
+    id 'com.github.spotbugs' version '1.6.5'
     id "com.jfrog.bintray" version "1.8.0"
 }
 
 group = 'ch.hsr.adv'
-version = '1.0'
+version = '1.1'
 
 /****************************************
  * instructions for all projects
@@ -27,8 +27,8 @@ allprojects {
         mavenCentral()
     }
 
-    sourceCompatibility = 1.9
-    targetCompatibility = 1.9
+    sourceCompatibility = 1.10
+    targetCompatibility = 1.10
 }
 
 /****************************************
@@ -42,11 +42,12 @@ subprojects {
         // put common test dependencies here
         testCompile 'junit:junit:4+'
         testCompile 'org.jukito:jukito:1+'
+        testCompile 'org.mockito:mockito-core:2+'
         testCompile 'org.hamcrest:hamcrest-library:1+'
         // ui testing frameworks
-        testCompile "org.testfx:openjfx-monocle:jdk-9+181"
-        testCompile "org.testfx:testfx-core:4.0.8-alpha"
-        testCompile "org.testfx:testfx-junit:4.0.8-alpha"
+        testCompile "org.testfx:openjfx-monocle:jdk-11+26"
+        testCompile "org.testfx:testfx-core:4.0.15-alpha"
+        testCompile "org.testfx:testfx-junit:4.0.15-alpha"
 
     }
 
@@ -58,6 +59,10 @@ subprojects {
         checkstyleTest.enabled = false
     }
 
+    jacoco {
+        toolVersion = "0.8.2"
+    }
+    
     jacocoTestReport {
         additionalSourceDirs = files(sourceSets.main.allSource.srcDirs)
         sourceDirectories = files(sourceSets.main.allSource.srcDirs)

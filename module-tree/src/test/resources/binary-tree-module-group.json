@@ -1,0 +1,63 @@
+{
+  "moduleName": "tree-binary",
+  "elements": [
+    {
+      "id": 1,
+      "content": "A"
+    },
+    {
+      "id": 2,
+      "content": "B"
+    },
+    {
+      "id": 4,
+      "content": "D"
+    },
+    {
+      "id": 3,
+      "style": {
+        "fillColor": 13888729,
+        "strokeColor": 7324547,
+        "strokeStyle": "solid",
+        "strokeThickness": 2
+      },
+      "content": "C"
+    },
+    {
+      "id": 5,
+      "content": "E"
+    },
+    {
+      "id": 6,
+      "content": "F"
+    }
+  ],
+  "relations": [
+    {
+      "sourceElementId": 1,
+      "targetElementId": 2,
+      "style": {
+        "fillColor": 14006715,
+        "strokeColor": 12148586,
+        "strokeStyle": "dashed",
+        "strokeThickness": 7
+      }
+    },
+    {
+      "sourceElementId": 2,
+      "targetElementId": 4
+    },
+    {
+      "sourceElementId": 2,
+      "targetElementId": 5
+    },
+    {
+      "sourceElementId": 1,
+      "targetElementId": 3
+    },
+    {
+      "sourceElementId": 3,
+      "targetElementId": 6
+    }
+  ]
+}

@@ -2,44 +2,22 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="adv-parent_main" target="1.9" />
-      <module name="adv-parent_test" target="1.9" />
-      <module name="adv-root_main" target="1.9" />
-      <module name="adv-root_test" target="1.9" />
-      <module name="adv-ui_main" target="1.9" />
-      <module name="adv-ui_test" target="1.9" />
-      <module name="adv_main" target="1.9" />
-      <module name="adv_test" target="1.9" />
-      <module name="bootstraper_main" target="1.9" />
-      <module name="bootstraper_test" target="1.9" />
-      <module name="bootstrapper_main" target="1.9" />
-      <module name="bootstrapper_test" target="1.9" />
-      <module name="common_main" target="1.9" />
-      <module name="common_test" target="1.9" />
-      <module name="core_main" target="1.9" />
-      <module name="core_test" target="1.9" />
-      <module name="lib_main" target="1.9" />
-      <module name="lib_test" target="1.9" />
-      <module name="module-_main" target="1.9" />
-      <module name="module-_test" target="1.9" />
-      <module name="module-array_main" target="1.9" />
-      <module name="module-array_test" target="1.9" />
-      <module name="module-graph_main" target="1.9" />
-      <module name="module-graph_test" target="1.9" />
-      <module name="module-name_main" target="1.9" />
-      <module name="module-name_test" target="1.9" />
-      <module name="module-queue_main" target="1.9" />
-      <module name="module-queue_test" target="1.9" />
-      <module name="module-recursion_main" target="1.9" />
-      <module name="module-recursion_test" target="1.9" />
-      <module name="module-sort_main" target="1.9" />
-      <module name="module-sort_test" target="1.9" />
-      <module name="module-stack_main" target="1.9" />
-      <module name="module-stack_test" target="1.9" />
-      <module name="module_main" target="1.9" />
-      <module name="module_test" target="1.9" />
-      <module name="ui-core_main" target="1.9" />
-      <module name="ui-core_test" target="1.9" />
+      <module name="adv-ui_main" target="1.10" />
+      <module name="adv-ui_test" target="1.10" />
+      <module name="bootstrapper_main" target="1.10" />
+      <module name="bootstrapper_test" target="1.10" />
+      <module name="module-array_main" target="1.10" />
+      <module name="module-array_test" target="1.10" />
+      <module name="module-graph_main" target="1.10" />
+      <module name="module-graph_test" target="1.10" />
+      <module name="module-queue_main" target="1.10" />
+      <module name="module-queue_test" target="1.10" />
+      <module name="module-stack_main" target="1.10" />
+      <module name="module-stack_test" target="1.10" />
+      <module name="module-tree_main" target="1.10" />
+      <module name="module-tree_test" target="1.10" />
+      <module name="ui-core_main" target="1.10" />
+      <module name="ui-core_test" target="1.10" />
     </bytecodeTargetLevel>
   </component>
 </project>
