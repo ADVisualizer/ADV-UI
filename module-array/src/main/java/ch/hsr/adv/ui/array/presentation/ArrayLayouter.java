@@ -38,24 +38,29 @@ public class ArrayLayouter implements Layouter {
      * Delegates the layout of an array to the correct array layouter.
      *
      * @param moduleGroup to be layouted
-     * @param flags to switch between primitive array and object references
+     * @param flags       to switch between primitive array and object
+     *                    references
      * @return layouted snapshot
      */
     @Override
     public Pane layout(ModuleGroup moduleGroup, List<String> flags) {
 
         boolean showObjectRelations = false;
+        boolean showIndices = false;
         if (flags != null) {
             showObjectRelations = flags.stream()
                     .anyMatch(f -> f.equals(SHOW_OBJECT_RELATIONS));
+            showIndices = flags.stream()
+                    .anyMatch(f -> f.equals(ConstantsArray.SHOW_ARRAY_INDICES));
         }
 
         if (showObjectRelations) {
             logger.info("Use Object Reference Array Layouter");
-            return arrayObjectReferenceLayouter.layout(moduleGroup);
+            return arrayObjectReferenceLayouter.layout(
+                    moduleGroup, showIndices);
         } else {
             logger.info("Use Default Array Layouter");
-            return arrayDefaultLayouter.layout(moduleGroup);
+            return arrayDefaultLayouter.layout(moduleGroup, showIndices);
         }
     }
 }

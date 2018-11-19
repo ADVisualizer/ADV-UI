@@ -3,10 +3,10 @@ package ch.hsr.adv.ui.array.presentation;
 import ch.hsr.adv.commons.array.logic.domain.ArrayElement;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.commons.core.logic.domain.styles.presets
-        .ADVDefaultElementStyle;
+import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultElementStyle;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
+import ch.hsr.adv.ui.core.presentation.widgets.IndexPosition;
+import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
 import com.google.inject.Singleton;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -25,11 +25,12 @@ public class ArrayDefaultLayouter {
      * Layouts an array to look like a primitive array.
      *
      * @param moduleGroup moduleGroup to layout
+     * @param showIndices flag to show indices above array
      * @return layouted pane
      */
-    public Pane layout(ModuleGroup moduleGroup) {
+    public Pane layout(ModuleGroup moduleGroup, boolean showIndices) {
         initializeContainer();
-        drawElements(moduleGroup);
+        drawElements(moduleGroup, showIndices);
 
         scalePane.addChildren(valueContainer);
 
@@ -42,19 +43,21 @@ public class ArrayDefaultLayouter {
         valueContainer.setAlignment(Pos.CENTER);
     }
 
-    private void drawElements(ModuleGroup moduleGroup) {
+    private void drawElements(ModuleGroup moduleGroup, boolean showIndices) {
+        for (int i = 0; i < moduleGroup.getElements().size(); i++) {
+            ArrayElement element =
+                    (ArrayElement) moduleGroup.getElements().get(i);
 
-        moduleGroup.getElements().forEach(e -> {
-            ArrayElement element = (ArrayElement) e;
             ADVStyle style = element.getStyle();
             if (style == null) {
                 style = new ADVDefaultElementStyle();
             }
 
-            LabeledNode valueNode = new LabeledNode(element
-                    .getContent(), style);
+            IndexedNode valueNode = new IndexedNode(i, element.getContent(),
+                    style, false, showIndices,
+                    IndexPosition.TOP);
 
             valueContainer.getChildren().add(valueNode);
-        });
+        }
     }
 }
