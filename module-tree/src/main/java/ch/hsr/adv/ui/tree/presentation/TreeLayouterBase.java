@@ -11,10 +11,11 @@ import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.logic.Layouter;
 import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
 import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
+import ch.hsr.adv.ui.core.presentation.widgets.IndexPosition;
+import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.WalkerTreeAlgorithm;
-import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,7 +153,8 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
                 style = new ADVDefaultElementStyle();
             }
             IndexedNode indexedNode = new IndexedNode(index, element
-                    .getContent(), style, ROUNDED_CORNER_STYLE, showIndex);
+                    .getContent(), style, ROUNDED_CORNER_STYLE, showIndex,
+                    IndexPosition.RIGHT);
             indexedNodes.put(index, indexedNode);
         }
         return indexedNodes;

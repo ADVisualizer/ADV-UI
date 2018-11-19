@@ -1,38 +1,37 @@
 package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 /**
  * Widget component for a indexed labeled node with optional rounded corners
  */
-public class IndexedNode extends Region {
+public class IndexedNode extends Pane {
 
     private static final double INDEX_LABEL_DISTANCE = 5;
 
     private final LabeledNode labeledNode;
-
-    private int centerX;
-    private int centerY;
-    private Label indexLabel;
-    private boolean showIndex;
+    private final Label indexLabel;
 
     public IndexedNode(long index, String labelText, ADVStyle style,
-                       boolean isRoundedDown, boolean showIndex) {
-        this.showIndex = showIndex;
-
+                       boolean isRoundedDown, boolean showIndex,
+                       IndexPosition indexPosition) {
         labeledNode = new LabeledNode(labelText, style, isRoundedDown);
         labeledNode.setX(0);
         labeledNode.setY(0);
-        getChildren().add(labeledNode);
 
         indexLabel = new Label();
         indexLabel.setText(String.valueOf(index));
         indexLabel.setVisible(showIndex);
-        getChildren().add(indexLabel);
+        indexLabel.setPadding(calculateInsets(indexPosition));
+
+        getChildren().add(createRootPane(indexPosition, showIndex));
     }
 
     /**
@@ -41,8 +40,7 @@ public class IndexedNode extends Region {
      * @param x x coordinate
      */
     public void setCenterX(int x) {
-        centerX = x;
-        layoutXProperty().set(centerX - labeledNode.getWidth() / 2);
+        layoutXProperty().set(x - labeledNode.getWidth() / 2);
     }
 
     /**
@@ -51,37 +49,50 @@ public class IndexedNode extends Region {
      * @param y y coordinate
      */
     public void setCenterY(int y) {
-        centerY = y;
-        layoutYProperty().set(centerY - labeledNode.getHeight() / 2);
+        layoutYProperty().set(y - labeledNode.getHeight() / 2);
     }
 
     public LabeledNode getLabeledNode() {
         return labeledNode;
     }
 
-    /**
-     * Centers the label and the index on the node
-     */
-    @Override
-    protected void layoutChildren() {
+    private Pane createRootPane(IndexPosition position, boolean showIndex) {
         if (showIndex) {
-            final double nodeHeight = getHeight();
-            final double insetTop = getInsets().getTop();
-            final double insetLeft = getInsets().getLeft();
-            final double insetBottom = getInsets().getBottom();
-
-            final double contentHeight = (nodeHeight - insetTop - insetBottom);
-            double leftPos = insetLeft
-                    + labeledNode.getWidth() + INDEX_LABEL_DISTANCE;
-
-            layoutInArea(indexLabel, leftPos, insetTop,
-                    indexLabel.getWidth(), contentHeight,
-                    getBaselineOffset(), HPos.LEFT, VPos.CENTER);
+            switch (position) {
+                case TOP:
+                    VBox vBox = new VBox();
+                    vBox.setAlignment(Pos.TOP_CENTER);
+                    vBox.getChildren().add(indexLabel);
+                    vBox.getChildren().add(labeledNode);
+                    return vBox;
+                case RIGHT:
+                    HBox hBox = new HBox();
+                    hBox.setAlignment(Pos.CENTER_LEFT);
+                    hBox.getChildren().add(labeledNode);
+                    hBox.getChildren().add(indexLabel);
+                    return hBox;
+                default:
+                    throw new IllegalArgumentException(
+                            "unknown IndexPosition " + position.toString());
+            }
+        } else {
+            StackPane pane = new StackPane();
+            pane.setAlignment(Pos.CENTER);
+            pane.getChildren().add(labeledNode);
+            pane.getChildren().add(indexLabel);
+            return pane;
         }
+    }
 
-        setCenterX(centerX);
-        setCenterY(centerY);
-
-        super.layoutChildren();
+    private Insets calculateInsets(IndexPosition position) {
+        switch (position) {
+            case TOP:
+                return new Insets(0, 0, INDEX_LABEL_DISTANCE, 0);
+            case RIGHT:
+                return new Insets(0, 0, 0, INDEX_LABEL_DISTANCE);
+            default:
+                throw new IllegalArgumentException(
+                        "unknown IndexPosition " + position.toString());
+        }
     }
 }
