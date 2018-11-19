@@ -14,7 +14,7 @@ import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.WalkerTreeAlgorithm;
-import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
+import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
 
 import java.util.ArrayList;
 import java.util.List;

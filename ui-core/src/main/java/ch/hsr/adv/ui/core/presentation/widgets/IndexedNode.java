@@ -1,7 +1,6 @@
-package ch.hsr.adv.ui.tree.presentation.widgets;
+package ch.hsr.adv.ui.core.presentation.widgets;
 
 import ch.hsr.adv.commons.core.logic.domain.styles.ADVStyle;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledNode;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.control.Label;

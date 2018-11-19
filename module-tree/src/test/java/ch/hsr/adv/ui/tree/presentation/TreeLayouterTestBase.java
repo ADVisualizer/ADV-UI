@@ -5,7 +5,7 @@ import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
 import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.TreeParser;
-import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
+import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import javafx.scene.Group;
