@@ -104,4 +104,16 @@ public class TreeParserTestBase {
         assertEquals(strokeThickness, parsedStyle
                 .getStrokeThickness(), DOUBLE_ACCURACY);
     }
+
+    public void assertFlagIsSet(String flag) {
+        ModuleGroup actual = sut.parse(jsonElement);
+
+        assertTrue(actual.getFlags().contains(flag));
+    }
+
+    public void assertMetaDataEquals(String metaDataKey, String expectedValue) {
+        ModuleGroup actual = sut.parse(jsonElement);
+
+        assertEquals(expectedValue, actual.getMetaData().get(metaDataKey));
+    }
 }
