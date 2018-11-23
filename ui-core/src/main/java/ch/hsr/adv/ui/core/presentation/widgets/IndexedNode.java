@@ -19,6 +19,9 @@ public class IndexedNode extends Pane {
     private final LabeledNode labeledNode;
     private final Label indexLabel;
 
+    private int preferredX;
+    private int preferredY;
+
     public IndexedNode(long index, String labelText, ADVStyle style,
                        boolean isRoundedDown, boolean showIndex,
                        IndexPosition indexPosition) {
@@ -40,7 +43,8 @@ public class IndexedNode extends Pane {
      * @param x x coordinate
      */
     public void setCenterX(int x) {
-        layoutXProperty().set(x - labeledNode.getWidth() / 2);
+        preferredX = x;
+        layoutXProperty().set(preferredX - labeledNode.getWidth() / 2);
     }
 
     /**
@@ -49,7 +53,8 @@ public class IndexedNode extends Pane {
      * @param y y coordinate
      */
     public void setCenterY(int y) {
-        layoutYProperty().set(y - labeledNode.getHeight() / 2);
+        preferredY = y;
+        layoutYProperty().set(preferredY - labeledNode.getHeight() / 2);
     }
 
     public LabeledNode getLabeledNode() {
@@ -94,5 +99,16 @@ public class IndexedNode extends Pane {
                 throw new IllegalArgumentException(
                         "unknown IndexPosition " + position.toString());
         }
+    }
+
+    /**
+     * Updates position of IndexedNode so that the center of the Labeled Node
+     * is at preferredX / preferredY
+     */
+    @Override
+    protected void layoutChildren() {
+        setCenterX(preferredX);
+        setCenterY(preferredY);
+        super.layoutChildren();
     }
 }
