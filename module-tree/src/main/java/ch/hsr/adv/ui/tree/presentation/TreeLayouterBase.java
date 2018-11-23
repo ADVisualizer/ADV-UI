@@ -9,11 +9,7 @@ import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultRelationSty
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
-import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
-import ch.hsr.adv.ui.core.presentation.widgets.IndexPosition;
-import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
+import ch.hsr.adv.ui.core.presentation.widgets.*;
 import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.WalkerTreeAlgorithm;
 
@@ -70,7 +66,7 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
      */
     void positionNodes() {
         WalkerTreeAlgorithm algorithm = new WalkerTreeAlgorithm(
-                nodes.get(DEFAULT_ROOT_ID));
+                getDefaultRoot());
         algorithm.positionNodes();
     }
 
@@ -87,6 +83,26 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
             trees.add(algorithm);
         }
         positionTrees(trees);
+    }
+
+    T getDefaultRoot() {
+        return nodes.get(DEFAULT_ROOT_ID);
+    }
+
+    /**
+     * @param showIndex true if node indices are visible
+     * @return distance between two vertices in a tree
+     */
+    static double getHorizontalVertexDistance(boolean showIndex) {
+        double distance = VERTEX_DISTANCE_HORIZONTAL;
+        if (showIndex) {
+            distance += INDEX_WIDTH;
+        }
+        return distance;
+    }
+
+    static double getVerticalVertexDistance() {
+        return VERTEX_DISTANCE_VERTICAL;
     }
 
     private void positionTrees(List<WalkerTreeAlgorithm> trees) {
