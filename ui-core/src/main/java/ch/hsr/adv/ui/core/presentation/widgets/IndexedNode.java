@@ -33,6 +33,7 @@ public class IndexedNode extends Pane {
         indexLabel.setText(String.valueOf(index));
         indexLabel.setVisible(showIndex);
         indexLabel.setPadding(calculateInsets(indexPosition));
+        indexLabel.getStyleClass().add("node-index");
 
         getChildren().add(createRootPane(indexPosition, showIndex));
     }

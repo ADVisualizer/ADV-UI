@@ -10,3 +10,8 @@
 .text-area {
     -fx-focus-color: -accent;
 }
+
+.node-index {
+    -fx-font-size: 0.8em;
+    -fx-font-weight: bold;
+}
