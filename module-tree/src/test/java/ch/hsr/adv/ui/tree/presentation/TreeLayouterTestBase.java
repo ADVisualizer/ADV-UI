@@ -102,4 +102,14 @@ class TreeLayouterTestBase<T extends WalkerNode> {
         assertEquals(expectedX, actual.getCenterX(), DOUBLE_ACCURACY);
         assertEquals(expectedY, actual.getCenterY(), DOUBLE_ACCURACY);
     }
+
+    void assertTreeWithoutRootHasNoElements() {
+        ModuleGroup emptyModule = new ModuleGroup("TestModule");
+        Pane pane = sut.layout(emptyModule, emptyModule.getFlags());
+
+        final int expectedNodes = 0;
+        final int nodes =
+                getChildren(pane, e -> e instanceof IndexedNode).size();
+        assertEquals(expectedNodes, nodes);
+    }
 }

@@ -145,8 +145,14 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
      * @return invisible Pane
      */
     private Pane createInvisiblePane(boolean showIndex) {
-        double[] leftPosition = getLeftmostPosition(getDefaultRoot());
-        double[] rightPosition = getRightmostPosition(getDefaultRoot());
+        double[] leftPosition = new double[2];
+        double[] rightPosition = new double[2];
+
+        if (getDefaultRoot() != null) {
+            leftPosition = getLeftmostPosition(getDefaultRoot());
+            rightPosition = getRightmostPosition(getDefaultRoot());
+        }
+
         double horizontalDistance = getHorizontalVertexDistance(showIndex);
         double verticalDistance = getVerticalVertexDistance();
         double left = (leftPosition[0] - 0.5) * horizontalDistance;

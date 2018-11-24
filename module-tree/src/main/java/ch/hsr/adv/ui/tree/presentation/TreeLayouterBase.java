@@ -65,9 +65,12 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
      * Positions the tree-vertices using the WalkerTreeAlgorithm
      */
     void positionNodes() {
-        WalkerTreeAlgorithm algorithm = new WalkerTreeAlgorithm(
-                getDefaultRoot());
-        algorithm.positionNodes();
+        T root = getDefaultRoot();
+        if (root != null) {
+            WalkerTreeAlgorithm algorithm =
+                    new WalkerTreeAlgorithm(getDefaultRoot());
+            algorithm.positionNodes();
+        }
     }
 
     /**
@@ -183,12 +186,7 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
             IndexedNode indexedNode = indexedNodes.get(entry.getKey());
             WalkerNode node = entry.getValue();
 
-            double horizontalDistance = VERTEX_DISTANCE_HORIZONTAL;
-
-            if (showIndex) {
-                horizontalDistance += INDEX_WIDTH;
-            }
-
+            double horizontalDistance = getHorizontalVertexDistance(showIndex);
             int x = (int) (node.getCenterX() * horizontalDistance);
             int y = (int) (node.getCenterY() * VERTEX_DISTANCE_VERTICAL);
 

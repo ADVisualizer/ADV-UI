@@ -110,4 +110,9 @@ public class TreeBinaryTreeLayouterTest {
         assertEquals(expectedWidth, pane.getPrefWidth(), DOUBLE_ACCURACY);
         assertEquals(expectedHeight, pane.getPrefHeight(), DOUBLE_ACCURACY);
     }
+
+    @Test
+    public void layoutTreeWithoutRootHasNoElementsTest() {
+        base.assertTreeWithoutRootHasNoElements();
+    }
 }

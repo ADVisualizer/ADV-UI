@@ -70,4 +70,9 @@ public class TreeGeneralTreeLayouterTest {
         final double expectedY = 2.0;
         base.assertNodePositionedCorrect(nodeIndex, expectedX, expectedY);
     }
+
+    @Test
+    public void layoutTreeWithoutRootHasNoElementsTest() {
+        base.assertTreeWithoutRootHasNoElements();
+    }
 }

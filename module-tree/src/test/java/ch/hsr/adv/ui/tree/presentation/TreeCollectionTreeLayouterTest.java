@@ -76,4 +76,9 @@ public class TreeCollectionTreeLayouterTest {
         final double expectedY = 1.0;
         base.assertNodePositionedCorrect(nodeIndex, expectedX, expectedY);
     }
+
+    @Test
+    public void layoutTreeWithoutRootHasNoElementsTest() {
+        base.assertTreeWithoutRootHasNoElements();
+    }
 }
