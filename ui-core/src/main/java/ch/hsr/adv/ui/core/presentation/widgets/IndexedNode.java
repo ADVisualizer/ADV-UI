@@ -38,24 +38,12 @@ public class IndexedNode extends Pane {
         getChildren().add(createRootPane(indexPosition, showIndex));
     }
 
-    /**
-     * Sets the X property of the center of the labeled node
-     *
-     * @param x x coordinate
-     */
     public void setCenterX(int x) {
         preferredX = x;
-        layoutXProperty().set(preferredX - labeledNode.getWidth() / 2);
     }
 
-    /**
-     * Sets the y property of the center of the labeled node
-     *
-     * @param y y coordinate
-     */
     public void setCenterY(int y) {
         preferredY = y;
-        layoutYProperty().set(preferredY - labeledNode.getHeight() / 2);
     }
 
     public LabeledNode getLabeledNode() {
@@ -108,8 +96,8 @@ public class IndexedNode extends Pane {
      */
     @Override
     protected void layoutChildren() {
-        setCenterX(preferredX);
-        setCenterY(preferredY);
+        layoutXProperty().set(preferredX - labeledNode.getWidth() / 2);
+        layoutYProperty().set(preferredY - labeledNode.getHeight() / 2);
         super.layoutChildren();
     }
 }
