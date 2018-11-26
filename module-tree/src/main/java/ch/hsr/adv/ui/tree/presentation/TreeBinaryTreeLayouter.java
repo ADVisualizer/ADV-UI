@@ -58,31 +58,26 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
      * @param metaData metaData that contains tree-layout-information
      */
     private void fillTreeWithDummyNodes(Map<String, String> metaData) {
-        fillLeftSideWithDummyNodes(metaData);
-        fillRightSideWithDummyNodes(metaData);
-    }
-
-    private void fillLeftSideWithDummyNodes(Map<String, String> metaData) {
-        String leftMaxHeightValue =
-                metaData.get(ConstantsTree.MAX_TREE_HEIGHT_LEFT);
-        if (leftMaxHeightValue != null) {
-            int leftMaxHeight = Integer.parseInt(leftMaxHeightValue);
-            BinaryWalkerNode root = getDefaultRoot();
-            fillWithDummyNodes(root.getLeftChild(), leftMaxHeight - 1);
+        BinaryWalkerNode root = getDefaultRoot();
+        if (root != null) {
+            fillBranchWithDummyNodes(
+                    metaData.get(ConstantsTree.MAX_TREE_HEIGHT_LEFT),
+                    root.getLeftChild());
+            fillBranchWithDummyNodes(
+                    metaData.get(ConstantsTree.MAX_TREE_HEIGHT_RIGHT),
+                    root.getRightChild());
         }
     }
 
-    private void fillRightSideWithDummyNodes(Map<String, String> metaData) {
-        String rightMaxHeightValue =
-                metaData.get(ConstantsTree.MAX_TREE_HEIGHT_RIGHT);
-        if (rightMaxHeightValue != null) {
-            int rightMaxHeight = Integer.parseInt(rightMaxHeightValue);
-            BinaryWalkerNode root = getDefaultRoot();
-            fillWithDummyNodes(root.getRightChild(), rightMaxHeight - 1);
+    private void fillBranchWithDummyNodes(String maxHeightValue,
+                                          BinaryWalkerNode branchRoot) {
+        if (maxHeightValue != null) {
+            final int maxHeight = Integer.parseInt(maxHeightValue);
+            fillBranchWithDummyNodes(branchRoot, maxHeight - 1);
         }
     }
 
-    private void fillWithDummyNodes(BinaryWalkerNode node, int height) {
+    private void fillBranchWithDummyNodes(BinaryWalkerNode node, int height) {
         if (height > 0) {
             if (node.getLeftChild() == null) {
                 addLeftDummyNodeToParent(node);
@@ -90,8 +85,8 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
             if (node.getRightChild() == null) {
                 addRightDummyNodeToParent(node);
             }
-            fillWithDummyNodes(node.getLeftChild(), height - 1);
-            fillWithDummyNodes(node.getRightChild(), height - 1);
+            fillBranchWithDummyNodes(node.getLeftChild(), height - 1);
+            fillBranchWithDummyNodes(node.getRightChild(), height - 1);
         }
     }
 
@@ -121,20 +116,6 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
         BinaryWalkerNode dummyChild = new BinaryWalkerNode(true);
         parent.setRightChild(dummyChild);
         dummyChild.setParent(parent);
-    }
-
-    private double[] getRightmostPosition(BinaryWalkerNode node) {
-        if (node.getRightChild() != null) {
-            return getRightmostPosition(node.getRightChild());
-        }
-        return new double[] {node.getCenterX(), node.getCenterY()};
-    }
-
-    private double[] getLeftmostPosition(BinaryWalkerNode node) {
-        if (node.getLeftChild() != null) {
-            return getLeftmostPosition(node.getLeftChild());
-        }
-        return new double[] {node.getCenterX(), node.getCenterY()};
     }
 
     /**
@@ -172,6 +153,20 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
         invisiblePane.setBackground(Background.EMPTY);
 
         return invisiblePane;
+    }
+
+    private double[] getRightmostPosition(BinaryWalkerNode node) {
+        if (node.getRightChild() != null) {
+            return getRightmostPosition(node.getRightChild());
+        }
+        return new double[] {node.getCenterX(), node.getCenterY()};
+    }
+
+    private double[] getLeftmostPosition(BinaryWalkerNode node) {
+        if (node.getLeftChild() != null) {
+            return getLeftmostPosition(node.getLeftChild());
+        }
+        return new double[] {node.getCenterX(), node.getCenterY()};
     }
 
     private void removeDummyNodes() {

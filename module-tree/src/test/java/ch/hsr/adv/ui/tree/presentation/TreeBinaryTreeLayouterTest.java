@@ -1,5 +1,7 @@
 package ch.hsr.adv.ui.tree.presentation;
 
+import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
+import ch.hsr.adv.commons.tree.logic.ConstantsTree;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
 import ch.hsr.adv.ui.tree.domain.BinaryWalkerNode;
@@ -114,5 +116,19 @@ public class TreeBinaryTreeLayouterTest {
     @Test
     public void layoutTreeWithoutRootHasNoElementsTest() {
         base.assertTreeWithoutRootHasNoElements();
+    }
+
+    @Test
+    public void layoutTreeWithoutRootAndWithFixationHasNoElementsTest() {
+        ModuleGroup emptyModule = new ModuleGroup("TestModule");
+        emptyModule.getMetaData().put(ConstantsTree.MAX_TREE_HEIGHT_LEFT, "1");
+        emptyModule.getMetaData().put(ConstantsTree.MAX_TREE_HEIGHT_RIGHT, "2");
+
+        Pane pane = sut.layout(emptyModule, emptyModule.getFlags());
+
+        final int expectedNodes = 0;
+        final int nodes =
+                base.getChildren(pane, e -> e instanceof IndexedNode).size();
+        assertEquals(expectedNodes, nodes);
     }
 }
