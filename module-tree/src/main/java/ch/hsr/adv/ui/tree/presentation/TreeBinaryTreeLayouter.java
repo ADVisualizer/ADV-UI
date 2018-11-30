@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Supplier;
 
 /**
  * Creates JavaFX Nodes for the tree elements and adds them to a pane
@@ -62,18 +63,30 @@ public class TreeBinaryTreeLayouter extends TreeLayouterBase<BinaryWalkerNode>
         if (root != null) {
             fillBranchWithDummyNodes(
                     metaData.get(ConstantsTree.MAX_TREE_HEIGHT_LEFT),
-                    root.getLeftChild());
+                    root.getLeftChild(), () -> {
+                        addLeftDummyNodeToParent(root);
+                        return root.getLeftChild();
+                    });
             fillBranchWithDummyNodes(
                     metaData.get(ConstantsTree.MAX_TREE_HEIGHT_RIGHT),
-                    root.getRightChild());
+                    root.getRightChild(), () -> {
+                        addRightDummyNodeToParent(root);
+                        return root.getRightChild();
+                    });
         }
     }
 
-    private void fillBranchWithDummyNodes(String maxHeightValue,
-                                          BinaryWalkerNode branchRoot) {
+    private void fillBranchWithDummyNodes(
+            String maxHeightValue, BinaryWalkerNode branchRoot,
+            Supplier<BinaryWalkerNode> createDummyBranchRoot) {
         if (maxHeightValue != null) {
             final int maxHeight = Integer.parseInt(maxHeightValue);
-            fillBranchWithDummyNodes(branchRoot, maxHeight - 1);
+            if (maxHeight > 0) {
+                if (branchRoot == null) {
+                    branchRoot = createDummyBranchRoot.get();
+                }
+                fillBranchWithDummyNodes(branchRoot, maxHeight - 1);
+            }
         }
     }
 

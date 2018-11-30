@@ -2,8 +2,10 @@ package ch.hsr.adv.ui.tree.presentation;
 
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.commons.tree.logic.ConstantsTree;
+import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.core.presentation.widgets.IndexedNode;
+import ch.hsr.adv.ui.tree.domain.BinaryTreeTestNode;
 import ch.hsr.adv.ui.tree.domain.BinaryWalkerNode;
 import ch.hsr.adv.ui.tree.logic.binarytree.TreeBinaryTreeParser;
 import com.google.inject.Inject;
@@ -127,6 +129,22 @@ public class TreeBinaryTreeLayouterTest {
         Pane pane = sut.layout(emptyModule, emptyModule.getFlags());
 
         final int expectedNodes = 0;
+        final int nodes =
+                base.getChildren(pane, e -> e instanceof IndexedNode).size();
+        assertEquals(expectedNodes, nodes);
+    }
+
+    @Test
+    public void layoutTreeWithOnlyRootAndFixationPositionsRootCorrectTest() {
+        BinaryTreeTestNode<String> root = new BinaryTreeTestNode<>("Hi");
+        ModuleGroup emptyModule = new ModuleGroup("TestModule");
+        emptyModule.addElement(new TreeNodeElement(root, 1));
+        emptyModule.getMetaData().put(ConstantsTree.MAX_TREE_HEIGHT_LEFT, "0");
+        emptyModule.getMetaData().put(ConstantsTree.MAX_TREE_HEIGHT_RIGHT, "1");
+
+        Pane pane = sut.layout(emptyModule, emptyModule.getFlags());
+
+        final int expectedNodes = 1;
         final int nodes =
                 base.getChildren(pane, e -> e instanceof IndexedNode).size();
         assertEquals(expectedNodes, nodes);
