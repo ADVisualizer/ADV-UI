@@ -30,7 +30,7 @@ public class IndexedNode extends Pane {
         labeledNode.setY(0);
 
         indexLabel = new Label();
-        indexLabel.setText(String.valueOf(index));
+        indexLabel.setText("[" + index + "]");
         indexLabel.setVisible(showIndex);
         indexLabel.setPadding(calculateInsets(indexPosition));
         indexLabel.getStyleClass().add("node-index");
