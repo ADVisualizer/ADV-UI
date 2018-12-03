@@ -43,7 +43,7 @@ public class TreeCollectionTreeLayouterTest {
     }
 
     @Test
-    public void layoutTreeRootAHasNoChildren() {
+    public void layoutTreeRootAHasNoChildrenTest() {
         final long rootAIndex = 1L;
         base.layoutTree();
 
