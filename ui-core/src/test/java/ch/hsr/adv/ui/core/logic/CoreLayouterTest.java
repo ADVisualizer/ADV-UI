@@ -140,10 +140,4 @@ public class CoreLayouterTest {
         positions.clear();
         sut.layout(panes, positions, dividers);
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void layoutNotEqualPositionSizeTest() {
-        positions.clear();
-        sut.layout(panes, positions, dividers);
-    }
 }

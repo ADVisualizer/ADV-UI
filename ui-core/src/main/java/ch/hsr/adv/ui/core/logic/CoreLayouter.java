@@ -69,10 +69,6 @@ public class CoreLayouter {
             String message = "panes must contain at least one element";
             logger.error(message);
             throw new IllegalArgumentException(message);
-        } else if (panes.size() != positions.size()) {
-            String message = "panes and positions must have equal size";
-            logger.error(message);
-            throw new IllegalArgumentException(message);
         }
 
         if (!dividers.isEmpty()) {
