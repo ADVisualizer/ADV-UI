@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.core.logic;
 
+import ch.hsr.adv.commons.core.logic.domain.ModulePosition;
 import ch.hsr.adv.commons.core.logic.domain.Session;
 import ch.hsr.adv.commons.core.logic.domain.Snapshot;
 import ch.hsr.adv.ui.core.access.DatastoreAccess;
@@ -21,7 +22,9 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -120,16 +123,18 @@ public class FlowControl {
 
             // layout
             List<Pane> panes = new ArrayList<>();
+            Map<Pane, ModulePosition> positions = new HashMap<>();
             snapshot.getModuleGroups().forEach(group -> {
                 String moduleName = group.getModuleName();
                 Layouter layouter = serviceProvider.getLayouter(moduleName);
                 Pane pane = layouter.layout(group, group.getFlags());
                 panes.add(pane);
+                positions.put(pane, group.getPosition());
             });
 
             // wrap in split pane
             List<SplitPane.Divider> dividers = new ArrayList<>();
-            Region parent = coreLayouter.layout(panes, dividers);
+            Region parent = coreLayouter.layout(panes, positions, dividers);
             LayoutedSnapshot layoutedSnapshot = new LayoutedSnapshot(
                     snapshot.getSnapshotId(), parent, dividers);
             layoutedSnapshot

@@ -9,12 +9,9 @@ import ch.hsr.adv.commons.core.logic.domain.styles.presets.ADVDefaultRelationSty
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeElement;
 import ch.hsr.adv.commons.tree.logic.domain.TreeNodeRelation;
 import ch.hsr.adv.ui.core.logic.Layouter;
-import ch.hsr.adv.ui.core.presentation.widgets.AutoScalePane;
-import ch.hsr.adv.ui.core.presentation.widgets.ConnectorType;
-import ch.hsr.adv.ui.core.presentation.widgets.LabeledEdge;
+import ch.hsr.adv.ui.core.presentation.widgets.*;
 import ch.hsr.adv.ui.tree.domain.WalkerNode;
 import ch.hsr.adv.ui.tree.logic.WalkerTreeAlgorithm;
-import ch.hsr.adv.ui.tree.presentation.widgets.IndexedNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +65,12 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
      * Positions the tree-vertices using the WalkerTreeAlgorithm
      */
     void positionNodes() {
-        WalkerTreeAlgorithm algorithm = new WalkerTreeAlgorithm(
-                nodes.get(DEFAULT_ROOT_ID));
-        algorithm.positionNodes();
+        T root = getDefaultRoot();
+        if (root != null) {
+            WalkerTreeAlgorithm algorithm =
+                    new WalkerTreeAlgorithm(getDefaultRoot());
+            algorithm.positionNodes();
+        }
     }
 
     /**
@@ -86,6 +86,26 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
             trees.add(algorithm);
         }
         positionTrees(trees);
+    }
+
+    T getDefaultRoot() {
+        return nodes.get(DEFAULT_ROOT_ID);
+    }
+
+    /**
+     * @param showIndex true if node indices are visible
+     * @return distance between two vertices in a tree
+     */
+    static double getHorizontalVertexDistance(boolean showIndex) {
+        double distance = VERTEX_DISTANCE_HORIZONTAL;
+        if (showIndex) {
+            distance += INDEX_WIDTH;
+        }
+        return distance;
+    }
+
+    static double getVerticalVertexDistance() {
+        return VERTEX_DISTANCE_VERTICAL;
     }
 
     private void positionTrees(List<WalkerTreeAlgorithm> trees) {
@@ -152,7 +172,8 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
                 style = new ADVDefaultElementStyle();
             }
             IndexedNode indexedNode = new IndexedNode(index, element
-                    .getContent(), style, ROUNDED_CORNER_STYLE, showIndex);
+                    .getContent(), style, ROUNDED_CORNER_STYLE, showIndex,
+                    IndexPosition.RIGHT);
             indexedNodes.put(index, indexedNode);
         }
         return indexedNodes;
@@ -165,12 +186,7 @@ abstract class TreeLayouterBase<T extends WalkerNode> implements Layouter {
             IndexedNode indexedNode = indexedNodes.get(entry.getKey());
             WalkerNode node = entry.getValue();
 
-            double horizontalDistance = VERTEX_DISTANCE_HORIZONTAL;
-
-            if (showIndex) {
-                horizontalDistance += INDEX_WIDTH;
-            }
-
+            double horizontalDistance = getHorizontalVertexDistance(showIndex);
             int x = (int) (node.getCenterX() * horizontalDistance);
             int y = (int) (node.getCenterY() * VERTEX_DISTANCE_VERTICAL);
 

@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.tree.logic.binarytree;
 
+import ch.hsr.adv.commons.tree.logic.ConstantsTree;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
 import ch.hsr.adv.ui.tree.logic.TreeParserTestBase;
 import com.google.inject.Inject;
@@ -57,5 +58,16 @@ public class TreeBinaryTreeParserTest {
     @Test
     public void parseRelationStyleTest() {
         base.assertStyleOfRelationEquals(0, 14006715, 12148586, "dashed", 7);
+    }
+
+    @Test
+    public void parseFlagTest() {
+        base.assertFlagIsSet(ConstantsTree.SHOW_ARRAY_INDICES);
+    }
+
+    @Test
+    public void parseMetaDataTest() {
+        base.assertMetaDataEquals("max-right-tree-height", "2");
+        base.assertMetaDataEquals("max-left-tree-height", "3");
     }
 }

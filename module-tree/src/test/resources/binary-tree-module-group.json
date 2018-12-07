@@ -59,5 +59,12 @@
       "sourceElementId": 3,
       "targetElementId": 6
     }
-  ]
+  ],
+  "flags": [
+    "show-array-indices"
+  ],
+  "metaData": {
+    "max-right-tree-height": "2",
+    "max-left-tree-height": "3"
+  }
 }

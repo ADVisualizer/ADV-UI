@@ -1,5 +1,6 @@
 package ch.hsr.adv.ui.array.presentation;
 
+import ch.hsr.adv.commons.array.logic.ConstantsArray;
 import ch.hsr.adv.commons.core.logic.domain.ModuleGroup;
 import ch.hsr.adv.ui.array.logic.ArrayParser;
 import ch.hsr.adv.ui.core.access.FileDatastoreAccess;
@@ -47,7 +48,7 @@ public class ArrayLayouterTest extends ApplicationTest {
         sut.layout(moduleGroup, null);
 
         // THEN
-        verify(mockDefaultLayouter).layout(moduleGroup);
+        verify(mockDefaultLayouter).layout(moduleGroup, false);
     }
 
     @Test
@@ -59,7 +60,28 @@ public class ArrayLayouterTest extends ApplicationTest {
         sut.layout(moduleGroup, flags);
 
         // THEN
-        verify(mockObjectReferenceLayouter).layout(moduleGroup);
+        verify(mockObjectReferenceLayouter).layout(moduleGroup, false);
+    }
+
+    @Test
+    public void layoutShowArrayIndicesTest(
+            ArrayDefaultLayouter mockDefaultLayouter) {
+        List<String> flags = new ArrayList<>();
+        flags.add(ConstantsArray.SHOW_ARRAY_INDICES);
+        sut.layout(moduleGroup, flags);
+
+        verify(mockDefaultLayouter).layout(moduleGroup, true);
+    }
+
+    @Test
+    public void layoutObjectReferenceAndShowArrayIndicesTest(
+            ArrayObjectReferenceLayouter mockObjectReferenceLayouter) {
+        List<String> flags = new ArrayList<>();
+        flags.add(ConstantsArray.SHOW_ARRAY_INDICES);
+        flags.add(SHOW_OBJECT_RELATIONS);
+        sut.layout(moduleGroup, flags);
+
+        verify(mockObjectReferenceLayouter).layout(moduleGroup, true);
     }
 
     public static class Module extends JukitoModule {

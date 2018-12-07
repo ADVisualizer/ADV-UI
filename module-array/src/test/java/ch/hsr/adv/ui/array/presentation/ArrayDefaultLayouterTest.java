@@ -48,7 +48,7 @@ public class ArrayDefaultLayouterTest {
     @Test
     public void layoutTest() {
         // WHEN
-        Pane actual = sut.layout(moduleGroup);
+        Pane actual = sut.layout(moduleGroup, false);
 
         // THEN
         ObservableList<Node> children = actual.getChildren();

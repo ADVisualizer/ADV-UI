@@ -30,7 +30,7 @@ dependencies {
 
 
     // common dependencies
-    compile('ch.hsr.adv:adv-commons:1.1')
+    compile('ch.hsr.adv:adv-commons:1.2')
 }
 
 mainClassName = 'ADVApplication'

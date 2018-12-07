@@ -43,7 +43,7 @@ public class TreeCollectionTreeLayouterTest {
     }
 
     @Test
-    public void layoutTreeRootAHasNoChildren() {
+    public void layoutTreeRootAHasNoChildrenTest() {
         final long rootAIndex = 1L;
         base.layoutTree();
 
@@ -75,5 +75,10 @@ public class TreeCollectionTreeLayouterTest {
         final double expectedX = 3.0;
         final double expectedY = 1.0;
         base.assertNodePositionedCorrect(nodeIndex, expectedX, expectedY);
+    }
+
+    @Test
+    public void layoutTreeWithoutRootHasNoElementsTest() {
+        base.assertTreeWithoutRootHasNoElements();
     }
 }
