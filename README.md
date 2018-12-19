@@ -15,11 +15,11 @@ If the UI-JAR can be found on the classpath, the application is automatically st
 Otherwise the JAR must be started manually.
 
 ### Install
-The ADV-UI is available on jCenter and Maven Central. It requires Java 9 or higher.
+The ADV-UI is available on jCenter. It requires Java 11 or higher.
 
 #### Gradle
 ````groovy
-compile 'ch.hsr.adv:adv-ui:1.0'
+compile 'ch.hsr.adv:adv-ui:2.0'
 ````
 
 #### Maven
@@ -27,7 +27,7 @@ compile 'ch.hsr.adv:adv-ui:1.0'
 <dependency>
   <groupId>ch.hsr.adv</groupId>
   <artifactId>adv-ui</artifactId>
-  <version>1.0</version>
+  <version>2.0</version>
 </dependency>
 ````
 
